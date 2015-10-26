@@ -1,0 +1,286 @@
+<html> 
+    <head> 
+        <title>My first X3DOM page</title> 	
+        <script src='javascripts/jquery-1.11.3.js'></script>
+        <script src='javascripts/x3dom-full.js'></script>
+        <script src='javascripts/nebula.js'></script>
+        <link rel='stylesheet' type='text/css' href='stylesheets/x3dom.css'></link> 
+        <style>
+            .selected
+            {
+                border: 2pt;
+                border-color: orange;
+            }
+            x3d
+            {
+                //border:2px solid darkorange;        
+                background-color: black;
+                width: 100%;
+                height: 100%;
+                border: 0;
+                margin: 0;
+                padding: 0;
+            }       
+            body
+            {     
+                background-color: black;
+                margin: 0;
+                padding: 0;
+                width: 100%;
+                height: 100%;
+            }
+
+            h1
+            {
+                color: darkorange;
+            }             
+
+            #tools
+            {
+                top:0;
+                left:0;
+                margin:0;
+                padding:0;
+                position:absolute;
+                display:inline;
+                z-index:100;
+            }
+            #tools li
+            {
+                line-height:0px;
+                list-style-type:none;
+                display:inline;
+                padding:0;
+                margin:0 -4px 0 0;
+                float:left;
+            }
+            #tools li button
+            {
+                border:1px solid #666;
+                background-color:#202021;
+                color:#ccc;
+                padding:4px;
+                margin:0;
+                display:inline;
+                margin-top:-1px;
+            }
+            #tools li:first-child button
+            {
+                margin-left:-1px;
+            }
+            #tools li button:hover
+            {
+                background-color:blue;
+            }
+        </style>
+    </head> 
+    <body onkeydown="console.log(event);">
+
+    <x3d id="boxes" keysEnabled="True">
+        <ul id="tools">
+            <li><button onclick="addNode();">Add Node</button></li>
+            <li><button onclick="removeNode();">Remove Node</button></li>
+            <li><button onclick="randomize();">Randomize</button></li>
+        </ul>
+
+        <template id="datum_template">
+            <Group id="group">
+                <Transform id="transform">
+                    <Transform>
+                        <PlaneSensor id="sensor" autoOffset="true"></PlaneSensor>
+                        <Switch id="type_switch" whichChoice="0">
+                            <transform>
+                                <Switch class="style_switch" whichChoice="0">
+                                    <shape>
+                                        <appearance>
+                                            <material diffuseColor='1 0 0'></material>
+                                        </appearance>
+                                        <Sphere></Sphere>
+                                    </shape>
+                                    <shape>
+                                        <appearance>
+                                            <material diffuseColor='0 1 0'></material>
+                                        </appearance>
+                                        <Sphere></Sphere>
+                                    </shape>
+                                    <shape>
+                                        <appearance>
+                                            <material diffuseColor='0 0 1'></material>
+                                        </appearance>
+                                        <Sphere></Sphere>
+                                    </shape>
+                                </Switch>
+                            </transform>
+                            <transform>
+                                <shape>
+                                    <appearance>
+                                        <material DEF='Red' diffuseColor='1 0 0'></material>
+                                        <imageTexture id="image"></imageTexture>
+                                    </appearance>
+                                    <box size='5 5 5'></box>
+                                </shape>
+                            </transform>
+                        </Switch>
+                    </Transform>
+                    <billboard axisOfRotation="0 0 0">
+                        <transform scale="10 10 1" translation='0 -10.4 0.64087'>
+                            <Switch class="style_switch" whichChoice="0">
+                                <shape>
+                                    <appearance>
+                                        <material diffuseColor='1 1 1'></material>
+                                    </appearance>
+                                    <text class="datum_label" string='"I am a Label ID"'>
+                                    <fontStyle family='"SAN"' justify='"MIDDLE" "BEGIN"'></fontStyle>
+                                    </text>
+                                </shape>
+                                <shape>
+                                    <appearance>
+                                        <material diffuseColor='0 1 0'></material>
+                                    </appearance>
+                                    <text class="datum_label" string='"I am a Label ID"'>
+                                    <fontStyle family='"SAN"' justify='"MIDDLE" "BEGIN"'></fontStyle>
+                                    </text>
+                                </shape>
+                            </Switch>
+                        </transform>
+                    </billboard>
+                </Transform>
+                <PositionInterpolator id="pi" key="0 1"></PositionInterpolator>
+                <Route id="timer_route" fromField="fraction_changed" toField="set_fraction"></Route>
+                <Route id="pi_route" fromField="value_changed" toField="translation"></Route>
+            </Group>
+        </template>
+
+        <scene id="scene">
+            <!--<navigationInfo type="None"></navigationInfo>-->
+            <orthoViewpoint fieldOfView='-50 -50 50 50'></orthoviewpoint>
+            <transform id="root" translation="0 0 0">
+
+            </transform> 
+
+            <timeSensor id="timer" onoutputchange="handleTimer(event);"></timesensor>
+        </scene>
+    </x3d>
+
+    <script type="text/javascript">
+                var nextId = 0;
+                var points = new NEBULA.DatumSet();
+                var jobId;
+                
+                $(function() {
+                   $.post("oli/init", function(data) {
+                	   console.log(data);
+                       jobId = data.jobId;
+                       console.log(jobId);
+                   }) 
+                });
+                
+                function viewChanged(event)
+                {
+                    console.log(event);
+                }
+                
+                function handleTimer(event)
+                {
+                    if (event.fieldName === "isActive" && event.value === false) {
+                        for (var id of points.keys()) {
+                            pos = points.get(id).getInterpolatedPosition();
+                            points.get(id).setPosition(pos);
+                        }
+                    }
+                }
+                
+                function handleEvent(event)
+                {
+                    if (event.type === "outputchange" && event.fieldName === "translation_changed") {
+                        datum = points.find(event.target);
+                        datum.transform.setAttribute("translation", event.value);
+                    }
+                    else if (event.type === "click") {
+                        datum = points.find(event.target);
+                        datum.toggleSelect();
+                    }
+                }
+
+                function addNode()
+                {
+                    $.ajax({
+                        type: "POST",
+                        url: "oli/new",
+                        data: JSON.stringify({jobId: jobId}),
+                        contentType: "application/json",
+                        success: function(data) {
+                            update(data);
+                        }
+                    });
+                }
+
+                function removeNode()
+                {
+                //if (points.length > 0) {
+                //    points.shift().remove();
+                //}
+                    data = {points: {"1": [1, 2, 3], "2": [2, 3, 4]},
+                            weights: [1.5, 3.4, 2.2]};
+                    $.ajax({
+                        type: "POST",
+                        url: "api/oli/actions/mds",
+                        data: JSON.stringify(data),
+                        contentType: "application/json",
+                        success: function(data) {
+                            console.log(data);
+                        }
+                    })
+                }
+
+                function randomize()
+                {
+                    if ($("#timer").prop("isActive")) {
+                        return;
+                    }
+
+                    var p = [];
+                    for (var key of points.keys()) {
+                        p.push(key);
+                    }
+
+                    $.ajax({
+                        type: "POST",
+                        url: "api/oli/actions/randomize",
+                        data: JSON.stringify({jobId: jobId, type: "randomize"}),
+                        contentType: "application/json",
+                        success: function(data) {
+                            update(data);
+                        }
+                    });
+                }
+
+                function update(interfaceUpdate) {
+                    console.log(interfaceUpdate);
+
+                    var animate = false;
+                    for (var i = 0; i < interfaceUpdate.points.entry.length; i++) {
+                        point = interfaceUpdate.points.entry[i];
+                        id = point.key;
+                        pos = point.value;
+                        if (points.has(id)) {
+                            curPos = points.get(id).getPosition();
+                            points.get(id).setInterpolatorPositions(curPos + " " + pos);
+                            points.get(id).deselect();
+                            animate = true;
+                        }
+                        else {
+                            root = document.getElementById("root");
+                            var datum = new NEBULA.Datum(root, id, handleEvent);
+                            datum.setPosition(pos);
+                            points.add(datum);
+                        }
+                    }
+                    if (animate) {
+                        $("#timer").attr("startTime", Date.now() / 1000);
+                    }
+                }
+
+    </script>
+</body>
+</html>

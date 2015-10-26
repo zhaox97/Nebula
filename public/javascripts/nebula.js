@@ -1,0 +1,200 @@
+/* 
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+var NEBULA = NEBULA || {};
+
+NEBULA.Images = ["Cube.jpg", "Hard Hat.jpg", "Occulus.jpg", "Study.jpg"];
+NEBULA.Icons = ["news.png", "spread.png", "twit.png"];
+
+NEBULA.DATUM_STATUS_NONE = 0;
+NEBULA.DATUM_STATUS_SELECTED = 1;
+NEBULA.DATUM_STATUS_HIGHLIGHTED = 2;
+
+NEBULA.DATUM_STYLE_SELECTED = 1;
+NEBULA.DATUM_STYLE_HIGHLIGHTED = 2;
+
+NEBULA.Datum = function (parent, id, eventHandler) {
+    this.parent = parent;
+    this.id = id;
+    this.status = 0;
+
+    var template = document.getElementById("datum_template");
+    var clone = document.importNode(template.content, true);
+    
+    this.group = clone.querySelector("#group");
+    this.group.setAttribute("id", "group" + this.id);
+    
+    this.sensor = this.group.querySelector("#sensor");
+    this.sensor.setAttribute("id", "sensor" + this.id);
+    this.sensor.onoutputchange = eventHandler;
+    
+    this.transform = this.group.querySelector("#transform");
+    this.transform.setAttribute("id", "transform" + this.id);
+    this.transform.onclick = eventHandler;
+    
+    this.type_switch = this.group.querySelector("#type_switch");
+    this.type_switch.setAttribute("id", "type_switch" + this.id);
+    type = Math.floor(Math.random() * 2);
+    this.type_switch.setAttribute("whichChoice", type);
+    
+    this.style_switches = this.group.querySelectorAll(".style_switch");
+    
+    this.image = this.group.querySelector("#image");
+    icon = Math.floor(Math.random() * NEBULA.Icons.length);
+    this.image.setAttribute("url", "images/" + NEBULA.Icons[icon]);
+    
+    this.labels = this.group.querySelectorAll(".datum_label");
+    for (var i=0; i < this.labels.length; i++)
+        this.labels[i].setAttribute("string", id);
+    
+    this.interpolator = this.group.querySelector("#pi");
+    this.interpolator.setAttribute("id", "pi" + this.id);
+
+    var timerRoute = this.group.querySelector("#timer_route");
+    timerRoute.setAttribute("id", "timer_route" + this.id);
+    timerRoute.setAttribute("fromNode", "timer");
+    timerRoute.setAttribute("toNode", "pi" + this.id);
+
+    var piRoute = this.group.querySelector("#pi_route");
+    piRoute.setAttribute("id", "pi_route" + this.id);
+    piRoute.setAttribute("fromNode", "pi" + this.id);
+    piRoute.setAttribute("toNode", "transform" + this.id);
+
+    this.insert();
+};
+
+NEBULA.processSensor = function (event) {
+    if (event.type === "outputchange" && event.fieldName === "translation_changed") {
+        target = event.target;
+        id = target.getAttribute("id").substring(6);
+        transform = document.getElementById("transform" + id);
+        transform.setAttribute("translation", event.value);
+    }
+    else if (event.type === "click") {
+        console.log(event.target);
+    }
+};
+
+NEBULA.Datum.prototype.getId = function() {
+    return this.id;
+};
+
+NEBULA.Datum.prototype.getPosition = function() {
+    return this.transform.getAttribute("translation");
+};
+
+NEBULA.Datum.prototype.setPosition = function (position) {
+    this.sensor.setAttribute("offset", position);
+    this.transform.setAttribute("translation", position);
+};
+
+NEBULA.Datum.prototype.getInterpolatedPosition = function() {
+    return this.interpolator.getAttribute("value_changed");
+};
+
+NEBULA.Datum.prototype.setInterpolatorPositions = function(positions) {
+    this.interpolator.setAttribute("keyValue", positions);
+};
+
+NEBULA.Datum.prototype.insert = function() {
+    this.parent.appendChild(this.group);
+};
+
+NEBULA.Datum.prototype.remove = function() {
+    this.group.parentNode.removeChild(this.group);
+};
+
+NEBULA.Datum.prototype.toggleSelect = function() {
+    this.status ^= NEBULA.DATUM_STATUS_SELECTED;
+    this.updateStyle();
+};
+
+NEBULA.Datum.prototype.select = function() {
+    this.status &= NEBULA.DATUM_STATUS_SELECTED;
+    this.updateStyle();
+};
+
+NEBULA.Datum.prototype.deselect = function() {
+    this.status &= ~NEBULA.DATUM_STATUS_SELECTED;
+    this.updateStyle();
+};
+
+NEBULA.Datum.prototype.toggleHighlight = function() {
+    this.status ^= NEBULA.DATUM_STATUS_HIGHLIGHTED;
+    this.updateStyle();
+}
+
+NEBULA.Datum.prototype.highlight = function() {
+    this.status &= NEBULA.DATUM_STATUS_HIGHLIGHTED;
+    this.updateStyle();
+};
+
+NEBULA.Datum.prototype.unhighlight = function() {
+    this.status &= ~NEBULA.DATUM_STATUS_HIGHLIGHTED;
+    this.updateStyle();
+};
+
+NEBULA.Datum.prototype.updateStyle = function() {
+    var style = 0;
+    if (this.status & NEBULA.DATUM_STATUS_SELECTED) {
+        style = NEBULA.DATUM_STYLE_SELECTED;
+    }
+    else if (this.status & NEBULA.DATUM_STATUS_HIGHLIGHTED) {
+        style = NEBULA.DATUM_STYLE_HIGHLIGHTED;
+    }
+    else {
+        style = 0;
+    }
+    
+    for (var i=0; i < this.style_switches.length; i++) {
+        this.style_switches[i].setAttribute("whichChoice", style);
+    }
+};
+
+NEBULA.DatumSet = function() {
+    this.map = new Map();
+};
+
+NEBULA.DatumSet.prototype.add = function(datum) {
+    if (this.map.has(datum.getId()))
+        console.log("Adding an existing ID to datum set");
+    this.map.set(datum.getId(), datum);
+};
+
+NEBULA.DatumSet.prototype.get = function(id) {
+    return this.map.get(id);
+};
+
+NEBULA.DatumSet.prototype.has = function(id) {
+    return this.map.has(id);
+};
+
+NEBULA.DatumSet.prototype.remove = function(id) {
+    return this.map.remove(id);
+};
+
+NEBULA.DatumSet.prototype.keys = function() {
+    return this.map.keys();
+};
+
+/*
+ * Iterates up the target's parents until a group node is found. The ID of the
+ * group node is then extracted and searched for in the list of nodes.
+ */
+NEBULA.DatumSet.prototype.find = function(target) {
+    while (target.nodeName !== "GROUP") {
+        target = target.parentElement;
+        if (target === null)
+            return null;
+    }
+    
+    id = target.getAttribute("id").substring(5);
+    if (!this.map.has(id)) {
+        console.log("Object not found in datum set");
+        return null;
+    }
+    
+    return this.map.get(id);
+};
