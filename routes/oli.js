@@ -23,7 +23,14 @@ router.post('/init', function(req, res, next) {
 
 router.post('/new', function(req, res, next) {
 	console.log(req.body);
-	res.sendStatus(200);
+	var id = Math.floor(Math.random() * 100);
+	var x = Math.random() * 100 - 50;
+	var y = Math.random() * 100 - 50;
+	var pos = x + " " + y + " 0";
+	var data = {points: []};
+	data.points.push({id: id.toString(), pos: pos});
+	
+	res.json(data);
 });
 
 router.post('/mds', function(req, res, next) {

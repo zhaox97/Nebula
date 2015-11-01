@@ -36,18 +36,36 @@ NEBULA.Datum = function (parent, id, eventHandler) {
     
     this.type_switch = this.group.querySelector("#type_switch");
     this.type_switch.setAttribute("id", "type_switch" + this.id);
-    type = Math.floor(Math.random() * 2);
-    this.type_switch.setAttribute("whichChoice", type);
+    var type = Math.floor(Math.random() * 2);
+    this.type_switch.setAttribute("whichChoice", 1);
     
     this.style_switches = this.group.querySelectorAll(".style_switch");
     
-    this.image = this.group.querySelector("#image");
-    icon = Math.floor(Math.random() * NEBULA.Icons.length);
-    this.image.setAttribute("url", "images/" + NEBULA.Icons[icon]);
+    this.imageScale = this.group.querySelector(".image_scale");
+    this.imageTex = this.group.querySelector("#image");
+    var icon = Math.floor(Math.random() * NEBULA.Images.length);
     
-    this.labels = this.group.querySelectorAll(".datum_label");
-    for (var i=0; i < this.labels.length; i++)
-        this.labels[i].setAttribute("string", id);
+    // Load the image and get it's size to scale to the appropriate aspect
+    // ratio
+    this.image = new Image();
+    this.image.onload = $.proxy(function() {
+    	var aspect = this.image.width / this.image.height;
+    	console.log(aspect);
+    	
+    	if (aspect > 1) {
+    		this.imageScale.setAttribute("scale", aspect + " 1 1");
+    	}
+    	else {
+    		this.imageScale.setAttribute("scale", "1 " + (1 / aspect) + " 1");
+    	}
+    	this.imageTex.setAttribute("url", this.image.src);
+    }, this);
+    this.image.src = "images/" + NEBULA.Images[icon];
+    
+    //this.labels = this.group.querySelectorAll(".datum_label");
+    //for (var i=0; i < this.labels.length; i++) {
+    // 	this.labels[i].setAttribute("string", id);
+    //}
     
     this.interpolator = this.group.querySelector("#pi");
     this.interpolator.setAttribute("id", "pi" + this.id);
@@ -67,9 +85,9 @@ NEBULA.Datum = function (parent, id, eventHandler) {
 
 NEBULA.processSensor = function (event) {
     if (event.type === "outputchange" && event.fieldName === "translation_changed") {
-        target = event.target;
-        id = target.getAttribute("id").substring(6);
-        transform = document.getElementById("transform" + id);
+        var target = event.target;
+        var id = target.getAttribute("id").substring(6);
+        var transform = document.getElementById("transform" + id);
         transform.setAttribute("translation", event.value);
     }
     else if (event.type === "click") {
@@ -124,7 +142,7 @@ NEBULA.Datum.prototype.deselect = function() {
 NEBULA.Datum.prototype.toggleHighlight = function() {
     this.status ^= NEBULA.DATUM_STATUS_HIGHLIGHTED;
     this.updateStyle();
-}
+};
 
 NEBULA.Datum.prototype.highlight = function() {
     this.status &= NEBULA.DATUM_STATUS_HIGHLIGHTED;
