@@ -2,7 +2,7 @@
     <head> 
         <title>My first X3DOM page</title> 	
         <script src='javascripts/jquery-1.11.3.js'></script>
-        <script src='javascripts/x3dom-full.js'></script>
+        <script src='javascripts/x3dom.js'></script>
         <script src='javascripts/nebula.js'></script>
         <link rel='stylesheet' type='text/css' href='stylesheets/x3dom.css'></link> 
         <style>
@@ -111,18 +111,18 @@
                                     </shape>
                                 </Switch>
                             </transform>
-                            <transform>
+                            <transform class="image_scale" scale="1 1 1">
                                 <shape>
                                     <appearance>
                                         <material DEF='Red' diffuseColor='1 0 0'></material>
                                         <imageTexture id="image"></imageTexture>
                                     </appearance>
-                                    <box size='5 5 5'></box>
+                                    <box size='30 30 1'></box>
                                 </shape>
                             </transform>
                         </Switch>
                     </Transform>
-                    <billboard axisOfRotation="0 0 0">
+                    <!-- <billboard axisOfRotation="0 0 0">
                         <transform scale="10 10 1" translation='0 -10.4 0.64087'>
                             <Switch class="style_switch" whichChoice="0">
                                 <shape>
@@ -143,7 +143,7 @@
                                 </shape>
                             </Switch>
                         </transform>
-                    </billboard>
+                    </billboard> -->
                 </Transform>
                 <PositionInterpolator id="pi" key="0 1"></PositionInterpolator>
                 <Route id="timer_route" fromField="fraction_changed" toField="set_fraction"></Route>
@@ -152,8 +152,8 @@
         </template>
 
         <scene id="scene">
-            <!--<navigationInfo type="None"></navigationInfo>-->
-            <orthoViewpoint fieldOfView='-50 -50 50 50'></orthoviewpoint>
+            <navigationInfo type="None"></navigationInfo>
+            <orthoViewpoint fieldOfView='-60 -60 60 60'></orthoviewpoint>
             <transform id="root" translation="0 0 0">
 
             </transform> 
@@ -259,10 +259,10 @@
                     console.log(interfaceUpdate);
 
                     var animate = false;
-                    for (var i = 0; i < interfaceUpdate.points.entry.length; i++) {
-                        point = interfaceUpdate.points.entry[i];
-                        id = point.key;
-                        pos = point.value;
+                    for (var i = 0; i < interfaceUpdate.points.length; i++) {
+                        point = interfaceUpdate.points[i];
+                        id = point.id;
+                        pos = point.pos;
                         if (points.has(id)) {
                             curPos = points.get(id).getPosition();
                             points.get(id).setInterpolatorPositions(curPos + " " + pos);
