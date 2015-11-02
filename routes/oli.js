@@ -3,22 +3,20 @@ var router = express.Router();
 var path = require('path');
 var spawn = require('child_process').spawn;
 
-
 router.post('/init', function(req, res, next) {
-	//var db = req.db;
-	//var collection = db.get('jobs');
-	//collection.insert({}, function(err, doc) {
-	//	if (err) {
-	//		console.log(err);
-	//		res.sendStatus(500);
-	//	}
-	//	if (doc) {
-	//		console.log(doc);
-	//		var data = {jobId: doc._id};
-	//		res.json(data);
-	//	}
-	//});
-	res.sendStatus(200);
+	var db = req.db;
+	var collection = db.get('jobs');
+	collection.insert({}, function(err, doc) {
+		if (err) {
+			console.log(err);
+			res.sendStatus(500);
+		}
+		if (doc) {
+			console.log(doc);
+			var data = {jobId: doc._id};
+			res.json(data);
+		}
+	});
 });
 
 router.post('/new', function(req, res, next) {

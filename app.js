@@ -9,9 +9,9 @@ var routes = require('./routes/index');
 var data = require('./routes/data');
 var oli = require('./routes/oli');
 
-//var mongo = require('mongodb');
-//var monk = require('monk');
-//var db = monk('localhost:27017/nodetest');
+var mongo = require('mongodb');
+var monk = require('monk');
+var db = monk('localhost:27017/nodetest');
 
 var app = express();
 
@@ -30,10 +30,10 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 // Make our db accessible to our router
-//app.use(function(req,res,next){
-//    req.db = db;
-//    next();
-//});
+app.use(function(req,res,next){
+    req.db = db;
+    next();
+});
 
 app.use('/', routes);
 app.use('/oli', oli);
