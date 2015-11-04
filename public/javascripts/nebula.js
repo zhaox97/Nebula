@@ -15,7 +15,7 @@ NEBULA.DATUM_STATUS_HIGHLIGHTED = 2;
 NEBULA.DATUM_STYLE_SELECTED = 1;
 NEBULA.DATUM_STYLE_HIGHLIGHTED = 2;
 
-NEBULA.Datum = function (parent, id, eventHandler) {
+NEBULA.Datum = function (parent, id, label, eventHandler) {
     this.parent = parent;
     this.id = id;
     this.status = 0;
@@ -37,7 +37,7 @@ NEBULA.Datum = function (parent, id, eventHandler) {
     this.type_switch = this.group.querySelector("#type_switch");
     this.type_switch.setAttribute("id", "type_switch" + this.id);
     var type = Math.floor(Math.random() * 2);
-    this.type_switch.setAttribute("whichChoice", 1);
+    this.type_switch.setAttribute("whichChoice", 0);
     
     this.style_switches = this.group.querySelectorAll(".style_switch");
     
@@ -62,10 +62,10 @@ NEBULA.Datum = function (parent, id, eventHandler) {
     }, this);
     this.image.src = "images/" + NEBULA.Images[icon];
     
-    //this.labels = this.group.querySelectorAll(".datum_label");
-    //for (var i=0; i < this.labels.length; i++) {
-    // 	this.labels[i].setAttribute("string", id);
-    //}
+    this.labels = this.group.querySelectorAll(".datum_label");
+    for (var i=0; i < this.labels.length; i++) {
+     	this.labels[i].setAttribute("string", label);
+    }
     
     this.interpolator = this.group.querySelector("#pi");
     this.interpolator.setAttribute("id", "pi" + this.id);

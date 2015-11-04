@@ -12,6 +12,7 @@ var oli = require('./routes/oli');
 var mongo = require('mongodb');
 var monk = require('monk');
 var db = monk('localhost:27017/nodetest');
+var datasets = monk('localhost:27017/datasets');
 
 var app = express();
 
@@ -32,6 +33,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 // Make our db accessible to our router
 app.use(function(req,res,next){
     req.db = db;
+    req.datasets = datasets;
     next();
 });
 

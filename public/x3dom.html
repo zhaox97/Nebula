@@ -89,7 +89,7 @@
                     <Transform>
                         <PlaneSensor id="sensor" autoOffset="true"></PlaneSensor>
                         <Switch id="type_switch" whichChoice="0">
-                            <transform>
+                            <transform scale="1.5 1.5 1">
                                 <Switch class="style_switch" whichChoice="0">
                                     <shape>
                                         <appearance>
@@ -122,8 +122,8 @@
                             </transform>
                         </Switch>
                     </Transform>
-                    <!-- <billboard axisOfRotation="0 0 0">
-                        <transform scale="10 10 1" translation='0 -10.4 0.64087'>
+                    <billboard axisOfRotation="0 0 0">
+                        <transform scale="4 4 1" translation='0 -6 0.64087'>
                             <Switch class="style_switch" whichChoice="0">
                                 <shape>
                                     <appearance>
@@ -143,7 +143,7 @@
                                 </shape>
                             </Switch>
                         </transform>
-                    </billboard> -->
+                    </billboard>
                 </Transform>
                 <PositionInterpolator id="pi" key="0 1"></PositionInterpolator>
                 <Route id="timer_route" fromField="fraction_changed" toField="set_fraction"></Route>
@@ -166,13 +166,20 @@
                 var nextId = 0;
                 var points = new NEBULA.DatumSet();
                 var jobId;
+                var width, height;
                 
                 $(function() {
-                   $.post("oli/init", function(data) {
+                    width = 60;
+                    height = 60;
+                
+                	$.post("oli/init", function(data) {
                        console.log(data);
                        jobId = data.jobId;
-                       console.log(jobId);
-                   }) 
+                       $.post("oli/mds/" + data.jobId, function(data) {
+                    	   console.log(data); 
+                       });
+                   });
+                   
                 });
                 
                 function viewChanged(event)
@@ -183,7 +190,7 @@
                 function handleTimer(event)
                 {
                     if (event.fieldName === "isActive" && event.value === false) {
-                        for (var id of points.keys()) {
+                    	for (var id of points.keys()) {
                             pos = points.get(id).getInterpolatedPosition();
                             points.get(id).setPosition(pos);
                         }
@@ -239,15 +246,10 @@
                         return;
                     }
 
-                    var p = [];
-                    for (var key of points.keys()) {
-                        p.push(key);
-                    }
-
                     $.ajax({
                         type: "POST",
-                        url: "api/oli/actions/randomize",
-                        data: JSON.stringify({jobId: jobId, type: "randomize"}),
+                        url: "/oli/randomize",
+                        data: JSON.stringify({jobId: jobId}),
                         contentType: "application/json",
                         success: function(data) {
                             update(data);
@@ -262,17 +264,21 @@
                     for (var i = 0; i < interfaceUpdate.points.length; i++) {
                         point = interfaceUpdate.points[i];
                         id = point.id;
+                        label = point.label;
                         pos = point.pos;
+                        pos.x = pos.x * width;
+                        pos.y = pos.y * height;
                         if (points.has(id)) {
                             curPos = points.get(id).getPosition();
-                            points.get(id).setInterpolatorPositions(curPos + " " + pos);
+                            newPos = pos.x + " " + pos.y + " " + pos.z;
+                            points.get(id).setInterpolatorPositions(curPos + " " + newPos);
                             points.get(id).deselect();
                             animate = true;
                         }
                         else {
                             root = document.getElementById("root");
-                            var datum = new NEBULA.Datum(root, id, handleEvent);
-                            datum.setPosition(pos);
+                            var datum = new NEBULA.Datum(root, id, label, handleEvent);
+                            datum.setPosition(pos.x + " " + pos.y + " " + pos.z);
                             points.add(datum);
                         }
                     }
