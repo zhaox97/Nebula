@@ -112,15 +112,26 @@ router.post('/mds', function(req, res, next) {
 
 router.post('/mds/:jobId', function(req, res, next) {
 	var db = req.db;
+	var datasets = req.datasets;
 	var collection = db.get('jobs');
+	var master = datasets.get('master');
 	console.log(req.params.jobId);
-	collection.findById(req.params.jobId, function(err, doc) {
-		var mdsRequest = {};
-		
-		
-		for (var i=0; i < doc.points.length; i++) {
+	collection.findById(req.params.jobId, function(err, job) {
+		var dataset = job.dataset;
+		master.find({name: dataset}, function(err, docs) {
+			var mdsRequest = {};
+			console.log(docs);
 			
-		}
+			mdsRequest.highDimensions = docs[0].dimensions.length;
+			mdsRequest.points = [];
+			
+			for (var i=0; i < job.points.length; i++) {
+				var highD = [];
+				
+			}
+		});
+		
+		
 	});
 });
 
