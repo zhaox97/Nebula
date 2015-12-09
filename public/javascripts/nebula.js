@@ -60,7 +60,6 @@ NEBULA.Datum = function (parent, id, label, eventHandler) {
     	}
     	this.imageTex.setAttribute("url", this.image.src);
     }, this);
-    this.image.src = "images/" + NEBULA.Images[icon];
     
     this.labels = this.group.querySelectorAll(".datum_label");
     for (var i=0; i < this.labels.length; i++) {

@@ -78,8 +78,7 @@
 
     <x3d id="boxes" keysEnabled="True">
         <ul id="tools">
-            <li><button onclick="addNode();">Add Node</button></li>
-            <li><button onclick="removeNode();">Remove Node</button></li>
+            <li><button onclick="mds();">MDS</button></li>
             <li><button onclick="randomize();">Randomize</button></li>
         </ul>
 
@@ -175,8 +174,9 @@
                 	$.post("oli/init", function(data) {
                        console.log(data);
                        jobId = data.jobId;
+                       update(data);
                        $.post("oli/mds/" + data.jobId, function(data) {
-                    	   console.log(data); 
+                       	   update(data); 
                        });
                    });
                    
@@ -209,35 +209,12 @@
                     }
                 }
 
-                function addNode()
+                function mds()
                 {
-                    $.ajax({
-                        type: "POST",
-                        url: "oli/new",
-                        data: JSON.stringify({jobId: jobId}),
-                        contentType: "application/json",
-                        success: function(data) {
-                            update(data);
-                        }
-                    });
-                }
-
-                function removeNode()
-                {
-                //if (points.length > 0) {
-                //    points.shift().remove();
-                //}
-                    data = {points: {"1": [1, 2, 3], "2": [2, 3, 4]},
-                            weights: [1.5, 3.4, 2.2]};
-                    $.ajax({
-                        type: "POST",
-                        url: "api/oli/actions/mds",
-                        data: JSON.stringify(data),
-                        contentType: "application/json",
-                        success: function(data) {
-                            console.log(data);
-                        }
-                    })
+                	$.post("oli/mds/" + jobId, function(data) {
+                		console.log(data);
+                		update(data);
+                	});
                 }
 
                 function randomize()
@@ -264,7 +241,6 @@
                     for (var i = 0; i < interfaceUpdate.points.length; i++) {
                         point = interfaceUpdate.points[i];
                         id = point.id;
-                        label = point.label;
                         pos = point.pos;
                         pos.x = pos.x * width;
                         pos.y = pos.y * height;
@@ -276,6 +252,7 @@
                             animate = true;
                         }
                         else {
+                        	label = point.label;
                             root = document.getElementById("root");
                             var datum = new NEBULA.Datum(root, id, label, handleEvent);
                             datum.setPosition(pos.x + " " + pos.y + " " + pos.z);

@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 var path = require('path');
 var spawn = require('child_process').spawn;
+var async = require('async');
 
 router.post('/init', function(req, res, next) {
 	var db = req.db;
@@ -78,7 +79,7 @@ router.post('/randomize', function(req, res, next) {
 				throw err;
 			}
 		});
-		res.json(doc);
+		res.json({jobId: req.body.jobId, points: doc.points});
 	});
 });
 
@@ -99,8 +100,18 @@ var mds = function(obj, res, next) {
 	});
 	
 	mds.on('close', function(code) {
-		console.log("MDS child processed closed");
-		res.json(JSON.parse(body));
+		console.log("MDS child process closed");
+		var response = {};
+		response.points = [];
+		var ret = JSON.parse(body);
+		for (var key in ret) {
+			var obj = {};
+			obj.id = key;
+			obj.pos = {x: ret[key][0], y: ret[key][1], z: 0};
+			response.points.push(obj);
+		
+		}
+		res.json(response);
 	});
 	
 	mds.stdin.write(JSON.stringify(obj));
@@ -115,23 +126,32 @@ router.post('/mds/:jobId', function(req, res, next) {
 	var datasets = req.datasets;
 	var collection = db.get('jobs');
 	var master = datasets.get('master');
-	console.log(req.params.jobId);
 	collection.findById(req.params.jobId, function(err, job) {
-		var dataset = job.dataset;
-		master.find({name: dataset}, function(err, docs) {
-			var mdsRequest = {};
-			console.log(docs);
-			
-			mdsRequest.highDimensions = docs[0].dimensions.length;
-			mdsRequest.points = [];
-			
-			for (var i=0; i < job.points.length; i++) {
-				var highD = [];
-				
+		if (err) {
+			console.log(err);
+			res.sendStatus(500);
+		}
+		var dataset = datasets.get(job.dataset);
+		var mdsRequest = {};
+		mdsRequest.points = {};
+		
+		async.map(job.points, function(item, callback) {
+			dataset.findById(item.id, function(err, p) {
+				callback(err, p);
+			});
+		}, function(err, results) {
+			if (err) {
+				console.log(err);
+				res.sendStatus(500);
 			}
-		});
-		
-		
+			mdsRequest.highDimensions = results[0].dimensions.length;
+			for (var i=0; i < results.length; i++) {
+				var p = {};
+				p.highD = results[i].dimensions;
+				mdsRequest.points[results[i]._id] = p;
+			}
+			mds(mdsRequest, res, next);
+		});	
 	});
 });
 
