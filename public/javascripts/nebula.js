@@ -128,13 +128,17 @@ NEBULA.Datum.prototype.toggleSelect = function() {
     this.updateStyle();
 };
 
-NEBULA.Datum.prototype.select = function() {
-    this.status &= NEBULA.DATUM_STATUS_SELECTED;
-    this.updateStyle();
+NEBULA.Datum.prototype.selected = function() {
+	return (this.status & NEBULA.DATUM_STATUS_SELECTED) !== 0;
 };
 
-NEBULA.Datum.prototype.deselect = function() {
-    this.status &= ~NEBULA.DATUM_STATUS_SELECTED;
+NEBULA.Datum.prototype.select = function(bool) {
+	if (bool) {
+		this.status |= NEBULA.DATUM_STATUS_SELECTED;
+	}
+	else {
+		this.status &= ~NEBULA.DATUM_STATUS_SELECTED;
+	}
     this.updateStyle();
 };
 
@@ -143,13 +147,17 @@ NEBULA.Datum.prototype.toggleHighlight = function() {
     this.updateStyle();
 };
 
-NEBULA.Datum.prototype.highlight = function() {
-    this.status &= NEBULA.DATUM_STATUS_HIGHLIGHTED;
-    this.updateStyle();
+NEBULA.Datum.prototype.highlighted = function() {
+	return (this.status & NEBULA.DATUM_STATUS_HIGHLIGHTED) !== 0;
 };
 
-NEBULA.Datum.prototype.unhighlight = function() {
-    this.status &= ~NEBULA.DATUM_STATUS_HIGHLIGHTED;
+NEBULA.Datum.prototype.highlight = function(bool) {
+    if (bool) {
+    	this.status |= NEBULA.DATUM_STATUS_HIGHLIGHTED;
+    }
+    else {
+    	this.status &= ~NEBULA.DATUM_STATUS_HIGHLIGHTED;
+    }
     this.updateStyle();
 };
 
@@ -160,9 +168,6 @@ NEBULA.Datum.prototype.updateStyle = function() {
     }
     else if (this.status & NEBULA.DATUM_STATUS_HIGHLIGHTED) {
         style = NEBULA.DATUM_STYLE_HIGHLIGHTED;
-    }
-    else {
-        style = 0;
     }
     
     for (var i=0; i < this.style_switches.length; i++) {
@@ -175,8 +180,9 @@ NEBULA.DatumSet = function() {
 };
 
 NEBULA.DatumSet.prototype.add = function(datum) {
-    if (this.map.has(datum.getId()))
+    if (this.map.has(datum.getId())) {
         console.log("Adding an existing ID to datum set");
+    }
     this.map.set(datum.getId(), datum);
 };
 
@@ -203,11 +209,12 @@ NEBULA.DatumSet.prototype.keys = function() {
 NEBULA.DatumSet.prototype.find = function(target) {
     while (target.nodeName !== "GROUP") {
         target = target.parentElement;
-        if (target === null)
+        if (target === null) {
             return null;
+        }
     }
     
-    id = target.getAttribute("id").substring(5);
+    var id = target.getAttribute("id").substring(5);
     if (!this.map.has(id)) {
         console.log("Object not found in datum set");
         return null;

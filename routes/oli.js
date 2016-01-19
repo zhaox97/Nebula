@@ -90,7 +90,6 @@ var mds = function(obj, res, next) {
 	mds.stdout.setEncoding('utf8');
 		
 	mds.stdout.on('data', function(data) {
-		console.log(data.toString());
 		body += data;
 	});
 	
@@ -100,7 +99,6 @@ var mds = function(obj, res, next) {
 	});
 	
 	mds.on('close', function(code) {
-		console.log("MDS child process closed");
 		var response = {};
 		response.points = [];
 		var ret = JSON.parse(body);

@@ -4,6 +4,7 @@
         <script src='javascripts/jquery-1.11.3.js'></script>
         <script src='javascripts/x3dom.js'></script>
         <script src='javascripts/nebula.js'></script>
+        <script src="/socket.io/socket.io.js"></script>
         <link rel='stylesheet' type='text/css' href='stylesheets/x3dom.css'></link> 
         <style>
             .selected
@@ -74,7 +75,7 @@
             }
         </style>
     </head> 
-    <body onkeydown="console.log(event);">
+    <body onkeydown="//console.log(event);">
 
     <x3d id="boxes" keysEnabled="True">
         <ul id="tools">
@@ -166,22 +167,46 @@
                 var points = new NEBULA.DatumSet();
                 var jobId;
                 var width, height;
+                var socket;
                 
                 $(function() {
                     width = 60;
                     height = 60;
                 
-                	$.post("oli/init", function(data) {
-                       console.log(data);
-                       jobId = data.jobId;
-                       update(data);
-                       $.post("oli/mds/" + data.jobId, function(data) {
-                       	   update(data); 
-                       });
-                   });
+                	//$.post("oli/init", function(data) {
+                    //   console.log(data);
+                    //   jobId = data.jobId;
+                    //   update(data);
+                    //   $.post("oli/mds/" + data.jobId, function(data) {
+                    //   	   update(data); 
+                    //   });
+                  socket = io.connect();
+			      socket.on('action', function(data) {
+			    	  if (data.type == "move") {
+			        	  position = (data.pos.x * width) + " " + (data.pos.y * height) + " 0";
+			        	  points.get(data.pointId).setPosition(position);
+			          }
+			          else if (data.type == "select") {
+			        	  points.get(data.pointId).select(data.state);
+			          }
+			      });
+			      
+			      socket.on('update', function(data) {
+			    	  update(data);
+			      });
+			      
+			      socket.emit('join', 'default', socket.id);
                    
                 });
                 
+                function normalizePos(pos) {
+                	var newPos = {};
+                	newPos.x = pos.x / width;
+                	newPos.y = pos.y / height;
+                	newPos.z = pos.z;
+                	return newPos;
+                }
+                	
                 function viewChanged(event)
                 {
                     console.log(event);
@@ -200,21 +225,25 @@
                 function handleEvent(event)
                 {
                     if (event.type === "outputchange" && event.fieldName === "translation_changed") {
-                        datum = points.find(event.target);
-                        datum.transform.setAttribute("translation", event.value);
+                    	datum = points.find(event.target);
+                    	pos = event.value.x + " " + event.value.y + " 0";
+                        datum.transform.setAttribute("translation", pos);
+                        socket.emit("action", {type: "move", pointId: datum.getId(), pos: normalizePos(event.value)})
                     }
                     else if (event.type === "click") {
                         datum = points.find(event.target);
                         datum.toggleSelect();
+                        socket.emit("action", {pointId: datum.getId(), type: "select", state: datum.selected()});
                     }
                 }
 
                 function mds()
                 {
-                	$.post("oli/mds/" + jobId, function(data) {
-                		console.log(data);
-                		update(data);
-                	});
+                	//$.post("oli/mds/" + jobId, function(data) {
+                	//	console.log(data);
+                	//	update(data);
+                	//});
+                	socket.emit('update', {type: "mds"});
                 }
 
                 function randomize()
@@ -244,18 +273,23 @@
                         pos = point.pos;
                         pos.x = pos.x * width;
                         pos.y = pos.y * height;
+                        var selected = false;
+                        if (point.selected) {
+                        	selected = point.selected;
+                        }
                         if (points.has(id)) {
                             curPos = points.get(id).getPosition();
                             newPos = pos.x + " " + pos.y + " " + pos.z;
                             points.get(id).setInterpolatorPositions(curPos + " " + newPos);
-                            points.get(id).deselect();
                             animate = true;
+                            points.get(id).select(selected);
                         }
                         else {
                         	label = point.label;
                             root = document.getElementById("root");
                             var datum = new NEBULA.Datum(root, id, label, handleEvent);
                             datum.setPosition(pos.x + " " + pos.y + " " + pos.z);
+                            datum.select(selected);
                             points.add(datum);
                         }
                     }

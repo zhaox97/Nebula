@@ -15,8 +15,13 @@ var db = monk('localhost:27017/nodetest');
 var datasets = monk('localhost:27017/datasets');
 
 var app = express();
+var debug = require('debug')('Nebula:server');
+var http = require('http').Server(app);
+var io = require('socket.io')(http);
+var nebula = require('./nebula')(io);
 
-app.set('port', process.env.PORT || 8081);
+var port = process.env.PORT || 8081;
+app.set('port', port);
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -31,7 +36,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 // Make our db accessible to our router
-app.use(function(req,res,next){
+app.use(function(req, res, next){
     req.db = db;
     req.datasets = datasets;
     next();
@@ -72,5 +77,49 @@ app.use(function(err, req, res, next) {
   });
 });
 
+/**
+ * Event listener for HTTP server "error" event.
+ */
 
-module.exports = app;
+function onError(error) {
+  if (error.syscall !== 'listen') {
+    throw error;
+  }
+
+  var bind = typeof port === 'string'
+    ? 'Pipe ' + port
+    : 'Port ' + port;
+
+  // handle specific listen errors with friendly messages
+  switch (error.code) {
+    case 'EACCES':
+      console.error(bind + ' requires elevated privileges');
+      process.exit(1);
+      break;
+    case 'EADDRINUSE':
+      console.error(bind + ' is already in use');
+      process.exit(1);
+      break;
+    default:
+      throw error;
+  }
+}
+
+/**
+ * Event listener for HTTP server "listening" event.
+ */
+
+function onListening() {
+  var addr = http.address();
+  var bind = typeof addr === 'string'
+    ? 'pipe ' + addr
+    : 'port ' + addr.port;
+  debug('Listening on ' + bind);
+}
+
+/**
+ * Listen on provided port, on all network interfaces.
+ */
+http.listen(port);
+http.on('error', onError);
+http.on('listening', onListening);
