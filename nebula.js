@@ -75,7 +75,9 @@ var initRoom = function(room, callback) {
 			return;
 		}
 		var datasetName = docs[0].name;
+		room.dimensionNames = docs[0].dimensions;
 		var dataCollection = datasets.get(datasetName);
+		var dimensions = 0;
 		dataCollection.find({}, function(err, docs) {
 			if (err) {
 				console.log(err);
@@ -85,6 +87,7 @@ var initRoom = function(room, callback) {
 			for (var i=0; i < docs.length; i++) {
 				var point = {id: docs[i]._id, label: docs[i].label, pos: {x: 0, y: 0, z: 0}};
 				point.highD = docs[i].dimensions.slice();
+				dimensions = point.highD.length;
 				points.push(point);
 			}
 			collection.insert({points: points, dataset: datasetName}, function(err, doc) {
@@ -99,6 +102,7 @@ var initRoom = function(room, callback) {
 					for (var j=0; j < points.length; j++) {
 						room.points.set(String(points[j].id), points[j]);
 					}
+					room.dimensions = dimensions;
 					room.dataset = datasetName;
 					callback(null);
 				}
@@ -128,49 +132,83 @@ var handleAction = function(action, room) {
 
 var handleUpdate = function(data, room, callback) {
 	console.log("Handle update called");
-	var collection = db.get('jobs');
-	var master = datasets.get('master');
-	
-	var dataset = datasets.get(room.dataset);
-	var mdsRequest = {};
-	mdsRequest.points = {};
-	
-	async.map(Array.from(room.points.values()), function(item, callback) {
-		dataset.findById(item.id, function(err, p) {
-			callback(err, p);
-		});
-	}, function(err, results) {
-		if (err) {
-			console.log(err);
-			callback(err);
+
+	var mdsCallback = function(err, response) {
+		if (err) console.log(err);
+		var update = {};
+		update.points = [];
+		for (var key in response) {
+			if (response.hasOwnProperty(key)) {
+				var obj = {};
+				obj.id = key;
+				obj.pos = {x: response[key][0], y: response[key][1], z: 0};
+				update.points.push(obj);
+			}
 		}
-		mdsRequest.highDimensions = results[0].dimensions.length;
-		for (var i=0; i < results.length; i++) {
-			var p = {};
-			p.highD = results[i].dimensions;
-			mdsRequest.points[results[i]._id] = p;
+		
+		for (var j=0; j < update.points.length; j++) {
+			var point = update.points[j];
+			if (room.points.has(point.id)) {
+				room.points.get(point.id).pos = point.pos;
+			}
+			else {
+				console.log("Couldn't find point after MDS");
+			}
 		}
-		mds(mdsRequest, function(err, response) {
+		
+		callback(err, update);
+	};
+	
+	if (data.type === "mds") {
+		mds(room, mdsCallback);
+	}
+	else if (data.type === "invmds") {
+		mds(room, {inverse: true}, function(err, response) {
 			if (err) {
 				console.log(err);
+				return;
 			}
-			for (var j=0; j < response.points.length; j++) {
-				var point = response.points[j];
-				if (room.points.has(point.id)) {
-					room.points.get(point.id).pos = point.pos;
-				}
-				else {
-					console.log("Couldn't find point after MDS");
-				}
-			}
-			
-			callback(err, response);
+			room.weights = response.weights;
+			mds(room, mdsCallback);
 		});
-			
-	});	
+	}
 };
 
-var mds = function(obj, callback) {
+var mds = function(room, options, callback) {
+	if (!callback) {
+		callback = options;
+		options = {};
+	}
+	if (!options.inverse) options.inverse = false;
+	
+	
+	var mdsRequest = {};
+	mdsRequest.points = {};
+	var pointCount = 0;
+
+	mdsRequest.highDimensions = room.dimensions;
+	mdsRequest.lowDimensions = 2;
+	if (options.inverse) mdsRequest.inverse = true;
+	for (var key of room.points.keys()) {
+		var point = room.points.get(key);
+		if (!mdsRequest.inverse || point.selected) {
+			var p = {};
+			p.highD = point.highD;
+			p.lowD = [point.pos.x, point.pos.y];
+			mdsRequest.points[key] = p;
+			pointCount += 1;
+		}
+	}
+	
+	if (mdsRequest.inverse && pointCount <= 2) {
+		callback("Not enough points");
+		return;
+	}
+	
+	if (room.weights) {
+		mdsRequest.weights = room.weights;
+	}
+	
 	var mds = spawn('java', ['-jar', 'java/test.jar']);
 	var body = '';
 	
@@ -186,19 +224,11 @@ var mds = function(obj, callback) {
 	});
 	
 	mds.on('close', function(code) {
-		var response = {};
-		response.points = [];
 		var ret = JSON.parse(body);
-		for (var key in ret) {
-			var obj = {};
-			obj.id = key;
-			obj.pos = {x: ret[key][0], y: ret[key][1], z: 0};
-			response.points.push(obj);
-		}
-		callback(null, response);
+		callback(null, ret);
 	});
 	
-	mds.stdin.write(JSON.stringify(obj));
+	mds.stdin.write(JSON.stringify(mdsRequest));
 };
 
 var sendRoom = function(room) {

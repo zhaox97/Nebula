@@ -166,7 +166,7 @@ router.post('/invmds', function(req, res, next) {
 	
 	mds.stderr.on('data', function(data) {
 		console.log(data.toString());
-		res.sendStatus(500);
+		//res.sendStatus(500);
 	});
 	
 	mds.on('close', function(code) {

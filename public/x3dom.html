@@ -80,7 +80,7 @@
     <x3d id="boxes" keysEnabled="True">
         <ul id="tools">
             <li><button onclick="mds();">MDS</button></li>
-            <li><button onclick="randomize();">Randomize</button></li>
+            <li><button onclick="invmds();">Inverse MDS</button></li>
         </ul>
 
         <template id="datum_template">
@@ -246,21 +246,13 @@
                 	socket.emit('update', {type: "mds"});
                 }
 
-                function randomize()
+                function invmds()
                 {
                     if ($("#timer").prop("isActive")) {
                         return;
                     }
 
-                    $.ajax({
-                        type: "POST",
-                        url: "/oli/randomize",
-                        data: JSON.stringify({jobId: jobId}),
-                        contentType: "application/json",
-                        success: function(data) {
-                            update(data);
-                        }
-                    });
+                    socket.emit('update', {type: "invmds"});
                 }
 
                 function update(interfaceUpdate) {
@@ -282,7 +274,7 @@
                             newPos = pos.x + " " + pos.y + " " + pos.z;
                             points.get(id).setInterpolatorPositions(curPos + " " + newPos);
                             animate = true;
-                            points.get(id).select(selected);
+                            //points.get(id).select(selected);
                         }
                         else {
                         	label = point.label;
