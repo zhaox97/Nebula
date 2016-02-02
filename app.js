@@ -5,25 +5,33 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
+/* REST API routes */
 var routes = require('./routes/index');
 var data = require('./routes/data');
 var oli = require('./routes/oli');
 
+/* Connect to the databases */
 var mongo = require('mongodb');
 var monk = require('monk');
 var db = monk('localhost:27017/nodetest');
 var datasets = monk('localhost:27017/datasets');
 
+/* The HTTP request handler */
 var app = express();
 var debug = require('debug')('Nebula:server');
 var http = require('http').Server(app);
+
+/* The Socket.io WebSocket module */
 var io = require('socket.io')(http);
+
+/* Our custom Nebula module handles the WebSocket synchronization */
 var nebula = require('./nebula')(io);
 
+/* Set the port we want to run on */
 var port = process.env.PORT || 8081;
 app.set('port', port);
 
-// view engine setup
+/* view engine setup, currently not used */
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 
@@ -33,6 +41,8 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
+
+/* Expose everything in public/ through our web server */
 app.use(express.static(path.join(__dirname, 'public')));
 
 // Make our db accessible to our router
@@ -42,6 +52,7 @@ app.use(function(req, res, next){
     next();
 });
 
+/* Initiate the REST API */
 app.use('/', routes);
 app.use('/oli', oli);
 app.use('/data', data);

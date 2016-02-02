@@ -1,20 +1,36 @@
 var spawn = require('child_process').spawn;
 var async = require('async');
 
+/* Load the databases we need */
 var monk = require('monk');
 var db = monk('localhost:27017/nodetest');
 var datasets = monk('localhost:27017/datasets');
 
+/* Export the Nebula class */
 module.exports = Nebula;
 
+/* Nebula class constructor */
 function Nebula(io) {
+	/* This allows you to use "Nebula(obj)" as well as "new Nebula(obj)" */
 	if (!(this instanceof Nebula)) { 
 		return new Nebula(io);
 	}
+	
+	/* The group of rooms currently active, each with a string identifier
+	 * Each room represents an instance of a visualization that can be shared
+	 * among clients.
+	 */
 	this.rooms = {};
 	
+	/* For proper use in callback functions */
 	var self = this;
+	
+	/* Accept new WebSocket clients */
 	io.on('connection', function(socket) {
+		
+		/* When clients disconnect, remove them from the room. If the room is
+		 * now empty, delete it.
+		 */
 		socket.on('disconnect', function() {
 			console.log('Disconnected');
 			if (self.rooms[socket.room] && self.rooms[socket.room].count) {
@@ -25,6 +41,10 @@ function Nebula(io) {
 			}
 		});
 		
+		/* Lets a client join a room. If the room doesn't next exist yet,
+		 * initiate it and send the new room to the client. Otherwise, send
+		 * the client the current state of the room.
+		 */
 		socket.on('join', function(room, user) {
 			console.log('Join called!');
 			socket.room = room;
@@ -48,6 +68,9 @@ function Nebula(io) {
 			}
 		});
 		
+		/* Listens for actions from the clients, tracking them and then
+		 * broadcasting them to all other clients within the room.
+		 */
 		socket.on('action', function(data) {
 			if (socket.room) {
 				handleAction(data, self.rooms[socket.room]);
@@ -55,6 +78,9 @@ function Nebula(io) {
 			}
 		});
 		
+		/* Listens for update requests from the client, executing the update
+		 * and then sending the results to all clients.
+		 */
 		socket.on('update', function(data) {
 			if (socket.room) {
 				handleUpdate(data, self.rooms[socket.room], function(err) {
@@ -67,6 +93,7 @@ function Nebula(io) {
 			}
 		});
 		
+		/* Returns the current set of weights for the client's room */
 		socket.on('weights', function() {
 			if (socket.room) {
 				socket.emit('weights', socket.room.weights);
@@ -75,6 +102,13 @@ function Nebula(io) {
 	});
 }
 
+/* Initializes a room. Currently loads the default dataset stored in the
+ * database. The created room is then stored in the database. This will
+ * need some major overhaul to allow choosing different datasets (or the
+ * whole dataset or however we implement it). Also, the support for storing
+ * current rooms in the database is somewhat limited and doesn't really get
+ * updated.
+ */
 var initRoom = function(room, callback) {
 	var collection = db.get('jobs');
 	var master = datasets.get('master');
@@ -125,6 +159,9 @@ var initRoom = function(room, callback) {
 	});
 };
 
+/* Handles an action received by the client, updating the state of the room
+ * as necessary.
+ */
 var handleAction = function(action, room) {
 	if (action.type === "move") {
 		if (room.points.has(action.pointId)) {
@@ -144,6 +181,9 @@ var handleAction = function(action, room) {
 	}
 };
 
+/* Handles updates received by the client, running the necessary processes
+ * and updating the room as necessary.
+ */
 var handleUpdate = function(data, room, callback) {
 	console.log("Handle update called");
 
@@ -188,6 +228,10 @@ var handleUpdate = function(data, room, callback) {
 	}
 };
 
+/* Runs MDS or Inverse MDS on the points in a room. For inverse MDS,
+ * only the selected points are included in the algorithm. This spawns
+ * a Java process with the accompanying jar file to run the algorithm.
+ */
 var mds = function(room, options, callback) {
 	if (!callback) {
 		callback = options;
@@ -245,6 +289,9 @@ var mds = function(room, options, callback) {
 	mds.stdin.write(JSON.stringify(mdsRequest));
 };
 
+/* Returns a copy of a room with the necessary details to send to the client
+ * on an update.
+ */
 var sendRoom = function(room) {
 	var modRoom = {};
 	if (room.weights) modRoom.weights = room.weights;

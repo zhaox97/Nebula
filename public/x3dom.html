@@ -172,14 +172,7 @@
                 $(function() {
                     width = 60;
                     height = 60;
-                
-                	//$.post("oli/init", function(data) {
-                    //   console.log(data);
-                    //   jobId = data.jobId;
-                    //   update(data);
-                    //   $.post("oli/mds/" + data.jobId, function(data) {
-                    //   	   update(data); 
-                    //   });
+
                   socket = io.connect();
 			      socket.on('action', function(data) {
 			    	  if (data.type == "move") {
@@ -239,10 +232,6 @@
 
                 function mds()
                 {
-                	//$.post("oli/mds/" + jobId, function(data) {
-                	//	console.log(data);
-                	//	update(data);
-                	//});
                 	socket.emit('update', {type: "mds"});
                 }
 
