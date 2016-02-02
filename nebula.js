@@ -54,12 +54,17 @@ function Nebula(io) {
 		});
 		
 		socket.on('update', function(data) {
-			handleUpdate(data, self.rooms[socket.room], function(err, response) {
+			handleUpdate(data, self.rooms[socket.room], function(err) {
 				if (err) {
 					console.log(err);
+					return;
 				}
-				io.to(socket.room).emit('update', response);
+				io.to(socket.room).emit('update', sendRoom(self.rooms[socket.room]));
 			});
+		});
+		
+		socket.on('weights', function() {
+			socket.emit('weights', socket.room.weights);
 		});
 	});
 }
@@ -76,6 +81,11 @@ var initRoom = function(room, callback) {
 		}
 		var datasetName = docs[0].name;
 		room.dimensionNames = docs[0].dimensions;
+		room.dimensions = docs[0].dimensions.length;
+		room.weights = [];
+		for (var i=0; i < room.dimensions; i++) {
+			room.weights[i] = 1.0 / room.dimensions;
+		}
 		var dataCollection = datasets.get(datasetName);
 		var dimensions = 0;
 		dataCollection.find({}, function(err, docs) {
@@ -86,8 +96,7 @@ var initRoom = function(room, callback) {
 			}
 			for (var i=0; i < docs.length; i++) {
 				var point = {id: docs[i]._id, label: docs[i].label, pos: {x: 0, y: 0, z: 0}};
-				point.highD = docs[i].dimensions.slice();
-				dimensions = point.highD.length;
+				point.highD = docs[i].dimensions;
 				points.push(point);
 			}
 			collection.insert({points: points, dataset: datasetName}, function(err, doc) {
@@ -102,7 +111,6 @@ var initRoom = function(room, callback) {
 					for (var j=0; j < points.length; j++) {
 						room.points.set(String(points[j].id), points[j]);
 					}
-					room.dimensions = dimensions;
 					room.dataset = datasetName;
 					callback(null);
 				}
@@ -233,6 +241,7 @@ var mds = function(room, options, callback) {
 
 var sendRoom = function(room) {
 	var modRoom = {};
+	if (room.weights) modRoom.weights = room.weights;
 	modRoom.jobId = room.jobId;
 	modRoom.points = Array.from(room.points.values());
 	return modRoom;

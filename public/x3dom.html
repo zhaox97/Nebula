@@ -285,6 +285,9 @@
                             points.add(datum);
                         }
                     }
+                    if (interfaceUpdate.weights) {
+                    	console.log(interfaceUpdate.weights);
+                    }
                     if (animate) {
                         $("#timer").attr("startTime", Date.now() / 1000);
                     }
