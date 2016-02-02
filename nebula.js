@@ -49,22 +49,28 @@ function Nebula(io) {
 		});
 		
 		socket.on('action', function(data) {
-			handleAction(data, self.rooms[socket.room]);
-			socket.broadcast.to(socket.room).emit('action', data);
+			if (socket.room) {
+				handleAction(data, self.rooms[socket.room]);
+				socket.broadcast.to(socket.room).emit('action', data);
+			}
 		});
 		
 		socket.on('update', function(data) {
-			handleUpdate(data, self.rooms[socket.room], function(err) {
-				if (err) {
-					console.log(err);
-					return;
-				}
-				io.to(socket.room).emit('update', sendRoom(self.rooms[socket.room]));
-			});
+			if (socket.room) {
+				handleUpdate(data, self.rooms[socket.room], function(err) {
+					if (err) {
+						console.log(err);
+						return;
+					}
+					io.to(socket.room).emit('update', sendRoom(self.rooms[socket.room]));
+				});
+			}
 		});
 		
 		socket.on('weights', function() {
-			socket.emit('weights', socket.room.weights);
+			if (socket.room) {
+				socket.emit('weights', socket.room.weights);
+			}
 		});
 	});
 }
