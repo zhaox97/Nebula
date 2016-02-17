@@ -1,5 +1,6 @@
 var spawn = require('child_process').spawn;
 var async = require('async');
+var zerorpc = require("zerorpc");
 
 /* Load the databases we need */
 var monk = require('monk');
@@ -10,11 +11,18 @@ var datasets = monk('localhost:27017/datasets');
 module.exports = Nebula;
 
 /* Nebula class constructor */
-function Nebula(io) {
+function Nebula(io, pipeline) {
 	/* This allows you to use "Nebula(obj)" as well as "new Nebula(obj)" */
 	if (!(this instanceof Nebula)) { 
 		return new Nebula(io);
 	}
+	
+	pipeline = pipeline || "tcp://127.0.0.1:5555";
+	this.pipelineClient = new zerorpc.Client();
+	this.pipelineClient.connect(pipeline);
+	this.pipelineClient.on("error", function(error) {
+		console.error("RPC client error:", error);
+	});
 	
 	/* The group of rooms currently active, each with a string identifier
 	 * Each room represents an instance of a visualization that can be shared
@@ -54,12 +62,8 @@ function Nebula(io) {
 			if (!self.rooms[room]) {
 				self.rooms[room] = {};
 				self.rooms[room].count = 1;
-				initRoom(self.rooms[room], function(err) {
-					if (err) {
-						console.log(err);
-					}
-					socket.emit('update', sendRoom(self.rooms[room]));
-				});
+				self.rooms[room].points = new Map();
+				socket.emit('update', sendRoom(self.rooms[room]));
 			}
 			else {
 				self.rooms[room].count += 1;
@@ -73,7 +77,7 @@ function Nebula(io) {
 		 */
 		socket.on('action', function(data) {
 			if (socket.room) {
-				handleAction(data, self.rooms[socket.room]);
+				self.handleAction(data, self.rooms[socket.room]);
 				socket.broadcast.to(socket.room).emit('action', data);
 			}
 		});
@@ -83,7 +87,7 @@ function Nebula(io) {
 		 */
 		socket.on('update', function(data) {
 			if (socket.room) {
-				handleUpdate(data, self.rooms[socket.room], function(err) {
+				self.handleUpdate(data, self.rooms[socket.room], function(err) {
 					if (err) {
 						console.log(err);
 						return;
@@ -102,67 +106,10 @@ function Nebula(io) {
 	});
 }
 
-/* Initializes a room. Currently loads the default dataset stored in the
- * database. The created room is then stored in the database. This will
- * need some major overhaul to allow choosing different datasets (or the
- * whole dataset or however we implement it). Also, the support for storing
- * current rooms in the database is somewhat limited and doesn't really get
- * updated.
- */
-var initRoom = function(room, callback) {
-	var collection = db.get('jobs');
-	var master = datasets.get('master');
-	var points = [];
-	master.find({}, function(err, docs) {
-		if (err) {
-			console.log(err);
-			callback(err);
-			return;
-		}
-		var datasetName = docs[0].name;
-		room.dimensionNames = docs[0].dimensions;
-		room.dimensions = docs[0].dimensions.length;
-		room.weights = [];
-		for (var i=0; i < room.dimensions; i++) {
-			room.weights[i] = 1.0 / room.dimensions;
-		}
-		var dataCollection = datasets.get(datasetName);
-		var dimensions = 0;
-		dataCollection.find({}, function(err, docs) {
-			if (err) {
-				console.log(err);
-				callback(err);
-				return;
-			}
-			for (var i=0; i < docs.length; i++) {
-				var point = {id: docs[i]._id, label: docs[i].label, pos: {x: 0, y: 0, z: 0}};
-				point.highD = docs[i].dimensions;
-				points.push(point);
-			}
-			collection.insert({points: points, dataset: datasetName}, function(err, doc) {
-				if (err) {
-					console.log(err);
-					callback(err);
-					return;
-				}
-				if (doc) {
-					room.jobId = doc._id;
-					room.points = new Map();
-					for (var j=0; j < points.length; j++) {
-						room.points.set(String(points[j].id), points[j]);
-					}
-					room.dataset = datasetName;
-					callback(null);
-				}
-			});
-		});
-	});
-};
-
 /* Handles an action received by the client, updating the state of the room
  * as necessary.
  */
-var handleAction = function(action, room) {
+Nebula.prototype.handleAction = function(action, room) {
 	if (action.type === "move") {
 		if (room.points.has(action.pointId)) {
 			room.points.get(action.pointId).pos = action.pos;
@@ -184,47 +131,54 @@ var handleAction = function(action, room) {
 /* Handles updates received by the client, running the necessary processes
  * and updating the room as necessary.
  */
-var handleUpdate = function(data, room, callback) {
+Nebula.prototype.handleUpdate = function(data, room, callback) {
 	console.log("Handle update called");
 
-	var mdsCallback = function(err, response) {
-		if (err) console.log(err);
+	var updateCallback = function(err, res) {
+		if (err) {
+			console.log(err);
+			callback(err);
+			return;
+		}
 		var update = {};
 		update.points = [];
-		for (var key in response) {
-			if (response.hasOwnProperty(key)) {
+		if (res.documents) {
+			for (var i=0; i < res.documents.length; i++) {
+				var doc = res.documents[i];
 				var obj = {};
-				obj.id = key;
-				obj.pos = {x: response[key][0], y: response[key][1], z: 0};
+				obj.id = doc.doc_id;
+				obj.pos = {x: doc.low_d[0], y: doc.low_d[1], z: 0};
+				obj.relevance = doc.doc_relevance;
 				update.points.push(obj);
 			}
 		}
 		
-		for (var j=0; j < update.points.length; j++) {
-			var point = update.points[j];
-			if (room.points.has(point.id)) {
-				room.points.get(point.id).pos = point.pos;
-			}
-			else {
-				console.log("Couldn't find point after MDS");
-			}
-		}
-		
-		callback(err, update);
+		updateRoom(room, update);
+		callback(null);
 	};
 	
-	if (data.type === "mds") {
-		mds(room, mdsCallback);
+	if (data.type === "oli") {
+		this.pipelineClient.invoke("update", {interaction: "oli", type: "classic", points: oli(room)}, updateCallback);			
 	}
-	else if (data.type === "invmds") {
-		mds(room, {inverse: true}, function(err, response) {
-			if (err) {
-				console.log(err);
-				return;
-			}
-			room.weights = response.weights;
-			mds(room, mdsCallback);
-		});
+	else if (data.type === "search") {
+		this.pipelineClient.invoke("update", {interaction: "search", query: data.query}, updateCallback);
+	}
+	else if (data.type === "none") {
+		this.pipelineClient.invoke("update", {interaction: "none"}, updateCallback);
+	}
+};
+
+var updateRoom = function(room, update) {
+	for (var i=0; i < update.points.length; i++) {
+		var point = update.points[i];
+		if (room.points.has(point.id)) {
+			room.points.get(point.id).pos = point.pos;
+			if (point.relevance)
+				room.points.get(point.id).relevance = point.relevance;
+		}
+		else {
+			room.points.set(String(point.id), point);
+		}
 	}
 };
 
@@ -232,61 +186,17 @@ var handleUpdate = function(data, room, callback) {
  * only the selected points are included in the algorithm. This spawns
  * a Java process with the accompanying jar file to run the algorithm.
  */
-var mds = function(room, options, callback) {
-	if (!callback) {
-		callback = options;
-		options = {};
-	}
-	if (!options.inverse) options.inverse = false;
-	
-	
-	var mdsRequest = {};
-	mdsRequest.points = {};
-	var pointCount = 0;
-
-	mdsRequest.highDimensions = room.dimensions;
-	mdsRequest.lowDimensions = 2;
-	if (options.inverse) mdsRequest.inverse = true;
+var oli = function(room) {
+	var points = {};
 	for (var key of room.points.keys()) {
 		var point = room.points.get(key);
-		if (!mdsRequest.inverse || point.selected) {
+		if (point.selected) {
 			var p = {};
-			p.highD = point.highD;
 			p.lowD = [point.pos.x, point.pos.y];
-			mdsRequest.points[key] = p;
-			pointCount += 1;
+			points[key] = p;
 		}
 	}
-	
-	if (mdsRequest.inverse && pointCount <= 2) {
-		callback("Not enough points");
-		return;
-	}
-	
-	if (room.weights) {
-		mdsRequest.weights = room.weights;
-	}
-	
-	var mds = spawn('java', ['-jar', 'java/test.jar']);
-	var body = '';
-	
-	mds.stdout.setEncoding('utf8');
-		
-	mds.stdout.on('data', function(data) {
-		body += data;
-	});
-	
-	mds.stderr.on('data', function(data) {
-		console.log(data.toString());
-		callback(data.toString());
-	});
-	
-	mds.on('close', function(code) {
-		var ret = JSON.parse(body);
-		callback(null, ret);
-	});
-	
-	mds.stdin.write(JSON.stringify(mdsRequest));
+	return points;
 };
 
 /* Returns a copy of a room with the necessary details to send to the client
@@ -295,7 +205,7 @@ var mds = function(room, options, callback) {
 var sendRoom = function(room) {
 	var modRoom = {};
 	if (room.weights) modRoom.weights = room.weights;
-	modRoom.jobId = room.jobId;
+	if (room.jobId) modRoom.jobId = room.jobId;
 	modRoom.points = Array.from(room.points.values());
 	return modRoom;
 };

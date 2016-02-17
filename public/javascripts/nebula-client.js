@@ -107,6 +107,14 @@ NEBULA.Datum.prototype.setPosition = function (position) {
     this.transform.setAttribute("translation", position);
 };
 
+NEBULA.Datum.prototype.getScale = function() {
+	return this.transform.getAttribute("scale");
+};
+
+NEBULA.Datum.prototype.setScale = function(scale) {
+	return this.transform.setAttribute("scale", scale);
+}
+
 NEBULA.Datum.prototype.getInterpolatedPosition = function() {
     return this.interpolator.getAttribute("value_changed");
 };

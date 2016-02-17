@@ -73,6 +73,16 @@
             {
                 background-color:blue;
             }
+            #tools li input
+            {
+                border:1px solid #666;
+                background-color:#202021;
+                color:#ccc;
+                padding:4px;
+                margin:0;
+                display:linline;
+                margin-top:-1px;
+            }
         </style>
     </head> 
     <body onkeydown="//console.log(event);">
@@ -81,6 +91,9 @@
         <ul id="tools">
             <li><button onclick="mds();">MDS</button></li>
             <li><button onclick="invmds();">Inverse MDS</button></li>
+            <li>
+                <input type="text" id="query" onkeydown="query(event);">
+            </li>
         </ul>
 
         <template id="datum_template">
@@ -232,7 +245,8 @@
 
                 function mds()
                 {
-                	socket.emit('update', {type: "mds"});
+                	console.log("Emitting none update");
+                	socket.emit('update', {type: "none"});
                 }
 
                 function invmds()
@@ -240,39 +254,65 @@
                     if ($("#timer").prop("isActive")) {
                         return;
                     }
-
-                    socket.emit('update', {type: "invmds"});
+                    socket.emit('update', {type: "oli"});
+                    //socket.emit('update', {type: "invmds"});
+                }
+                
+                function query(event)
+                {
+                	if (event.keyCode == 13) {
+                		socket.emit('update', {type: "search", query: event.target.value})
+                		event.target.value = "";
+                	}
+                	
                 }
 
                 function update(interfaceUpdate) {
                     console.log(interfaceUpdate);
 
                     var animate = false;
-                    for (var i = 0; i < interfaceUpdate.points.length; i++) {
-                        point = interfaceUpdate.points[i];
-                        id = point.id;
-                        pos = point.pos;
-                        pos.x = pos.x * width;
-                        pos.y = pos.y * height;
-                        var selected = false;
-                        if (point.selected) {
-                        	selected = point.selected;
-                        }
-                        if (points.has(id)) {
-                            curPos = points.get(id).getPosition();
-                            newPos = pos.x + " " + pos.y + " " + pos.z;
-                            points.get(id).setInterpolatorPositions(curPos + " " + newPos);
-                            animate = true;
-                            //points.get(id).select(selected);
-                        }
-                        else {
-                        	label = point.label;
-                            root = document.getElementById("root");
-                            var datum = new NEBULA.Datum(root, id, label, handleEvent);
-                            datum.setPosition(pos.x + " " + pos.y + " " + pos.z);
-                            datum.select(selected);
-                            points.add(datum);
-                        }
+                    if (interfaceUpdate.points) {
+	                    for (var i = 0; i < interfaceUpdate.points.length; i++) {
+	                        point = interfaceUpdate.points[i];
+	                        id = point.id;
+	                        pos = point.pos;
+	                        pos.x = pos.x * width;
+	                        pos.y = pos.y * height;
+	                        var selected = false;
+	                        if (point.selected) {
+	                        	selected = point.selected;
+	                        }
+	                        if (points.has(id)) {
+	                        	p = points.get(id);
+	                            curPos = p.getPosition();
+	                            newPos = pos.x + " " + pos.y + " " + pos.z;
+	                            p.setInterpolatorPositions(curPos + " " + newPos);
+	                            animate = true;
+	                            
+	                            if (point.relevance) {
+	                            	console.log("Setting relevance");
+	                            	scale = 0.5 + point.relevance;
+	                            	p.setScale(scale + "," + scale + "," + 1);
+	                            }
+	                            //points.get(id).select(selected);
+	                        }
+	                        else {
+	                        	label = point.label || point.id;
+	                            root = document.getElementById("root");
+	                            var datum = new NEBULA.Datum(root, id, label, handleEvent);
+	                            curPos = pos.x + " " + pos.y + " " + pos.z;
+	                            datum.setPosition(curPos);
+	                            datum.setInterpolatorPositions(curPos + " " + curPos);
+	                            datum.select(selected);
+	                            points.add(datum);
+	                            
+	                            if (point.relevance) {
+	                            	console.log("Setting new relevance");
+	                            	scale = 0.5 + point.relevance;
+	                            	datum.setScale(scale + "," + scale + "," + 1);
+	                            }
+	                        }
+	                    }
                     }
                     if (interfaceUpdate.weights) {
                     	console.log(interfaceUpdate.weights);
