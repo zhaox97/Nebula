@@ -7,8 +7,9 @@ In addition to sending messages, clients should also be listening for these mess
 
 
 # Installing and Running
-To run this code, move into the root directory of the project and run `npm install`. This will install all the dependencies required by the project. You can then start the server by running `npm start`. Then simply open up a browser and go to http://localhost:8081 to load the X3DOM client.
+This project is built using Node.js. The first requirement is to install Node.js (nodejs.org). With this installed, move into the root directory of the project and run `npm install`. This will install all the dependencies required by the project. Next you need to make sure that the CosmosD3 submodule has been pulled in. This can be done by passing the `--recursive` flag when cloning the Nebula repository, or by running the commands `git submodule init` followed by `git submodule update` in the root directory of the project. You can then launch the Node.js server by running `npm start` from the root directory. This will start the server listening (default on port 8081), with the CosmosD3.html file being the default file sent when the website is accessed.
 
+This Node.js server expects the Nebula Pipeline to be running, currently locally defaulting to port 5555. See the Nebula-Pipeline project for details on starting that up.
 
 # Structure
 This project is organized as a Nodeclipse project. The core pieces are as follows:
@@ -21,6 +22,9 @@ This is the main entry point of the server. It creates a server listening on por
 
 ## nebula.js
 The core WebSocket logic. It listens for incoming WebSocket connections on the web server, and handles tracking of rooms and clients and synching messages between them. It is loaded as a module from app.js.
+
+## CosmosD3
+A Git submodule for accessing the CosmosD3 project. The CosmosMDS.js file is copied to the public/javascripts file on running `npm start`, and the default index file for the server is currently CosmosD3/CosmosD3.html.
 
 ## public/
 This folder contains the files intended for the client. Anything in this folder is accessible from the web server.

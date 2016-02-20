@@ -1,3 +1,4 @@
 [submodule "CosmosD3"]
 	path = CosmosD3
 	url = git@git.it.vt.edu:gd/CosmosD3.git
+	branch = adamq
