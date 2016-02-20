@@ -1,6 +1,7 @@
-node_modules/*
-log/*
-build/*
+node_modules
+log
+build
+public/javascripts/CosmosMDS.js
 # Elastic Beanstalk Files
 .elasticbeanstalk/*
 !.elasticbeanstalk/*.cfg.yml

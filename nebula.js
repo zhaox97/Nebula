@@ -23,6 +23,12 @@ function Nebula(io, pipeline) {
 	this.pipelineClient.on("error", function(error) {
 		console.error("RPC client error:", error);
 	});
+	this.pipelineClient.invoke("reset", function(err) {
+		if (err) {
+			console.log("Error resetting pipeline");
+			console.log(err);
+		}
+	});
 	
 	/* The group of rooms currently active, each with a string identifier
 	 * Each room represents an instance of a visualization that can be shared
@@ -147,7 +153,7 @@ Nebula.prototype.handleUpdate = function(data, room, callback) {
 				var doc = res.documents[i];
 				var obj = {};
 				obj.id = doc.doc_id;
-				obj.pos = {x: doc.low_d[0], y: doc.low_d[1], z: 0};
+				obj.pos = doc.low_d;
 				obj.relevance = doc.doc_relevance;
 				update.points.push(obj);
 			}
@@ -192,7 +198,7 @@ var oli = function(room) {
 		var point = room.points.get(key);
 		if (point.selected) {
 			var p = {};
-			p.lowD = [point.pos.x, point.pos.y];
+			p.lowD = point.pos;
 			points[key] = p;
 		}
 	}

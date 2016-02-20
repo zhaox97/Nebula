@@ -189,7 +189,7 @@
                   socket = io.connect();
 			      socket.on('action', function(data) {
 			    	  if (data.type == "move") {
-			        	  position = (data.pos.x * width) + " " + (data.pos.y * height) + " 0";
+			        	  position = (data.pos[0] * width) + " " + (data.pos[1] * height) + " 0";
 			        	  points.get(data.pointId).setPosition(position);
 			          }
 			          else if (data.type == "select") {
@@ -275,9 +275,10 @@
 	                    for (var i = 0; i < interfaceUpdate.points.length; i++) {
 	                        point = interfaceUpdate.points[i];
 	                        id = point.id;
-	                        pos = point.pos;
-	                        pos.x = pos.x * width;
-	                        pos.y = pos.y * height;
+	                        pos = {};
+	                        pos.x = point.pos[0] * width;
+	                        pos.y = point.pos[1] * height;
+	                        pos.z = 0;
 	                        var selected = false;
 	                        if (point.selected) {
 	                        	selected = point.selected;
