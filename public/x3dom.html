@@ -206,10 +206,9 @@
                 });
                 
                 function normalizePos(pos) {
-                	var newPos = {};
-                	newPos.x = pos.x / width;
-                	newPos.y = pos.y / height;
-                	newPos.z = pos.z;
+                	var newPos = [];
+                	newPos.push(pos.x / width);
+                	newPos.push(pos.y / height);
                 	return newPos;
                 }
                 	
@@ -231,6 +230,7 @@
                 function handleEvent(event)
                 {
                     if (event.type === "outputchange" && event.fieldName === "translation_changed") {
+                    	console.log(event.value);
                     	datum = points.find(event.target);
                     	pos = event.value.x + " " + event.value.y + " 0";
                         datum.transform.setAttribute("translation", pos);
