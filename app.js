@@ -44,6 +44,7 @@ app.use(cookieParser());
 
 /* Expose everything in public/ through our web server */
 app.use(express.static(path.join(__dirname, 'public')));
+app.use("/cosmos", express.static(path.join(__dirname, 'CosmosD3')));
 
 // Make our db accessible to our router
 app.use(function(req, res, next){

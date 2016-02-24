@@ -275,20 +275,25 @@
 	                    for (var i = 0; i < interfaceUpdate.points.length; i++) {
 	                        point = interfaceUpdate.points[i];
 	                        id = point.id;
-	                        pos = {};
-	                        pos.x = point.pos[0] * width;
-	                        pos.y = point.pos[1] * height;
-	                        pos.z = 0;
+	                        var pos = null;
+	                        if (point.pos) {
+		                        pos = {};
+		                        pos.x = point.pos[0] * width;
+		                        pos.y = point.pos[1] * height;
+		                        pos.z = 0;
+	                        }
 	                        var selected = false;
 	                        if (point.selected) {
 	                        	selected = point.selected;
 	                        }
 	                        if (points.has(id)) {
 	                        	p = points.get(id);
-	                            curPos = p.getPosition();
-	                            newPos = pos.x + " " + pos.y + " " + pos.z;
-	                            p.setInterpolatorPositions(curPos + " " + newPos);
-	                            animate = true;
+	                        	if (pos) {
+		                            curPos = p.getPosition();
+		                            newPos = pos.x + " " + pos.y + " " + pos.z;
+		                            p.setInterpolatorPositions(curPos + " " + newPos);
+		                            animate = true;
+	                        	}
 	                            
 	                            if (point.relevance) {
 	                            	console.log("Setting relevance");

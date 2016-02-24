@@ -103,6 +103,17 @@ function Nebula(io, pipeline) {
 			}
 		});
 		
+		socket.on('reset', function() {
+			self.pipelineClient.invoke("reset", function(err) {
+				if (err) {
+					console.log("Error resetting pipeline");
+					console.log(err);
+				}
+				self.rooms[socket.room].points = new Map();
+				io.to(socket.room).emit('reset');
+			});
+		});
+		
 		/* Returns the current set of weights for the client's room */
 		socket.on('weights', function() {
 			if (socket.room) {
@@ -178,7 +189,8 @@ var updateRoom = function(room, update) {
 	for (var i=0; i < update.points.length; i++) {
 		var point = update.points[i];
 		if (room.points.has(point.id)) {
-			room.points.get(point.id).pos = point.pos;
+			if (point.pos)
+				room.points.get(point.id).pos = point.pos;
 			if (point.relevance)
 				room.points.get(point.id).relevance = point.relevance;
 		}

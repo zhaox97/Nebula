@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "start": "cp CosmosD3/CosmosMDS.js public/javascripts/CosmosMDS.js && node app.js"
+    "start": "node app.js"
   },
   "dependencies": {
     "async": "*",
