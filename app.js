@@ -11,10 +11,10 @@ var data = require('./routes/data');
 var oli = require('./routes/oli');
 
 /* Connect to the databases */
-var mongo = require('mongodb');
-var monk = require('monk');
-var db = monk('localhost:27017/nodetest');
-var datasets = monk('localhost:27017/datasets');
+//var mongo = require('mongodb');
+//var monk = require('monk');
+//var db = monk('localhost:27017/nodetest');
+//var datasets = monk('localhost:27017/datasets');
 
 /* The HTTP request handler */
 var app = express();
@@ -47,15 +47,15 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use("/cosmos", express.static(path.join(__dirname, 'CosmosD3')));
 
 // Make our db accessible to our router
-app.use(function(req, res, next){
-    req.db = db;
-    req.datasets = datasets;
-    next();
-});
+//app.use(function(req, res, next){
+//    req.db = db;
+//    req.datasets = datasets;
+//    next();
+//});
 
 /* Initiate the REST API */
 app.use('/', routes);
-app.use('/oli', oli);
+//app.use('/oli', oli);
 app.use('/data', data);
 
 // catch 404 and forward to error handler

@@ -3,9 +3,9 @@ var async = require('async');
 var zerorpc = require("zerorpc");
 
 /* Load the databases we need */
-var monk = require('monk');
-var db = monk('localhost:27017/nodetest');
-var datasets = monk('localhost:27017/datasets');
+//var monk = require('monk');
+//var db = monk('localhost:27017/nodetest');
+//var datasets = monk('localhost:27017/datasets');
 
 /* Export the Nebula class */
 module.exports = Nebula;
