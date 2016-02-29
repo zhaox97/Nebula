@@ -93,16 +93,32 @@ function Nebula(io, pipeline) {
 		 */
 		socket.on('update', function(data) {
 			if (socket.room) {
-				self.handleUpdate(data, self.rooms[socket.room], function(err) {
+				self.handleUpdate(data, self.rooms[socket.room], function(err, res) {
 					if (err) {
 						console.log(err);
 						return;
 					}
-					io.to(socket.room).emit('update', sendRoom(self.rooms[socket.room]));
+					io.to(socket.room).emit('update', res);
 				});
 			}
 		});
 		
+		/* Listens for get requests to get information about the underlying data,
+		 * such as the original text of the document or the type.
+		 */
+		socket.on('get', function(data) {
+			if (socket.room) {
+				self.pipelineClient.invoke("get", data, function(err, res) {
+					if (err) {
+						console.log(err);
+						return;
+					}
+					socket.emit('get', res);
+				});
+			}
+		});
+		
+		/* Resets the pipeline. */
 		socket.on('reset', function() {
 			self.pipelineClient.invoke("reset", function(err) {
 				if (err) {
@@ -112,13 +128,6 @@ function Nebula(io, pipeline) {
 				self.rooms[socket.room].points = new Map();
 				io.to(socket.room).emit('reset');
 			});
-		});
-		
-		/* Returns the current set of weights for the client's room */
-		socket.on('weights', function() {
-			if (socket.room) {
-				socket.emit('weights', socket.room.weights);
-			}
 		});
 	});
 }
@@ -169,9 +178,11 @@ Nebula.prototype.handleUpdate = function(data, room, callback) {
 				update.points.push(obj);
 			}
 		}
-		
+		if (res.similarity_weights) {
+			update.similarity_weights = res.similarity_weights;
+		}
 		updateRoom(room, update);
-		callback(null);
+		callback(null, update);
 	};
 	
 	if (data.type === "oli") {
@@ -217,13 +228,8 @@ var oli = function(room) {
 	return points;
 };
 
-/* Returns a copy of a room with the necessary details to send to the client
- * on an update.
- */
 var sendRoom = function(room) {
 	var modRoom = {};
-	if (room.weights) modRoom.weights = room.weights;
-	if (room.jobId) modRoom.jobId = room.jobId;
 	modRoom.points = Array.from(room.points.values());
 	return modRoom;
 };
