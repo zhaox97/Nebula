@@ -11,15 +11,26 @@ var zerorpc = require("zerorpc");
 module.exports = Nebula;
 
 /* Nebula class constructor */
-function Nebula(io, pipeline) {
+function Nebula(io, pipelineAddr) {
 	/* This allows you to use "Nebula(obj)" as well as "new Nebula(obj)" */
 	if (!(this instanceof Nebula)) { 
 		return new Nebula(io);
 	}
 	
-	pipeline = pipeline || "tcp://127.0.0.1:5555";
+	if (!pipelineAddr) {
+		var pipeline = spawn("python", ["Nebula-Pipeline/main.py", "Nebula-Pipeline/crescent tfidf.csv", "Nebula-Pipeline/crescent_raw"]);
+		
+		pipeline.stdout.on("data", function(data) {
+			console.log("Pipeline: " + data.toString());
+		});
+		pipeline.stderr.on("data", function(data) {
+			console.log("Pipeline error: " + data.toString());
+		});
+	}
+	
+	pipelineAddr = pipelineAddr || "tcp://127.0.0.1:5555";
 	this.pipelineClient = new zerorpc.Client();
-	this.pipelineClient.connect(pipeline);
+	this.pipelineClient.connect(pipelineAddr);
 	this.pipelineClient.on("error", function(error) {
 		console.error("RPC client error:", error);
 	});
@@ -107,6 +118,7 @@ function Nebula(io, pipeline) {
 		 * such as the original text of the document or the type.
 		 */
 		socket.on('get', function(data) {
+			console.log(data);
 			if (socket.room) {
 				self.pipelineClient.invoke("get", data, function(err, res) {
 					if (err) {
@@ -174,6 +186,7 @@ Nebula.prototype.handleUpdate = function(data, room, callback) {
 				var obj = {};
 				obj.id = doc.doc_id;
 				obj.pos = doc.low_d;
+				obj.type = doc.type;
 				obj.relevance = doc.doc_relevance;
 				update.points.push(obj);
 			}
