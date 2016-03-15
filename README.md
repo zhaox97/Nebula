@@ -14,6 +14,7 @@ This project is built using Node.js, and uses the CosmosD3 and Nebula-Pipeline r
 Or if you have already cloned the repo, pull in the submodules using:
 
 ```git submodule init```
+
 ```git submodule update```
 
 The next requirement is to download and install Node.js. See their website [here](nodejs.org) for instructions on doing so. Next, if you are running on Windows, you must install the Visual C++ Build Tools, found [here](https://www.microsoft.com/en-us/download/details.aspx?id=49983). Then you can install the Node dependencies by running the following command in the root directory of the project:
@@ -24,14 +25,13 @@ Note: Mac instructions coming soon.
 
 With this, all the Node depedencies should be installed. Now we only need to install the Python packages required for the Pipeline. If you do not have Python installed, first install Python 2.7 from their website [here](https://www.python.org/downloads/release/python-2711/). This should come with pip, the Python package manager. If you can run pip from the command line, you are ready to proceed. If pip isn't found, you can install if by following the instructions [here](https://pip.pypa.io/en/stable/installing/). With pip installed, you can install the required packages by running the commands:
 
-```pip install zerorpc```
-```pip install numpy```
-```pip install sklearn```
-```pip install scipy```
+```pip install zerorpc numpy sklearn scipy```
 
 Note: the last command likely won't work on Windows. If it fails, download the Scipy Windows installer found [here](https://github.com/scipy/scipy/releases/download/v0.16.0/scipy-0.16.0-win32-superpack-python2.7.exe)
 
-The first requirement is to install Node.js (nodejs.org). With this installed, move into the root directory of the project and run `npm install`. This will install all the dependencies required by the project. Next you need to make sure that the CosmosD3 submodule has been pulled in. This can be done by passing the `--recursive` flag when cloning the Nebula repository, or by running the commands `git submodule init` followed by `git submodule update` in the root directory of the project. You can then launch the Node.js server by running `npm start` from the root directory. This will start the server listening (default on port 8081), with the CosmosD3.html file being the default file sent when the website is accessed.
+
+
+You can then launch the Node.js server by running `npm start` from the root directory. This will start the server listening (default on port 8081), with the CosmosD3.html file being the default file sent when the website is accessed.
 
 This Node.js server expects the Nebula Pipeline to be running, currently locally defaulting to port 5555. See the Nebula-Pipeline project for details on starting that up.
 
