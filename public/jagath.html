@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script src="/socket.io/socket.io.js"></script>
+    </head>
+    <body>
+        <script>
+        var socket = io.connect();
+        
+        /* Action messages are sent when a point is selected or
+        moved from another visualization. For testing purposes, you
+        don't need to worry about responding to these, but you do need
+        to send them as explained below for OLI updates to work */
+        socket.on('action', function(data) {
+            if (data.type === "move") {
+                /* Data format:
+                 * pointId: <string>,
+                 * pos: [] (each [-1, 1])
+                 */
+            }
+            else if (data.type === "select") {
+                /* Data format:
+                 * pointId: <string>,
+                 * state: <boolean>
+                 */
+            }
+        });
+
+        socket.on('update', function(data) {
+            /* This is called when new data is pulled in or an OLI
+            update changes the layout. 
+            The format of the "data" object:
+             * points: [
+             *  {
+             *  id: <string>,
+             *  label: <string>,
+             *  pos: [],
+             *  selected: <boolean>,
+             *  relevance: <float [0, 1]>
+             * }
+             */
+        });
+
+        /* "get" messages are for retrieving the raw data. The
+        server will respond with a "get" message with the result
+        of a "get" query explained below. */
+        socket.on('get', function(data) {
+            if (!data || !data.type) return;
+            if (data.type === "attributes") {
+                /* data.value will be an array of attribute names.
+                This is for enabling the composite matrix functionality. */
+            }
+            else if (data.type === "raw") {
+            	/* This is the raw data for one data point. data.id will be
+            	the id of the point, and data.value will be the raw text. */
+            }
+        });
+
+        socket.on('reset', function() {
+        	/* Simply delete all the nodes when a reset message is received */
+        });
+
+        /* Just copy and paste this somewhere before any other socket actions
+        take place. It's required for things to work correctly. */
+        socket.emit('join', 'default', socket.id);
+
+        /* This gets the array of attributes for the composite matrix functionality.
+        I would just ignore this for now */
+        socket.emit('get', { type: 'attributes' });
+        
+        /* If you want to initiate a reset, just send this message and look for the
+        response above */
+        socket.emit("reset");
+        
+        /* When you want to get the raw text data for a document, just send this
+        message */
+        socket.emit("get", {type: "raw", id: <point id>});
+        
+        /* When you select a point for inclusion in OLI updates, you must send
+        this message so the server knows. Likewise, if you deselect a point, 
+        you should send a message with state: false */
+        socket.emit('action', {type: "select", state: true, id: <point id>});
+        
+        /* Same thing for whenever you move a point. You must send this message
+        for OLI updates to work correctly. And the position must be normalized
+        so that each dimension is between -1 and 1. */
+        socket.emit('action', {type: "move", pos: [x, y, z], id: <point id>});
+        
+        /* When you want to initiate an OLI update and relayout the screen, just
+        send this message */
+        socket.emit("update", {type: "oli"});
+        
+        /* To execute a text search, just call this: */
+        socket.emit('update', {type: "search", query: term});
+        </script>
+    </body>
+</html>

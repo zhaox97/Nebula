@@ -149,16 +149,16 @@ function Nebula(io, pipelineAddr) {
  */
 Nebula.prototype.handleAction = function(action, room) {
 	if (action.type === "move") {
-		if (room.points.has(action.pointId)) {
-			room.points.get(action.pointId).pos = action.pos;
+		if (room.points.has(action.id)) {
+			room.points.get(action.id).pos = action.pos;
 		}
 		else {
 			console.log("Point not found in room for move");
 		}
 	}
 	else if (action.type === "select") {
-		if (room.points.has(action.pointId)) {
-			room.points.get(action.pointId).selected = action.state;
+		if (room.points.has(action.id)) {
+			room.points.get(action.id).selected = action.state;
 		}
 		else {
 			console.log("Point not found in room for select");
