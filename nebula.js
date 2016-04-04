@@ -18,7 +18,7 @@ function Nebula(io, pipelineAddr) {
 	}
 	
 	if (!pipelineAddr) {
-		var pipeline = spawn("python", ["Nebula-Pipeline/main.py", "Nebula-Pipeline/crescent tfidf.csv", "Nebula-Pipeline/crescent_raw"]);
+		var pipeline = spawn("python", ["-u", "Nebula-Pipeline/main.py", "Nebula-Pipeline/crescent tfidf.csv", "Nebula-Pipeline/crescent_raw"], {stdout: "inherit"});
 		
 		pipeline.stdout.on("data", function(data) {
 			console.log("Pipeline: " + data.toString());
@@ -203,6 +203,13 @@ Nebula.prototype.handleUpdate = function(data, room, callback) {
 	}
 	else if (data.type === "search") {
 		this.pipelineClient.invoke("update", {interaction: "search", query: data.query}, updateCallback);
+	}
+	else if (data.type === "change_relevance") {
+		console.log(data);
+		this.pipelineClient.invoke("update", {interaction: "change_relevance", id: data.id, relevance: data.relevance}, updateCallback);
+	}
+	else if (data.type === "delete") {
+		this.pipelineClient.invoke("update", {interaction: "delete", id: data.id}, updateCallback);
 	}
 	else if (data.type === "none") {
 		this.pipelineClient.invoke("update", {interaction: "none"}, updateCallback);
