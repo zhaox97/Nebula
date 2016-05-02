@@ -18,7 +18,7 @@ function Nebula(io, pipelineAddr) {
 	}
 	
 	if (!pipelineAddr) {
-		var pipeline = spawn("python", ["-u", "Nebula-Pipeline/main.py", "Nebula-Pipeline/crescent tfidf.csv", "Nebula-Pipeline/crescent_raw"], {stdout: "inherit"});
+		var pipeline = spawn("python2.7", ["-u", "Nebula-Pipeline/main.py", "Nebula-Pipeline/crescent tfidf.csv", "Nebula-Pipeline/crescent_raw"], {stdout: "inherit"});
 		
 		pipeline.stdout.on("data", function(data) {
 			console.log("Pipeline: " + data.toString());
