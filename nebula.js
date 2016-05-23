@@ -17,30 +17,6 @@ function Nebula(io, pipelineAddr) {
 		return new Nebula(io);
 	}
 	
-	if (!pipelineAddr) {
-		var pipeline = spawn("python2.7", ["-u", "Nebula-Pipeline/main.py", "Nebula-Pipeline/crescent tfidf.csv", "Nebula-Pipeline/crescent_raw"], {stdout: "inherit"});
-		
-		pipeline.stdout.on("data", function(data) {
-			console.log("Pipeline: " + data.toString());
-		});
-		pipeline.stderr.on("data", function(data) {
-			console.log("Pipeline error: " + data.toString());
-		});
-	}
-	
-	pipelineAddr = pipelineAddr || "tcp://127.0.0.1:5555";
-	this.pipelineClient = new zerorpc.Client();
-	this.pipelineClient.connect(pipelineAddr);
-	this.pipelineClient.on("error", function(error) {
-		console.error("RPC client error:", error);
-	});
-	this.pipelineClient.invoke("reset", function(err) {
-		if (err) {
-			console.log("Error resetting pipeline");
-			console.log(err);
-		}
-	});
-	
 	/* The group of rooms currently active, each with a string identifier
 	 * Each room represents an instance of a visualization that can be shared
 	 * among clients.
@@ -70,22 +46,62 @@ function Nebula(io, pipelineAddr) {
 		 * initiate it and send the new room to the client. Otherwise, send
 		 * the client the current state of the room.
 		 */
-		socket.on('join', function(room, user) {
+		socket.on('join', function(roomName, user, args) {
 			console.log('Join called!');
-			socket.room = room;
+			socket.roomName = roomName;
 			socket.user = user;
-			socket.join(room);
+			socket.join(roomName);
 			
-			if (!self.rooms[room]) {
-				self.rooms[room] = {};
-				self.rooms[room].count = 1;
-				self.rooms[room].points = new Map();
-				socket.emit('update', sendRoom(self.rooms[room]));
+			if (!self.rooms[roomName]) {
+				var room = {};
+				room.count = 1;
+				room.points = new Map();
+				
+				/* Create a pipeline client for this room */
+				if (!pipelineAddr) {
+					pythonArgs = ["-u", "Nebula-Pipeline/main.py", 
+                                  "5555",
+                                  "Nebula-Pipeline/crescent tfidf.csv", 
+                                  "Nebula-Pipeline/crescent_raw"];
+					for (var key in args) {
+						if (args.hasOwnProperty(key)) {
+							pythonArgs.push("--" + key);
+							pythonArgs.push(args[key]);
+						}
+					}
+					console.log(pythonArgs);
+					
+					var pipeline = spawn("python2.7", pythonArgs, {stdout: "inherit"});
+					
+					pipeline.stdout.on("data", function(data) {
+						console.log("Pipeline: " + data.toString());
+					});
+					pipeline.stderr.on("data", function(data) {
+						console.log("Pipeline error: " + data.toString());
+					});
+				}
+				
+				pipelineAddr = pipelineAddr || "tcp://127.0.0.1:5555";
+				room.pipelineClient = new zerorpc.Client();
+				room.pipelineClient.connect(pipelineAddr);
+				room.pipelineClient.on("error", function(error) {
+					console.error("RPC client error:", error);
+				});
+				room.pipelineClient.invoke("reset", function(err) {
+					if (err) {
+						console.log("Error resetting pipeline");
+						console.log(err);
+					}
+				});
+				
+				self.rooms[roomName] = socket.room = room;
+				socket.emit('update', sendRoom(room));
 			}
 			else {
-				self.rooms[room].count += 1;
-				console.log(self.rooms[room].count + " people now in room " + room);
-				socket.emit('update', sendRoom(self.rooms[room]));
+				var room = self.rooms[roomName];
+				room.count += 1;
+				console.log(room.count + " people now in room " + roomName);
+				socket.emit('update', sendRoom(room));
 			}
 		});
 		
@@ -94,8 +110,8 @@ function Nebula(io, pipelineAddr) {
 		 */
 		socket.on('action', function(data) {
 			if (socket.room) {
-				self.handleAction(data, self.rooms[socket.room]);
-				socket.broadcast.to(socket.room).emit('action', data);
+				self.handleAction(data, socket.room);
+				socket.broadcast.to(socket.roomName).emit('action', data);
 			}
 		});
 		
@@ -104,12 +120,12 @@ function Nebula(io, pipelineAddr) {
 		 */
 		socket.on('update', function(data) {
 			if (socket.room) {
-				self.handleUpdate(data, self.rooms[socket.room], function(err, res) {
+				self.handleUpdate(data, socket.room, function(err, res) {
 					if (err) {
 						console.log(err);
 						return;
 					}
-					io.to(socket.room).emit('update', res);
+					io.to(socket.roomName).emit('update', res);
 				});
 			}
 		});
@@ -120,7 +136,7 @@ function Nebula(io, pipelineAddr) {
 		socket.on('get', function(data) {
 			console.log(data);
 			if (socket.room) {
-				self.pipelineClient.invoke("get", data, function(err, res) {
+				socket.room.pipelineClient.invoke("get", data, function(err, res) {
 					if (err) {
 						console.log(err);
 						return;
@@ -132,13 +148,13 @@ function Nebula(io, pipelineAddr) {
 		
 		/* Resets the pipeline. */
 		socket.on('reset', function() {
-			self.pipelineClient.invoke("reset", function(err) {
+			socket.room.pipelineClient.invoke("reset", function(err) {
 				if (err) {
 					console.log("Error resetting pipeline");
 					console.log(err);
 				}
-				self.rooms[socket.room].points = new Map();
-				io.to(socket.room).emit('reset');
+				socket.room.points = new Map();
+				io.to(socket.roomName).emit('reset');
 			});
 		});
 	});
@@ -199,20 +215,20 @@ Nebula.prototype.handleUpdate = function(data, room, callback) {
 	};
 	
 	if (data.type === "oli") {
-		this.pipelineClient.invoke("update", {interaction: "oli", type: "classic", points: oli(room)}, updateCallback);			
+		room.pipelineClient.invoke("update", {interaction: "oli", type: "classic", points: oli(room)}, updateCallback);			
 	}
 	else if (data.type === "search") {
-		this.pipelineClient.invoke("update", {interaction: "search", query: data.query}, updateCallback);
+		room.pipelineClient.invoke("update", {interaction: "search", query: data.query}, updateCallback);
 	}
 	else if (data.type === "change_relevance") {
 		console.log(data);
-		this.pipelineClient.invoke("update", {interaction: "change_relevance", id: data.id, relevance: data.relevance}, updateCallback);
+		room.pipelineClient.invoke("update", {interaction: "change_relevance", id: data.id, relevance: data.relevance}, updateCallback);
 	}
 	else if (data.type === "delete") {
-		this.pipelineClient.invoke("update", {interaction: "delete", id: data.id}, updateCallback);
+		room.pipelineClient.invoke("update", {interaction: "delete", id: data.id}, updateCallback);
 	}
 	else if (data.type === "none") {
-		this.pipelineClient.invoke("update", {interaction: "none"}, updateCallback);
+		room.pipelineClient.invoke("update", {interaction: "none"}, updateCallback);
 	}
 };
 
