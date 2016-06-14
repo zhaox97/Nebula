@@ -10,6 +10,31 @@ var zerorpc = require("zerorpc");
 /* Export the Nebula class */
 module.exports = Nebula;
 
+var pipelines = {andromeda: [ 
+                             "Nebula-Pipeline/andromeda.py",
+                             "5555",
+                             "Nebula-Pipeline/Animal_Data_small.csv"
+                             ],
+				 cosmos: [
+				          "Nebula-Pipeline/cosmos.py",
+				          "5555",
+				          "Nebula-Pipeline/crescent tfidf.csv",
+				          "Nebula-Pipeline/crescent_raw"
+				          ],
+				 composite: [
+							 "Nebula-Pipeline/composite.py",
+							 "5555",
+							 "Nebula-Pipeline/crescent tfidf.csv",
+							 "Nebula-Pipeline/crescent_raw"
+				             ],
+				 loadtest: [
+				            "Nebula-Pipeline/cosmos.py",
+				            "5555",
+				            "Nebula-Pipeline/data10000x1000.csv",
+				            "Nebula-Pipeline/crescent_raw"
+				            ]
+};
+
 /* Nebula class constructor */
 function Nebula(io, pipelineAddr) {
 	/* This allows you to use "Nebula(obj)" as well as "new Nebula(obj)" */
@@ -46,7 +71,7 @@ function Nebula(io, pipelineAddr) {
 		 * initiate it and send the new room to the client. Otherwise, send
 		 * the client the current state of the room.
 		 */
-		socket.on('join', function(roomName, user, args) {
+		socket.on('join', function(roomName, user, pipeline, args) {
 			console.log('Join called!');
 			socket.roomName = roomName;
 			socket.user = user;
@@ -59,10 +84,11 @@ function Nebula(io, pipelineAddr) {
 				
 				/* Create a pipeline client for this room */
 				if (!pipelineAddr) {
-					pythonArgs = ["-u", "Nebula-Pipeline/main.py", 
-                                  "5555",
-                                  "Nebula-Pipeline/crescent tfidf.csv", 
-                                  "Nebula-Pipeline/crescent_raw"];
+					var pythonArgs = ["-u"];
+					if (pipeline in pipelines)
+						pythonArgs = pythonArgs.concat(pipelines[pipeline]);
+					else
+						pythonArgs = pythonArgs.concat(pipelines.cosmos);
 					for (var key in args) {
 						if (args.hasOwnProperty(key)) {
 							pythonArgs.push("--" + key);
@@ -71,12 +97,12 @@ function Nebula(io, pipelineAddr) {
 					}
 					console.log(pythonArgs);
 					
-					var pipeline = spawn("python2.7", pythonArgs, {stdout: "inherit"});
+					var pipelineInstance = spawn("python2.7", pythonArgs, {stdout: "inherit"});
 					
-					pipeline.stdout.on("data", function(data) {
+					pipelineInstance.stdout.on("data", function(data) {
 						console.log("Pipeline: " + data.toString());
 					});
-					pipeline.stderr.on("data", function(data) {
+					pipelineInstance.stderr.on("data", function(data) {
 						console.log("Pipeline error: " + data.toString());
 					});
 				}
@@ -91,11 +117,19 @@ function Nebula(io, pipelineAddr) {
 					if (err) {
 						console.log("Error resetting pipeline");
 						console.log(err);
+						return;
 					}
+					
+					self.handleUpdate({type: "none"}, room, function(err, res) {
+						if (err) {
+							console.log(err);
+							return;
+						}
+						socket.emit('update', sendRoom(room));
+					});
 				});
 				
 				self.rooms[roomName] = socket.room = room;
-				socket.emit('update', sendRoom(room));
 			}
 			else {
 				var room = self.rooms[roomName];
