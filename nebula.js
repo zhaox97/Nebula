@@ -1,6 +1,7 @@
 var spawn = require('child_process').spawn;
 var async = require('async');
-var zerorpc = require("zerorpc");
+var zerorpc = require('zerorpc');
+var zmq = require('zmq');
 
 /* Load the databases we need */
 //var monk = require('monk');
@@ -16,10 +17,14 @@ var pipelines = {andromeda: [
                              "Nebula-Pipeline/Animal_Data_small.csv"
                              ],
 				 cosmos: [
-				          "Nebula-Pipeline/cosmos.py",
+				          "Nebula-Pipeline/cosmosdynamic.py",
 				          "5555",
 				          "Nebula-Pipeline/crescent tfidf.csv",
 				          "Nebula-Pipeline/crescent_raw"
+				          ],
+				 twitter: [
+				           "Nebula-Pipeline/twitter.py",
+				           "5555"
 				          ],
 				 composite: [
 							 "Nebula-Pipeline/composite.py",
@@ -47,6 +52,7 @@ function Nebula(io, pipelineAddr) {
 	 * among clients.
 	 */
 	this.rooms = {};
+	this.io = io;
 	
 	/* For proper use in callback functions */
 	var self = this;
@@ -79,6 +85,7 @@ function Nebula(io, pipelineAddr) {
 			
 			if (!self.rooms[roomName]) {
 				var room = {};
+				room.name = roomName;
 				room.count = 1;
 				room.points = new Map();
 				
@@ -108,34 +115,21 @@ function Nebula(io, pipelineAddr) {
 				}
 				
 				pipelineAddr = pipelineAddr || "tcp://127.0.0.1:5555";
-				room.pipelineClient = new zerorpc.Client();
-				room.pipelineClient.connect(pipelineAddr);
-				room.pipelineClient.on("error", function(error) {
-					console.error("RPC client error:", error);
-				});
-				room.pipelineClient.invoke("reset", function(err) {
-					if (err) {
-						console.log("Error resetting pipeline");
-						console.log(err);
-						return;
-					}
-					
-					self.handleUpdate({type: "none"}, room, function(err, res) {
-						if (err) {
-							console.log(err);
-							return;
-						}
-						socket.emit('update', sendRoom(room));
-					});
-				});
+				room.pipelineSocket = zmq.socket('pair');
+				room.pipelineSocket.connect(pipelineAddr);
 				
+				room.pipelineSocket.on('message', function (msg) {
+					self.handleMessage(room, msg);
+				});
+
 				self.rooms[roomName] = socket.room = room;
+				invoke(room.pipelineSocket, "reset");
 			}
 			else {
-				var room = self.rooms[roomName];
-				room.count += 1;
-				console.log(room.count + " people now in room " + roomName);
-				socket.emit('update', sendRoom(room));
+				socket.room = self.rooms[roomName];
+				socket.room.count += 1;
+				console.log(socket.room.count + " people now in room " + roomName);
+				socket.emit('update', sendRoom(socket.room));
 			}
 		});
 		
@@ -154,13 +148,30 @@ function Nebula(io, pipelineAddr) {
 		 */
 		socket.on('update', function(data) {
 			if (socket.room) {
-				self.handleUpdate(data, socket.room, function(err, res) {
-					if (err) {
-						console.log(err);
-						return;
-					}
-					io.to(socket.roomName).emit('update', res);
-				});
+				if (data.type === "oli") {
+					invoke(socket.room.pipelineSocket, "update", 
+							{interaction: "oli", type: "classic", points: oli(socket.room)});			
+				}
+				else {
+					data.interaction = data.type;
+					invoke(socket.room.pipelineSocket, "update", data);
+				}
+//				else if (data.type === "search") {
+//					invoke(socket.room.pipelineSocket, "update", 
+//							{interaction: "search", query: data.query});
+//				}
+//				else if (data.type === "change_relevance") {
+//					invoke(socket.room.pipelineSocket, "update", 
+//							{interaction: "change_relevance", id: data.id, relevance: data.relevance});
+//				}
+//				else if (data.type === "delete") {
+//					invoke(socket.room.pipelineSocket, "update", 
+//							{interaction: "delete", id: data.id});
+//				}
+//				else if (data.type === "none") {
+//					invoke(socket.room.pipelineSocket, "update", 
+//							{interaction: "none"});
+//				}
 			}
 		});
 		
@@ -168,28 +179,17 @@ function Nebula(io, pipelineAddr) {
 		 * such as the original text of the document or the type.
 		 */
 		socket.on('get', function(data) {
-			console.log(data);
 			if (socket.room) {
-				socket.room.pipelineClient.invoke("get", data, function(err, res) {
-					if (err) {
-						console.log(err);
-						return;
-					}
-					socket.emit('get', res);
-				});
+				invoke(socket.room.pipelineSocket, "get", data);
 			}
 		});
 		
 		/* Resets the pipeline. */
 		socket.on('reset', function() {
-			socket.room.pipelineClient.invoke("reset", function(err) {
-				if (err) {
-					console.log("Error resetting pipeline");
-					console.log(err);
-				}
+			if (socket.room) {
+				invoke(socket.room.pipelineSocket, "reset");
 				socket.room.points = new Map();
-				io.to(socket.roomName).emit('reset');
-			});
+			}
 		});
 	});
 }
@@ -203,7 +203,7 @@ Nebula.prototype.handleAction = function(action, room) {
 			room.points.get(action.id).pos = action.pos;
 		}
 		else {
-			console.log("Point not found in room for move");
+			console.log("Point not found in room for move: " + action.id);
 		}
 	}
 	else if (action.type === "select") {
@@ -211,7 +211,23 @@ Nebula.prototype.handleAction = function(action, room) {
 			room.points.get(action.id).selected = action.state;
 		}
 		else {
-			console.log("Point not found in room for select");
+			console.log("Point not found in room for select: " + action.id);
+		}
+	}
+};
+
+Nebula.prototype.handleMessage = function(room, msg) {
+	var obj = JSON.parse(msg.toString());
+	if (obj.func) {
+		if (obj.func === "update") {
+			this.handleUpdate(room, obj.contents);
+		} else if (obj.func === "get") {
+			this.io.to(room.name).emit("get", obj.contents);
+		} else if (obj.func === "set") {
+			this.io.to(room.name).emit("set", obj.contents);
+		} else if (obj.func === "reset") {
+			this.io.to(room.name).emit("reset");
+			invoke(room.pipelineSocket, "update", {interaction: "none"});
 		}
 	}
 };
@@ -219,51 +235,27 @@ Nebula.prototype.handleAction = function(action, room) {
 /* Handles updates received by the client, running the necessary processes
  * and updating the room as necessary.
  */
-Nebula.prototype.handleUpdate = function(data, room, callback) {
+Nebula.prototype.handleUpdate = function(room, res) {
 	console.log("Handle update called");
 
-	var updateCallback = function(err, res) {
-		if (err) {
-			console.log(err);
-			callback(err);
-			return;
+	var update = {};
+	update.points = [];
+	if (res.documents) {
+		for (var i=0; i < res.documents.length; i++) {
+			var doc = res.documents[i];
+			var obj = {};
+			obj.id = doc.doc_id;
+			obj.pos = doc.low_d;
+			obj.type = doc.type;
+			obj.relevance = doc.doc_relevance;
+			update.points.push(obj);
 		}
-		var update = {};
-		update.points = [];
-		if (res.documents) {
-			for (var i=0; i < res.documents.length; i++) {
-				var doc = res.documents[i];
-				var obj = {};
-				obj.id = doc.doc_id;
-				obj.pos = doc.low_d;
-				obj.type = doc.type;
-				obj.relevance = doc.doc_relevance;
-				update.points.push(obj);
-			}
-		}
-		if (res.similarity_weights) {
-			update.similarity_weights = res.similarity_weights;
-		}
-		updateRoom(room, update);
-		callback(null, update);
-	};
-	
-	if (data.type === "oli") {
-		room.pipelineClient.invoke("update", {interaction: "oli", type: "classic", points: oli(room)}, updateCallback);			
 	}
-	else if (data.type === "search") {
-		room.pipelineClient.invoke("update", {interaction: "search", query: data.query}, updateCallback);
+	if (res.similarity_weights) {
+		update.similarity_weights = res.similarity_weights;
 	}
-	else if (data.type === "change_relevance") {
-		console.log(data);
-		room.pipelineClient.invoke("update", {interaction: "change_relevance", id: data.id, relevance: data.relevance}, updateCallback);
-	}
-	else if (data.type === "delete") {
-		room.pipelineClient.invoke("update", {interaction: "delete", id: data.id}, updateCallback);
-	}
-	else if (data.type === "none") {
-		room.pipelineClient.invoke("update", {interaction: "none"}, updateCallback);
-	}
+	updateRoom(room, update);
+	this.io.to(room.name).emit('update', update);
 };
 
 var updateRoom = function(room, update) {
@@ -276,7 +268,7 @@ var updateRoom = function(room, update) {
 				room.points.get(point.id).relevance = point.relevance;
 		}
 		else {
-			room.points.set(String(point.id), point);
+			room.points.set(point.id, point);
 		}
 	}
 };
@@ -302,4 +294,9 @@ var sendRoom = function(room) {
 	var modRoom = {};
 	modRoom.points = Array.from(room.points.values());
 	return modRoom;
+};
+
+var invoke = function(socket, func, data) {
+	var obj = {"func": func, "contents": data};
+	socket.send(JSON.stringify(obj));
 };
