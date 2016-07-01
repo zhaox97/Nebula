@@ -1,6 +1,5 @@
 var spawn = require('child_process').spawn;
 var async = require('async');
-var zerorpc = require('zerorpc');
 var zmq = require('zmq');
 
 /* Load the databases we need */
@@ -105,6 +104,18 @@ function Nebula(io, pipelineAddr) {
 					console.log(pythonArgs);
 					
 					var pipelineInstance = spawn("python2.7", pythonArgs, {stdout: "inherit"});
+					
+					pipelineInstance.on("error", function(err) {
+						console.log("python2.7.exe not found. Trying python.exe");
+						pipelineInstance = spawn("python", pythonArgs, {stdout: "inherit"});
+						
+						pipelineInstance.stdout.on("data", function(data) {
+							console.log("Pipeline: " + data.toString());
+						});
+						pipelineInstance.stderr.on("data", function(data) {
+							console.log("Pipeline error: " + data.toString());
+						});
+					});
 					
 					pipelineInstance.stdout.on("data", function(data) {
 						console.log("Pipeline: " + data.toString());
