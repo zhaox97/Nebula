@@ -7,60 +7,57 @@ In addition to sending messages, clients should also be listening for these mess
 
 
 # Installing and Running
-The first requirement is to have git installed on your machine. It is also a good idea to have your public keys set up with git and the GitLab where the project is hosted (git.it.vt.edu) so that SSH can be used to download things quickly.
+The first requirement is to have git installed on your machine. You must have your public keys set up with git and the GitLab where the project is hosted (git.it.vt.edu) so that SSH can be used to download the submodules.
 
-This project is built using Node.js, and uses the CosmosD3 and Nebula-Pipeline repositories as submodules. To make sure these submodules get pulled in correctly, either clone this repo using the `--recursive` flag:
-
-``git clone --recursive git@git.it.vt.edu:gd/Nebula.git``
-
-If you do not have your public keys setup to work with git, you can access the project with the https protocol:
-
-``git clone --recursive https://git.it.vt.edu/gd/Nebula.git``
-
-Or if you have already cloned the repo, pull in the submodules using:
+This project is built using Node.js, and uses the CosmosD3 and Nebula-Pipeline repositories as submodules. To make sure these submodules get pulled in correctly, either clone this repo using the `--recursive` flag or if you have already cloned the repo, pull in the submodules using:
 
 ``git submodule init``
 
 ``git submodule update``
 
-The next requirement is to download and install Node.js. See their website [here](nodejs.org) for instructions on doing so. 
+For all platforms, Python 2.7 must be installed. It can be installed from their website [here](https://www.python.org/downloads/release/python-2712/). This install should come with pip, the Python package manager. If you can run pip from the command line, you are ready to proceed. If pip isn't found, you can install it by following the instructions [here](https://pip.pypa.io/en/stable/installing/). Make sure pip is updated to the latest version by running:
 
-Next, there instructions are different depending on the platform.
+``pip install --upgrade pip``
+
+Next, some dependencies must be installed which are different for each platform. Instructions for installing the pipeline (Nebula-Pipeline submodule) are provided as well.
 
 ## Windows
-if you are running on Windows, you must install the Visual C++ Build Tools, found [here](https://www.microsoft.com/en-us/download/details.aspx?id=49983). Then you can install the Node dependencies by running the following command in the root directory of the project:
+Install the Node.js from their website [here](nodejs.org). Select the LTS version.
 
-``npm install --msvs_version=2015``
+Install the Visual C++ Build Tools, found [here](http://landinghub.visualstudio.com/visual-cpp-build-tools). Then tell the Node package manager to use this version by running:
 
-With this, all the Node depedencies should be installed. Now we only need to install the Python packages required for the Pipeline. If you do not have Python installed, first install Python 2.7 from their website [here](https://www.python.org/downloads/release/python-2711/). You must have the 32-bit version of Python, as some of the additional packages are only available for 32-bit Python. This install should come with pip, the Python package manager. If you can run pip from the command line, you are ready to proceed. If pip isn't found, you can install if by following the instructions [here](https://pip.pypa.io/en/stable/installing/). With pip installed, you can install the required packages by running the commands:
+``npm config set msvs_version 2015``
 
-``pip install zerorpc``
-``pip install numpy``
-``pip install sklearn``
-``pip install scipy``
+Finally, to work with the pipeline, the Python packages numpy and scipy must be installed before running the setup below. One option is to use a Python distribution that has these packages installed, such as [Anaconda](https://www.continuum.io/downloads). If you already have the traditional Python distribution installed, the best way to install these packages is by downloading them from the site [here](http://www.lfd.uci.edu/~gohlke/pythonlibs/). Download the files `numpy-1.11.1+mkl-cp27-cp27m-win_amd64.whl` and `scipy-0.17.1-cp27-cp27m-win_amd64.whl` (or the 32-bit version if that's the Python version you're running), and run the following commands in the directory these files are in:
 
-Note: the last command likely won't work on Windows. If it fails, download the Scipy Windows installer found [here](https://github.com/scipy/scipy/releases/download/v0.16.0/scipy-0.16.0-win32-superpack-python2.7.exe)
+``pip install numpy-1.11.1+mkl-cp27-cp27m-win_amd64.whl``
 
+``pip install scipy-0.17.1-cp27-cp27m-win_amd64.whl``
 
 ## Mac
-If you are running on OS X, Install HomeBrew. Then install zeromq and pkg-config:
+Install [HomeBrew](http://brew.sh/). Then use HomeBrew to install zeromq and pkg-config:
 
 ``brew install zeromq pkg-config``
 
-Then you can install the Node dependencies:
+## Debian/Ubuntu
+Install the libzmq-dev, npm, and nodejs-legacy packages:
+
+``sudo apt-get install libzmq-dev npm nodejs-legacy``
+
+## All Platforms
+Once these platform specific dependencies have be installed, you can install all the required Node.js modules using:
 
 ``npm install``
 
-With this, all the Node depedencies should be installed. Now we only need to install the Python packages required for the Pipeline. If you do not have Python installed, first install Python 2.7 from their website [here](https://www.python.org/downloads/release/python-2711/). This install should come with pip, the Python package manager. If you can run pip from the command line, you are ready to proceed. If pip isn't found, you can install if by following the instructions [here](https://pip.pypa.io/en/stable/installing/). With pip installed, you can install the required packages by running the commands:
+With this, all the Node dependencies should be installed. 
 
-``pip install zerorpc``
-``pip install numpy`` 
-``pip install sklearn``
-``pip install scipy``
+Next, you can install all the pipeline dependecies with the command:
+
+``pip install -e Nebula-Pipeline``
 
 --------------------------------------------------------------------------------------
 
-You can then launch the Node.js server by running `npm start` from the root directory. This will start the server listening (default on port 8081), with the CosmosD3.html file being the default file sent when the website is accessed.
+You can then launch the Node.js server by running `npm start` from the root directory. This will start the server listening (default on port 8081).
 
 # Structure
 This project is organized as a Nodeclipse project. The core pieces are as follows:
