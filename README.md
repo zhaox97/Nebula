@@ -6,7 +6,7 @@ From here, clients can send two main types of messages to the server. `action` m
 In addition to sending messages, clients should also be listening for these messages as well. Received `action` messages reflect another client as performed some action that should be taken into account in the current client, and operate on single points. `update` messages typically are for updating the entire display, such as from the result of a query, and include the position and state of every single point currently visible.
 
 
-# Installing and Running
+# Installation
 The first requirement is to have git installed on your machine. You must have your public keys set up with git and the GitLab where the project is hosted (git.it.vt.edu) so that SSH can be used to download the submodules.
 
 This project is built using Node.js, and uses the CosmosD3 and Nebula-Pipeline repositories as submodules. To make sure these submodules get pulled in correctly, either clone this repo using the `--recursive` flag or if you have already cloned the repo, pull in the submodules using:
@@ -28,7 +28,7 @@ Install the Visual C++ Build Tools, found [here](http://landinghub.visualstudio.
 
 ``npm config set msvs_version 2015``
 
-Finally, to work with the pipeline, the Python packages numpy and scipy must be installed before running the setup below. One option is to use a Python distribution that has these packages installed, such as [Anaconda](https://www.continuum.io/downloads). If you already have the traditional Python distribution installed, the best way to install these packages is by downloading them from the site [here](http://www.lfd.uci.edu/~gohlke/pythonlibs/). Download the files `numpy-1.11.1+mkl-cp27-cp27m-win_amd64.whl` and `scipy-0.17.1-cp27-cp27m-win_amd64.whl` (or the 32-bit version if that's the Python version you're running), and run the following commands in the directory these files are in:
+Finally, to work with the pipeline, the Python packages numpy and scipy must be installed before running the setup below. One option is to use a Python distribution that has these packages preinstalled, such as [Anaconda](https://www.continuum.io/downloads). If you already have the traditional Python distribution installed, the best way to install these packages is by downloading them from the site [here](http://www.lfd.uci.edu/~gohlke/pythonlibs/). Download the files `numpy-1.11.1+mkl-cp27-cp27m-win_amd64.whl` and `scipy-0.17.1-cp27-cp27m-win_amd64.whl` (or the 32-bit version if that's the Python version you're running), and run the following commands in the directory these files are in:
 
 ``pip install numpy-1.11.1+mkl-cp27-cp27m-win_amd64.whl``
 
@@ -53,7 +53,7 @@ With this, all the Node dependencies should be installed.
 
 Next, you can install all the pipeline dependecies with the command:
 
-``pip install -e Nebula-Pipeline``
+``pip install Nebula-Pipeline`` (if you are going to develop you can use ``pip install -e Nebula-Pipeline``)
 
 --------------------------------------------------------------------------------------
 
