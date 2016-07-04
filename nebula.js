@@ -11,31 +11,31 @@ var zmq = require('zmq');
 module.exports = Nebula;
 
 var pipelines = {andromeda: [ 
-                             "Nebula-Pipeline/andromeda.py",
+                             "pipelines/andromeda.py",
                              "5555",
-                             "Nebula-Pipeline/Animal_Data_small.csv"
+                             "data/Animal_Data_small.csv"
                              ],
 				 cosmos: [
-				          "Nebula-Pipeline/cosmosdynamic.py",
+				          "pipelines/cosmosdynamic.py",
 				          "5555",
-				          "Nebula-Pipeline/crescent tfidf.csv",
-				          "Nebula-Pipeline/crescent_raw"
+				          "data/crescent tfidf.csv",
+				          "data/crescent_raw"
 				          ],
 				 twitter: [
-				           "Nebula-Pipeline/twitter.py",
+				           "pipelines/twitter.py",
 				           "5555"
 				          ],
 				 composite: [
-							 "Nebula-Pipeline/composite.py",
+							 "pipelines/composite.py",
 							 "5555",
-							 "Nebula-Pipeline/crescent tfidf.csv",
-							 "Nebula-Pipeline/crescent_raw"
+							 "data/crescent tfidf.csv",
+							 "data/crescent_raw"
 				             ],
 				 loadtest: [
-				            "Nebula-Pipeline/cosmos.py",
+				            "pipelines/cosmos.py",
 				            "5555",
-				            "Nebula-Pipeline/data10000x1000.csv",
-				            "Nebula-Pipeline/crescent_raw"
+				            "data/data10000x1000.csv",
+				            "data/crescent_raw"
 				            ]
 };
 
