@@ -10,6 +10,7 @@ var zmq = require('zmq');
 /* Export the Nebula class */
 module.exports = Nebula;
 
+/* The pipelines available to use */
 var pipelines = {andromeda: [ 
                              "pipelines/andromeda.py",
                              "5555",
@@ -167,22 +168,6 @@ function Nebula(io, pipelineAddr) {
 					data.interaction = data.type;
 					invoke(socket.room.pipelineSocket, "update", data);
 				}
-//				else if (data.type === "search") {
-//					invoke(socket.room.pipelineSocket, "update", 
-//							{interaction: "search", query: data.query});
-//				}
-//				else if (data.type === "change_relevance") {
-//					invoke(socket.room.pipelineSocket, "update", 
-//							{interaction: "change_relevance", id: data.id, relevance: data.relevance});
-//				}
-//				else if (data.type === "delete") {
-//					invoke(socket.room.pipelineSocket, "update", 
-//							{interaction: "delete", id: data.id});
-//				}
-//				else if (data.type === "none") {
-//					invoke(socket.room.pipelineSocket, "update", 
-//							{interaction: "none"});
-//				}
 			}
 		});
 		

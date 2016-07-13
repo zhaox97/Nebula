@@ -55,8 +55,6 @@ app.use("/cosmos", express.static(path.join(__dirname, 'CosmosD3')));
 
 /* Initiate the REST API */
 app.use('/', routes);
-//app.use('/oli', oli);
-app.use('/data', data);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

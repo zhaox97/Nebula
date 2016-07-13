@@ -9,9 +9,6 @@ router.get('/', function(req, res, next) {
         console.log("Error: send file");
         console.log(err);   
       }
-      else {
-          console.log("Sent file x3dom.html");
-      }
   });
 });
 

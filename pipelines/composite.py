@@ -17,11 +17,11 @@ def main():
     pipeline = nebula.pipeline.Pipeline()
    
     relevance = nebula.model.ActiveSetModel()
-    similarity = nebula.model.SimilarityModel()
+    composite = nebula.model.CompositeModel()
     data_controller = nebula.data.CSVDataController(csvfile, raw_folder)
    
     pipeline.append_model(relevance)
-    pipeline.append_model(similarity)
+    pipeline.append_model(composite)
     pipeline.set_data_controller(data_controller)
     
     connector = nebula.connector.ZeroMQConnector(port=int(sys.argv[1]))

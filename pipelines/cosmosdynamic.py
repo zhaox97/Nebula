@@ -20,12 +20,8 @@ def main():
     similarity = nebula.model.DynamicSimilarityModel()
     data_controller = nebula.data.CSVDataController(csvfile, raw_folder)
    
-    corpus = nebula.model.CorpusSetModel()
-    #pipeline.append_model(corpus)
-   
     pipeline.append_model(relevance)
     pipeline.append_model(similarity)
-    #pipeline.append_model(composite)
     pipeline.set_data_controller(data_controller)
     
     connector = nebula.connector.ZeroMQConnector(port=int(sys.argv[1]))
