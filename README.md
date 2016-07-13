@@ -64,7 +64,7 @@ Multiple clients of the same type can be opened simultaneously, and all clients 
 
 When the first client is loaded from the server, it can specify which pipeline to load, which are described below. This pipeline is then started by the Node.js server, by spawning a Python instance. Each pipeline gets started on port 5555, and the server automatically connects to it once it is started. Because each is run on the same port, only one pipeline can currently be run. Again, this simply enables us to test each client, and could easily be modified for more robust use.
 
-# Developer Guide
+# Developer Notes
 
 ## Structure
 This project is organized as a Nodeclipse project. The core pieces are as follows:
@@ -99,13 +99,14 @@ The `nebula` Node.js module contains the heart of the logic pertaining to the vi
 The current logical flow of the application can be described as follows:
 
 * A client initiates a Socket.io connection to the server, handled by the `io.on('connection')` callback.
-* The client requests to join a room, providing a room name and a pipeline run in that room. This is handled by the `socket.on('join') callback.
+* The client requests to join a room, providing a room name and a pipeline run in that room. This is handled by the `socket.on('join')` callback.
 * If the room does not exist, create it, and spawn an Python instance of the specified pipeline, using the arguments hard coded for that pipeline at the top of `nebula.js`.
     * If the room does exist, add this user to that room and do not start any new pipeline. If this room uses a different visualization or pipeline than what the new user expected, results are undefined.
 * A connection is initiated with the new pipeline instance, currently done through ZeroMQ sockets using JSON messages.
 * The server then listens to certain messages from the client, as described below.
 
 There are four types of message the server listens for from clients:
+
 * `action`: this is the only message that is not forwarded to the pipeline. `action` messages represents interactions that occur within the visualization that should be sent to any other web clients if multiple are open in the same room. Examples of this include moving or selecting a point, neither of which currently qualify is an interaction a pipeline would care about.
 * `update`: this message is what triggers an iteration of the pipeline to occur. Information about the type of interaction that occurred is passed with this message and forwarded on to the pipeline.
 * `get`: this message is directly forwarded to the pipeline, and its behavior is described in the pipeline documentation.
