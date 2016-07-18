@@ -88,6 +88,7 @@ function Nebula(io, pipelineAddr) {
 				room.name = roomName;
 				room.count = 1;
 				room.points = new Map();
+				room.similarity_weights = new Map();
 				
 				/* Create a pipeline client for this room */
 				if (!pipelineAddr) {
@@ -255,16 +256,29 @@ Nebula.prototype.handleUpdate = function(room, res) {
 };
 
 var updateRoom = function(room, update) {
-	for (var i=0; i < update.points.length; i++) {
-		var point = update.points[i];
-		if (room.points.has(point.id)) {
-			if (point.pos)
-				room.points.get(point.id).pos = point.pos;
-			if (point.relevance)
-				room.points.get(point.id).relevance = point.relevance;
+	if (update.points) {
+		for (var i=0; i < update.points.length; i++) {
+			var point = update.points[i];
+			if (room.points.has(point.id)) {
+				if (point.pos)
+					room.points.get(point.id).pos = point.pos;
+				if (point.relevance)
+					room.points.get(point.id).relevance = point.relevance;
+			}
+			else {
+				room.points.set(point.id, point);
+			}
 		}
-		else {
-			room.points.set(point.id, point);
+	}
+	if (update.similarity_weights) {
+		for (var i=0; i < update.similarity_weights.length; i++) {
+			var weight = update.similarity_weights[i];
+			if (room.similarity_weights.has(weight.id)) {
+				room.similarity_weights.get(weight.id).weight = weight.weight;
+			}
+			else {
+				room.similarity_weights.set(weight.id, weight);
+			}
 		}
 	}
 };
@@ -289,6 +303,7 @@ var oli = function(room) {
 var sendRoom = function(room) {
 	var modRoom = {};
 	modRoom.points = Array.from(room.points.values());
+	modRoom.similarity_weights = Array.from(room.similarity_weights.values());
 	return modRoom;
 };
 
