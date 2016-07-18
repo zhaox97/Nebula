@@ -7,8 +7,6 @@ var bodyParser = require('body-parser');
 
 /* REST API routes */
 var routes = require('./routes/index');
-var data = require('./routes/data');
-var oli = require('./routes/oli');
 
 /* Connect to the databases */
 //var mongo = require('mongodb');

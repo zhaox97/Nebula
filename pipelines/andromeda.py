@@ -14,7 +14,7 @@ def main():
     
     pipeline = nebula.pipeline.Pipeline()
    
-    andromeda = nebula.model.Andromeda(dist_func="euclidean")
+    andromeda = nebula.model.AndromedaModel(dist_func="euclidean")
     #composite = nebula.model.CompositeModel()
     data_controller = nebula.data.CSVDataController(csvfile)
    
