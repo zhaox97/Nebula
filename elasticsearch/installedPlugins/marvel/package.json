@@ -1,0 +1,64 @@
+{
+ "author": {
+  "name": "Elasticsearch",
+  "company": "Elasticsearch BV"
+ },
+ "scripts": {
+  "test": "gulp test",
+  "start": "npm run rebuild && gulp dev",
+  "build": "npm run rebuild && gulp package",
+  "rebuild": "npm prune && npm install",
+  "precommit": "gulp lint"
+ },
+ "name": "marvel",
+ "version": "2.3.4",
+ "repository": {
+  "type": "git",
+  "url": "http://github.com/elasticsearch/elasticsearch-marvel.git"
+ },
+ "devDependencies": {
+  "aws-sdk": "2.2.33",
+  "babel": "^5.8.34",
+  "babel-eslint": "^4.1.1",
+  "bluebird": "2.10.2",
+  "del": "2.2.0",
+  "elasticsearch": "10.1.3",
+  "eslint": "1.10.3",
+  "eslint-plugin-mocha": "1.1.0",
+  "expect.js": "0.3.1",
+  "gulp": "3.9.0",
+  "gulp-eslint": "1.1.1",
+  "gulp-gzip": "1.2.0",
+  "gulp-hashsum": "1.0.1",
+  "gulp-istanbul": "0.10.3",
+  "gulp-load-plugins": "1.2.0",
+  "gulp-mocha": "2.2.0",
+  "gulp-rename": "1.2.2",
+  "gulp-tar": "1.8.0",
+  "gulp-util": "3.0.7",
+  "husky": "0.10.2",
+  "isparta": "3.5.3",
+  "joi": "6.6.1",
+  "libesvm": "3.2.2",
+  "lodash": "3.10.1",
+  "mkdirp": "0.5.1",
+  "moment": "2.11.1",
+  "node-uuid": "1.4.7",
+  "portscanner": "1.0.0",
+  "rsync": "0.4.0",
+  "yargs": "3.32.0"
+ },
+ "dependencies": {
+  "@spalger/numeral": "2.2.1",
+  "angular-resource": "1.4.9",
+  "boom": "2.10.1",
+  "flot-charts": "0.8.3",
+  "react": "0.13.3",
+  "requirefrom": "0.2.0",
+  "semver": "5.1.0"
+ },
+ "build": {
+  "number": 4341,
+  "sha": "5b88de592403181cf2083f63aff8b8b976cf72ff"
+ }
+}

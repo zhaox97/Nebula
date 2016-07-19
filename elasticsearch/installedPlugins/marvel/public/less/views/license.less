@@ -1,0 +1,29 @@
+@link-green: #3ac374;
+.license-view {
+  padding: 50px 125px 5px;
+  background-color: #424242;
+  color: #fff;
+  font-size: 20px;
+
+  .license-main {
+    text-align: center;
+    a {
+      color: @link-green;
+      &.btn {
+        font-size: 20px;
+        margin: 30px 0;
+        width: 200px;
+        color: #fff;
+        border: 1px solid @link-green;
+
+        &.premium { background-color: @link-green; }
+      }
+    }
+  }
+  .license-back { text-align: right; }
+  .bold { font-weight: bold; }
+  .title {
+    margin-bottom: 30px;
+    font-size: 30px;
+  }
+}
