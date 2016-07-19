@@ -1,6 +1,5 @@
 var spawn = require('child_process').spawn;
 var async = require('async');
-var zerorpc = require('zerorpc');
 var zmq = require('zmq');
 
 /* Load the databases we need */
@@ -11,36 +10,43 @@ var zmq = require('zmq');
 /* Export the Nebula class */
 module.exports = Nebula;
 
+/* The pipelines available to use */
 var pipelines = {andromeda: [ 
-                             "Nebula-Pipeline/andromeda.py",
+                             "pipelines/andromeda.py",
                              "5555",
-                             "Nebula-Pipeline/Animal_Data_small.csv"
+                             "data/Animal_Data_small.csv"
                              ],
 				 cosmos: [
-				          "Nebula-Pipeline/cosmosdynamic.py",
+				          "pipelines/cosmosdynamic.py",
 				          "5555",
-				          "Nebula-Pipeline/crescent tfidf.csv",
-				          "Nebula-Pipeline/crescent_raw"
+				          "data/crescent tfidf.csv",
+				          "data/crescent_raw"
 				          ],
 				 twitter: [
-				           "Nebula-Pipeline/twitter.py",
+				           "pipelines/twitter.py",
 				           "5555"
 				          ],
 				 composite: [
-							 "Nebula-Pipeline/composite.py",
+							 "pipelines/composite.py",
 							 "5555",
-							 "Nebula-Pipeline/crescent tfidf.csv",
-							 "Nebula-Pipeline/crescent_raw"
+							 "data/crescent tfidf.csv",
+							 "data/crescent_raw"
 				             ],
 				 loadtest: [
-				            "Nebula-Pipeline/cosmos.py",
+				            "pipelines/cosmos.py",
 				            "5555",
+<<<<<<< HEAD
 				            "Nebula-Pipeline/data10000x1000.csv",
 				            "Nebula-Pipeline/crescent_raw"
 				            ],
 				 elasticsearch: [
 				 			"Nebula-Pipeline/tfpipeline.py",
 				 			"5555"]
+=======
+				            "data/data10000x1000.csv",
+				            "data/crescent_raw"
+				            ]
+>>>>>>> master
 };
 
 /* Nebula class constructor */
@@ -91,6 +97,7 @@ function Nebula(io, pipelineAddr) {
 				room.name = roomName;
 				room.count = 1;
 				room.points = new Map();
+				room.similarity_weights = new Map();
 				
 				/* Create a pipeline client for this room */
 				if (!pipelineAddr) {
@@ -108,6 +115,18 @@ function Nebula(io, pipelineAddr) {
 					console.log(pythonArgs);
 					
 					var pipelineInstance = spawn("python2.7", pythonArgs, {stdout: "inherit"});
+					
+					pipelineInstance.on("error", function(err) {
+						console.log("python2.7.exe not found. Trying python.exe");
+						pipelineInstance = spawn("python", pythonArgs, {stdout: "inherit"});
+						
+						pipelineInstance.stdout.on("data", function(data) {
+							console.log("Pipeline: " + data.toString());
+						});
+						pipelineInstance.stderr.on("data", function(data) {
+							console.log("Pipeline error: " + data.toString());
+						});
+					});
 					
 					pipelineInstance.stdout.on("data", function(data) {
 						console.log("Pipeline: " + data.toString());
@@ -159,22 +178,6 @@ function Nebula(io, pipelineAddr) {
 					data.interaction = data.type;
 					invoke(socket.room.pipelineSocket, "update", data);
 				}
-//				else if (data.type === "search") {
-//					invoke(socket.room.pipelineSocket, "update", 
-//							{interaction: "search", query: data.query});
-//				}
-//				else if (data.type === "change_relevance") {
-//					invoke(socket.room.pipelineSocket, "update", 
-//							{interaction: "change_relevance", id: data.id, relevance: data.relevance});
-//				}
-//				else if (data.type === "delete") {
-//					invoke(socket.room.pipelineSocket, "update", 
-//							{interaction: "delete", id: data.id});
-//				}
-//				else if (data.type === "none") {
-//					invoke(socket.room.pipelineSocket, "update", 
-//							{interaction: "none"});
-//				}
 			}
 		});
 		
@@ -262,16 +265,29 @@ Nebula.prototype.handleUpdate = function(room, res) {
 };
 
 var updateRoom = function(room, update) {
-	for (var i=0; i < update.points.length; i++) {
-		var point = update.points[i];
-		if (room.points.has(point.id)) {
-			if (point.pos)
-				room.points.get(point.id).pos = point.pos;
-			if (point.relevance)
-				room.points.get(point.id).relevance = point.relevance;
+	if (update.points) {
+		for (var i=0; i < update.points.length; i++) {
+			var point = update.points[i];
+			if (room.points.has(point.id)) {
+				if (point.pos)
+					room.points.get(point.id).pos = point.pos;
+				if (point.relevance)
+					room.points.get(point.id).relevance = point.relevance;
+			}
+			else {
+				room.points.set(point.id, point);
+			}
 		}
-		else {
-			room.points.set(point.id, point);
+	}
+	if (update.similarity_weights) {
+		for (var i=0; i < update.similarity_weights.length; i++) {
+			var weight = update.similarity_weights[i];
+			if (room.similarity_weights.has(weight.id)) {
+				room.similarity_weights.get(weight.id).weight = weight.weight;
+			}
+			else {
+				room.similarity_weights.set(weight.id, weight);
+			}
 		}
 	}
 };
@@ -296,6 +312,7 @@ var oli = function(room) {
 var sendRoom = function(room) {
 	var modRoom = {};
 	modRoom.points = Array.from(room.points.values());
+	modRoom.similarity_weights = Array.from(room.similarity_weights.values());
 	return modRoom;
 };
 

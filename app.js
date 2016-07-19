@@ -7,8 +7,6 @@ var bodyParser = require('body-parser');
 
 /* REST API routes */
 var routes = require('./routes/index');
-var data = require('./routes/data');
-var oli = require('./routes/oli');
 
 /* Connect to the databases */
 //var mongo = require('mongodb');
@@ -55,8 +53,6 @@ app.use("/cosmos", express.static(path.join(__dirname, 'CosmosD3')));
 
 /* Initiate the REST API */
 app.use('/', routes);
-//app.use('/oli', oli);
-app.use('/data', data);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -98,9 +94,7 @@ function onError(error) {
     throw error;
   }
 
-  var bind = typeof port === 'string'
-    ? 'Pipe ' + port
-    : 'Port ' + port;
+  var bind = (typeof port === 'string' ? 'Pipe ' + port : 'Port ' + port);
 
   // handle specific listen errors with friendly messages
   switch (error.code) {
@@ -123,9 +117,7 @@ function onError(error) {
 
 function onListening() {
   var addr = http.address();
-  var bind = typeof addr === 'string'
-    ? 'pipe ' + addr
-    : 'port ' + addr.port;
+  var bind = (typeof addr === 'string' ? 'pipe ' + addr : 'port ' + addr.port);
   debug('Listening on ' + bind);
 }
 
