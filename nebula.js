@@ -37,7 +37,10 @@ var pipelines = {andromeda: [
 				            "5555",
 				            "Nebula-Pipeline/data10000x1000.csv",
 				            "Nebula-Pipeline/crescent_raw"
-				            ]
+				            ],
+				 elasticsearch: [
+				 			"Nebula-Pipeline/tfpipeline.py",
+				 			"5555"]
 };
 
 /* Nebula class constructor */
