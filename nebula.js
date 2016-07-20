@@ -35,18 +35,12 @@ var pipelines = {andromeda: [
 				 loadtest: [
 				            "pipelines/cosmos.py",
 				            "5555",
-<<<<<<< HEAD
 				            "Nebula-Pipeline/data10000x1000.csv",
 				            "Nebula-Pipeline/crescent_raw"
 				            ],
 				 elasticsearch: [
-				 			"Nebula-Pipeline/tfpipeline.py",
+				 			"tfpipeline.py",
 				 			"5555"]
-=======
-				            "data/data10000x1000.csv",
-				            "data/crescent_raw"
-				            ]
->>>>>>> master
 };
 
 /* Nebula class constructor */
