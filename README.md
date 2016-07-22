@@ -11,6 +11,8 @@ For all platforms, Python 2.7 must be installed for Nebula-Pipeline to work. It 
 ## Windows
 Install the Node.js from their website [here](nodejs.org). Select the LTS version.
 
+NOTE: Any LTS version at or below 4.4.7 will not work correctly. As soon as a new version is released, the rest of the install instructions should work fine, but as of this writing a new version has not been released. To fix this issue, you must run `npm install -g npm`, and then go into your `~\AppData\Roaming\npm\node_modules\npm` directory and run the command `npm install node-gyp@3.4.0`. With this, the remaining instructions should work. Any LTS Node.js version after 4.4.7 should not need to the aforementioned steps.
+
 Install the Visual C++ Build Tools, found [here](http://landinghub.visualstudio.com/visual-cpp-build-tools). Then tell the Node package manager to use this version by running:
 
 ``npm config set msvs_version 2015``
