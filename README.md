@@ -2,15 +2,7 @@
 This project acts as the visualization controller. It is a Node.js server that makes use of WebSockets to synchronize actions across multiple clients. The logical flow is as follows: clients submit a `join` message to the room they wish to join. This room is a string specifying different instances of visualizations to connect to. Currently, the client automatically connects to a room called `default`. If the room the client connects to already exists, the client will be synch'd with the current state of the visualization. Otherwise, the room will be created and initialized as an empty visualization.
 
 # Installation
-The first requirement is to have git installed on your machine. You must have your public keys set up with git and the GitLab where the project is hosted (git.it.vt.edu) so that SSH can be used to download the submodules.
-
-This project is built using Node.js, and uses the CosmosD3 and Nebula-Pipeline repositories as submodules. To make sure these submodules get pulled in correctly, either clone this repo using the `--recursive` flag or if you have already cloned the repo, pull in the submodules using:
-
-``git submodule init``
-
-``git submodule update``
-
-Some dependencies must be installed which are different for each platform. Instructions for installing the pipeline (Nebula-Pipeline submodule) are provided as well. You may choose to install the pipeline separate following its own instructions. In this case, ignore all instructions for Python and the pipeline.
+Some dependencies must be installed which are different for each platform. Instructions for installing the pipeline (Nebula-Pipeline submodule) are provided as well. You may choose to install the pipeline separately following its own instructions. In this case, ignore all instructions for Python and the pipeline.
 
 For all platforms, Python 2.7 must be installed for Nebula-Pipeline to work. It can be installed from their website [here](https://www.python.org/downloads/release/python-2712/). This install should come with pip, the Python package manager. If you can run pip from the command line, you are ready to proceed. If pip isn't found, you can install it by following the instructions [here](https://pip.pypa.io/en/stable/installing/). Make sure pip is updated to the latest version by running:
 
@@ -50,11 +42,9 @@ With this, all the Node dependencies should be installed.
 
 Next, you can install all the pipeline dependencies with the command:
 
-``pip install Nebula-Pipeline`` (if you are going to develop you can use ``pip install -e Nebula-Pipeline``)
+``pip install ./path/to/Nebula-Pipeline`` (if you are going to develop you can use ``pip install -e ./path/to/Nebula-Pipeline``)
 
 Again, you may need to use `sudo`.
-
---------------------------------------------------------------------------------------
 
 # User Guide
 
@@ -65,6 +55,8 @@ Multiple clients of the same type can be opened simultaneously, and all clients 
 When the first client is loaded from the server, it can specify which pipeline to load, which are described below. This pipeline is then started by the Node.js server, by spawning a Python instance. Each pipeline gets started on port 5555, and the server automatically connects to it once it is started. Because each is run on the same port, only one pipeline can currently be run. Again, this simply enables us to test each client, and could easily be modified for more robust use.
 
 # Developer Notes
+
+When initialing cloning from git, be sure to either run `git clone` with the `--recursive` command, or run `git submodule init` followed by `git submodule update` to pull in the CosmosD3 submodule that contains the web client code.
 
 ## Structure
 This project is organized as a Nodeclipse project. The core pieces are as follows:
@@ -82,7 +74,7 @@ The core WebSocket logic. It listens for incoming WebSocket connections on the w
 A Git submodule for accessing the CosmosD3 project. This contains all the HTML, Javascript, and CSS files necessary for the web visualization clients. See the CosmosD3 project for more information.
 
 ### pipelines/
-This folder contains all the pipeline instances currently implemented. The `cosmos` pipeline contains an ActiveSetModel and a SimilarityModel, and works with both the CosmosD3 and CosmosRadar clients. The `composite` pipeline works with these visualizations as well, adding in the features described in the Nebula-Pipeline README. The `twitter` pipeline works with the CosmosTwitter client.
+This folder contains all the pipeline instances currently implemented. The `cosmos` pipeline contains an ActiveSetModel and a SimilarityModel, and works with both the CosmosD3 and CosmosRadar clients. The `composite` pipeline works with these visualizations as well, adding in the features described in the Nebula-Pipeline README. The `twitter` pipeline works with the CosmosTwitter client, and the access and consumer tokens must be set for this to work, see [here](https://dev.twitter.com/oauth/overview) for instructions on creating these keys.
 
 ### data/
 This folder contains the data to be used by any of the aforementioned pipelines.
