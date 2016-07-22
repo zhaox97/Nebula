@@ -14,7 +14,7 @@ module.exports = Nebula;
 var pipelines = {andromeda: [ 
                              "pipelines/andromeda.py",
                              "5555",
-                             "data/Animal_Data_small.csv"
+                             "data/Animal_Data_study.csv"
                              ],
 				 cosmos: [
 				          "pipelines/cosmos.py",
@@ -121,10 +121,12 @@ function Nebula(io, pipelineAddr) {
 					});
 				}
 				
+				/* Connect to the pipeline */
 				pipelineAddr = pipelineAddr || "tcp://127.0.0.1:5555";
 				room.pipelineSocket = zmq.socket('pair');
 				room.pipelineSocket.connect(pipelineAddr);
 				
+				/* Listens for messages from the pipeline */
 				room.pipelineSocket.on('message', function (msg) {
 					self.handleMessage(room, msg);
 				});
@@ -207,6 +209,7 @@ Nebula.prototype.handleAction = function(action, room) {
 	}
 };
 
+/* Handles a message from the pipeline, encapsulated in an RPC-like fashion */
 Nebula.prototype.handleMessage = function(room, msg) {
 	var obj = JSON.parse(msg.toString());
 	if (obj.func) {
@@ -249,6 +252,7 @@ Nebula.prototype.handleUpdate = function(room, res) {
 	this.io.to(room.name).emit('update', update);
 };
 
+/* Updates our state for each room upon an update from the pipeline */
 var updateRoom = function(room, update) {
 	if (update.points) {
 		for (var i=0; i < update.points.length; i++) {
@@ -277,9 +281,8 @@ var updateRoom = function(room, update) {
 	}
 };
 
-/* Runs MDS or Inverse MDS on the points in a room. For inverse MDS,
- * only the selected points are included in the algorithm. This spawns
- * a Java process with the accompanying jar file to run the algorithm.
+/* Runs inverse MDS on the points in a room. For inverse MDS,
+ * only the selected points are included in the algorithm. 
  */
 var oli = function(room) {
 	var points = {};
@@ -294,6 +297,7 @@ var oli = function(room) {
 	return points;
 };
 
+/* Copies the room details we want to send to the client to a new object */
 var sendRoom = function(room) {
 	var modRoom = {};
 	modRoom.points = Array.from(room.points.values());
@@ -301,6 +305,7 @@ var sendRoom = function(room) {
 	return modRoom;
 };
 
+/* Sends a message to a pipeline, enscapsulating it in an RPC-like fashion */
 var invoke = function(socket, func, data) {
 	var obj = {"func": func, "contents": data};
 	socket.send(JSON.stringify(obj));
