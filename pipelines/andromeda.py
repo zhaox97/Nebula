@@ -15,11 +15,9 @@ def main():
     pipeline = nebula.pipeline.Pipeline()
    
     andromeda = nebula.model.AndromedaModel(dist_func="euclidean")
-    #composite = nebula.model.CompositeModel()
     data_controller = nebula.data.CSVDataController(csvfile)
    
     pipeline.append_model(andromeda)
-    #pipeline.append_model(composite)
     pipeline.set_data_controller(data_controller)
     
     connector = nebula.connector.ZeroMQConnector(port=int(sys.argv[1]))

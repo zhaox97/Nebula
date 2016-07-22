@@ -17,7 +17,7 @@ var pipelines = {andromeda: [
                              "data/Animal_Data_small.csv"
                              ],
 				 cosmos: [
-				          "pipelines/cosmosdynamic.py",
+				          "pipelines/cosmos.py",
 				          "5555",
 				          "data/crescent tfidf.csv",
 				          "data/crescent_raw"
@@ -31,13 +31,7 @@ var pipelines = {andromeda: [
 							 "5555",
 							 "data/crescent tfidf.csv",
 							 "data/crescent_raw"
-				             ],
-				 loadtest: [
-				            "pipelines/cosmos.py",
-				            "5555",
-				            "data/data10000x1000.csv",
-				            "data/crescent_raw"
-				            ]
+				             ]
 };
 
 /* Nebula class constructor */

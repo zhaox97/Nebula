@@ -12,8 +12,8 @@ def main():
     
     pipeline = nebula.pipeline.Pipeline()
    
-    relevance = nebula.model.DynamicActiveSetModel()
-    similarity = nebula.model.DynamicSimilarityModel()
+    relevance = nebula.model.ActiveSetModel()
+    similarity = nebula.model.SimilarityModel()
     data_controller = nebula.data.TwitterDataController()
    
     corpus = nebula.model.CorpusSetModel()
