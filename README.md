@@ -10,7 +10,7 @@ This project is built using Node.js, and uses the CosmosD3 and Nebula-Pipeline r
 
 ``git submodule update``
 
-Some dependencies must be installed which are different for each platform. Instructions for installing the pipeline (Nebula-Pipeline submodule) are provided as well. You may choose to install the pipeline seperate following its own instructions. In this case, ignore all instructions for Python and the pipeline.
+Some dependencies must be installed which are different for each platform. Instructions for installing the pipeline (Nebula-Pipeline submodule) are provided as well. You may choose to install the pipeline separate following its own instructions. In this case, ignore all instructions for Python and the pipeline.
 
 For all platforms, Python 2.7 must be installed for Nebula-Pipeline to work. It can be installed from their website [here](https://www.python.org/downloads/release/python-2712/). This install should come with pip, the Python package manager. If you can run pip from the command line, you are ready to proceed. If pip isn't found, you can install it by following the instructions [here](https://pip.pypa.io/en/stable/installing/). Make sure pip is updated to the latest version by running:
 
