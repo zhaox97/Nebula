@@ -17,8 +17,6 @@ def main():
     # Create a Pipeline object from the nebula.pipeline module
     pipeline = nebula.pipeline.Pipeline()
     
-    ### Continue comment party from here
-    
     # Create an ActiveSetModel object from the nebula.model module, starts out empty
     relevance = nebula.model.ActiveSetModel()
     
