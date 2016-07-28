@@ -20,6 +20,8 @@ def main():
     # Create an ActiveSetModel object from the nebula.model module, starts out empty
     relevance = nebula.model.ActiveSetModel()
     
+    ### Continue from here
+    
     # Create a SimilarityModel object from the nebula.model module, which does 
     # forward and inverse MDS
     # projections and stores the current set of similarity weights
