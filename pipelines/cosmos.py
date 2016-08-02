@@ -18,14 +18,14 @@ def main():
     pipeline = nebula.pipeline.Pipeline()
     
     # Create an ActiveSetModel object from the nebula.model module, starts out empty
-    relevance = nebula.model.ActiveSetModel()
+    relevance_model = nebula.model.ActiveSetModel()
     
     ### Continue from here
     
     # Create a SimilarityModel object from the nebula.model module, which does 
     # forward and inverse MDS
     # projections and stores the current set of similarity weights
-    similarity = nebula.model.SimilarityModel()
+    similarity_model = nebula.model.SimilarityModel()
     
     # Create a CSVDataController object from the nebula.data module, providing
     # a CSV file to load data from and the path to a folder containing the raw
@@ -42,8 +42,8 @@ def main():
     # The order that the models are
     # added is the order in which they are executed in the forward pipeline.
     # IMPORTANT: They are executed in reverse order in the inverse pipeline
-    pipeline.append_model(relevance)
-    pipeline.append_model(similarity)
+    pipeline.append_model(relevance_model)
+    pipeline.append_model(similarity_model)
     
     # Note: a pipeline contains exactly one data controller
     pipeline.set_data_controller(data_controller)
