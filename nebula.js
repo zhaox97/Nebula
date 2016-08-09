@@ -11,28 +11,27 @@ var zmq = require('zmq');
 module.exports = Nebula;
 
 /* The pipelines available to use */
-var pipelines = {andromeda: [ 
-                             "pipelines/andromeda.py",
-                             "5555",
-                             "data/Animal_Data_study.csv"
-                             ],
-				 cosmos: [
-				          "pipelines/cosmos.py",
-				          "5555",
-				          "data/crescent tfidf.csv",
-				          "data/crescent_raw"
-				          ],
-				 twitter: [
-				           "pipelines/twitter.py",
-				           "5555"
-				          ],
-				 composite: [
-							 "pipelines/composite.py",
-							 "5555",
-							 "data/crescent tfidf.csv",
-							 "data/crescent_raw"
-				             ]
+var pipelines = {andromeda: { 
+                             file: "pipelines/andromeda.py",
+                             args: ["data/Animal_Data_study.csv"]
+				 },
+				 cosmos: {
+				          file: "pipelines/cosmos.py",
+				          args: ["data/crescent tfidf.csv",
+				                 "data/crescent_raw"]
+				 },
+				 twitter: {
+				           file: "pipelines/twitter.py",
+				           args: []
+				 },
+				 composite: {
+					 		 file: "pipelines/composite.py",
+							 args: ["data/crescent tfidf.csv",
+							        "data/crescent_raw"]
+				 }
 };
+
+var port = 5555;
 
 /* Nebula class constructor */
 function Nebula(io, pipelineAddr) {
@@ -87,10 +86,16 @@ function Nebula(io, pipelineAddr) {
 				/* Create a pipeline client for this room */
 				if (!pipelineAddr) {
 					var pythonArgs = ["-u"];
-					if (pipeline in pipelines)
-						pythonArgs = pythonArgs.concat(pipelines[pipeline]);
-					else
-						pythonArgs = pythonArgs.concat(pipelines.cosmos);
+					if (pipeline in pipelines) {
+						pythonArgs.push(pipelines[pipeline].file);
+						pythonArgs.push(port.toString());
+						pythonArgs = pythonArgs.concat(pipelines[pipeline].args);
+					}
+					else {
+						pythonArgs.push(pipelines.cosmos.file);
+						pythonArgs.push(port.toString());
+						pythonArgs = pythonArgs.concat(pipelines.cosmos.args);
+					}
 					for (var key in args) {
 						if (args.hasOwnProperty(key)) {
 							pythonArgs.push("--" + key);
@@ -122,9 +127,12 @@ function Nebula(io, pipelineAddr) {
 				}
 				
 				/* Connect to the pipeline */
-				pipelineAddr = pipelineAddr || "tcp://127.0.0.1:5555";
+				pipelineAddr = pipelineAddr || "tcp://127.0.0.1:" + port.toString();
 				room.pipelineSocket = zmq.socket('pair');
 				room.pipelineSocket.connect(pipelineAddr);
+				
+				pipelineAddr = null;
+				port += 1;
 				
 				/* Listens for messages from the pipeline */
 				room.pipelineSocket.on('message', function (msg) {
