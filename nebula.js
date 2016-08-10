@@ -28,6 +28,10 @@ var pipelines = {andromeda: {
 					 		 file: "pipelines/composite.py",
 							 args: ["data/crescent tfidf.csv",
 							        "data/crescent_raw"]
+				 },
+				 elasticsearch: {
+				 			file: "espipeline.py",
+				 			args: []
 				 }
 };
 

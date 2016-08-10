@@ -2,6 +2,7 @@ node_modules
 log
 build
 *.log
+elasticsearch/data
 # Elastic Beanstalk Files
 .elasticbeanstalk/*
 !.elasticbeanstalk/*.cfg.yml
