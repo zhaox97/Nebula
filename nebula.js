@@ -30,7 +30,7 @@ var pipelines = {andromeda: {
 							        "data/crescent_raw"]
 				 },
 				 elasticsearch: {
-				 			file: "espipeline.py",
+				 			file: "pipelines/espipeline.py",
 				 			args: []
 				 }
 };
