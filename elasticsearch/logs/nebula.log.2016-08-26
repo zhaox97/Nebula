@@ -1,0 +1,466 @@
+[2016-08-26 00:06:59,973][ERROR][license.plugin.core      ] [ne_search] 
+#
+# LICENSE EXPIRED ON [Thursday, August 11, 2016]. IF YOU HAVE A NEW LICENSE, PLEASE
+# UPDATE IT. OTHERWISE, PLEASE REACH OUT TO YOUR SUPPORT CONTACT.
+# 
+# COMMERCIAL PLUGINS OPERATING WITH REDUCED FUNCTIONALITY
+# - marvel
+#  - The agent will stop collecting cluster and indices metrics
+#  - The agent will stop automatically cleaning indices older than [marvel.history.duration]
+[2016-08-26 00:17:00,020][ERROR][license.plugin.core      ] [ne_search] 
+#
+# LICENSE EXPIRED ON [Thursday, August 11, 2016]. IF YOU HAVE A NEW LICENSE, PLEASE
+# UPDATE IT. OTHERWISE, PLEASE REACH OUT TO YOUR SUPPORT CONTACT.
+# 
+# COMMERCIAL PLUGINS OPERATING WITH REDUCED FUNCTIONALITY
+# - marvel
+#  - The agent will stop collecting cluster and indices metrics
+#  - The agent will stop automatically cleaning indices older than [marvel.history.duration]
+[2016-08-26 00:23:41,856][INFO ][cluster.routing.allocation.decider] [ne_search] low disk watermark [85%] exceeded on [GnZAbzW0SyG3VhESCUnKTw][ne_search][/Users/Theo/Desktop/Nebula/elasticsearch/data/nebula/nodes/0] free: 34.4gb[14.8%], replicas will not be assigned to this node
+[2016-08-26 00:24:11,863][INFO ][cluster.routing.allocation.decider] [ne_search] low disk watermark [85%] exceeded on [GnZAbzW0SyG3VhESCUnKTw][ne_search][/Users/Theo/Desktop/Nebula/elasticsearch/data/nebula/nodes/0] free: 33.6gb[14.4%], replicas will not be assigned to this node
+[2016-08-26 00:24:41,866][INFO ][cluster.routing.allocation.decider] [ne_search] low disk watermark [85%] exceeded on [GnZAbzW0SyG3VhESCUnKTw][ne_search][/Users/Theo/Desktop/Nebula/elasticsearch/data/nebula/nodes/0] free: 31.8gb[13.6%], replicas will not be assigned to this node
+[2016-08-26 00:25:11,869][INFO ][cluster.routing.allocation.decider] [ne_search] low disk watermark [85%] exceeded on [GnZAbzW0SyG3VhESCUnKTw][ne_search][/Users/Theo/Desktop/Nebula/elasticsearch/data/nebula/nodes/0] free: 29.6gb[12.7%], replicas will not be assigned to this node
+[2016-08-26 00:25:41,874][INFO ][cluster.routing.allocation.decider] [ne_search] low disk watermark [85%] exceeded on [GnZAbzW0SyG3VhESCUnKTw][ne_search][/Users/Theo/Desktop/Nebula/elasticsearch/data/nebula/nodes/0] free: 27.3gb[11.7%], replicas will not be assigned to this node
+[2016-08-26 00:26:11,878][INFO ][cluster.routing.allocation.decider] [ne_search] low disk watermark [85%] exceeded on [GnZAbzW0SyG3VhESCUnKTw][ne_search][/Users/Theo/Desktop/Nebula/elasticsearch/data/nebula/nodes/0] free: 24.8gb[10.6%], replicas will not be assigned to this node
+[2016-08-26 00:26:41,883][WARN ][cluster.routing.allocation.decider] [ne_search] high disk watermark [90%] exceeded on [GnZAbzW0SyG3VhESCUnKTw][ne_search][/Users/Theo/Desktop/Nebula/elasticsearch/data/nebula/nodes/0] free: 22.8gb[9.8%], shards will be relocated away from this node
+[2016-08-26 00:26:41,883][INFO ][cluster.routing.allocation.decider] [ne_search] rerouting shards: [high disk watermark exceeded on one or more nodes]
+[2016-08-26 00:27:00,043][ERROR][license.plugin.core      ] [ne_search] 
+#
+# LICENSE EXPIRED ON [Thursday, August 11, 2016]. IF YOU HAVE A NEW LICENSE, PLEASE
+# UPDATE IT. OTHERWISE, PLEASE REACH OUT TO YOUR SUPPORT CONTACT.
+# 
+# COMMERCIAL PLUGINS OPERATING WITH REDUCED FUNCTIONALITY
+# - marvel
+#  - The agent will stop collecting cluster and indices metrics
+#  - The agent will stop automatically cleaning indices older than [marvel.history.duration]
+[2016-08-26 00:27:11,917][WARN ][cluster.routing.allocation.decider] [ne_search] high disk watermark [90%] exceeded on [GnZAbzW0SyG3VhESCUnKTw][ne_search][/Users/Theo/Desktop/Nebula/elasticsearch/data/nebula/nodes/0] free: 22gb[9.4%], shards will be relocated away from this node
+[2016-08-26 00:27:41,920][WARN ][cluster.routing.allocation.decider] [ne_search] high disk watermark [90%] exceeded on [GnZAbzW0SyG3VhESCUnKTw][ne_search][/Users/Theo/Desktop/Nebula/elasticsearch/data/nebula/nodes/0] free: 21.7gb[9.3%], shards will be relocated away from this node
+[2016-08-26 00:27:41,920][INFO ][cluster.routing.allocation.decider] [ne_search] rerouting shards: [high disk watermark exceeded on one or more nodes]
+[2016-08-26 00:28:11,925][WARN ][cluster.routing.allocation.decider] [ne_search] high disk watermark [90%] exceeded on [GnZAbzW0SyG3VhESCUnKTw][ne_search][/Users/Theo/Desktop/Nebula/elasticsearch/data/nebula/nodes/0] free: 21.6gb[9.3%], shards will be relocated away from this node
+[2016-08-26 00:28:41,932][WARN ][cluster.routing.allocation.decider] [ne_search] high disk watermark [90%] exceeded on [GnZAbzW0SyG3VhESCUnKTw][ne_search][/Users/Theo/Desktop/Nebula/elasticsearch/data/nebula/nodes/0] free: 21.6gb[9.2%], shards will be relocated away from this node
+[2016-08-26 00:28:41,933][INFO ][cluster.routing.allocation.decider] [ne_search] rerouting shards: [high disk watermark exceeded on one or more nodes]
+[2016-08-26 00:29:11,940][WARN ][cluster.routing.allocation.decider] [ne_search] high disk watermark [90%] exceeded on [GnZAbzW0SyG3VhESCUnKTw][ne_search][/Users/Theo/Desktop/Nebula/elasticsearch/data/nebula/nodes/0] free: 21.5gb[9.2%], shards will be relocated away from this node
+[2016-08-26 00:29:41,944][WARN ][cluster.routing.allocation.decider] [ne_search] high disk watermark [90%] exceeded on [GnZAbzW0SyG3VhESCUnKTw][ne_search][/Users/Theo/Desktop/Nebula/elasticsearch/data/nebula/nodes/0] free: 21.5gb[9.2%], shards will be relocated away from this node
+[2016-08-26 00:29:41,944][INFO ][cluster.routing.allocation.decider] [ne_search] rerouting shards: [high disk watermark exceeded on one or more nodes]
+[2016-08-26 00:30:11,946][WARN ][cluster.routing.allocation.decider] [ne_search] high disk watermark [90%] exceeded on [GnZAbzW0SyG3VhESCUnKTw][ne_search][/Users/Theo/Desktop/Nebula/elasticsearch/data/nebula/nodes/0] free: 21.5gb[9.2%], shards will be relocated away from this node
+[2016-08-26 00:30:41,953][INFO ][cluster.routing.allocation.decider] [ne_search] rerouting shards: [one or more nodes has gone under the high or low watermark]
+[2016-08-26 00:35:47,369][INFO ][node                     ] [ne_search] stopping ...
+[2016-08-26 00:35:47,477][INFO ][node                     ] [ne_search] stopped
+[2016-08-26 00:35:47,478][INFO ][node                     ] [ne_search] closing ...
+[2016-08-26 00:35:47,508][INFO ][node                     ] [ne_search] closed
+[2016-08-26 00:53:00,359][INFO ][node                     ] [ne_search] version[2.3.4], pid[772], build[e455fd0/2016-06-30T11:24:31Z]
+[2016-08-26 00:53:00,362][INFO ][node                     ] [ne_search] initializing ...
+[2016-08-26 00:53:01,259][INFO ][plugins                  ] [ne_search] modules [reindex, lang-expression, lang-groovy], plugins [license, marvel-agent], sites []
+[2016-08-26 00:53:01,298][INFO ][env                      ] [ne_search] using [1] data paths, mounts [[/ (/dev/disk1)]], net usable_space [69.4gb], net total_space [232.6gb], spins? [unknown], types [hfs]
+[2016-08-26 00:53:01,299][INFO ][env                      ] [ne_search] heap size [990.7mb], compressed ordinary object pointers [true]
+[2016-08-26 00:53:01,300][WARN ][env                      ] [ne_search] max file descriptors [10240] for elasticsearch process likely too low, consider increasing to at least [65536]
+[2016-08-26 00:53:04,048][INFO ][node                     ] [ne_search] initialized
+[2016-08-26 00:53:04,050][INFO ][node                     ] [ne_search] starting ...
+[2016-08-26 00:53:04,195][INFO ][transport                ] [ne_search] publish_address {127.0.0.1:9300}, bound_addresses {127.0.0.1:9300}
+[2016-08-26 00:53:04,200][INFO ][discovery                ] [ne_search] nebula/K7fg49LrTf-ZP3LWHmjkOg
+[2016-08-26 00:53:07,246][INFO ][cluster.service          ] [ne_search] new_master {ne_search}{K7fg49LrTf-ZP3LWHmjkOg}{127.0.0.1}{127.0.0.1:9300}, reason: zen-disco-join(elected_as_master, [0] joins received)
+[2016-08-26 00:53:07,257][INFO ][http                     ] [ne_search] publish_address {127.0.0.1:9200}, bound_addresses {127.0.0.1:9200}
+[2016-08-26 00:53:07,257][INFO ][node                     ] [ne_search] started
+[2016-08-26 00:53:07,575][INFO ][license.plugin.core      ] [ne_search] license [aa60ab53-bddc-4e29-951e-64ec7a45317c] - expired
+[2016-08-26 00:53:07,578][ERROR][license.plugin.core      ] [ne_search] 
+#
+# LICENSE EXPIRED ON [Thursday, August 11, 2016]. IF YOU HAVE A NEW LICENSE, PLEASE
+# UPDATE IT. OTHERWISE, PLEASE REACH OUT TO YOUR SUPPORT CONTACT.
+# 
+# COMMERCIAL PLUGINS OPERATING WITH REDUCED FUNCTIONALITY
+# - marvel
+#  - The agent will stop collecting cluster and indices metrics
+#  - The agent will stop automatically cleaning indices older than [marvel.history.duration]
+[2016-08-26 00:53:07,638][INFO ][gateway                  ] [ne_search] recovered [10] indices into cluster_state
+[2016-08-26 00:53:08,920][INFO ][cluster.routing.allocation] [ne_search] Cluster health status changed from [RED] to [YELLOW] (reason: [shards started [[.marvel-es-data-1][0]] ...]).
+[2016-08-26 00:53:38,234][DEBUG][action.search            ] [ne_search] [test_index][4], node[K7fg49LrTf-ZP3LWHmjkOg], [P], v[12], s[STARTED], a[id=xq__uHKxT9eskuulh8HlvQ]: Failed to execute [org.elasticsearch.action.search.SearchRequest@78b5875d] lastShard [true]
+RemoteTransportException[[ne_search][127.0.0.1:9300][indices:data/read/search[phase/query]]]; nested: SearchParseException[failed to parse search source [{"match": {"title": {"minimum_should_match": "75%", "query": "storage fbi va"}}}]]; nested: SearchParseException[failed to parse search source. unknown search element [match]];
+Caused by: SearchParseException[failed to parse search source [{"match": {"title": {"minimum_should_match": "75%", "query": "storage fbi va"}}}]]; nested: SearchParseException[failed to parse search source. unknown search element [match]];
+	at org.elasticsearch.search.SearchService.parseSource(SearchService.java:855)
+	at org.elasticsearch.search.SearchService.createContext(SearchService.java:654)
+	at org.elasticsearch.search.SearchService.createAndPutContext(SearchService.java:620)
+	at org.elasticsearch.search.SearchService.executeQueryPhase(SearchService.java:371)
+	at org.elasticsearch.search.action.SearchServiceTransportAction$SearchQueryTransportHandler.messageReceived(SearchServiceTransportAction.java:368)
+	at org.elasticsearch.search.action.SearchServiceTransportAction$SearchQueryTransportHandler.messageReceived(SearchServiceTransportAction.java:365)
+	at org.elasticsearch.transport.TransportRequestHandler.messageReceived(TransportRequestHandler.java:33)
+	at org.elasticsearch.transport.RequestHandlerRegistry.processMessageReceived(RequestHandlerRegistry.java:75)
+	at org.elasticsearch.transport.TransportService$4.doRun(TransportService.java:376)
+	at org.elasticsearch.common.util.concurrent.AbstractRunnable.run(AbstractRunnable.java:37)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617)
+	at java.lang.Thread.run(Thread.java:745)
+Caused by: SearchParseException[failed to parse search source. unknown search element [match]]
+	at org.elasticsearch.search.SearchService.parseSource(SearchService.java:836)
+	... 12 more
+[2016-08-26 00:53:38,234][DEBUG][action.search            ] [ne_search] [test_index][0], node[K7fg49LrTf-ZP3LWHmjkOg], [P], v[12], s[STARTED], a[id=jlYJ5G9ETPmeap5xBEw8Ag]: Failed to execute [org.elasticsearch.action.search.SearchRequest@78b5875d] lastShard [true]
+RemoteTransportException[[ne_search][127.0.0.1:9300][indices:data/read/search[phase/query]]]; nested: SearchParseException[failed to parse search source [{"match": {"title": {"minimum_should_match": "75%", "query": "storage fbi va"}}}]]; nested: SearchParseException[failed to parse search source. unknown search element [match]];
+Caused by: SearchParseException[failed to parse search source [{"match": {"title": {"minimum_should_match": "75%", "query": "storage fbi va"}}}]]; nested: SearchParseException[failed to parse search source. unknown search element [match]];
+	at org.elasticsearch.search.SearchService.parseSource(SearchService.java:855)
+	at org.elasticsearch.search.SearchService.createContext(SearchService.java:654)
+	at org.elasticsearch.search.SearchService.createAndPutContext(SearchService.java:620)
+	at org.elasticsearch.search.SearchService.executeQueryPhase(SearchService.java:371)
+	at org.elasticsearch.search.action.SearchServiceTransportAction$SearchQueryTransportHandler.messageReceived(SearchServiceTransportAction.java:368)
+	at org.elasticsearch.search.action.SearchServiceTransportAction$SearchQueryTransportHandler.messageReceived(SearchServiceTransportAction.java:365)
+	at org.elasticsearch.transport.TransportRequestHandler.messageReceived(TransportRequestHandler.java:33)
+	at org.elasticsearch.transport.RequestHandlerRegistry.processMessageReceived(RequestHandlerRegistry.java:75)
+	at org.elasticsearch.transport.TransportService$4.doRun(TransportService.java:376)
+	at org.elasticsearch.common.util.concurrent.AbstractRunnable.run(AbstractRunnable.java:37)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617)
+	at java.lang.Thread.run(Thread.java:745)
+Caused by: SearchParseException[failed to parse search source. unknown search element [match]]
+	at org.elasticsearch.search.SearchService.parseSource(SearchService.java:836)
+	... 12 more
+[2016-08-26 00:53:38,235][DEBUG][action.search            ] [ne_search] [test_index][3], node[K7fg49LrTf-ZP3LWHmjkOg], [P], v[12], s[STARTED], a[id=aN0rH0f_S5GBhCktPVxL7A]: Failed to execute [org.elasticsearch.action.search.SearchRequest@78b5875d]
+RemoteTransportException[[ne_search][127.0.0.1:9300][indices:data/read/search[phase/query]]]; nested: SearchParseException[failed to parse search source [{"match": {"title": {"minimum_should_match": "75%", "query": "storage fbi va"}}}]]; nested: SearchParseException[failed to parse search source. unknown search element [match]];
+Caused by: SearchParseException[failed to parse search source [{"match": {"title": {"minimum_should_match": "75%", "query": "storage fbi va"}}}]]; nested: SearchParseException[failed to parse search source. unknown search element [match]];
+	at org.elasticsearch.search.SearchService.parseSource(SearchService.java:855)
+	at org.elasticsearch.search.SearchService.createContext(SearchService.java:654)
+	at org.elasticsearch.search.SearchService.createAndPutContext(SearchService.java:620)
+	at org.elasticsearch.search.SearchService.executeQueryPhase(SearchService.java:371)
+	at org.elasticsearch.search.action.SearchServiceTransportAction$SearchQueryTransportHandler.messageReceived(SearchServiceTransportAction.java:368)
+	at org.elasticsearch.search.action.SearchServiceTransportAction$SearchQueryTransportHandler.messageReceived(SearchServiceTransportAction.java:365)
+	at org.elasticsearch.transport.TransportRequestHandler.messageReceived(TransportRequestHandler.java:33)
+	at org.elasticsearch.transport.RequestHandlerRegistry.processMessageReceived(RequestHandlerRegistry.java:75)
+	at org.elasticsearch.transport.TransportService$4.doRun(TransportService.java:376)
+	at org.elasticsearch.common.util.concurrent.AbstractRunnable.run(AbstractRunnable.java:37)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617)
+	at java.lang.Thread.run(Thread.java:745)
+Caused by: SearchParseException[failed to parse search source. unknown search element [match]]
+	at org.elasticsearch.search.SearchService.parseSource(SearchService.java:836)
+	... 12 more
+[2016-08-26 00:53:38,246][DEBUG][action.search            ] [ne_search] All shards failed for phase: [query]
+RemoteTransportException[[ne_search][127.0.0.1:9300][indices:data/read/search[phase/query]]]; nested: SearchParseException[failed to parse search source [{"match": {"title": {"minimum_should_match": "75%", "query": "storage fbi va"}}}]]; nested: SearchParseException[failed to parse search source. unknown search element [match]];
+Caused by: SearchParseException[failed to parse search source [{"match": {"title": {"minimum_should_match": "75%", "query": "storage fbi va"}}}]]; nested: SearchParseException[failed to parse search source. unknown search element [match]];
+	at org.elasticsearch.search.SearchService.parseSource(SearchService.java:855)
+	at org.elasticsearch.search.SearchService.createContext(SearchService.java:654)
+	at org.elasticsearch.search.SearchService.createAndPutContext(SearchService.java:620)
+	at org.elasticsearch.search.SearchService.executeQueryPhase(SearchService.java:371)
+	at org.elasticsearch.search.action.SearchServiceTransportAction$SearchQueryTransportHandler.messageReceived(SearchServiceTransportAction.java:368)
+	at org.elasticsearch.search.action.SearchServiceTransportAction$SearchQueryTransportHandler.messageReceived(SearchServiceTransportAction.java:365)
+	at org.elasticsearch.transport.TransportRequestHandler.messageReceived(TransportRequestHandler.java:33)
+	at org.elasticsearch.transport.RequestHandlerRegistry.processMessageReceived(RequestHandlerRegistry.java:75)
+	at org.elasticsearch.transport.TransportService$4.doRun(TransportService.java:376)
+	at org.elasticsearch.common.util.concurrent.AbstractRunnable.run(AbstractRunnable.java:37)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617)
+	at java.lang.Thread.run(Thread.java:745)
+Caused by: SearchParseException[failed to parse search source. unknown search element [match]]
+	at org.elasticsearch.search.SearchService.parseSource(SearchService.java:836)
+	... 12 more
+[2016-08-26 00:53:38,234][DEBUG][action.search            ] [ne_search] [test_index][2], node[K7fg49LrTf-ZP3LWHmjkOg], [P], v[12], s[STARTED], a[id=uL_eS9NpR5GMqO-RMS_YtA]: Failed to execute [org.elasticsearch.action.search.SearchRequest@78b5875d] lastShard [true]
+RemoteTransportException[[ne_search][127.0.0.1:9300][indices:data/read/search[phase/query]]]; nested: SearchParseException[failed to parse search source [{"match": {"title": {"minimum_should_match": "75%", "query": "storage fbi va"}}}]]; nested: SearchParseException[failed to parse search source. unknown search element [match]];
+Caused by: SearchParseException[failed to parse search source [{"match": {"title": {"minimum_should_match": "75%", "query": "storage fbi va"}}}]]; nested: SearchParseException[failed to parse search source. unknown search element [match]];
+	at org.elasticsearch.search.SearchService.parseSource(SearchService.java:855)
+	at org.elasticsearch.search.SearchService.createContext(SearchService.java:654)
+	at org.elasticsearch.search.SearchService.createAndPutContext(SearchService.java:620)
+	at org.elasticsearch.search.SearchService.executeQueryPhase(SearchService.java:371)
+	at org.elasticsearch.search.action.SearchServiceTransportAction$SearchQueryTransportHandler.messageReceived(SearchServiceTransportAction.java:368)
+	at org.elasticsearch.search.action.SearchServiceTransportAction$SearchQueryTransportHandler.messageReceived(SearchServiceTransportAction.java:365)
+	at org.elasticsearch.transport.TransportRequestHandler.messageReceived(TransportRequestHandler.java:33)
+	at org.elasticsearch.transport.RequestHandlerRegistry.processMessageReceived(RequestHandlerRegistry.java:75)
+	at org.elasticsearch.transport.TransportService$4.doRun(TransportService.java:376)
+	at org.elasticsearch.common.util.concurrent.AbstractRunnable.run(AbstractRunnable.java:37)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617)
+	at java.lang.Thread.run(Thread.java:745)
+Caused by: SearchParseException[failed to parse search source. unknown search element [match]]
+	at org.elasticsearch.search.SearchService.parseSource(SearchService.java:836)
+	... 12 more
+[2016-08-26 00:53:38,234][DEBUG][action.search            ] [ne_search] [test_index][1], node[K7fg49LrTf-ZP3LWHmjkOg], [P], v[12], s[STARTED], a[id=EOAVemDhTbSI-T1bNzFxYw]: Failed to execute [org.elasticsearch.action.search.SearchRequest@78b5875d] lastShard [true]
+RemoteTransportException[[ne_search][127.0.0.1:9300][indices:data/read/search[phase/query]]]; nested: SearchParseException[failed to parse search source [{"match": {"title": {"minimum_should_match": "75%", "query": "storage fbi va"}}}]]; nested: SearchParseException[failed to parse search source. unknown search element [match]];
+Caused by: SearchParseException[failed to parse search source [{"match": {"title": {"minimum_should_match": "75%", "query": "storage fbi va"}}}]]; nested: SearchParseException[failed to parse search source. unknown search element [match]];
+	at org.elasticsearch.search.SearchService.parseSource(SearchService.java:855)
+	at org.elasticsearch.search.SearchService.createContext(SearchService.java:654)
+	at org.elasticsearch.search.SearchService.createAndPutContext(SearchService.java:620)
+	at org.elasticsearch.search.SearchService.executeQueryPhase(SearchService.java:371)
+	at org.elasticsearch.search.action.SearchServiceTransportAction$SearchQueryTransportHandler.messageReceived(SearchServiceTransportAction.java:368)
+	at org.elasticsearch.search.action.SearchServiceTransportAction$SearchQueryTransportHandler.messageReceived(SearchServiceTransportAction.java:365)
+	at org.elasticsearch.transport.TransportRequestHandler.messageReceived(TransportRequestHandler.java:33)
+	at org.elasticsearch.transport.RequestHandlerRegistry.processMessageReceived(RequestHandlerRegistry.java:75)
+	at org.elasticsearch.transport.TransportService$4.doRun(TransportService.java:376)
+	at org.elasticsearch.common.util.concurrent.AbstractRunnable.run(AbstractRunnable.java:37)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617)
+	at java.lang.Thread.run(Thread.java:745)
+Caused by: SearchParseException[failed to parse search source. unknown search element [match]]
+	at org.elasticsearch.search.SearchService.parseSource(SearchService.java:836)
+	... 12 more
+[2016-08-26 01:00:08,093][DEBUG][action.search            ] [ne_search] [test_index][2], node[K7fg49LrTf-ZP3LWHmjkOg], [P], v[12], s[STARTED], a[id=uL_eS9NpR5GMqO-RMS_YtA]: Failed to execute [org.elasticsearch.action.search.SearchRequest@12ec612] lastShard [true]
+RemoteTransportException[[ne_search][127.0.0.1:9300][indices:data/read/search[phase/query]]]; nested: SearchParseException[failed to parse search source [{"match": {"title": {"minimum_should_match": "50%", "query": "1"}}}]]; nested: SearchParseException[failed to parse search source. unknown search element [match]];
+Caused by: SearchParseException[failed to parse search source [{"match": {"title": {"minimum_should_match": "50%", "query": "1"}}}]]; nested: SearchParseException[failed to parse search source. unknown search element [match]];
+	at org.elasticsearch.search.SearchService.parseSource(SearchService.java:855)
+	at org.elasticsearch.search.SearchService.createContext(SearchService.java:654)
+	at org.elasticsearch.search.SearchService.createAndPutContext(SearchService.java:620)
+	at org.elasticsearch.search.SearchService.executeQueryPhase(SearchService.java:371)
+	at org.elasticsearch.search.action.SearchServiceTransportAction$SearchQueryTransportHandler.messageReceived(SearchServiceTransportAction.java:368)
+	at org.elasticsearch.search.action.SearchServiceTransportAction$SearchQueryTransportHandler.messageReceived(SearchServiceTransportAction.java:365)
+	at org.elasticsearch.transport.TransportRequestHandler.messageReceived(TransportRequestHandler.java:33)
+	at org.elasticsearch.transport.RequestHandlerRegistry.processMessageReceived(RequestHandlerRegistry.java:75)
+	at org.elasticsearch.transport.TransportService$4.doRun(TransportService.java:376)
+	at org.elasticsearch.common.util.concurrent.AbstractRunnable.run(AbstractRunnable.java:37)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617)
+	at java.lang.Thread.run(Thread.java:745)
+Caused by: SearchParseException[failed to parse search source. unknown search element [match]]
+	at org.elasticsearch.search.SearchService.parseSource(SearchService.java:836)
+	... 12 more
+[2016-08-26 01:00:08,093][DEBUG][action.search            ] [ne_search] [test_index][1], node[K7fg49LrTf-ZP3LWHmjkOg], [P], v[12], s[STARTED], a[id=EOAVemDhTbSI-T1bNzFxYw]: Failed to execute [org.elasticsearch.action.search.SearchRequest@12ec612]
+RemoteTransportException[[ne_search][127.0.0.1:9300][indices:data/read/search[phase/query]]]; nested: SearchParseException[failed to parse search source [{"match": {"title": {"minimum_should_match": "50%", "query": "1"}}}]]; nested: SearchParseException[failed to parse search source. unknown search element [match]];
+Caused by: SearchParseException[failed to parse search source [{"match": {"title": {"minimum_should_match": "50%", "query": "1"}}}]]; nested: SearchParseException[failed to parse search source. unknown search element [match]];
+	at org.elasticsearch.search.SearchService.parseSource(SearchService.java:855)
+	at org.elasticsearch.search.SearchService.createContext(SearchService.java:654)
+	at org.elasticsearch.search.SearchService.createAndPutContext(SearchService.java:620)
+	at org.elasticsearch.search.SearchService.executeQueryPhase(SearchService.java:371)
+	at org.elasticsearch.search.action.SearchServiceTransportAction$SearchQueryTransportHandler.messageReceived(SearchServiceTransportAction.java:368)
+	at org.elasticsearch.search.action.SearchServiceTransportAction$SearchQueryTransportHandler.messageReceived(SearchServiceTransportAction.java:365)
+	at org.elasticsearch.transport.TransportRequestHandler.messageReceived(TransportRequestHandler.java:33)
+	at org.elasticsearch.transport.RequestHandlerRegistry.processMessageReceived(RequestHandlerRegistry.java:75)
+	at org.elasticsearch.transport.TransportService$4.doRun(TransportService.java:376)
+	at org.elasticsearch.common.util.concurrent.AbstractRunnable.run(AbstractRunnable.java:37)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617)
+	at java.lang.Thread.run(Thread.java:745)
+Caused by: SearchParseException[failed to parse search source. unknown search element [match]]
+	at org.elasticsearch.search.SearchService.parseSource(SearchService.java:836)
+	... 12 more
+[2016-08-26 01:00:08,093][DEBUG][action.search            ] [ne_search] [test_index][4], node[K7fg49LrTf-ZP3LWHmjkOg], [P], v[12], s[STARTED], a[id=xq__uHKxT9eskuulh8HlvQ]: Failed to execute [org.elasticsearch.action.search.SearchRequest@12ec612] lastShard [true]
+RemoteTransportException[[ne_search][127.0.0.1:9300][indices:data/read/search[phase/query]]]; nested: SearchParseException[failed to parse search source [{"match": {"title": {"minimum_should_match": "50%", "query": "1"}}}]]; nested: SearchParseException[failed to parse search source. unknown search element [match]];
+Caused by: SearchParseException[failed to parse search source [{"match": {"title": {"minimum_should_match": "50%", "query": "1"}}}]]; nested: SearchParseException[failed to parse search source. unknown search element [match]];
+	at org.elasticsearch.search.SearchService.parseSource(SearchService.java:855)
+	at org.elasticsearch.search.SearchService.createContext(SearchService.java:654)
+	at org.elasticsearch.search.SearchService.createAndPutContext(SearchService.java:620)
+	at org.elasticsearch.search.SearchService.executeQueryPhase(SearchService.java:371)
+	at org.elasticsearch.search.action.SearchServiceTransportAction$SearchQueryTransportHandler.messageReceived(SearchServiceTransportAction.java:368)
+	at org.elasticsearch.search.action.SearchServiceTransportAction$SearchQueryTransportHandler.messageReceived(SearchServiceTransportAction.java:365)
+	at org.elasticsearch.transport.TransportRequestHandler.messageReceived(TransportRequestHandler.java:33)
+	at org.elasticsearch.transport.RequestHandlerRegistry.processMessageReceived(RequestHandlerRegistry.java:75)
+	at org.elasticsearch.transport.TransportService$4.doRun(TransportService.java:376)
+	at org.elasticsearch.common.util.concurrent.AbstractRunnable.run(AbstractRunnable.java:37)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617)
+	at java.lang.Thread.run(Thread.java:745)
+Caused by: SearchParseException[failed to parse search source. unknown search element [match]]
+	at org.elasticsearch.search.SearchService.parseSource(SearchService.java:836)
+	... 12 more
+[2016-08-26 01:00:08,093][DEBUG][action.search            ] [ne_search] [test_index][0], node[K7fg49LrTf-ZP3LWHmjkOg], [P], v[12], s[STARTED], a[id=jlYJ5G9ETPmeap5xBEw8Ag]: Failed to execute [org.elasticsearch.action.search.SearchRequest@12ec612] lastShard [true]
+RemoteTransportException[[ne_search][127.0.0.1:9300][indices:data/read/search[phase/query]]]; nested: SearchParseException[failed to parse search source [{"match": {"title": {"minimum_should_match": "50%", "query": "1"}}}]]; nested: SearchParseException[failed to parse search source. unknown search element [match]];
+Caused by: SearchParseException[failed to parse search source [{"match": {"title": {"minimum_should_match": "50%", "query": "1"}}}]]; nested: SearchParseException[failed to parse search source. unknown search element [match]];
+	at org.elasticsearch.search.SearchService.parseSource(SearchService.java:855)
+	at org.elasticsearch.search.SearchService.createContext(SearchService.java:654)
+	at org.elasticsearch.search.SearchService.createAndPutContext(SearchService.java:620)
+	at org.elasticsearch.search.SearchService.executeQueryPhase(SearchService.java:371)
+	at org.elasticsearch.search.action.SearchServiceTransportAction$SearchQueryTransportHandler.messageReceived(SearchServiceTransportAction.java:368)
+	at org.elasticsearch.search.action.SearchServiceTransportAction$SearchQueryTransportHandler.messageReceived(SearchServiceTransportAction.java:365)
+	at org.elasticsearch.transport.TransportRequestHandler.messageReceived(TransportRequestHandler.java:33)
+	at org.elasticsearch.transport.RequestHandlerRegistry.processMessageReceived(RequestHandlerRegistry.java:75)
+	at org.elasticsearch.transport.TransportService$4.doRun(TransportService.java:376)
+	at org.elasticsearch.common.util.concurrent.AbstractRunnable.run(AbstractRunnable.java:37)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617)
+	at java.lang.Thread.run(Thread.java:745)
+Caused by: SearchParseException[failed to parse search source. unknown search element [match]]
+	at org.elasticsearch.search.SearchService.parseSource(SearchService.java:836)
+	... 12 more
+[2016-08-26 01:00:08,093][DEBUG][action.search            ] [ne_search] [test_index][3], node[K7fg49LrTf-ZP3LWHmjkOg], [P], v[12], s[STARTED], a[id=aN0rH0f_S5GBhCktPVxL7A]: Failed to execute [org.elasticsearch.action.search.SearchRequest@12ec612] lastShard [true]
+RemoteTransportException[[ne_search][127.0.0.1:9300][indices:data/read/search[phase/query]]]; nested: SearchParseException[failed to parse search source [{"match": {"title": {"minimum_should_match": "50%", "query": "1"}}}]]; nested: SearchParseException[failed to parse search source. unknown search element [match]];
+Caused by: SearchParseException[failed to parse search source [{"match": {"title": {"minimum_should_match": "50%", "query": "1"}}}]]; nested: SearchParseException[failed to parse search source. unknown search element [match]];
+	at org.elasticsearch.search.SearchService.parseSource(SearchService.java:855)
+	at org.elasticsearch.search.SearchService.createContext(SearchService.java:654)
+	at org.elasticsearch.search.SearchService.createAndPutContext(SearchService.java:620)
+	at org.elasticsearch.search.SearchService.executeQueryPhase(SearchService.java:371)
+	at org.elasticsearch.search.action.SearchServiceTransportAction$SearchQueryTransportHandler.messageReceived(SearchServiceTransportAction.java:368)
+	at org.elasticsearch.search.action.SearchServiceTransportAction$SearchQueryTransportHandler.messageReceived(SearchServiceTransportAction.java:365)
+	at org.elasticsearch.transport.TransportRequestHandler.messageReceived(TransportRequestHandler.java:33)
+	at org.elasticsearch.transport.RequestHandlerRegistry.processMessageReceived(RequestHandlerRegistry.java:75)
+	at org.elasticsearch.transport.TransportService$4.doRun(TransportService.java:376)
+	at org.elasticsearch.common.util.concurrent.AbstractRunnable.run(AbstractRunnable.java:37)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617)
+	at java.lang.Thread.run(Thread.java:745)
+Caused by: SearchParseException[failed to parse search source. unknown search element [match]]
+	at org.elasticsearch.search.SearchService.parseSource(SearchService.java:836)
+	... 12 more
+[2016-08-26 01:00:08,102][DEBUG][action.search            ] [ne_search] All shards failed for phase: [query]
+RemoteTransportException[[ne_search][127.0.0.1:9300][indices:data/read/search[phase/query]]]; nested: SearchParseException[failed to parse search source [{"match": {"title": {"minimum_should_match": "50%", "query": "1"}}}]]; nested: SearchParseException[failed to parse search source. unknown search element [match]];
+Caused by: SearchParseException[failed to parse search source [{"match": {"title": {"minimum_should_match": "50%", "query": "1"}}}]]; nested: SearchParseException[failed to parse search source. unknown search element [match]];
+	at org.elasticsearch.search.SearchService.parseSource(SearchService.java:855)
+	at org.elasticsearch.search.SearchService.createContext(SearchService.java:654)
+	at org.elasticsearch.search.SearchService.createAndPutContext(SearchService.java:620)
+	at org.elasticsearch.search.SearchService.executeQueryPhase(SearchService.java:371)
+	at org.elasticsearch.search.action.SearchServiceTransportAction$SearchQueryTransportHandler.messageReceived(SearchServiceTransportAction.java:368)
+	at org.elasticsearch.search.action.SearchServiceTransportAction$SearchQueryTransportHandler.messageReceived(SearchServiceTransportAction.java:365)
+	at org.elasticsearch.transport.TransportRequestHandler.messageReceived(TransportRequestHandler.java:33)
+	at org.elasticsearch.transport.RequestHandlerRegistry.processMessageReceived(RequestHandlerRegistry.java:75)
+	at org.elasticsearch.transport.TransportService$4.doRun(TransportService.java:376)
+	at org.elasticsearch.common.util.concurrent.AbstractRunnable.run(AbstractRunnable.java:37)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617)
+	at java.lang.Thread.run(Thread.java:745)
+Caused by: SearchParseException[failed to parse search source. unknown search element [match]]
+	at org.elasticsearch.search.SearchService.parseSource(SearchService.java:836)
+	... 12 more
+[2016-08-26 01:01:00,180][DEBUG][action.search            ] [ne_search] [test_index][4], node[K7fg49LrTf-ZP3LWHmjkOg], [P], v[12], s[STARTED], a[id=xq__uHKxT9eskuulh8HlvQ]: Failed to execute [org.elasticsearch.action.search.SearchRequest@354906a7] lastShard [true]
+RemoteTransportException[[ne_search][127.0.0.1:9300][indices:data/read/search[phase/query]]]; nested: SearchParseException[failed to parse search source [{"match": {"text": {"minimum_should_match": "50%", "query": "1"}}}]]; nested: SearchParseException[failed to parse search source. unknown search element [match]];
+Caused by: SearchParseException[failed to parse search source [{"match": {"text": {"minimum_should_match": "50%", "query": "1"}}}]]; nested: SearchParseException[failed to parse search source. unknown search element [match]];
+	at org.elasticsearch.search.SearchService.parseSource(SearchService.java:855)
+	at org.elasticsearch.search.SearchService.createContext(SearchService.java:654)
+	at org.elasticsearch.search.SearchService.createAndPutContext(SearchService.java:620)
+	at org.elasticsearch.search.SearchService.executeQueryPhase(SearchService.java:371)
+	at org.elasticsearch.search.action.SearchServiceTransportAction$SearchQueryTransportHandler.messageReceived(SearchServiceTransportAction.java:368)
+	at org.elasticsearch.search.action.SearchServiceTransportAction$SearchQueryTransportHandler.messageReceived(SearchServiceTransportAction.java:365)
+	at org.elasticsearch.transport.TransportRequestHandler.messageReceived(TransportRequestHandler.java:33)
+	at org.elasticsearch.transport.RequestHandlerRegistry.processMessageReceived(RequestHandlerRegistry.java:75)
+	at org.elasticsearch.transport.TransportService$4.doRun(TransportService.java:376)
+	at org.elasticsearch.common.util.concurrent.AbstractRunnable.run(AbstractRunnable.java:37)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617)
+	at java.lang.Thread.run(Thread.java:745)
+Caused by: SearchParseException[failed to parse search source. unknown search element [match]]
+	at org.elasticsearch.search.SearchService.parseSource(SearchService.java:836)
+	... 12 more
+[2016-08-26 01:01:00,180][DEBUG][action.search            ] [ne_search] [test_index][3], node[K7fg49LrTf-ZP3LWHmjkOg], [P], v[12], s[STARTED], a[id=aN0rH0f_S5GBhCktPVxL7A]: Failed to execute [org.elasticsearch.action.search.SearchRequest@354906a7]
+RemoteTransportException[[ne_search][127.0.0.1:9300][indices:data/read/search[phase/query]]]; nested: SearchParseException[failed to parse search source [{"match": {"text": {"minimum_should_match": "50%", "query": "1"}}}]]; nested: SearchParseException[failed to parse search source. unknown search element [match]];
+Caused by: SearchParseException[failed to parse search source [{"match": {"text": {"minimum_should_match": "50%", "query": "1"}}}]]; nested: SearchParseException[failed to parse search source. unknown search element [match]];
+	at org.elasticsearch.search.SearchService.parseSource(SearchService.java:855)
+	at org.elasticsearch.search.SearchService.createContext(SearchService.java:654)
+	at org.elasticsearch.search.SearchService.createAndPutContext(SearchService.java:620)
+	at org.elasticsearch.search.SearchService.executeQueryPhase(SearchService.java:371)
+	at org.elasticsearch.search.action.SearchServiceTransportAction$SearchQueryTransportHandler.messageReceived(SearchServiceTransportAction.java:368)
+	at org.elasticsearch.search.action.SearchServiceTransportAction$SearchQueryTransportHandler.messageReceived(SearchServiceTransportAction.java:365)
+	at org.elasticsearch.transport.TransportRequestHandler.messageReceived(TransportRequestHandler.java:33)
+	at org.elasticsearch.transport.RequestHandlerRegistry.processMessageReceived(RequestHandlerRegistry.java:75)
+	at org.elasticsearch.transport.TransportService$4.doRun(TransportService.java:376)
+	at org.elasticsearch.common.util.concurrent.AbstractRunnable.run(AbstractRunnable.java:37)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617)
+	at java.lang.Thread.run(Thread.java:745)
+Caused by: SearchParseException[failed to parse search source. unknown search element [match]]
+	at org.elasticsearch.search.SearchService.parseSource(SearchService.java:836)
+	... 12 more
+[2016-08-26 01:01:00,180][DEBUG][action.search            ] [ne_search] [test_index][1], node[K7fg49LrTf-ZP3LWHmjkOg], [P], v[12], s[STARTED], a[id=EOAVemDhTbSI-T1bNzFxYw]: Failed to execute [org.elasticsearch.action.search.SearchRequest@354906a7] lastShard [true]
+RemoteTransportException[[ne_search][127.0.0.1:9300][indices:data/read/search[phase/query]]]; nested: SearchParseException[failed to parse search source [{"match": {"text": {"minimum_should_match": "50%", "query": "1"}}}]]; nested: SearchParseException[failed to parse search source. unknown search element [match]];
+Caused by: SearchParseException[failed to parse search source [{"match": {"text": {"minimum_should_match": "50%", "query": "1"}}}]]; nested: SearchParseException[failed to parse search source. unknown search element [match]];
+	at org.elasticsearch.search.SearchService.parseSource(SearchService.java:855)
+	at org.elasticsearch.search.SearchService.createContext(SearchService.java:654)
+	at org.elasticsearch.search.SearchService.createAndPutContext(SearchService.java:620)
+	at org.elasticsearch.search.SearchService.executeQueryPhase(SearchService.java:371)
+	at org.elasticsearch.search.action.SearchServiceTransportAction$SearchQueryTransportHandler.messageReceived(SearchServiceTransportAction.java:368)
+	at org.elasticsearch.search.action.SearchServiceTransportAction$SearchQueryTransportHandler.messageReceived(SearchServiceTransportAction.java:365)
+	at org.elasticsearch.transport.TransportRequestHandler.messageReceived(TransportRequestHandler.java:33)
+	at org.elasticsearch.transport.RequestHandlerRegistry.processMessageReceived(RequestHandlerRegistry.java:75)
+	at org.elasticsearch.transport.TransportService$4.doRun(TransportService.java:376)
+	at org.elasticsearch.common.util.concurrent.AbstractRunnable.run(AbstractRunnable.java:37)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617)
+	at java.lang.Thread.run(Thread.java:745)
+Caused by: SearchParseException[failed to parse search source. unknown search element [match]]
+	at org.elasticsearch.search.SearchService.parseSource(SearchService.java:836)
+	... 12 more
+[2016-08-26 01:01:00,180][DEBUG][action.search            ] [ne_search] [test_index][2], node[K7fg49LrTf-ZP3LWHmjkOg], [P], v[12], s[STARTED], a[id=uL_eS9NpR5GMqO-RMS_YtA]: Failed to execute [org.elasticsearch.action.search.SearchRequest@354906a7] lastShard [true]
+RemoteTransportException[[ne_search][127.0.0.1:9300][indices:data/read/search[phase/query]]]; nested: SearchParseException[failed to parse search source [{"match": {"text": {"minimum_should_match": "50%", "query": "1"}}}]]; nested: SearchParseException[failed to parse search source. unknown search element [match]];
+Caused by: SearchParseException[failed to parse search source [{"match": {"text": {"minimum_should_match": "50%", "query": "1"}}}]]; nested: SearchParseException[failed to parse search source. unknown search element [match]];
+	at org.elasticsearch.search.SearchService.parseSource(SearchService.java:855)
+	at org.elasticsearch.search.SearchService.createContext(SearchService.java:654)
+	at org.elasticsearch.search.SearchService.createAndPutContext(SearchService.java:620)
+	at org.elasticsearch.search.SearchService.executeQueryPhase(SearchService.java:371)
+	at org.elasticsearch.search.action.SearchServiceTransportAction$SearchQueryTransportHandler.messageReceived(SearchServiceTransportAction.java:368)
+	at org.elasticsearch.search.action.SearchServiceTransportAction$SearchQueryTransportHandler.messageReceived(SearchServiceTransportAction.java:365)
+	at org.elasticsearch.transport.TransportRequestHandler.messageReceived(TransportRequestHandler.java:33)
+	at org.elasticsearch.transport.RequestHandlerRegistry.processMessageReceived(RequestHandlerRegistry.java:75)
+	at org.elasticsearch.transport.TransportService$4.doRun(TransportService.java:376)
+	at org.elasticsearch.common.util.concurrent.AbstractRunnable.run(AbstractRunnable.java:37)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617)
+	at java.lang.Thread.run(Thread.java:745)
+Caused by: SearchParseException[failed to parse search source. unknown search element [match]]
+	at org.elasticsearch.search.SearchService.parseSource(SearchService.java:836)
+	... 12 more
+[2016-08-26 01:01:00,180][DEBUG][action.search            ] [ne_search] [test_index][0], node[K7fg49LrTf-ZP3LWHmjkOg], [P], v[12], s[STARTED], a[id=jlYJ5G9ETPmeap5xBEw8Ag]: Failed to execute [org.elasticsearch.action.search.SearchRequest@354906a7] lastShard [true]
+RemoteTransportException[[ne_search][127.0.0.1:9300][indices:data/read/search[phase/query]]]; nested: SearchParseException[failed to parse search source [{"match": {"text": {"minimum_should_match": "50%", "query": "1"}}}]]; nested: SearchParseException[failed to parse search source. unknown search element [match]];
+Caused by: SearchParseException[failed to parse search source [{"match": {"text": {"minimum_should_match": "50%", "query": "1"}}}]]; nested: SearchParseException[failed to parse search source. unknown search element [match]];
+	at org.elasticsearch.search.SearchService.parseSource(SearchService.java:855)
+	at org.elasticsearch.search.SearchService.createContext(SearchService.java:654)
+	at org.elasticsearch.search.SearchService.createAndPutContext(SearchService.java:620)
+	at org.elasticsearch.search.SearchService.executeQueryPhase(SearchService.java:371)
+	at org.elasticsearch.search.action.SearchServiceTransportAction$SearchQueryTransportHandler.messageReceived(SearchServiceTransportAction.java:368)
+	at org.elasticsearch.search.action.SearchServiceTransportAction$SearchQueryTransportHandler.messageReceived(SearchServiceTransportAction.java:365)
+	at org.elasticsearch.transport.TransportRequestHandler.messageReceived(TransportRequestHandler.java:33)
+	at org.elasticsearch.transport.RequestHandlerRegistry.processMessageReceived(RequestHandlerRegistry.java:75)
+	at org.elasticsearch.transport.TransportService$4.doRun(TransportService.java:376)
+	at org.elasticsearch.common.util.concurrent.AbstractRunnable.run(AbstractRunnable.java:37)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617)
+	at java.lang.Thread.run(Thread.java:745)
+Caused by: SearchParseException[failed to parse search source. unknown search element [match]]
+	at org.elasticsearch.search.SearchService.parseSource(SearchService.java:836)
+	... 12 more
+[2016-08-26 01:01:00,181][DEBUG][action.search            ] [ne_search] All shards failed for phase: [query]
+RemoteTransportException[[ne_search][127.0.0.1:9300][indices:data/read/search[phase/query]]]; nested: SearchParseException[failed to parse search source [{"match": {"text": {"minimum_should_match": "50%", "query": "1"}}}]]; nested: SearchParseException[failed to parse search source. unknown search element [match]];
+Caused by: SearchParseException[failed to parse search source [{"match": {"text": {"minimum_should_match": "50%", "query": "1"}}}]]; nested: SearchParseException[failed to parse search source. unknown search element [match]];
+	at org.elasticsearch.search.SearchService.parseSource(SearchService.java:855)
+	at org.elasticsearch.search.SearchService.createContext(SearchService.java:654)
+	at org.elasticsearch.search.SearchService.createAndPutContext(SearchService.java:620)
+	at org.elasticsearch.search.SearchService.executeQueryPhase(SearchService.java:371)
+	at org.elasticsearch.search.action.SearchServiceTransportAction$SearchQueryTransportHandler.messageReceived(SearchServiceTransportAction.java:368)
+	at org.elasticsearch.search.action.SearchServiceTransportAction$SearchQueryTransportHandler.messageReceived(SearchServiceTransportAction.java:365)
+	at org.elasticsearch.transport.TransportRequestHandler.messageReceived(TransportRequestHandler.java:33)
+	at org.elasticsearch.transport.RequestHandlerRegistry.processMessageReceived(RequestHandlerRegistry.java:75)
+	at org.elasticsearch.transport.TransportService$4.doRun(TransportService.java:376)
+	at org.elasticsearch.common.util.concurrent.AbstractRunnable.run(AbstractRunnable.java:37)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617)
+	at java.lang.Thread.run(Thread.java:745)
+Caused by: SearchParseException[failed to parse search source. unknown search element [match]]
+	at org.elasticsearch.search.SearchService.parseSource(SearchService.java:836)
+	... 12 more
+[2016-08-26 01:03:07,611][ERROR][license.plugin.core      ] [ne_search] 
+#
+# LICENSE EXPIRED ON [Thursday, August 11, 2016]. IF YOU HAVE A NEW LICENSE, PLEASE
+# UPDATE IT. OTHERWISE, PLEASE REACH OUT TO YOUR SUPPORT CONTACT.
+# 
+# COMMERCIAL PLUGINS OPERATING WITH REDUCED FUNCTIONALITY
+# - marvel
+#  - The agent will stop collecting cluster and indices metrics
+#  - The agent will stop automatically cleaning indices older than [marvel.history.duration]
+[2016-08-26 01:13:07,638][ERROR][license.plugin.core      ] [ne_search] 
+#
+# LICENSE EXPIRED ON [Thursday, August 11, 2016]. IF YOU HAVE A NEW LICENSE, PLEASE
+# UPDATE IT. OTHERWISE, PLEASE REACH OUT TO YOUR SUPPORT CONTACT.
+# 
+# COMMERCIAL PLUGINS OPERATING WITH REDUCED FUNCTIONALITY
+# - marvel
+#  - The agent will stop collecting cluster and indices metrics
+#  - The agent will stop automatically cleaning indices older than [marvel.history.duration]
+[2016-08-26 01:23:07,671][ERROR][license.plugin.core      ] [ne_search] 
+#
+# LICENSE EXPIRED ON [Thursday, August 11, 2016]. IF YOU HAVE A NEW LICENSE, PLEASE
+# UPDATE IT. OTHERWISE, PLEASE REACH OUT TO YOUR SUPPORT CONTACT.
+# 
+# COMMERCIAL PLUGINS OPERATING WITH REDUCED FUNCTIONALITY
+# - marvel
+#  - The agent will stop collecting cluster and indices metrics
+#  - The agent will stop automatically cleaning indices older than [marvel.history.duration]
+[2016-08-26 01:33:07,702][ERROR][license.plugin.core      ] [ne_search] 
+#
+# LICENSE EXPIRED ON [Thursday, August 11, 2016]. IF YOU HAVE A NEW LICENSE, PLEASE
+# UPDATE IT. OTHERWISE, PLEASE REACH OUT TO YOUR SUPPORT CONTACT.
+# 
+# COMMERCIAL PLUGINS OPERATING WITH REDUCED FUNCTIONALITY
+# - marvel
+#  - The agent will stop collecting cluster and indices metrics
+#  - The agent will stop automatically cleaning indices older than [marvel.history.duration]
+[2016-08-26 01:43:07,727][ERROR][license.plugin.core      ] [ne_search] 
+#
+# LICENSE EXPIRED ON [Thursday, August 11, 2016]. IF YOU HAVE A NEW LICENSE, PLEASE
+# UPDATE IT. OTHERWISE, PLEASE REACH OUT TO YOUR SUPPORT CONTACT.
+# 
+# COMMERCIAL PLUGINS OPERATING WITH REDUCED FUNCTIONALITY
+# - marvel
+#  - The agent will stop collecting cluster and indices metrics
+#  - The agent will stop automatically cleaning indices older than [marvel.history.duration]
+[2016-08-26 01:47:51,753][INFO ][node                     ] [ne_search] stopping ...
+[2016-08-26 01:47:51,899][INFO ][node                     ] [ne_search] stopped
+[2016-08-26 01:47:51,899][INFO ][node                     ] [ne_search] closing ...
+[2016-08-26 01:47:51,905][INFO ][node                     ] [ne_search] closed
