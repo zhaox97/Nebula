@@ -1,12 +1,14 @@
-var express = require('express');
-var path = require('path');
-var favicon = require('serve-favicon');
-var logger = require('morgan');
-var cookieParser = require('cookie-parser');
-var bodyParser = require('body-parser');
+/*Import packages required in package.json   */
+/*Add these packages from the ../node_modules path*/
+var express = require('express');//A lightweight nodejs web framework
+var path = require('path');//Ability to join filepaths to filenames.
+var favicon = require('serve-favicon');//Set prefered icon in browser URL bar. Unused?
+var logger = require('morgan');//HTTP request logger. Unused?
+var cookieParser = require('cookie-parser');//Stores cookies in req.cookies
+var bodyParser = require('body-parser');//Middleware parser for incoming request bodies, 
 
 /* REST API routes */
-var routes = require('./routes/index');
+var routes = require('./routes/index');//Points to /routes/index.js.  Currently, index.js points to CosmosD3/CosmosD3.html
 
 /* Connect to the databases */
 //var mongo = require('mongodb');
@@ -15,15 +17,16 @@ var routes = require('./routes/index');
 //var datasets = monk('localhost:27017/datasets');
 
 /* The HTTP request handler */
-var app = express();
-var debug = require('debug')('Nebula:server');
-var http = require('http').Server(app);
+
+var app = express();//Creates app from express class. (Baseline famework for an app. No web functionality).
+var debug = require('debug')('Nebula:server');//Require the debug module. Pass it scoping 'Nebula:server'
+var http = require('http').Server(app);//Create an http server on top of app.
 
 /* The Socket.io WebSocket module */
-var io = require('socket.io')(http);
+var io = require('socket.io')(http);//Create an io/websocket on top of http object.
 
 /* Our custom Nebula module handles the WebSocket synchronization */
-var nebula = require('./nebula')(io);
+var nebula = require('./nebula')(io);//Creates nebula layer on top of io.
 
 /* Set the port we want to run on */
 var port = process.env.PORT || 8081;
