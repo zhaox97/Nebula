@@ -1,6 +1,6 @@
 [submodule "CosmosD3"]
 	path = CosmosD3
-	url = git@github.com:DiscoveryAnalyticsCenter/CosmosD3.git
+	url = https://github.com/DiscoveryAnalyticsCenter/CosmosD3.git
 [submodule "Nebula-Pipeline"]
 	path = Nebula-Pipeline
-	url = git@github.com:DiscoveryAnalyticsCenter/Nebula-Pipeline.git
+	url = https://github.com/DiscoveryAnalyticsCenter/Nebula-Pipeline.git
