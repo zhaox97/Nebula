@@ -60,20 +60,40 @@ function Nebula(io, pipelineAddr) {
 		/* When clients disconnect, remove them from the room. If the room is
 		 * now empty, delete it.
 		 */
+		/* console.log("socket.room"+socket.room);
+		 console.log("socket.Name"+socket.roomName);
+		 console.log("Count of room"+self.rooms[socket.room].count)
+		 	 console.log("Count of room"+self.rooms[socket.room].count)*/
+		socket.on('list.rooms',function()
+         {
+            socket.emit('list.rooms.repose',socket.rooms,io.sockets.adapter.rooms);
+            socket.emit('list.rooms.session',socket.rooms);
+            console.log("Event Fired");
+         });
 		socket.on('disconnect', function() {
-			console.log('Disconnected');
-			if (self.rooms[socket.room] && self.rooms[socket.room].count) {
+			var name = socket.roomName;
+			console.log('I am disconnected  from ' + socket.roomName);
+			
+			
+			if (self.rooms[socket.room] && self.rooms[socket.room].count) 
+			{
+				console.log("Count of room"+self.rooms[socket.room].count);
 				self.rooms[socket.room].count -= 1;
-				if (self.rooms[socket.room] <= 0) {
+				if (self.rooms[socket.room].count <= 0) {
 					console.log("Room " + socket.room + " now empty");
-				}
 			}
-		});
+			}
+		}); 
 		
+		 
 		/* Lets a client join a room. If the room doesn't next exist yet,
 		 * initiate it and send the new room to the client. Otherwise, send
 		 * the client the current state of the room.
 		 */
+		 
+		 
+		 
+         
 		socket.on('join', function(roomName, user, pipeline, args) {
 			console.log('Join called!');
 			socket.roomName = roomName;
