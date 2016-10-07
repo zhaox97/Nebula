@@ -86,6 +86,36 @@ function Nebula(io, pipelineAddr) {
 		}); 
 		
 		 
+                 var csvFilePath;
+        socket.on('setData', function(data, room) {
+            csvFilePath = "data/" + room + "_data.csv";
+            console.log("Creating data file for " + csvFilePath);
+
+            var exec = require('child_process').exec;
+
+            var errors = [];
+            var command = "echo \"" + data + "\" > " + csvFilePath; 
+            exec(command, "-e",
+                function (error, stdout, stderr) {
+                    if (stdout) {
+                        console.log('stdout: ' + stdout);
+                    }
+                    if (error) {
+                        errors.push(error);
+                    }
+                    if (stderr) {
+                        console.log('stderr: ' + stderr);
+                        errors.push(error);
+                    }
+                    if (error !== null) {
+                         console.log('exec error: ' + error);
+                    }
+                });
+            if (errors.length == 0) {
+                socket.emit("csvDataReady");
+            }                        
+        });
+                 
 		/* Lets a client join a room. If the room doesn't next exist yet,
 		 * initiate it and send the new room to the client. Otherwise, send
 		 * the client the current state of the room.
@@ -111,6 +141,15 @@ function Nebula(io, pipelineAddr) {
 				if (!pipelineAddr) {
 					var pythonArgs = ["-u"];
 					if (pipeline in pipelines) {
+                                                if (pipelines[pipeline].args.length > 0 && csvFilePath) {
+                                                    var pipelineArgs = pipelines[pipeline].args;
+                                                    var i;
+                                                    for (i = 0; i < pipelineArgs.length; i++) {
+                                                        if (pipelineArgs[i].indexOf(".csv") > -1) {
+                                                            pipelineArgs[i] = csvFilePath;
+                                                        }
+                                                    }
+                                                }
 						pythonArgs.push(pipelines[pipeline].file);
 						pythonArgs.push(port.toString());
 						pythonArgs = pythonArgs.concat(pipelines[pipeline].args);
