@@ -58,10 +58,10 @@ function Nebula(io, pipelineAddr) {
     /* Accept new WebSocket clients */
     io.on('connection', function(socket) {
 
+        /* When a client requests the list of rooms, send them the list */
         socket.on('list.rooms',function() {
             socket.emit('list.rooms.repose',socket.rooms,io.sockets.adapter.rooms);
             socket.emit('list.rooms.session',socket.rooms);
-            console.log("Event Fired");
         });
 
         /* When clients disconnect, remove them from the room. If the room is
@@ -82,31 +82,53 @@ function Nebula(io, pipelineAddr) {
         }); 
 
 
+        // Use the csvFilePath to store the name of a user-defined CSV file
         var csvFilePath = null;
+        
+        /* When the client sends a "setData" message with the data and room name,
+         * generate a new file using the room name that contains the given data.
+         * Set the csvFilePath variable appropriately
+         */
         socket.on('setData', function(data, room) {
+            // Create the csvFilePath
             csvFilePath = "data/" + room + "_data.csv";
-            console.log("Creating data file for " + csvFilePath);
 
+            // Set exec to be a function that calls the command line
             var exec = require('child_process').exec;
 
+            // Initialize errors to be an empty array to capture any errors
             var errors = [];
+            // Create the command to use on the command line
             var command = "echo \"" + data + "\" > " + csvFilePath; 
+            
+            // Execute the command and cature any errors or printouts
             exec(command, "-e",
                 function (error, stdout, stderr) {
+                    // Print out any stdout captured to the console
                     if (stdout) {
                         console.log('stdout: ' + stdout);
                     }
+                    
+                    // Put any errors in the errors array
                     if (error) {
                         errors.push(error);
                     }
+                    
+                    // Put any errors in the errors array and print them out to
+                    // the console
                     if (stderr) {
                         console.log('stderr: ' + stderr);
                         errors.push(error);
                     }
+                    
+                    // Only print out non-null errors
                     if (error !== null) {
                          console.log('exec error: ' + error);
                     }
                 });
+                
+            // Only emit the "csvDataReady" message to the client if no errors
+            // were encountered while attempting to create the custom CSV file
             if (errors.length == 0) {
                 socket.emit("csvDataReady");
             }                        
@@ -135,6 +157,13 @@ function Nebula(io, pipelineAddr) {
                     var pythonArgs = ["-u"];
                     if (pipeline in pipelines) {
                         if (pipelines[pipeline].args.length > 0) {
+                            
+                            // Iterate through the pipeline's arguments. If there
+                            // is a CSV file defined and csvFilePath is not null,
+                            // put the csvFilePath in the pipelineArgsCopy.
+                            // Otherwise, just copy the pipeline arg into
+                            // pipelineArgsCopy. This supports both a custom CSV
+                            // file and a default CSV file
                             var pipelineArgs = pipelines[pipeline].args;
                             var i;
                             for (i = 0; i < pipelineArgs.length; i++) {
@@ -208,6 +237,7 @@ function Nebula(io, pipelineAddr) {
                 socket.emit('update', sendRoom(socket.room));
             }
             
+            // Reset the csvFilePath to null for future UIs
             csvFilePath = null;
         });
 
