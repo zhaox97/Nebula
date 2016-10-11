@@ -82,7 +82,7 @@ function Nebula(io, pipelineAddr) {
         }); 
 
 
-        var csvFilePath;
+        var csvFilePath = null;
         socket.on('setData', function(data, room) {
             csvFilePath = "data/" + room + "_data.csv";
             console.log("Creating data file for " + csvFilePath);
@@ -121,6 +121,7 @@ function Nebula(io, pipelineAddr) {
             socket.roomName = roomName;
             socket.user = user;
             socket.join(roomName);
+            var pipelineArgsCopy = [];
 
             if (!self.rooms[roomName]) {
                 var room = {};
@@ -133,18 +134,21 @@ function Nebula(io, pipelineAddr) {
                 if (!pipelineAddr) {
                     var pythonArgs = ["-u"];
                     if (pipeline in pipelines) {
-                        if (pipelines[pipeline].args.length > 0 && csvFilePath) {
+                        if (pipelines[pipeline].args.length > 0) {
                             var pipelineArgs = pipelines[pipeline].args;
                             var i;
                             for (i = 0; i < pipelineArgs.length; i++) {
-                                if (pipelineArgs[i].indexOf(".csv") > -1) {
-                                    pipelineArgs[i] = csvFilePath;
+                                if (pipelineArgs[i].indexOf(".csv") > -1 && csvFilePath) {
+                                    pipelineArgsCopy.push(csvFilePath);
+                                }
+                                else {
+                                    pipelineArgsCopy.push(pipelineArgs[i]);
                                 }
                             }
                         }
                         pythonArgs.push(pipelines[pipeline].file);
                         pythonArgs.push(port.toString());
-                        pythonArgs = pythonArgs.concat(pipelines[pipeline].args);
+                        pythonArgs = pythonArgs.concat(pipelineArgsCopy);
                     }
                     else {
                         pythonArgs.push(pipelines.cosmos.file);
@@ -203,6 +207,8 @@ function Nebula(io, pipelineAddr) {
                 console.log(socket.room.count + " people now in room " + roomName);
                 socket.emit('update', sendRoom(socket.room));
             }
+            
+            csvFilePath = null;
         });
 
         /* Listens for actions from the clients, tracking them and then
