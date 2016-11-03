@@ -14,7 +14,7 @@ module.exports = Nebula;
 var pipelines = {
     andromeda: { 
         file: "pipelines/andromeda.py",
-        args: ["data/Animal_Data_study.csv"]
+        args: ["data/STAT2004_Students_Subset50_noname_cp.csv"]
      },
      cosmos: {
         file: "pipelines/cosmos.py",
