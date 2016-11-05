@@ -14,7 +14,7 @@ module.exports = Nebula;
 var pipelines = {
     andromeda: { 
         file: "pipelines/andromeda.py",
-        args: ["data/STAT2004_subset50_noname_cp.csv"]
+        args: ["data/Animal_Data_study.csv"]
      },
      cosmos: {
         file: "pipelines/cosmos.py",
@@ -132,6 +132,11 @@ function Nebula(io, pipelineAddr) {
             if (errors.length == 0) {
                 socket.emit("csvDataReady");
             }                        
+        });
+        
+        socket.on("setCSV", function(csvName) {
+            csvFilePath = "data/" + csvName;
+            socket.emit("csvDataReady");
         });
 
         /* Lets a client join a room. If the room doesn't next exist yet,
