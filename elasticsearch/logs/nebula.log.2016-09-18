@@ -1,0 +1,6 @@
+[2016-09-18 02:32:39,070][INFO ][cluster.routing.allocation.decider] [ne_search] low disk watermark [85%] exceeded on [MNawtCA1SK6qZOxXRNh3sQ][ne_search][/Users/Theo/Desktop/Nebula/elasticsearch/data/nebula/nodes/0] free: 33.1gb[14.2%], replicas will not be assigned to this node
+[2016-09-18 16:32:49,112][INFO ][cluster.routing.allocation.decider] [ne_search] low disk watermark [85%] exceeded on [MNawtCA1SK6qZOxXRNh3sQ][ne_search][/Users/Theo/Desktop/Nebula/elasticsearch/data/nebula/nodes/0] free: 34gb[14.6%], replicas will not be assigned to this node
+[2016-09-18 16:33:12,211][INFO ][node                     ] [ne_search] stopping ...
+[2016-09-18 16:33:12,676][INFO ][node                     ] [ne_search] stopped
+[2016-09-18 16:33:12,677][INFO ][node                     ] [ne_search] closing ...
+[2016-09-18 16:33:12,696][INFO ][node                     ] [ne_search] closed
