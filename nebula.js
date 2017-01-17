@@ -72,16 +72,26 @@ function Nebula(io, pipelineAddr) {
          */
         socket.on('disconnect', function() {
             var name = socket.roomName;
-            console.log('I am disconnected  from ' + socket.roomName);
+            var roomData = self.rooms[name];
+            console.log('Client disconnecting from ' + socket.roomName);
 
-
-            if (self.rooms[socket.room] && self.rooms[socket.room].count) {
-                console.log("Count of room"+self.rooms[socket.room].count);
-                self.rooms[socket.room].count -= 1;
-                if (self.rooms[socket.room].count <= 0) {
-                        console.log("Room " + socket.room + " now empty");
+            if (roomData && roomData.count) {
+                console.log("Count of room: " + roomData.count);
+                roomData.count -= 1;
+                if (roomData.count <= 0) {
+                    console.log("Room " + name + " now empty");
+                    
+                    // Kill the Python script associated with the empty room
+                    roomData.pipelineInstance.stdin.pause();
+                    roomData.pipelineInstance.kill('SIGKILL');
+                    
+                    // Remove the empty room from the list of rooms
+                    console.log(self.rooms);
+                    delete self.rooms[name];
+                    console.log(self.rooms);
                 }
             }
+            console.log("DISCONNECT COMPLETE");
         }); 
 
 
@@ -148,11 +158,14 @@ function Nebula(io, pipelineAddr) {
         socket.on("getSessionName", function(ui) {
             // Create the new session name and send it back to the UI
             var sessionName = ui + nextSessionNumber;
-            console.log("SETTING NAME: " + sessionName);
             socket.emit("receiveSessionName", sessionName);
             
+            // TODO (maybe?): Allow for a larger number of clients to connect by
+            // storing all used numbers for sessions and forgetting/removing all other
+            // numbers. This allows us to reuse numbers that are no longer being
+            // used.
             // Keep track of used session numbers
-            usedSessionNumbers.push(nextSessionNumber);
+//            usedSessionNumbers.push(nextSessionNumber);
             
             // Determine the next session name
 //            if (nextSessionNumber == Number.MAX_VALUE || (nextSessionNumber+1) > Number.MAX_VALUE) {
@@ -244,6 +257,8 @@ function Nebula(io, pipelineAddr) {
                     pipelineInstance.stderr.on("data", function(data) {
                         console.log("Pipeline error: " + data.toString());
                     });
+                    
+                    room.pipelineInstance = pipelineInstance;
                 }
 
                 /* Connect to the pipeline */
