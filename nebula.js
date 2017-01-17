@@ -38,6 +38,9 @@ var pipelines = {
 
 var port = 5555;
 
+var nextSessionNumber = 0;
+var usedSessionNumbers = [];
+
 /* Nebula class constructor */
 function Nebula(io, pipelineAddr) {
     /* This allows you to use "Nebula(obj)" as well as "new Nebula(obj)" */
@@ -137,6 +140,30 @@ function Nebula(io, pipelineAddr) {
         socket.on("setCSV", function(csvName) {
             csvFilePath = "data/" + csvName;
             socket.emit("csvDataReady");
+        });
+
+        /* 
+         * Allows the server to be in control of session names
+         */
+        socket.on("getSessionName", function(ui) {
+            // Create the new session name and send it back to the UI
+            var sessionName = ui + nextSessionNumber;
+            console.log("SETTING NAME: " + sessionName);
+            socket.emit("receiveSessionName", sessionName);
+            
+            // Keep track of used session numbers
+            usedSessionNumbers.push(nextSessionNumber);
+            
+            // Determine the next session name
+//            if (nextSessionNumber == Number.MAX_VALUE || (nextSessionNumber+1) > Number.MAX_VALUE) {
+//                nextSessionNumber = 0;
+//                while (usedSessionNumber.indexOf(nextSessionNumber) >= 0) {
+//                    nextSessionNumber++;
+//                }
+//            }
+//            else {
+                nextSessionNumber++;                
+//            }
         });
 
         /* Lets a client join a room. If the room doesn't next exist yet,
