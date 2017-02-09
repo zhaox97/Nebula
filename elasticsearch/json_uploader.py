@@ -1,9 +1,6 @@
 #By Theo Long
-#This is a code specifically for readin file from cresent into es
-#date: 7/13/2016
-import operator
-import os
-import glob
+#This is a python script for uploading generic json file into elastic search
+#date: 08/27/2016
 import sys
 import re
 from datetime import datetime
@@ -14,6 +11,7 @@ import time
 
 if __name__ == "__main__":
 
+	#taking input arguments:
 	infile=raw_input("json file name: ")
 	host = raw_input('host: ')
 	port = raw_input('port: ')
@@ -22,13 +20,16 @@ if __name__ == "__main__":
 
 	#default localhost 9200
 	#es = Elasticsearch([{'host': 'localhost', 'port': 9200}])
+	#connect to es server
 	es = Elasticsearch([{'host': host, 'port': port}])
 	startTime = time.time()	
 	count = 0
 	print "==============================		started			=============================="
 	with open(infile) as data:
 		for line in data:
+			#json load can only decode json object one at a time. So the code has to loop through all the lines
 			d = json.loads(line)
+			# read in doc ID field to 
 			doc_id= d[u'story'][u'id']
 			print doc_id
 			es.index(index=target_index, doc_type=document_type, id=doc_id, body=d)

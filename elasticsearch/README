@@ -1,9 +1,0 @@
-Input_file.py is a python uploader for txt files.
-	usage: step in side and point the directory to the root of txt files.
-	Json object:{‘author’: author, ‘text’: raw_text, ‘timestamp’: date}
-	document is store as a single string inside ‘text’. This field must exist so that EScontroller will be able to retrieve contents back.
-
-
-Jason_uploader.py is a json file uploader.
-	** still modifying **
-	This python script will pare Json file and upload it into ES database. It must have a ‘text’ field containing document string in order for EScontroller to retrieve data. This script will detect and make sure that the Json file has a ‘text’ field at the root.
