@@ -1,0 +1,58 @@
+[2017-02-09 13:40:33,209][INFO ][node                     ] [ne_search] version[2.3.4], pid[27012], build[e455fd0/2016-06-30T11:24:31Z]
+[2017-02-09 13:40:33,211][INFO ][node                     ] [ne_search] initializing ...
+[2017-02-09 13:40:34,063][INFO ][plugins                  ] [ne_search] modules [reindex, lang-expression, lang-groovy], plugins [license, marvel-agent], sites []
+[2017-02-09 13:40:34,096][INFO ][env                      ] [ne_search] using [1] data paths, mounts [[/ (/dev/disk1)]], net usable_space [99.6gb], net total_space [232.6gb], spins? [unknown], types [hfs]
+[2017-02-09 13:40:34,097][INFO ][env                      ] [ne_search] heap size [990.7mb], compressed ordinary object pointers [true]
+[2017-02-09 13:40:34,098][WARN ][env                      ] [ne_search] max file descriptors [10240] for elasticsearch process likely too low, consider increasing to at least [65536]
+[2017-02-09 13:40:37,216][INFO ][node                     ] [ne_search] initialized
+[2017-02-09 13:40:37,217][INFO ][node                     ] [ne_search] starting ...
+[2017-02-09 13:40:37,390][INFO ][transport                ] [ne_search] publish_address {127.0.0.1:9300}, bound_addresses {127.0.0.1:9300}
+[2017-02-09 13:40:37,396][INFO ][discovery                ] [ne_search] nebula/X70Xfyg6QbeptCkqpsSNeg
+[2017-02-09 13:40:40,443][INFO ][cluster.service          ] [ne_search] new_master {ne_search}{X70Xfyg6QbeptCkqpsSNeg}{127.0.0.1}{127.0.0.1:9300}, reason: zen-disco-join(elected_as_master, [0] joins received)
+[2017-02-09 13:40:40,457][INFO ][http                     ] [ne_search] publish_address {127.0.0.1:9200}, bound_addresses {127.0.0.1:9200}
+[2017-02-09 13:40:40,457][INFO ][node                     ] [ne_search] started
+[2017-02-09 13:40:45,817][INFO ][license.plugin.core      ] [ne_search] license [aa60ab53-bddc-4e29-951e-64ec7a45317c] - expired
+[2017-02-09 13:40:45,821][ERROR][license.plugin.core      ] [ne_search] 
+#
+# LICENSE EXPIRED ON [Thursday, August 11, 2016]. IF YOU HAVE A NEW LICENSE, PLEASE
+# UPDATE IT. OTHERWISE, PLEASE REACH OUT TO YOUR SUPPORT CONTACT.
+# 
+# COMMERCIAL PLUGINS OPERATING WITH REDUCED FUNCTIONALITY
+# - marvel
+#  - The agent will stop collecting cluster and indices metrics
+#  - The agent will stop automatically cleaning indices older than [marvel.history.duration]
+[2017-02-09 13:40:45,853][INFO ][gateway                  ] [ne_search] recovered [4] indices into cluster_state
+[2017-02-09 13:40:46,863][INFO ][cluster.routing.allocation] [ne_search] Cluster health status changed from [RED] to [YELLOW] (reason: [shards started [[.kibana][0], [.kibana][0], [json][2]] ...]).
+[2017-02-09 13:41:45,066][INFO ][node                     ] [ne_search] stopping ...
+[2017-02-09 13:41:45,118][INFO ][node                     ] [ne_search] stopped
+[2017-02-09 13:41:45,118][INFO ][node                     ] [ne_search] closing ...
+[2017-02-09 13:41:45,139][INFO ][node                     ] [ne_search] closed
+[2017-02-09 13:50:29,683][INFO ][node                     ] [ne_search] version[2.3.4], pid[27189], build[e455fd0/2016-06-30T11:24:31Z]
+[2017-02-09 13:50:29,684][INFO ][node                     ] [ne_search] initializing ...
+[2017-02-09 13:50:30,839][INFO ][plugins                  ] [ne_search] modules [reindex, lang-expression, lang-groovy], plugins [license, marvel-agent], sites []
+[2017-02-09 13:50:30,892][INFO ][env                      ] [ne_search] using [1] data paths, mounts [[/ (/dev/disk1)]], net usable_space [100.4gb], net total_space [232.6gb], spins? [unknown], types [hfs]
+[2017-02-09 13:50:30,892][INFO ][env                      ] [ne_search] heap size [990.7mb], compressed ordinary object pointers [true]
+[2017-02-09 13:50:30,894][WARN ][env                      ] [ne_search] max file descriptors [10240] for elasticsearch process likely too low, consider increasing to at least [65536]
+[2017-02-09 13:50:35,282][INFO ][node                     ] [ne_search] initialized
+[2017-02-09 13:50:35,282][INFO ][node                     ] [ne_search] starting ...
+[2017-02-09 13:50:35,412][INFO ][transport                ] [ne_search] publish_address {127.0.0.1:9300}, bound_addresses {127.0.0.1:9300}
+[2017-02-09 13:50:35,418][INFO ][discovery                ] [ne_search] nebula/aktQbW_9SsKdnI59fMhvsA
+[2017-02-09 13:50:38,469][INFO ][cluster.service          ] [ne_search] new_master {ne_search}{aktQbW_9SsKdnI59fMhvsA}{127.0.0.1}{127.0.0.1:9300}, reason: zen-disco-join(elected_as_master, [0] joins received)
+[2017-02-09 13:50:38,492][INFO ][http                     ] [ne_search] publish_address {127.0.0.1:9200}, bound_addresses {127.0.0.1:9200}
+[2017-02-09 13:50:38,492][INFO ][node                     ] [ne_search] started
+[2017-02-09 13:50:43,859][INFO ][license.plugin.core      ] [ne_search] license [aa60ab53-bddc-4e29-951e-64ec7a45317c] - expired
+[2017-02-09 13:50:43,865][ERROR][license.plugin.core      ] [ne_search] 
+#
+# LICENSE EXPIRED ON [Thursday, August 11, 2016]. IF YOU HAVE A NEW LICENSE, PLEASE
+# UPDATE IT. OTHERWISE, PLEASE REACH OUT TO YOUR SUPPORT CONTACT.
+# 
+# COMMERCIAL PLUGINS OPERATING WITH REDUCED FUNCTIONALITY
+# - marvel
+#  - The agent will stop collecting cluster and indices metrics
+#  - The agent will stop automatically cleaning indices older than [marvel.history.duration]
+[2017-02-09 13:50:43,890][INFO ][gateway                  ] [ne_search] recovered [3] indices into cluster_state
+[2017-02-09 13:50:44,560][INFO ][cluster.routing.allocation] [ne_search] Cluster health status changed from [RED] to [YELLOW] (reason: [shards started [[test_index][0]] ...]).
+[2017-02-09 13:57:53,325][INFO ][node                     ] [ne_search] stopping ...
+[2017-02-09 13:57:53,372][INFO ][node                     ] [ne_search] stopped
+[2017-02-09 13:57:53,372][INFO ][node                     ] [ne_search] closing ...
+[2017-02-09 13:57:53,379][INFO ][node                     ] [ne_search] closed
