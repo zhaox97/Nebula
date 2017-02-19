@@ -305,8 +305,11 @@ function Nebula(io, pipelineAddr) {
                 socket.room = self.rooms[roomName];
                 socket.room.count += 1;
                 console.log(socket.room.count + " people now in room " + roomName);
+                
+                // TODO: Tell the UI which view/panel to update here by replacing true
+                // with isObservation or by repeating this line with false to
+                // send this message to the other UI as well
                 socket.emit('update', sendRoom(socket.room), true);
-//                socket.emit('update', sendRoom(socket.room), false);
             }
             
             // Reset the csvFilePath to null for future UIs
@@ -316,18 +319,21 @@ function Nebula(io, pipelineAddr) {
         /* Listens for actions from the clients, tracking them and then
          * broadcasting them to all other clients within the room.
          */
-        socket.on('action', function(data) {
+        // TODO: send isObservation to the handleAction function to tell the
+        // pipeline which data blob to use
+        socket.on('action', function(data, isObservation) {
             if (socket.room) {
                 self.handleAction(data, socket.room);
-                socket.broadcast.to(socket.roomName).emit('action', data, true);
-//                socket.broadcast.to(socket.roomName).emit('action', data, false);
+                socket.broadcast.to(socket.roomName).emit('action', data, isObservation);
             }
         });
 
         /* Listens for update requests from the client, executing the update
          * and then sending the results to all clients.
          */
-        socket.on('update', function(data) {
+        // TODO: use isObservation to tell the pipeline which data blob to use.
+        // isObservation will be null when a search is done
+        socket.on('update', function(data, isObservation) {
             if (socket.room) {
                 if (data.type === "oli") {
                     invoke(socket.room.pipelineSocket, "update", 
@@ -343,7 +349,9 @@ function Nebula(io, pipelineAddr) {
         /* Listens for get requests to get information about the underlying data,
          * such as the original text of the document or the type.
          */
-        socket.on('get', function(data) {
+        // TODO: send isObservation to the pipeline to tell it which data blob
+        // to use
+        socket.on('get', function(data, isObservation) {
             if (socket.room) {
                 invoke(socket.room.pipelineSocket, "get", data);
             }
@@ -382,6 +390,8 @@ Nebula.prototype.handleAction = function(action, room) {
 };
 
 /* Handles a message from the pipeline, encapsulated in an RPC-like fashion */
+// TODO: get isObservation from the pipeline to pass it on to the UI to tell the
+// UI which view/panel to update. true is stubbed in for now
 Nebula.prototype.handleMessage = function(room, msg) {
     var obj = JSON.parse(msg.toString());
     if (obj.func) {
@@ -389,7 +399,6 @@ Nebula.prototype.handleMessage = function(room, msg) {
             this.handleUpdate(room, obj.contents);
         } else if (obj.func === "get") {
             this.io.to(room.name).emit("get", obj.contents, true);
-//            this.io.to(room.name).emit("get", obj.contents, false);
         } else if (obj.func === "set") {
             this.io.to(room.name).emit("set", obj.contents);
         } else if (obj.func === "reset") {
@@ -402,6 +411,8 @@ Nebula.prototype.handleMessage = function(room, msg) {
 /* Handles updates received by the client, running the necessary processes
  * and updating the room as necessary.
  */
+// TODO: get isObservation from the pipeline to tell the UI which view/panel
+// should be updated
 Nebula.prototype.handleUpdate = function(room, res) {
     console.log("Handle update called");
 
@@ -422,8 +433,9 @@ Nebula.prototype.handleUpdate = function(room, res) {
         update.similarity_weights = res.similarity_weights;
     }
     updateRoom(room, update);
+    
+    // Tell the UI which view/panel to update here by replacing true with isObservation
     this.io.to(room.name).emit('update', update, true);
-//    this.io.to(room.name).emit('update', update, false);
 };
 
 /* Updates our state for each room upon an update from the pipeline */
