@@ -305,7 +305,8 @@ function Nebula(io, pipelineAddr) {
                 socket.room = self.rooms[roomName];
                 socket.room.count += 1;
                 console.log(socket.room.count + " people now in room " + roomName);
-                socket.emit('update', sendRoom(socket.room));
+                socket.emit('update', sendRoom(socket.room), true);
+//                socket.emit('update', sendRoom(socket.room), false);
             }
             
             // Reset the csvFilePath to null for future UIs
@@ -318,7 +319,8 @@ function Nebula(io, pipelineAddr) {
         socket.on('action', function(data) {
             if (socket.room) {
                 self.handleAction(data, socket.room);
-                socket.broadcast.to(socket.roomName).emit('action', data);
+                socket.broadcast.to(socket.roomName).emit('action', data, true);
+//                socket.broadcast.to(socket.roomName).emit('action', data, false);
             }
         });
 
@@ -386,7 +388,8 @@ Nebula.prototype.handleMessage = function(room, msg) {
         if (obj.func === "update") {
             this.handleUpdate(room, obj.contents);
         } else if (obj.func === "get") {
-            this.io.to(room.name).emit("get", obj.contents);
+            this.io.to(room.name).emit("get", obj.contents, true);
+//            this.io.to(room.name).emit("get", obj.contents, false);
         } else if (obj.func === "set") {
             this.io.to(room.name).emit("set", obj.contents);
         } else if (obj.func === "reset") {
@@ -419,7 +422,8 @@ Nebula.prototype.handleUpdate = function(room, res) {
         update.similarity_weights = res.similarity_weights;
     }
     updateRoom(room, update);
-    this.io.to(room.name).emit('update', update);
+    this.io.to(room.name).emit('update', update, true);
+//    this.io.to(room.name).emit('update', update, false);
 };
 
 /* Updates our state for each room upon an update from the pipeline */
