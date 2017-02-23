@@ -1,0 +1,704 @@
+[2016-07-25 02:53:11,965][INFO ][node                     ] [ne_search] version[2.3.4], pid[9353], build[e455fd0/2016-06-30T11:24:31Z]
+[2016-07-25 02:53:11,967][INFO ][node                     ] [ne_search] initializing ...
+[2016-07-25 02:53:12,719][INFO ][plugins                  ] [ne_search] modules [reindex, lang-expression, lang-groovy], plugins [license, marvel-agent], sites []
+[2016-07-25 02:53:12,753][INFO ][env                      ] [ne_search] using [1] data paths, mounts [[/ (/dev/disk1)]], net usable_space [12.8gb], net total_space [232.6gb], spins? [unknown], types [hfs]
+[2016-07-25 02:53:12,753][INFO ][env                      ] [ne_search] heap size [990.7mb], compressed ordinary object pointers [true]
+[2016-07-25 02:53:12,755][WARN ][env                      ] [ne_search] max file descriptors [10240] for elasticsearch process likely too low, consider increasing to at least [65536]
+[2016-07-25 02:53:15,435][INFO ][node                     ] [ne_search] initialized
+[2016-07-25 02:53:15,437][INFO ][node                     ] [ne_search] starting ...
+[2016-07-25 02:53:15,574][INFO ][transport                ] [ne_search] publish_address {127.0.0.1:9300}, bound_addresses {127.0.0.1:9300}
+[2016-07-25 02:53:15,579][INFO ][discovery                ] [ne_search] nebula/kLxnCxFHSyybC8so314WfQ
+[2016-07-25 02:53:18,618][INFO ][cluster.service          ] [ne_search] new_master {ne_search}{kLxnCxFHSyybC8so314WfQ}{127.0.0.1}{127.0.0.1:9300}, reason: zen-disco-join(elected_as_master, [0] joins received)
+[2016-07-25 02:53:18,630][INFO ][http                     ] [ne_search] publish_address {127.0.0.1:9200}, bound_addresses {127.0.0.1:9200}
+[2016-07-25 02:53:18,630][INFO ][node                     ] [ne_search] started
+[2016-07-25 02:53:18,973][INFO ][license.plugin.core      ] [ne_search] license [aa60ab53-bddc-4e29-951e-64ec7a45317c] - valid
+[2016-07-25 02:53:18,976][ERROR][license.plugin.core      ] [ne_search] 
+#
+# License will expire on [Thursday, August 11, 2016]. If you have a new license, please update it.
+# Otherwise, please reach out to your support contact.
+# 
+# Commercial plugins operate with reduced functionality on license expiration:
+# - marvel
+#  - The agent will stop collecting cluster and indices metrics
+#  - The agent will stop automatically cleaning indices older than [marvel.history.duration]
+[2016-07-25 02:53:19,006][INFO ][gateway                  ] [ne_search] recovered [6] indices into cluster_state
+[2016-07-25 02:53:19,897][INFO ][cluster.routing.allocation] [ne_search] Cluster health status changed from [RED] to [YELLOW] (reason: [shards started [[.marvel-es-1-2016.07.21][0]] ...]).
+[2016-07-25 02:53:25,630][INFO ][cluster.metadata         ] [ne_search] [.marvel-es-1-2016.07.25] creating index, cause [auto(bulk api)], templates [.marvel-es-1], shards [1]/[1], mappings [node, shards, _default_, index_stats, index_recovery, cluster_state, cluster_stats, node_stats, indices_stats]
+[2016-07-25 02:53:25,716][INFO ][cluster.routing.allocation] [ne_search] Cluster health status changed from [RED] to [YELLOW] (reason: [shards started [[.marvel-es-1-2016.07.25][0]] ...]).
+[2016-07-25 02:53:25,804][INFO ][cluster.metadata         ] [ne_search] [.marvel-es-1-2016.07.25] update_mapping [cluster_stats]
+[2016-07-25 02:53:25,871][INFO ][cluster.metadata         ] [ne_search] [.marvel-es-1-2016.07.25] update_mapping [node_stats]
+[2016-07-25 02:53:25,889][INFO ][cluster.metadata         ] [ne_search] [.marvel-es-1-2016.07.25] update_mapping [indices_stats]
+[2016-07-25 02:53:48,629][WARN ][cluster.routing.allocation.decider] [ne_search] high disk watermark [90%] exceeded on [kLxnCxFHSyybC8so314WfQ][ne_search][/Users/Theo/Desktop/Nebula/elasticsearch/data/nebula/nodes/0] free: 12.8gb[5.5%], shards will be relocated away from this node
+[2016-07-25 02:53:48,630][INFO ][cluster.routing.allocation.decider] [ne_search] rerouting shards: [high disk watermark exceeded on one or more nodes]
+[2016-07-25 02:54:18,648][WARN ][cluster.routing.allocation.decider] [ne_search] high disk watermark [90%] exceeded on [kLxnCxFHSyybC8so314WfQ][ne_search][/Users/Theo/Desktop/Nebula/elasticsearch/data/nebula/nodes/0] free: 12.8gb[5.5%], shards will be relocated away from this node
+[2016-07-25 02:54:32,794][INFO ][cluster.metadata         ] [ne_search] [.kibana] create_mapping [search]
+[2016-07-25 02:54:48,652][WARN ][cluster.routing.allocation.decider] [ne_search] high disk watermark [90%] exceeded on [kLxnCxFHSyybC8so314WfQ][ne_search][/Users/Theo/Desktop/Nebula/elasticsearch/data/nebula/nodes/0] free: 12.8gb[5.5%], shards will be relocated away from this node
+[2016-07-25 02:54:48,653][INFO ][cluster.routing.allocation.decider] [ne_search] rerouting shards: [high disk watermark exceeded on one or more nodes]
+[2016-07-25 02:55:18,656][WARN ][cluster.routing.allocation.decider] [ne_search] high disk watermark [90%] exceeded on [kLxnCxFHSyybC8so314WfQ][ne_search][/Users/Theo/Desktop/Nebula/elasticsearch/data/nebula/nodes/0] free: 12.8gb[5.5%], shards will be relocated away from this node
+[2016-07-25 02:55:48,660][WARN ][cluster.routing.allocation.decider] [ne_search] high disk watermark [90%] exceeded on [kLxnCxFHSyybC8so314WfQ][ne_search][/Users/Theo/Desktop/Nebula/elasticsearch/data/nebula/nodes/0] free: 12.8gb[5.5%], shards will be relocated away from this node
+[2016-07-25 02:55:48,661][INFO ][cluster.routing.allocation.decider] [ne_search] rerouting shards: [high disk watermark exceeded on one or more nodes]
+[2016-07-25 02:56:18,666][WARN ][cluster.routing.allocation.decider] [ne_search] high disk watermark [90%] exceeded on [kLxnCxFHSyybC8so314WfQ][ne_search][/Users/Theo/Desktop/Nebula/elasticsearch/data/nebula/nodes/0] free: 12.8gb[5.5%], shards will be relocated away from this node
+[2016-07-25 02:56:48,672][WARN ][cluster.routing.allocation.decider] [ne_search] high disk watermark [90%] exceeded on [kLxnCxFHSyybC8so314WfQ][ne_search][/Users/Theo/Desktop/Nebula/elasticsearch/data/nebula/nodes/0] free: 12.8gb[5.5%], shards will be relocated away from this node
+[2016-07-25 02:56:48,673][INFO ][cluster.routing.allocation.decider] [ne_search] rerouting shards: [high disk watermark exceeded on one or more nodes]
+[2016-07-25 02:57:18,680][WARN ][cluster.routing.allocation.decider] [ne_search] high disk watermark [90%] exceeded on [kLxnCxFHSyybC8so314WfQ][ne_search][/Users/Theo/Desktop/Nebula/elasticsearch/data/nebula/nodes/0] free: 12.8gb[5.5%], shards will be relocated away from this node
+[2016-07-25 02:57:38,071][INFO ][node                     ] [ne_search] stopping ...
+[2016-07-25 02:57:38,175][INFO ][node                     ] [ne_search] stopped
+[2016-07-25 02:57:38,175][INFO ][node                     ] [ne_search] closing ...
+[2016-07-25 02:57:38,182][INFO ][node                     ] [ne_search] closed
+[2016-07-25 02:58:54,675][INFO ][node                     ] [ne_search] version[2.3.4], pid[9496], build[e455fd0/2016-06-30T11:24:31Z]
+[2016-07-25 02:58:54,676][INFO ][node                     ] [ne_search] initializing ...
+[2016-07-25 02:58:55,275][INFO ][plugins                  ] [ne_search] modules [reindex, lang-expression, lang-groovy], plugins [license, marvel-agent], sites []
+[2016-07-25 02:58:55,296][INFO ][env                      ] [ne_search] using [1] data paths, mounts [[/ (/dev/disk1)]], net usable_space [12.8gb], net total_space [232.6gb], spins? [unknown], types [hfs]
+[2016-07-25 02:58:55,296][INFO ][env                      ] [ne_search] heap size [990.7mb], compressed ordinary object pointers [true]
+[2016-07-25 02:58:55,297][WARN ][env                      ] [ne_search] max file descriptors [10240] for elasticsearch process likely too low, consider increasing to at least [65536]
+[2016-07-25 02:58:57,652][INFO ][node                     ] [ne_search] initialized
+[2016-07-25 02:58:57,654][INFO ][node                     ] [ne_search] starting ...
+[2016-07-25 02:58:57,779][INFO ][transport                ] [ne_search] publish_address {127.0.0.1:9300}, bound_addresses {127.0.0.1:9300}
+[2016-07-25 02:58:57,783][INFO ][discovery                ] [ne_search] nebula/sgkidTjARk6KfceXOrg-Qw
+[2016-07-25 02:59:00,825][INFO ][cluster.service          ] [ne_search] new_master {ne_search}{sgkidTjARk6KfceXOrg-Qw}{127.0.0.1}{127.0.0.1:9300}, reason: zen-disco-join(elected_as_master, [0] joins received)
+[2016-07-25 02:59:00,834][INFO ][http                     ] [ne_search] publish_address {127.0.0.1:9200}, bound_addresses {127.0.0.1:9200}
+[2016-07-25 02:59:00,834][INFO ][node                     ] [ne_search] started
+[2016-07-25 02:59:01,113][INFO ][license.plugin.core      ] [ne_search] license [aa60ab53-bddc-4e29-951e-64ec7a45317c] - valid
+[2016-07-25 02:59:01,116][ERROR][license.plugin.core      ] [ne_search] 
+#
+# License will expire on [Thursday, August 11, 2016]. If you have a new license, please update it.
+# Otherwise, please reach out to your support contact.
+# 
+# Commercial plugins operate with reduced functionality on license expiration:
+# - marvel
+#  - The agent will stop collecting cluster and indices metrics
+#  - The agent will stop automatically cleaning indices older than [marvel.history.duration]
+[2016-07-25 02:59:01,154][INFO ][gateway                  ] [ne_search] recovered [7] indices into cluster_state
+[2016-07-25 02:59:02,522][INFO ][cluster.routing.allocation] [ne_search] Cluster health status changed from [RED] to [YELLOW] (reason: [shards started [[.marvel-es-1-2016.07.21][0]] ...]).
+[2016-07-25 02:59:30,838][WARN ][cluster.routing.allocation.decider] [ne_search] high disk watermark [90%] exceeded on [sgkidTjARk6KfceXOrg-Qw][ne_search][/Users/Theo/Desktop/Nebula/elasticsearch/data/nebula/nodes/0] free: 12.8gb[5.5%], shards will be relocated away from this node
+[2016-07-25 02:59:30,839][INFO ][cluster.routing.allocation.decider] [ne_search] rerouting shards: [high disk watermark exceeded on one or more nodes]
+[2016-07-25 03:00:00,846][WARN ][cluster.routing.allocation.decider] [ne_search] high disk watermark [90%] exceeded on [sgkidTjARk6KfceXOrg-Qw][ne_search][/Users/Theo/Desktop/Nebula/elasticsearch/data/nebula/nodes/0] free: 12.8gb[5.5%], shards will be relocated away from this node
+[2016-07-25 03:00:30,853][WARN ][cluster.routing.allocation.decider] [ne_search] high disk watermark [90%] exceeded on [sgkidTjARk6KfceXOrg-Qw][ne_search][/Users/Theo/Desktop/Nebula/elasticsearch/data/nebula/nodes/0] free: 12.8gb[5.5%], shards will be relocated away from this node
+[2016-07-25 03:00:30,854][INFO ][cluster.routing.allocation.decider] [ne_search] rerouting shards: [high disk watermark exceeded on one or more nodes]
+[2016-07-25 03:01:00,861][WARN ][cluster.routing.allocation.decider] [ne_search] high disk watermark [90%] exceeded on [sgkidTjARk6KfceXOrg-Qw][ne_search][/Users/Theo/Desktop/Nebula/elasticsearch/data/nebula/nodes/0] free: 12.8gb[5.5%], shards will be relocated away from this node
+[2016-07-25 03:01:30,864][WARN ][cluster.routing.allocation.decider] [ne_search] high disk watermark [90%] exceeded on [sgkidTjARk6KfceXOrg-Qw][ne_search][/Users/Theo/Desktop/Nebula/elasticsearch/data/nebula/nodes/0] free: 12.8gb[5.5%], shards will be relocated away from this node
+[2016-07-25 03:01:30,865][INFO ][cluster.routing.allocation.decider] [ne_search] rerouting shards: [high disk watermark exceeded on one or more nodes]
+[2016-07-25 03:02:00,868][WARN ][cluster.routing.allocation.decider] [ne_search] high disk watermark [90%] exceeded on [sgkidTjARk6KfceXOrg-Qw][ne_search][/Users/Theo/Desktop/Nebula/elasticsearch/data/nebula/nodes/0] free: 12.8gb[5.5%], shards will be relocated away from this node
+[2016-07-25 03:02:30,872][WARN ][cluster.routing.allocation.decider] [ne_search] high disk watermark [90%] exceeded on [sgkidTjARk6KfceXOrg-Qw][ne_search][/Users/Theo/Desktop/Nebula/elasticsearch/data/nebula/nodes/0] free: 12.8gb[5.5%], shards will be relocated away from this node
+[2016-07-25 03:02:30,872][INFO ][cluster.routing.allocation.decider] [ne_search] rerouting shards: [high disk watermark exceeded on one or more nodes]
+[2016-07-25 03:03:00,876][WARN ][cluster.routing.allocation.decider] [ne_search] high disk watermark [90%] exceeded on [sgkidTjARk6KfceXOrg-Qw][ne_search][/Users/Theo/Desktop/Nebula/elasticsearch/data/nebula/nodes/0] free: 12.8gb[5.5%], shards will be relocated away from this node
+[2016-07-25 03:03:30,883][WARN ][cluster.routing.allocation.decider] [ne_search] high disk watermark [90%] exceeded on [sgkidTjARk6KfceXOrg-Qw][ne_search][/Users/Theo/Desktop/Nebula/elasticsearch/data/nebula/nodes/0] free: 12.8gb[5.5%], shards will be relocated away from this node
+[2016-07-25 03:03:30,883][INFO ][cluster.routing.allocation.decider] [ne_search] rerouting shards: [high disk watermark exceeded on one or more nodes]
+[2016-07-25 03:04:00,886][WARN ][cluster.routing.allocation.decider] [ne_search] high disk watermark [90%] exceeded on [sgkidTjARk6KfceXOrg-Qw][ne_search][/Users/Theo/Desktop/Nebula/elasticsearch/data/nebula/nodes/0] free: 12.8gb[5.5%], shards will be relocated away from this node
+[2016-07-25 03:04:30,893][WARN ][cluster.routing.allocation.decider] [ne_search] high disk watermark [90%] exceeded on [sgkidTjARk6KfceXOrg-Qw][ne_search][/Users/Theo/Desktop/Nebula/elasticsearch/data/nebula/nodes/0] free: 12.8gb[5.5%], shards will be relocated away from this node
+[2016-07-25 03:04:30,893][INFO ][cluster.routing.allocation.decider] [ne_search] rerouting shards: [high disk watermark exceeded on one or more nodes]
+[2016-07-25 03:05:00,900][WARN ][cluster.routing.allocation.decider] [ne_search] high disk watermark [90%] exceeded on [sgkidTjARk6KfceXOrg-Qw][ne_search][/Users/Theo/Desktop/Nebula/elasticsearch/data/nebula/nodes/0] free: 12.8gb[5.5%], shards will be relocated away from this node
+[2016-07-25 03:05:30,903][WARN ][cluster.routing.allocation.decider] [ne_search] high disk watermark [90%] exceeded on [sgkidTjARk6KfceXOrg-Qw][ne_search][/Users/Theo/Desktop/Nebula/elasticsearch/data/nebula/nodes/0] free: 12.8gb[5.5%], shards will be relocated away from this node
+[2016-07-25 03:05:30,903][INFO ][cluster.routing.allocation.decider] [ne_search] rerouting shards: [high disk watermark exceeded on one or more nodes]
+[2016-07-25 03:06:00,915][WARN ][cluster.routing.allocation.decider] [ne_search] high disk watermark [90%] exceeded on [sgkidTjARk6KfceXOrg-Qw][ne_search][/Users/Theo/Desktop/Nebula/elasticsearch/data/nebula/nodes/0] free: 12.8gb[5.5%], shards will be relocated away from this node
+[2016-07-25 03:06:30,922][WARN ][cluster.routing.allocation.decider] [ne_search] high disk watermark [90%] exceeded on [sgkidTjARk6KfceXOrg-Qw][ne_search][/Users/Theo/Desktop/Nebula/elasticsearch/data/nebula/nodes/0] free: 12.8gb[5.5%], shards will be relocated away from this node
+[2016-07-25 03:06:30,922][INFO ][cluster.routing.allocation.decider] [ne_search] rerouting shards: [high disk watermark exceeded on one or more nodes]
+[2016-07-25 03:07:00,930][WARN ][cluster.routing.allocation.decider] [ne_search] high disk watermark [90%] exceeded on [sgkidTjARk6KfceXOrg-Qw][ne_search][/Users/Theo/Desktop/Nebula/elasticsearch/data/nebula/nodes/0] free: 12.8gb[5.5%], shards will be relocated away from this node
+[2016-07-25 03:07:30,936][WARN ][cluster.routing.allocation.decider] [ne_search] high disk watermark [90%] exceeded on [sgkidTjARk6KfceXOrg-Qw][ne_search][/Users/Theo/Desktop/Nebula/elasticsearch/data/nebula/nodes/0] free: 12.8gb[5.5%], shards will be relocated away from this node
+[2016-07-25 03:07:30,936][INFO ][cluster.routing.allocation.decider] [ne_search] rerouting shards: [high disk watermark exceeded on one or more nodes]
+[2016-07-25 03:08:00,939][WARN ][cluster.routing.allocation.decider] [ne_search] high disk watermark [90%] exceeded on [sgkidTjARk6KfceXOrg-Qw][ne_search][/Users/Theo/Desktop/Nebula/elasticsearch/data/nebula/nodes/0] free: 12.8gb[5.5%], shards will be relocated away from this node
+[2016-07-25 03:08:30,944][WARN ][cluster.routing.allocation.decider] [ne_search] high disk watermark [90%] exceeded on [sgkidTjARk6KfceXOrg-Qw][ne_search][/Users/Theo/Desktop/Nebula/elasticsearch/data/nebula/nodes/0] free: 12.8gb[5.5%], shards will be relocated away from this node
+[2016-07-25 03:08:30,944][INFO ][cluster.routing.allocation.decider] [ne_search] rerouting shards: [high disk watermark exceeded on one or more nodes]
+[2016-07-25 03:09:00,949][WARN ][cluster.routing.allocation.decider] [ne_search] high disk watermark [90%] exceeded on [sgkidTjARk6KfceXOrg-Qw][ne_search][/Users/Theo/Desktop/Nebula/elasticsearch/data/nebula/nodes/0] free: 12.8gb[5.5%], shards will be relocated away from this node
+[2016-07-25 03:09:30,967][WARN ][cluster.routing.allocation.decider] [ne_search] high disk watermark [90%] exceeded on [sgkidTjARk6KfceXOrg-Qw][ne_search][/Users/Theo/Desktop/Nebula/elasticsearch/data/nebula/nodes/0] free: 12.8gb[5.5%], shards will be relocated away from this node
+[2016-07-25 03:09:30,967][INFO ][cluster.routing.allocation.decider] [ne_search] rerouting shards: [high disk watermark exceeded on one or more nodes]
+[2016-07-25 03:10:00,973][WARN ][cluster.routing.allocation.decider] [ne_search] high disk watermark [90%] exceeded on [sgkidTjARk6KfceXOrg-Qw][ne_search][/Users/Theo/Desktop/Nebula/elasticsearch/data/nebula/nodes/0] free: 12.8gb[5.5%], shards will be relocated away from this node
+[2016-07-25 03:10:30,976][WARN ][cluster.routing.allocation.decider] [ne_search] high disk watermark [90%] exceeded on [sgkidTjARk6KfceXOrg-Qw][ne_search][/Users/Theo/Desktop/Nebula/elasticsearch/data/nebula/nodes/0] free: 12.8gb[5.5%], shards will be relocated away from this node
+[2016-07-25 03:10:30,976][INFO ][cluster.routing.allocation.decider] [ne_search] rerouting shards: [high disk watermark exceeded on one or more nodes]
+[2016-07-25 03:11:00,983][WARN ][cluster.routing.allocation.decider] [ne_search] high disk watermark [90%] exceeded on [sgkidTjARk6KfceXOrg-Qw][ne_search][/Users/Theo/Desktop/Nebula/elasticsearch/data/nebula/nodes/0] free: 12.8gb[5.5%], shards will be relocated away from this node
+[2016-07-25 03:11:30,986][WARN ][cluster.routing.allocation.decider] [ne_search] high disk watermark [90%] exceeded on [sgkidTjARk6KfceXOrg-Qw][ne_search][/Users/Theo/Desktop/Nebula/elasticsearch/data/nebula/nodes/0] free: 12.8gb[5.5%], shards will be relocated away from this node
+[2016-07-25 03:11:30,986][INFO ][cluster.routing.allocation.decider] [ne_search] rerouting shards: [high disk watermark exceeded on one or more nodes]
+[2016-07-25 03:12:00,992][WARN ][cluster.routing.allocation.decider] [ne_search] high disk watermark [90%] exceeded on [sgkidTjARk6KfceXOrg-Qw][ne_search][/Users/Theo/Desktop/Nebula/elasticsearch/data/nebula/nodes/0] free: 12.8gb[5.5%], shards will be relocated away from this node
+[2016-07-25 03:12:30,995][WARN ][cluster.routing.allocation.decider] [ne_search] high disk watermark [90%] exceeded on [sgkidTjARk6KfceXOrg-Qw][ne_search][/Users/Theo/Desktop/Nebula/elasticsearch/data/nebula/nodes/0] free: 12.8gb[5.5%], shards will be relocated away from this node
+[2016-07-25 03:12:31,002][INFO ][cluster.routing.allocation.decider] [ne_search] rerouting shards: [high disk watermark exceeded on one or more nodes]
+[2016-07-25 03:13:01,006][WARN ][cluster.routing.allocation.decider] [ne_search] high disk watermark [90%] exceeded on [sgkidTjARk6KfceXOrg-Qw][ne_search][/Users/Theo/Desktop/Nebula/elasticsearch/data/nebula/nodes/0] free: 12.8gb[5.5%], shards will be relocated away from this node
+[2016-07-25 03:13:31,010][WARN ][cluster.routing.allocation.decider] [ne_search] high disk watermark [90%] exceeded on [sgkidTjARk6KfceXOrg-Qw][ne_search][/Users/Theo/Desktop/Nebula/elasticsearch/data/nebula/nodes/0] free: 12.8gb[5.5%], shards will be relocated away from this node
+[2016-07-25 03:13:31,010][INFO ][cluster.routing.allocation.decider] [ne_search] rerouting shards: [high disk watermark exceeded on one or more nodes]
+[2016-07-25 03:14:01,015][WARN ][cluster.routing.allocation.decider] [ne_search] high disk watermark [90%] exceeded on [sgkidTjARk6KfceXOrg-Qw][ne_search][/Users/Theo/Desktop/Nebula/elasticsearch/data/nebula/nodes/0] free: 12.8gb[5.5%], shards will be relocated away from this node
+[2016-07-25 03:14:31,021][WARN ][cluster.routing.allocation.decider] [ne_search] high disk watermark [90%] exceeded on [sgkidTjARk6KfceXOrg-Qw][ne_search][/Users/Theo/Desktop/Nebula/elasticsearch/data/nebula/nodes/0] free: 12.8gb[5.5%], shards will be relocated away from this node
+[2016-07-25 03:14:31,022][INFO ][cluster.routing.allocation.decider] [ne_search] rerouting shards: [high disk watermark exceeded on one or more nodes]
+[2016-07-25 03:15:01,030][WARN ][cluster.routing.allocation.decider] [ne_search] high disk watermark [90%] exceeded on [sgkidTjARk6KfceXOrg-Qw][ne_search][/Users/Theo/Desktop/Nebula/elasticsearch/data/nebula/nodes/0] free: 12.8gb[5.5%], shards will be relocated away from this node
+[2016-07-25 03:15:31,038][WARN ][cluster.routing.allocation.decider] [ne_search] high disk watermark [90%] exceeded on [sgkidTjARk6KfceXOrg-Qw][ne_search][/Users/Theo/Desktop/Nebula/elasticsearch/data/nebula/nodes/0] free: 12.8gb[5.5%], shards will be relocated away from this node
+[2016-07-25 03:15:31,038][INFO ][cluster.routing.allocation.decider] [ne_search] rerouting shards: [high disk watermark exceeded on one or more nodes]
+[2016-07-25 03:16:01,041][WARN ][cluster.routing.allocation.decider] [ne_search] high disk watermark [90%] exceeded on [sgkidTjARk6KfceXOrg-Qw][ne_search][/Users/Theo/Desktop/Nebula/elasticsearch/data/nebula/nodes/0] free: 12.8gb[5.5%], shards will be relocated away from this node
+[2016-07-25 03:16:31,048][WARN ][cluster.routing.allocation.decider] [ne_search] high disk watermark [90%] exceeded on [sgkidTjARk6KfceXOrg-Qw][ne_search][/Users/Theo/Desktop/Nebula/elasticsearch/data/nebula/nodes/0] free: 12.8gb[5.5%], shards will be relocated away from this node
+[2016-07-25 03:16:31,048][INFO ][cluster.routing.allocation.decider] [ne_search] rerouting shards: [high disk watermark exceeded on one or more nodes]
+[2016-07-25 03:17:01,051][WARN ][cluster.routing.allocation.decider] [ne_search] high disk watermark [90%] exceeded on [sgkidTjARk6KfceXOrg-Qw][ne_search][/Users/Theo/Desktop/Nebula/elasticsearch/data/nebula/nodes/0] free: 12.8gb[5.5%], shards will be relocated away from this node
+[2016-07-25 03:17:31,056][WARN ][cluster.routing.allocation.decider] [ne_search] high disk watermark [90%] exceeded on [sgkidTjARk6KfceXOrg-Qw][ne_search][/Users/Theo/Desktop/Nebula/elasticsearch/data/nebula/nodes/0] free: 12.8gb[5.5%], shards will be relocated away from this node
+[2016-07-25 03:17:31,056][INFO ][cluster.routing.allocation.decider] [ne_search] rerouting shards: [high disk watermark exceeded on one or more nodes]
+[2016-07-25 03:18:01,063][WARN ][cluster.routing.allocation.decider] [ne_search] high disk watermark [90%] exceeded on [sgkidTjARk6KfceXOrg-Qw][ne_search][/Users/Theo/Desktop/Nebula/elasticsearch/data/nebula/nodes/0] free: 12.8gb[5.5%], shards will be relocated away from this node
+[2016-07-25 03:18:31,068][WARN ][cluster.routing.allocation.decider] [ne_search] high disk watermark [90%] exceeded on [sgkidTjARk6KfceXOrg-Qw][ne_search][/Users/Theo/Desktop/Nebula/elasticsearch/data/nebula/nodes/0] free: 12.8gb[5.5%], shards will be relocated away from this node
+[2016-07-25 03:18:31,068][INFO ][cluster.routing.allocation.decider] [ne_search] rerouting shards: [high disk watermark exceeded on one or more nodes]
+[2016-07-25 03:19:01,076][WARN ][cluster.routing.allocation.decider] [ne_search] high disk watermark [90%] exceeded on [sgkidTjARk6KfceXOrg-Qw][ne_search][/Users/Theo/Desktop/Nebula/elasticsearch/data/nebula/nodes/0] free: 12.8gb[5.5%], shards will be relocated away from this node
+[2016-07-25 03:19:31,083][WARN ][cluster.routing.allocation.decider] [ne_search] high disk watermark [90%] exceeded on [sgkidTjARk6KfceXOrg-Qw][ne_search][/Users/Theo/Desktop/Nebula/elasticsearch/data/nebula/nodes/0] free: 12.8gb[5.5%], shards will be relocated away from this node
+[2016-07-25 03:19:31,083][INFO ][cluster.routing.allocation.decider] [ne_search] rerouting shards: [high disk watermark exceeded on one or more nodes]
+[2016-07-25 03:20:01,091][WARN ][cluster.routing.allocation.decider] [ne_search] high disk watermark [90%] exceeded on [sgkidTjARk6KfceXOrg-Qw][ne_search][/Users/Theo/Desktop/Nebula/elasticsearch/data/nebula/nodes/0] free: 12.8gb[5.5%], shards will be relocated away from this node
+[2016-07-25 03:20:31,098][WARN ][cluster.routing.allocation.decider] [ne_search] high disk watermark [90%] exceeded on [sgkidTjARk6KfceXOrg-Qw][ne_search][/Users/Theo/Desktop/Nebula/elasticsearch/data/nebula/nodes/0] free: 12.8gb[5.5%], shards will be relocated away from this node
+[2016-07-25 03:20:31,098][INFO ][cluster.routing.allocation.decider] [ne_search] rerouting shards: [high disk watermark exceeded on one or more nodes]
+[2016-07-25 03:21:01,110][WARN ][cluster.routing.allocation.decider] [ne_search] high disk watermark [90%] exceeded on [sgkidTjARk6KfceXOrg-Qw][ne_search][/Users/Theo/Desktop/Nebula/elasticsearch/data/nebula/nodes/0] free: 12.8gb[5.5%], shards will be relocated away from this node
+[2016-07-25 06:21:32,037][WARN ][cluster.routing.allocation.decider] [ne_search] high disk watermark [90%] exceeded on [sgkidTjARk6KfceXOrg-Qw][ne_search][/Users/Theo/Desktop/Nebula/elasticsearch/data/nebula/nodes/0] free: 12.9gb[5.5%], shards will be relocated away from this node
+[2016-07-25 06:21:32,037][INFO ][cluster.routing.allocation.decider] [ne_search] rerouting shards: [high disk watermark exceeded on one or more nodes]
+[2016-07-25 12:06:47,818][WARN ][cluster.routing.allocation.decider] [ne_search] high disk watermark [90%] exceeded on [sgkidTjARk6KfceXOrg-Qw][ne_search][/Users/Theo/Desktop/Nebula/elasticsearch/data/nebula/nodes/0] free: 10.9gb[4.7%], shards will be relocated away from this node
+[2016-07-25 12:07:17,833][WARN ][cluster.routing.allocation.decider] [ne_search] high disk watermark [90%] exceeded on [sgkidTjARk6KfceXOrg-Qw][ne_search][/Users/Theo/Desktop/Nebula/elasticsearch/data/nebula/nodes/0] free: 11.9gb[5.1%], shards will be relocated away from this node
+[2016-07-25 12:07:17,834][INFO ][cluster.routing.allocation.decider] [ne_search] rerouting shards: [high disk watermark exceeded on one or more nodes]
+[2016-07-25 12:07:47,841][WARN ][cluster.routing.allocation.decider] [ne_search] high disk watermark [90%] exceeded on [sgkidTjARk6KfceXOrg-Qw][ne_search][/Users/Theo/Desktop/Nebula/elasticsearch/data/nebula/nodes/0] free: 11.9gb[5.1%], shards will be relocated away from this node
+[2016-07-25 12:08:17,844][WARN ][cluster.routing.allocation.decider] [ne_search] high disk watermark [90%] exceeded on [sgkidTjARk6KfceXOrg-Qw][ne_search][/Users/Theo/Desktop/Nebula/elasticsearch/data/nebula/nodes/0] free: 11.9gb[5.1%], shards will be relocated away from this node
+[2016-07-25 12:08:17,844][INFO ][cluster.routing.allocation.decider] [ne_search] rerouting shards: [high disk watermark exceeded on one or more nodes]
+[2016-07-25 12:08:47,852][WARN ][cluster.routing.allocation.decider] [ne_search] high disk watermark [90%] exceeded on [sgkidTjARk6KfceXOrg-Qw][ne_search][/Users/Theo/Desktop/Nebula/elasticsearch/data/nebula/nodes/0] free: 12.9gb[5.5%], shards will be relocated away from this node
+[2016-07-25 12:09:17,859][WARN ][cluster.routing.allocation.decider] [ne_search] high disk watermark [90%] exceeded on [sgkidTjARk6KfceXOrg-Qw][ne_search][/Users/Theo/Desktop/Nebula/elasticsearch/data/nebula/nodes/0] free: 12.9gb[5.5%], shards will be relocated away from this node
+[2016-07-25 12:09:17,859][INFO ][cluster.routing.allocation.decider] [ne_search] rerouting shards: [high disk watermark exceeded on one or more nodes]
+[2016-07-25 12:09:47,863][WARN ][cluster.routing.allocation.decider] [ne_search] high disk watermark [90%] exceeded on [sgkidTjARk6KfceXOrg-Qw][ne_search][/Users/Theo/Desktop/Nebula/elasticsearch/data/nebula/nodes/0] free: 12.9gb[5.5%], shards will be relocated away from this node
+[2016-07-25 12:10:17,868][WARN ][cluster.routing.allocation.decider] [ne_search] high disk watermark [90%] exceeded on [sgkidTjARk6KfceXOrg-Qw][ne_search][/Users/Theo/Desktop/Nebula/elasticsearch/data/nebula/nodes/0] free: 12.9gb[5.5%], shards will be relocated away from this node
+[2016-07-25 12:10:17,869][INFO ][cluster.routing.allocation.decider] [ne_search] rerouting shards: [high disk watermark exceeded on one or more nodes]
+[2016-07-25 12:10:47,877][WARN ][cluster.routing.allocation.decider] [ne_search] high disk watermark [90%] exceeded on [sgkidTjARk6KfceXOrg-Qw][ne_search][/Users/Theo/Desktop/Nebula/elasticsearch/data/nebula/nodes/0] free: 12.9gb[5.5%], shards will be relocated away from this node
+[2016-07-25 12:11:17,879][WARN ][cluster.routing.allocation.decider] [ne_search] high disk watermark [90%] exceeded on [sgkidTjARk6KfceXOrg-Qw][ne_search][/Users/Theo/Desktop/Nebula/elasticsearch/data/nebula/nodes/0] free: 12.9gb[5.5%], shards will be relocated away from this node
+[2016-07-25 12:11:17,879][INFO ][cluster.routing.allocation.decider] [ne_search] rerouting shards: [high disk watermark exceeded on one or more nodes]
+[2016-07-25 12:11:47,882][WARN ][cluster.routing.allocation.decider] [ne_search] high disk watermark [90%] exceeded on [sgkidTjARk6KfceXOrg-Qw][ne_search][/Users/Theo/Desktop/Nebula/elasticsearch/data/nebula/nodes/0] free: 12.9gb[5.5%], shards will be relocated away from this node
+[2016-07-25 12:12:17,886][WARN ][cluster.routing.allocation.decider] [ne_search] high disk watermark [90%] exceeded on [sgkidTjARk6KfceXOrg-Qw][ne_search][/Users/Theo/Desktop/Nebula/elasticsearch/data/nebula/nodes/0] free: 12.9gb[5.5%], shards will be relocated away from this node
+[2016-07-25 12:12:17,886][INFO ][cluster.routing.allocation.decider] [ne_search] rerouting shards: [high disk watermark exceeded on one or more nodes]
+[2016-07-25 12:12:47,891][WARN ][cluster.routing.allocation.decider] [ne_search] high disk watermark [90%] exceeded on [sgkidTjARk6KfceXOrg-Qw][ne_search][/Users/Theo/Desktop/Nebula/elasticsearch/data/nebula/nodes/0] free: 12.9gb[5.5%], shards will be relocated away from this node
+[2016-07-25 12:13:17,899][WARN ][cluster.routing.allocation.decider] [ne_search] high disk watermark [90%] exceeded on [sgkidTjARk6KfceXOrg-Qw][ne_search][/Users/Theo/Desktop/Nebula/elasticsearch/data/nebula/nodes/0] free: 12.9gb[5.5%], shards will be relocated away from this node
+[2016-07-25 12:13:17,899][INFO ][cluster.routing.allocation.decider] [ne_search] rerouting shards: [high disk watermark exceeded on one or more nodes]
+[2016-07-25 12:13:47,906][WARN ][cluster.routing.allocation.decider] [ne_search] high disk watermark [90%] exceeded on [sgkidTjARk6KfceXOrg-Qw][ne_search][/Users/Theo/Desktop/Nebula/elasticsearch/data/nebula/nodes/0] free: 12.9gb[5.5%], shards will be relocated away from this node
+[2016-07-25 12:14:17,916][WARN ][cluster.routing.allocation.decider] [ne_search] high disk watermark [90%] exceeded on [sgkidTjARk6KfceXOrg-Qw][ne_search][/Users/Theo/Desktop/Nebula/elasticsearch/data/nebula/nodes/0] free: 12.9gb[5.5%], shards will be relocated away from this node
+[2016-07-25 12:14:17,916][INFO ][cluster.routing.allocation.decider] [ne_search] rerouting shards: [high disk watermark exceeded on one or more nodes]
+[2016-07-25 12:14:47,924][WARN ][cluster.routing.allocation.decider] [ne_search] high disk watermark [90%] exceeded on [sgkidTjARk6KfceXOrg-Qw][ne_search][/Users/Theo/Desktop/Nebula/elasticsearch/data/nebula/nodes/0] free: 12.9gb[5.5%], shards will be relocated away from this node
+[2016-07-25 12:15:17,927][WARN ][cluster.routing.allocation.decider] [ne_search] high disk watermark [90%] exceeded on [sgkidTjARk6KfceXOrg-Qw][ne_search][/Users/Theo/Desktop/Nebula/elasticsearch/data/nebula/nodes/0] free: 12.9gb[5.5%], shards will be relocated away from this node
+[2016-07-25 12:15:17,935][INFO ][cluster.routing.allocation.decider] [ne_search] rerouting shards: [high disk watermark exceeded on one or more nodes]
+[2016-07-25 12:15:47,943][WARN ][cluster.routing.allocation.decider] [ne_search] high disk watermark [90%] exceeded on [sgkidTjARk6KfceXOrg-Qw][ne_search][/Users/Theo/Desktop/Nebula/elasticsearch/data/nebula/nodes/0] free: 12.9gb[5.5%], shards will be relocated away from this node
+[2016-07-25 12:16:17,950][WARN ][cluster.routing.allocation.decider] [ne_search] high disk watermark [90%] exceeded on [sgkidTjARk6KfceXOrg-Qw][ne_search][/Users/Theo/Desktop/Nebula/elasticsearch/data/nebula/nodes/0] free: 12.9gb[5.5%], shards will be relocated away from this node
+[2016-07-25 12:16:17,950][INFO ][cluster.routing.allocation.decider] [ne_search] rerouting shards: [high disk watermark exceeded on one or more nodes]
+[2016-07-25 12:16:47,952][WARN ][cluster.routing.allocation.decider] [ne_search] high disk watermark [90%] exceeded on [sgkidTjARk6KfceXOrg-Qw][ne_search][/Users/Theo/Desktop/Nebula/elasticsearch/data/nebula/nodes/0] free: 12.9gb[5.5%], shards will be relocated away from this node
+[2016-07-25 12:17:17,956][WARN ][cluster.routing.allocation.decider] [ne_search] high disk watermark [90%] exceeded on [sgkidTjARk6KfceXOrg-Qw][ne_search][/Users/Theo/Desktop/Nebula/elasticsearch/data/nebula/nodes/0] free: 12.9gb[5.5%], shards will be relocated away from this node
+[2016-07-25 12:17:17,956][INFO ][cluster.routing.allocation.decider] [ne_search] rerouting shards: [high disk watermark exceeded on one or more nodes]
+[2016-07-25 12:17:47,961][WARN ][cluster.routing.allocation.decider] [ne_search] high disk watermark [90%] exceeded on [sgkidTjARk6KfceXOrg-Qw][ne_search][/Users/Theo/Desktop/Nebula/elasticsearch/data/nebula/nodes/0] free: 12.9gb[5.5%], shards will be relocated away from this node
+[2016-07-25 12:18:17,969][WARN ][cluster.routing.allocation.decider] [ne_search] high disk watermark [90%] exceeded on [sgkidTjARk6KfceXOrg-Qw][ne_search][/Users/Theo/Desktop/Nebula/elasticsearch/data/nebula/nodes/0] free: 12.9gb[5.5%], shards will be relocated away from this node
+[2016-07-25 12:18:17,969][INFO ][cluster.routing.allocation.decider] [ne_search] rerouting shards: [high disk watermark exceeded on one or more nodes]
+[2016-07-25 12:18:47,976][WARN ][cluster.routing.allocation.decider] [ne_search] high disk watermark [90%] exceeded on [sgkidTjARk6KfceXOrg-Qw][ne_search][/Users/Theo/Desktop/Nebula/elasticsearch/data/nebula/nodes/0] free: 12.9gb[5.5%], shards will be relocated away from this node
+[2016-07-25 12:19:17,978][WARN ][cluster.routing.allocation.decider] [ne_search] high disk watermark [90%] exceeded on [sgkidTjARk6KfceXOrg-Qw][ne_search][/Users/Theo/Desktop/Nebula/elasticsearch/data/nebula/nodes/0] free: 12.9gb[5.5%], shards will be relocated away from this node
+[2016-07-25 12:19:17,978][INFO ][cluster.routing.allocation.decider] [ne_search] rerouting shards: [high disk watermark exceeded on one or more nodes]
+[2016-07-25 12:19:47,986][WARN ][cluster.routing.allocation.decider] [ne_search] high disk watermark [90%] exceeded on [sgkidTjARk6KfceXOrg-Qw][ne_search][/Users/Theo/Desktop/Nebula/elasticsearch/data/nebula/nodes/0] free: 12.9gb[5.5%], shards will be relocated away from this node
+[2016-07-25 12:20:17,993][WARN ][cluster.routing.allocation.decider] [ne_search] high disk watermark [90%] exceeded on [sgkidTjARk6KfceXOrg-Qw][ne_search][/Users/Theo/Desktop/Nebula/elasticsearch/data/nebula/nodes/0] free: 12.9gb[5.5%], shards will be relocated away from this node
+[2016-07-25 12:20:17,993][INFO ][cluster.routing.allocation.decider] [ne_search] rerouting shards: [high disk watermark exceeded on one or more nodes]
+[2016-07-25 12:20:47,998][WARN ][cluster.routing.allocation.decider] [ne_search] high disk watermark [90%] exceeded on [sgkidTjARk6KfceXOrg-Qw][ne_search][/Users/Theo/Desktop/Nebula/elasticsearch/data/nebula/nodes/0] free: 12.9gb[5.5%], shards will be relocated away from this node
+[2016-07-25 12:21:18,000][WARN ][cluster.routing.allocation.decider] [ne_search] high disk watermark [90%] exceeded on [sgkidTjARk6KfceXOrg-Qw][ne_search][/Users/Theo/Desktop/Nebula/elasticsearch/data/nebula/nodes/0] free: 12.9gb[5.5%], shards will be relocated away from this node
+[2016-07-25 12:21:18,001][INFO ][cluster.routing.allocation.decider] [ne_search] rerouting shards: [high disk watermark exceeded on one or more nodes]
+[2016-07-25 12:21:48,007][WARN ][cluster.routing.allocation.decider] [ne_search] high disk watermark [90%] exceeded on [sgkidTjARk6KfceXOrg-Qw][ne_search][/Users/Theo/Desktop/Nebula/elasticsearch/data/nebula/nodes/0] free: 12.9gb[5.5%], shards will be relocated away from this node
+[2016-07-25 12:22:18,022][WARN ][cluster.routing.allocation.decider] [ne_search] high disk watermark [90%] exceeded on [sgkidTjARk6KfceXOrg-Qw][ne_search][/Users/Theo/Desktop/Nebula/elasticsearch/data/nebula/nodes/0] free: 12.9gb[5.5%], shards will be relocated away from this node
+[2016-07-25 12:22:18,022][INFO ][cluster.routing.allocation.decider] [ne_search] rerouting shards: [high disk watermark exceeded on one or more nodes]
+[2016-07-25 12:22:48,025][WARN ][cluster.routing.allocation.decider] [ne_search] high disk watermark [90%] exceeded on [sgkidTjARk6KfceXOrg-Qw][ne_search][/Users/Theo/Desktop/Nebula/elasticsearch/data/nebula/nodes/0] free: 12.9gb[5.5%], shards will be relocated away from this node
+[2016-07-25 12:23:18,032][WARN ][cluster.routing.allocation.decider] [ne_search] high disk watermark [90%] exceeded on [sgkidTjARk6KfceXOrg-Qw][ne_search][/Users/Theo/Desktop/Nebula/elasticsearch/data/nebula/nodes/0] free: 12.9gb[5.5%], shards will be relocated away from this node
+[2016-07-25 12:23:18,033][INFO ][cluster.routing.allocation.decider] [ne_search] rerouting shards: [high disk watermark exceeded on one or more nodes]
+[2016-07-25 12:23:48,039][WARN ][cluster.routing.allocation.decider] [ne_search] high disk watermark [90%] exceeded on [sgkidTjARk6KfceXOrg-Qw][ne_search][/Users/Theo/Desktop/Nebula/elasticsearch/data/nebula/nodes/0] free: 12.9gb[5.5%], shards will be relocated away from this node
+[2016-07-25 12:24:18,047][WARN ][cluster.routing.allocation.decider] [ne_search] high disk watermark [90%] exceeded on [sgkidTjARk6KfceXOrg-Qw][ne_search][/Users/Theo/Desktop/Nebula/elasticsearch/data/nebula/nodes/0] free: 12.9gb[5.5%], shards will be relocated away from this node
+[2016-07-25 12:24:18,047][INFO ][cluster.routing.allocation.decider] [ne_search] rerouting shards: [high disk watermark exceeded on one or more nodes]
+[2016-07-25 12:24:48,059][WARN ][cluster.routing.allocation.decider] [ne_search] high disk watermark [90%] exceeded on [sgkidTjARk6KfceXOrg-Qw][ne_search][/Users/Theo/Desktop/Nebula/elasticsearch/data/nebula/nodes/0] free: 12.9gb[5.5%], shards will be relocated away from this node
+[2016-07-25 12:43:59,134][WARN ][cluster.routing.allocation.decider] [ne_search] high disk watermark [90%] exceeded on [sgkidTjARk6KfceXOrg-Qw][ne_search][/Users/Theo/Desktop/Nebula/elasticsearch/data/nebula/nodes/0] free: 12.9gb[5.5%], shards will be relocated away from this node
+[2016-07-25 12:43:59,135][INFO ][cluster.routing.allocation.decider] [ne_search] rerouting shards: [high disk watermark exceeded on one or more nodes]
+[2016-07-25 12:44:29,137][WARN ][cluster.routing.allocation.decider] [ne_search] high disk watermark [90%] exceeded on [sgkidTjARk6KfceXOrg-Qw][ne_search][/Users/Theo/Desktop/Nebula/elasticsearch/data/nebula/nodes/0] free: 12.9gb[5.5%], shards will be relocated away from this node
+[2016-07-25 12:44:59,143][WARN ][cluster.routing.allocation.decider] [ne_search] high disk watermark [90%] exceeded on [sgkidTjARk6KfceXOrg-Qw][ne_search][/Users/Theo/Desktop/Nebula/elasticsearch/data/nebula/nodes/0] free: 12.9gb[5.5%], shards will be relocated away from this node
+[2016-07-25 12:44:59,144][INFO ][cluster.routing.allocation.decider] [ne_search] rerouting shards: [high disk watermark exceeded on one or more nodes]
+[2016-07-25 12:45:29,146][WARN ][cluster.routing.allocation.decider] [ne_search] high disk watermark [90%] exceeded on [sgkidTjARk6KfceXOrg-Qw][ne_search][/Users/Theo/Desktop/Nebula/elasticsearch/data/nebula/nodes/0] free: 12.9gb[5.5%], shards will be relocated away from this node
+[2016-07-25 12:45:55,461][WARN ][cluster.routing.allocation.decider] [ne_search] high disk watermark [90%] exceeded on [sgkidTjARk6KfceXOrg-Qw][ne_search][/Users/Theo/Desktop/Nebula/elasticsearch/data/nebula/nodes/0] free: 12.9gb[5.5%], shards will be relocated away from this node
+[2016-07-25 12:45:55,462][INFO ][cluster.routing.allocation.decider] [ne_search] rerouting shards: [high disk watermark exceeded on one or more nodes]
+[2016-07-25 12:46:25,465][WARN ][cluster.routing.allocation.decider] [ne_search] high disk watermark [90%] exceeded on [sgkidTjARk6KfceXOrg-Qw][ne_search][/Users/Theo/Desktop/Nebula/elasticsearch/data/nebula/nodes/0] free: 12.9gb[5.5%], shards will be relocated away from this node
+[2016-07-25 12:46:55,469][WARN ][cluster.routing.allocation.decider] [ne_search] high disk watermark [90%] exceeded on [sgkidTjARk6KfceXOrg-Qw][ne_search][/Users/Theo/Desktop/Nebula/elasticsearch/data/nebula/nodes/0] free: 12.9gb[5.5%], shards will be relocated away from this node
+[2016-07-25 12:46:55,469][INFO ][cluster.routing.allocation.decider] [ne_search] rerouting shards: [high disk watermark exceeded on one or more nodes]
+[2016-07-25 12:47:25,476][WARN ][cluster.routing.allocation.decider] [ne_search] high disk watermark [90%] exceeded on [sgkidTjARk6KfceXOrg-Qw][ne_search][/Users/Theo/Desktop/Nebula/elasticsearch/data/nebula/nodes/0] free: 12.9gb[5.5%], shards will be relocated away from this node
+[2016-07-25 12:47:55,480][WARN ][cluster.routing.allocation.decider] [ne_search] high disk watermark [90%] exceeded on [sgkidTjARk6KfceXOrg-Qw][ne_search][/Users/Theo/Desktop/Nebula/elasticsearch/data/nebula/nodes/0] free: 12.9gb[5.5%], shards will be relocated away from this node
+[2016-07-25 12:47:55,480][INFO ][cluster.routing.allocation.decider] [ne_search] rerouting shards: [high disk watermark exceeded on one or more nodes]
+[2016-07-25 12:48:25,484][WARN ][cluster.routing.allocation.decider] [ne_search] high disk watermark [90%] exceeded on [sgkidTjARk6KfceXOrg-Qw][ne_search][/Users/Theo/Desktop/Nebula/elasticsearch/data/nebula/nodes/0] free: 12.9gb[5.5%], shards will be relocated away from this node
+[2016-07-25 12:48:55,489][WARN ][cluster.routing.allocation.decider] [ne_search] high disk watermark [90%] exceeded on [sgkidTjARk6KfceXOrg-Qw][ne_search][/Users/Theo/Desktop/Nebula/elasticsearch/data/nebula/nodes/0] free: 12.9gb[5.5%], shards will be relocated away from this node
+[2016-07-25 12:48:55,489][INFO ][cluster.routing.allocation.decider] [ne_search] rerouting shards: [high disk watermark exceeded on one or more nodes]
+[2016-07-25 12:49:25,496][WARN ][cluster.routing.allocation.decider] [ne_search] high disk watermark [90%] exceeded on [sgkidTjARk6KfceXOrg-Qw][ne_search][/Users/Theo/Desktop/Nebula/elasticsearch/data/nebula/nodes/0] free: 12.9gb[5.5%], shards will be relocated away from this node
+[2016-07-25 12:49:55,501][WARN ][cluster.routing.allocation.decider] [ne_search] high disk watermark [90%] exceeded on [sgkidTjARk6KfceXOrg-Qw][ne_search][/Users/Theo/Desktop/Nebula/elasticsearch/data/nebula/nodes/0] free: 12.9gb[5.5%], shards will be relocated away from this node
+[2016-07-25 12:49:55,501][INFO ][cluster.routing.allocation.decider] [ne_search] rerouting shards: [high disk watermark exceeded on one or more nodes]
+[2016-07-25 12:50:25,503][WARN ][cluster.routing.allocation.decider] [ne_search] high disk watermark [90%] exceeded on [sgkidTjARk6KfceXOrg-Qw][ne_search][/Users/Theo/Desktop/Nebula/elasticsearch/data/nebula/nodes/0] free: 12.9gb[5.5%], shards will be relocated away from this node
+[2016-07-25 12:50:55,510][WARN ][cluster.routing.allocation.decider] [ne_search] high disk watermark [90%] exceeded on [sgkidTjARk6KfceXOrg-Qw][ne_search][/Users/Theo/Desktop/Nebula/elasticsearch/data/nebula/nodes/0] free: 12.9gb[5.5%], shards will be relocated away from this node
+[2016-07-25 12:50:55,510][INFO ][cluster.routing.allocation.decider] [ne_search] rerouting shards: [high disk watermark exceeded on one or more nodes]
+[2016-07-25 12:51:25,513][WARN ][cluster.routing.allocation.decider] [ne_search] high disk watermark [90%] exceeded on [sgkidTjARk6KfceXOrg-Qw][ne_search][/Users/Theo/Desktop/Nebula/elasticsearch/data/nebula/nodes/0] free: 12.9gb[5.5%], shards will be relocated away from this node
+[2016-07-25 12:51:55,516][WARN ][cluster.routing.allocation.decider] [ne_search] high disk watermark [90%] exceeded on [sgkidTjARk6KfceXOrg-Qw][ne_search][/Users/Theo/Desktop/Nebula/elasticsearch/data/nebula/nodes/0] free: 12.9gb[5.5%], shards will be relocated away from this node
+[2016-07-25 12:51:55,516][INFO ][cluster.routing.allocation.decider] [ne_search] rerouting shards: [high disk watermark exceeded on one or more nodes]
+[2016-07-25 12:52:25,524][WARN ][cluster.routing.allocation.decider] [ne_search] high disk watermark [90%] exceeded on [sgkidTjARk6KfceXOrg-Qw][ne_search][/Users/Theo/Desktop/Nebula/elasticsearch/data/nebula/nodes/0] free: 12.9gb[5.5%], shards will be relocated away from this node
+[2016-07-25 12:52:55,529][WARN ][cluster.routing.allocation.decider] [ne_search] high disk watermark [90%] exceeded on [sgkidTjARk6KfceXOrg-Qw][ne_search][/Users/Theo/Desktop/Nebula/elasticsearch/data/nebula/nodes/0] free: 12.9gb[5.5%], shards will be relocated away from this node
+[2016-07-25 12:52:55,529][INFO ][cluster.routing.allocation.decider] [ne_search] rerouting shards: [high disk watermark exceeded on one or more nodes]
+[2016-07-25 12:53:25,536][WARN ][cluster.routing.allocation.decider] [ne_search] high disk watermark [90%] exceeded on [sgkidTjARk6KfceXOrg-Qw][ne_search][/Users/Theo/Desktop/Nebula/elasticsearch/data/nebula/nodes/0] free: 12.9gb[5.5%], shards will be relocated away from this node
+[2016-07-25 12:53:55,544][WARN ][cluster.routing.allocation.decider] [ne_search] high disk watermark [90%] exceeded on [sgkidTjARk6KfceXOrg-Qw][ne_search][/Users/Theo/Desktop/Nebula/elasticsearch/data/nebula/nodes/0] free: 12.9gb[5.5%], shards will be relocated away from this node
+[2016-07-25 12:53:55,544][INFO ][cluster.routing.allocation.decider] [ne_search] rerouting shards: [high disk watermark exceeded on one or more nodes]
+[2016-07-25 12:54:25,551][WARN ][cluster.routing.allocation.decider] [ne_search] high disk watermark [90%] exceeded on [sgkidTjARk6KfceXOrg-Qw][ne_search][/Users/Theo/Desktop/Nebula/elasticsearch/data/nebula/nodes/0] free: 12.9gb[5.5%], shards will be relocated away from this node
+[2016-07-25 12:54:55,569][WARN ][cluster.routing.allocation.decider] [ne_search] high disk watermark [90%] exceeded on [sgkidTjARk6KfceXOrg-Qw][ne_search][/Users/Theo/Desktop/Nebula/elasticsearch/data/nebula/nodes/0] free: 12.9gb[5.5%], shards will be relocated away from this node
+[2016-07-25 12:54:55,569][INFO ][cluster.routing.allocation.decider] [ne_search] rerouting shards: [high disk watermark exceeded on one or more nodes]
+[2016-07-25 12:55:25,572][WARN ][cluster.routing.allocation.decider] [ne_search] high disk watermark [90%] exceeded on [sgkidTjARk6KfceXOrg-Qw][ne_search][/Users/Theo/Desktop/Nebula/elasticsearch/data/nebula/nodes/0] free: 12.9gb[5.5%], shards will be relocated away from this node
+[2016-07-25 12:55:55,575][WARN ][cluster.routing.allocation.decider] [ne_search] high disk watermark [90%] exceeded on [sgkidTjARk6KfceXOrg-Qw][ne_search][/Users/Theo/Desktop/Nebula/elasticsearch/data/nebula/nodes/0] free: 12.9gb[5.5%], shards will be relocated away from this node
+[2016-07-25 12:55:55,576][INFO ][cluster.routing.allocation.decider] [ne_search] rerouting shards: [high disk watermark exceeded on one or more nodes]
+[2016-07-25 12:56:25,582][WARN ][cluster.routing.allocation.decider] [ne_search] high disk watermark [90%] exceeded on [sgkidTjARk6KfceXOrg-Qw][ne_search][/Users/Theo/Desktop/Nebula/elasticsearch/data/nebula/nodes/0] free: 12.9gb[5.5%], shards will be relocated away from this node
+[2016-07-25 12:56:55,584][WARN ][cluster.routing.allocation.decider] [ne_search] high disk watermark [90%] exceeded on [sgkidTjARk6KfceXOrg-Qw][ne_search][/Users/Theo/Desktop/Nebula/elasticsearch/data/nebula/nodes/0] free: 12.9gb[5.5%], shards will be relocated away from this node
+[2016-07-25 12:56:55,584][INFO ][cluster.routing.allocation.decider] [ne_search] rerouting shards: [high disk watermark exceeded on one or more nodes]
+[2016-07-25 12:57:25,596][WARN ][cluster.routing.allocation.decider] [ne_search] high disk watermark [90%] exceeded on [sgkidTjARk6KfceXOrg-Qw][ne_search][/Users/Theo/Desktop/Nebula/elasticsearch/data/nebula/nodes/0] free: 12.9gb[5.5%], shards will be relocated away from this node
+[2016-07-25 13:03:17,887][WARN ][cluster.routing.allocation.decider] [ne_search] high disk watermark [90%] exceeded on [sgkidTjARk6KfceXOrg-Qw][ne_search][/Users/Theo/Desktop/Nebula/elasticsearch/data/nebula/nodes/0] free: 12.9gb[5.5%], shards will be relocated away from this node
+[2016-07-25 13:03:17,888][INFO ][cluster.routing.allocation.decider] [ne_search] rerouting shards: [high disk watermark exceeded on one or more nodes]
+[2016-07-25 13:03:47,893][WARN ][cluster.routing.allocation.decider] [ne_search] high disk watermark [90%] exceeded on [sgkidTjARk6KfceXOrg-Qw][ne_search][/Users/Theo/Desktop/Nebula/elasticsearch/data/nebula/nodes/0] free: 12.9gb[5.5%], shards will be relocated away from this node
+[2016-07-25 13:04:17,898][WARN ][cluster.routing.allocation.decider] [ne_search] high disk watermark [90%] exceeded on [sgkidTjARk6KfceXOrg-Qw][ne_search][/Users/Theo/Desktop/Nebula/elasticsearch/data/nebula/nodes/0] free: 12.9gb[5.5%], shards will be relocated away from this node
+[2016-07-25 13:04:17,898][INFO ][cluster.routing.allocation.decider] [ne_search] rerouting shards: [high disk watermark exceeded on one or more nodes]
+[2016-07-25 13:04:47,905][WARN ][cluster.routing.allocation.decider] [ne_search] high disk watermark [90%] exceeded on [sgkidTjARk6KfceXOrg-Qw][ne_search][/Users/Theo/Desktop/Nebula/elasticsearch/data/nebula/nodes/0] free: 12.9gb[5.5%], shards will be relocated away from this node
+[2016-07-25 13:23:17,945][WARN ][cluster.routing.allocation.decider] [ne_search] high disk watermark [90%] exceeded on [sgkidTjARk6KfceXOrg-Qw][ne_search][/Users/Theo/Desktop/Nebula/elasticsearch/data/nebula/nodes/0] free: 12.9gb[5.5%], shards will be relocated away from this node
+[2016-07-25 13:23:17,945][INFO ][cluster.routing.allocation.decider] [ne_search] rerouting shards: [high disk watermark exceeded on one or more nodes]
+[2016-07-25 13:23:47,952][WARN ][cluster.routing.allocation.decider] [ne_search] high disk watermark [90%] exceeded on [sgkidTjARk6KfceXOrg-Qw][ne_search][/Users/Theo/Desktop/Nebula/elasticsearch/data/nebula/nodes/0] free: 12.9gb[5.5%], shards will be relocated away from this node
+[2016-07-25 13:24:17,957][WARN ][cluster.routing.allocation.decider] [ne_search] high disk watermark [90%] exceeded on [sgkidTjARk6KfceXOrg-Qw][ne_search][/Users/Theo/Desktop/Nebula/elasticsearch/data/nebula/nodes/0] free: 12.9gb[5.5%], shards will be relocated away from this node
+[2016-07-25 13:24:17,958][INFO ][cluster.routing.allocation.decider] [ne_search] rerouting shards: [high disk watermark exceeded on one or more nodes]
+[2016-07-25 13:24:47,964][WARN ][cluster.routing.allocation.decider] [ne_search] high disk watermark [90%] exceeded on [sgkidTjARk6KfceXOrg-Qw][ne_search][/Users/Theo/Desktop/Nebula/elasticsearch/data/nebula/nodes/0] free: 12.9gb[5.5%], shards will be relocated away from this node
+[2016-07-25 13:25:17,972][WARN ][cluster.routing.allocation.decider] [ne_search] high disk watermark [90%] exceeded on [sgkidTjARk6KfceXOrg-Qw][ne_search][/Users/Theo/Desktop/Nebula/elasticsearch/data/nebula/nodes/0] free: 12.9gb[5.5%], shards will be relocated away from this node
+[2016-07-25 13:25:17,972][INFO ][cluster.routing.allocation.decider] [ne_search] rerouting shards: [high disk watermark exceeded on one or more nodes]
+[2016-07-25 13:25:47,984][WARN ][cluster.routing.allocation.decider] [ne_search] high disk watermark [90%] exceeded on [sgkidTjARk6KfceXOrg-Qw][ne_search][/Users/Theo/Desktop/Nebula/elasticsearch/data/nebula/nodes/0] free: 12.9gb[5.5%], shards will be relocated away from this node
+[2016-07-25 13:32:05,145][WARN ][cluster.routing.allocation.decider] [ne_search] high disk watermark [90%] exceeded on [sgkidTjARk6KfceXOrg-Qw][ne_search][/Users/Theo/Desktop/Nebula/elasticsearch/data/nebula/nodes/0] free: 12.9gb[5.5%], shards will be relocated away from this node
+[2016-07-25 13:32:05,145][INFO ][cluster.routing.allocation.decider] [ne_search] rerouting shards: [high disk watermark exceeded on one or more nodes]
+[2016-07-25 13:32:35,147][WARN ][cluster.routing.allocation.decider] [ne_search] high disk watermark [90%] exceeded on [sgkidTjARk6KfceXOrg-Qw][ne_search][/Users/Theo/Desktop/Nebula/elasticsearch/data/nebula/nodes/0] free: 12.9gb[5.5%], shards will be relocated away from this node
+[2016-07-25 13:33:05,154][WARN ][cluster.routing.allocation.decider] [ne_search] high disk watermark [90%] exceeded on [sgkidTjARk6KfceXOrg-Qw][ne_search][/Users/Theo/Desktop/Nebula/elasticsearch/data/nebula/nodes/0] free: 12.9gb[5.5%], shards will be relocated away from this node
+[2016-07-25 13:33:05,154][INFO ][cluster.routing.allocation.decider] [ne_search] rerouting shards: [high disk watermark exceeded on one or more nodes]
+[2016-07-25 13:33:35,161][WARN ][cluster.routing.allocation.decider] [ne_search] high disk watermark [90%] exceeded on [sgkidTjARk6KfceXOrg-Qw][ne_search][/Users/Theo/Desktop/Nebula/elasticsearch/data/nebula/nodes/0] free: 12.9gb[5.5%], shards will be relocated away from this node
+[2016-07-25 13:34:05,167][WARN ][cluster.routing.allocation.decider] [ne_search] high disk watermark [90%] exceeded on [sgkidTjARk6KfceXOrg-Qw][ne_search][/Users/Theo/Desktop/Nebula/elasticsearch/data/nebula/nodes/0] free: 12.9gb[5.5%], shards will be relocated away from this node
+[2016-07-25 13:34:05,167][INFO ][cluster.routing.allocation.decider] [ne_search] rerouting shards: [high disk watermark exceeded on one or more nodes]
+[2016-07-25 13:34:35,170][WARN ][cluster.routing.allocation.decider] [ne_search] high disk watermark [90%] exceeded on [sgkidTjARk6KfceXOrg-Qw][ne_search][/Users/Theo/Desktop/Nebula/elasticsearch/data/nebula/nodes/0] free: 12.9gb[5.5%], shards will be relocated away from this node
+[2016-07-25 13:35:05,183][WARN ][cluster.routing.allocation.decider] [ne_search] high disk watermark [90%] exceeded on [sgkidTjARk6KfceXOrg-Qw][ne_search][/Users/Theo/Desktop/Nebula/elasticsearch/data/nebula/nodes/0] free: 12.9gb[5.5%], shards will be relocated away from this node
+[2016-07-25 13:35:05,183][INFO ][cluster.routing.allocation.decider] [ne_search] rerouting shards: [high disk watermark exceeded on one or more nodes]
+[2016-07-25 13:35:35,187][WARN ][cluster.routing.allocation.decider] [ne_search] high disk watermark [90%] exceeded on [sgkidTjARk6KfceXOrg-Qw][ne_search][/Users/Theo/Desktop/Nebula/elasticsearch/data/nebula/nodes/0] free: 12.9gb[5.5%], shards will be relocated away from this node
+[2016-07-25 13:36:05,194][WARN ][cluster.routing.allocation.decider] [ne_search] high disk watermark [90%] exceeded on [sgkidTjARk6KfceXOrg-Qw][ne_search][/Users/Theo/Desktop/Nebula/elasticsearch/data/nebula/nodes/0] free: 12.9gb[5.5%], shards will be relocated away from this node
+[2016-07-25 13:36:05,194][INFO ][cluster.routing.allocation.decider] [ne_search] rerouting shards: [high disk watermark exceeded on one or more nodes]
+[2016-07-25 13:36:35,197][WARN ][cluster.routing.allocation.decider] [ne_search] high disk watermark [90%] exceeded on [sgkidTjARk6KfceXOrg-Qw][ne_search][/Users/Theo/Desktop/Nebula/elasticsearch/data/nebula/nodes/0] free: 12.9gb[5.5%], shards will be relocated away from this node
+[2016-07-25 13:37:05,204][WARN ][cluster.routing.allocation.decider] [ne_search] high disk watermark [90%] exceeded on [sgkidTjARk6KfceXOrg-Qw][ne_search][/Users/Theo/Desktop/Nebula/elasticsearch/data/nebula/nodes/0] free: 12.9gb[5.5%], shards will be relocated away from this node
+[2016-07-25 13:37:05,204][INFO ][cluster.routing.allocation.decider] [ne_search] rerouting shards: [high disk watermark exceeded on one or more nodes]
+[2016-07-25 13:37:35,211][WARN ][cluster.routing.allocation.decider] [ne_search] high disk watermark [90%] exceeded on [sgkidTjARk6KfceXOrg-Qw][ne_search][/Users/Theo/Desktop/Nebula/elasticsearch/data/nebula/nodes/0] free: 12.9gb[5.5%], shards will be relocated away from this node
+[2016-07-25 13:38:05,214][WARN ][cluster.routing.allocation.decider] [ne_search] high disk watermark [90%] exceeded on [sgkidTjARk6KfceXOrg-Qw][ne_search][/Users/Theo/Desktop/Nebula/elasticsearch/data/nebula/nodes/0] free: 12.9gb[5.5%], shards will be relocated away from this node
+[2016-07-25 13:38:05,223][INFO ][cluster.routing.allocation.decider] [ne_search] rerouting shards: [high disk watermark exceeded on one or more nodes]
+[2016-07-25 13:38:35,226][WARN ][cluster.routing.allocation.decider] [ne_search] high disk watermark [90%] exceeded on [sgkidTjARk6KfceXOrg-Qw][ne_search][/Users/Theo/Desktop/Nebula/elasticsearch/data/nebula/nodes/0] free: 12.9gb[5.5%], shards will be relocated away from this node
+[2016-07-25 13:39:05,233][WARN ][cluster.routing.allocation.decider] [ne_search] high disk watermark [90%] exceeded on [sgkidTjARk6KfceXOrg-Qw][ne_search][/Users/Theo/Desktop/Nebula/elasticsearch/data/nebula/nodes/0] free: 12.9gb[5.5%], shards will be relocated away from this node
+[2016-07-25 13:39:05,241][INFO ][cluster.routing.allocation.decider] [ne_search] rerouting shards: [high disk watermark exceeded on one or more nodes]
+[2016-07-25 13:39:35,245][WARN ][cluster.routing.allocation.decider] [ne_search] high disk watermark [90%] exceeded on [sgkidTjARk6KfceXOrg-Qw][ne_search][/Users/Theo/Desktop/Nebula/elasticsearch/data/nebula/nodes/0] free: 12.9gb[5.5%], shards will be relocated away from this node
+[2016-07-25 13:40:05,249][WARN ][cluster.routing.allocation.decider] [ne_search] high disk watermark [90%] exceeded on [sgkidTjARk6KfceXOrg-Qw][ne_search][/Users/Theo/Desktop/Nebula/elasticsearch/data/nebula/nodes/0] free: 12.9gb[5.5%], shards will be relocated away from this node
+[2016-07-25 13:40:05,249][INFO ][cluster.routing.allocation.decider] [ne_search] rerouting shards: [high disk watermark exceeded on one or more nodes]
+[2016-07-25 13:40:35,252][WARN ][cluster.routing.allocation.decider] [ne_search] high disk watermark [90%] exceeded on [sgkidTjARk6KfceXOrg-Qw][ne_search][/Users/Theo/Desktop/Nebula/elasticsearch/data/nebula/nodes/0] free: 12.9gb[5.5%], shards will be relocated away from this node
+[2016-07-25 13:41:05,264][WARN ][cluster.routing.allocation.decider] [ne_search] high disk watermark [90%] exceeded on [sgkidTjARk6KfceXOrg-Qw][ne_search][/Users/Theo/Desktop/Nebula/elasticsearch/data/nebula/nodes/0] free: 12.9gb[5.5%], shards will be relocated away from this node
+[2016-07-25 13:41:05,264][INFO ][cluster.routing.allocation.decider] [ne_search] rerouting shards: [high disk watermark exceeded on one or more nodes]
+[2016-07-25 13:41:35,271][WARN ][cluster.routing.allocation.decider] [ne_search] high disk watermark [90%] exceeded on [sgkidTjARk6KfceXOrg-Qw][ne_search][/Users/Theo/Desktop/Nebula/elasticsearch/data/nebula/nodes/0] free: 12.9gb[5.5%], shards will be relocated away from this node
+[2016-07-25 13:42:05,283][WARN ][cluster.routing.allocation.decider] [ne_search] high disk watermark [90%] exceeded on [sgkidTjARk6KfceXOrg-Qw][ne_search][/Users/Theo/Desktop/Nebula/elasticsearch/data/nebula/nodes/0] free: 12.9gb[5.5%], shards will be relocated away from this node
+[2016-07-25 13:42:05,283][INFO ][cluster.routing.allocation.decider] [ne_search] rerouting shards: [high disk watermark exceeded on one or more nodes]
+[2016-07-25 13:42:35,290][WARN ][cluster.routing.allocation.decider] [ne_search] high disk watermark [90%] exceeded on [sgkidTjARk6KfceXOrg-Qw][ne_search][/Users/Theo/Desktop/Nebula/elasticsearch/data/nebula/nodes/0] free: 12.9gb[5.5%], shards will be relocated away from this node
+[2016-07-25 13:43:05,293][WARN ][cluster.routing.allocation.decider] [ne_search] high disk watermark [90%] exceeded on [sgkidTjARk6KfceXOrg-Qw][ne_search][/Users/Theo/Desktop/Nebula/elasticsearch/data/nebula/nodes/0] free: 12.9gb[5.5%], shards will be relocated away from this node
+[2016-07-25 13:43:05,301][INFO ][cluster.routing.allocation.decider] [ne_search] rerouting shards: [high disk watermark exceeded on one or more nodes]
+[2016-07-25 13:43:35,303][WARN ][cluster.routing.allocation.decider] [ne_search] high disk watermark [90%] exceeded on [sgkidTjARk6KfceXOrg-Qw][ne_search][/Users/Theo/Desktop/Nebula/elasticsearch/data/nebula/nodes/0] free: 12.9gb[5.5%], shards will be relocated away from this node
+[2016-07-25 13:44:05,312][WARN ][cluster.routing.allocation.decider] [ne_search] high disk watermark [90%] exceeded on [sgkidTjARk6KfceXOrg-Qw][ne_search][/Users/Theo/Desktop/Nebula/elasticsearch/data/nebula/nodes/0] free: 12.9gb[5.5%], shards will be relocated away from this node
+[2016-07-25 13:44:05,320][INFO ][cluster.routing.allocation.decider] [ne_search] rerouting shards: [high disk watermark exceeded on one or more nodes]
+[2016-07-25 13:44:35,324][WARN ][cluster.routing.allocation.decider] [ne_search] high disk watermark [90%] exceeded on [sgkidTjARk6KfceXOrg-Qw][ne_search][/Users/Theo/Desktop/Nebula/elasticsearch/data/nebula/nodes/0] free: 12.9gb[5.5%], shards will be relocated away from this node
+[2016-07-25 13:45:05,329][WARN ][cluster.routing.allocation.decider] [ne_search] high disk watermark [90%] exceeded on [sgkidTjARk6KfceXOrg-Qw][ne_search][/Users/Theo/Desktop/Nebula/elasticsearch/data/nebula/nodes/0] free: 12.9gb[5.5%], shards will be relocated away from this node
+[2016-07-25 13:45:05,337][INFO ][cluster.routing.allocation.decider] [ne_search] rerouting shards: [high disk watermark exceeded on one or more nodes]
+[2016-07-25 13:45:35,344][WARN ][cluster.routing.allocation.decider] [ne_search] high disk watermark [90%] exceeded on [sgkidTjARk6KfceXOrg-Qw][ne_search][/Users/Theo/Desktop/Nebula/elasticsearch/data/nebula/nodes/0] free: 12.9gb[5.5%], shards will be relocated away from this node
+[2016-07-25 13:46:05,350][WARN ][cluster.routing.allocation.decider] [ne_search] high disk watermark [90%] exceeded on [sgkidTjARk6KfceXOrg-Qw][ne_search][/Users/Theo/Desktop/Nebula/elasticsearch/data/nebula/nodes/0] free: 12.9gb[5.5%], shards will be relocated away from this node
+[2016-07-25 13:46:05,350][INFO ][cluster.routing.allocation.decider] [ne_search] rerouting shards: [high disk watermark exceeded on one or more nodes]
+[2016-07-25 16:46:35,136][WARN ][cluster.routing.allocation.decider] [ne_search] high disk watermark [90%] exceeded on [sgkidTjARk6KfceXOrg-Qw][ne_search][/Users/Theo/Desktop/Nebula/elasticsearch/data/nebula/nodes/0] free: 12.9gb[5.5%], shards will be relocated away from this node
+[2016-07-25 21:45:51,566][WARN ][cluster.routing.allocation.decider] [ne_search] high disk watermark [90%] exceeded on [sgkidTjARk6KfceXOrg-Qw][ne_search][/Users/Theo/Desktop/Nebula/elasticsearch/data/nebula/nodes/0] free: 10.9gb[4.6%], shards will be relocated away from this node
+[2016-07-25 21:45:51,591][INFO ][cluster.routing.allocation.decider] [ne_search] rerouting shards: [high disk watermark exceeded on one or more nodes]
+[2016-07-25 21:45:52,314][INFO ][cluster.metadata         ] [ne_search] [.marvel-es-1-2016.07.26] creating index, cause [auto(bulk api)], templates [.marvel-es-1], shards [1]/[1], mappings [node, shards, _default_, index_stats, index_recovery, cluster_state, cluster_stats, node_stats, indices_stats]
+[2016-07-25 21:45:52,562][INFO ][cluster.routing.allocation] [ne_search] Cluster health status changed from [RED] to [YELLOW] (reason: [shards started [[.marvel-es-1-2016.07.26][0]] ...]).
+[2016-07-25 21:45:52,611][INFO ][cluster.metadata         ] [ne_search] [.marvel-es-1-2016.07.26] update_mapping [node_stats]
+[2016-07-25 21:45:52,645][INFO ][cluster.metadata         ] [ne_search] [.marvel-es-1-2016.07.26] update_mapping [indices_stats]
+[2016-07-25 21:45:52,672][INFO ][cluster.metadata         ] [ne_search] [.marvel-es-1-2016.07.26] update_mapping [cluster_stats]
+[2016-07-25 21:46:21,617][WARN ][cluster.routing.allocation.decider] [ne_search] high disk watermark [90%] exceeded on [sgkidTjARk6KfceXOrg-Qw][ne_search][/Users/Theo/Desktop/Nebula/elasticsearch/data/nebula/nodes/0] free: 11.9gb[5.1%], shards will be relocated away from this node
+[2016-07-25 21:46:51,620][WARN ][cluster.routing.allocation.decider] [ne_search] high disk watermark [90%] exceeded on [sgkidTjARk6KfceXOrg-Qw][ne_search][/Users/Theo/Desktop/Nebula/elasticsearch/data/nebula/nodes/0] free: 11.9gb[5.1%], shards will be relocated away from this node
+[2016-07-25 21:46:51,620][INFO ][cluster.routing.allocation.decider] [ne_search] rerouting shards: [high disk watermark exceeded on one or more nodes]
+[2016-07-25 21:47:21,627][WARN ][cluster.routing.allocation.decider] [ne_search] high disk watermark [90%] exceeded on [sgkidTjARk6KfceXOrg-Qw][ne_search][/Users/Theo/Desktop/Nebula/elasticsearch/data/nebula/nodes/0] free: 11.9gb[5.1%], shards will be relocated away from this node
+[2016-07-25 21:47:51,634][WARN ][cluster.routing.allocation.decider] [ne_search] high disk watermark [90%] exceeded on [sgkidTjARk6KfceXOrg-Qw][ne_search][/Users/Theo/Desktop/Nebula/elasticsearch/data/nebula/nodes/0] free: 11.9gb[5.1%], shards will be relocated away from this node
+[2016-07-25 21:47:51,634][INFO ][cluster.routing.allocation.decider] [ne_search] rerouting shards: [high disk watermark exceeded on one or more nodes]
+[2016-07-25 21:48:21,637][WARN ][cluster.routing.allocation.decider] [ne_search] high disk watermark [90%] exceeded on [sgkidTjARk6KfceXOrg-Qw][ne_search][/Users/Theo/Desktop/Nebula/elasticsearch/data/nebula/nodes/0] free: 11.9gb[5.1%], shards will be relocated away from this node
+[2016-07-25 21:48:51,640][WARN ][cluster.routing.allocation.decider] [ne_search] high disk watermark [90%] exceeded on [sgkidTjARk6KfceXOrg-Qw][ne_search][/Users/Theo/Desktop/Nebula/elasticsearch/data/nebula/nodes/0] free: 11.9gb[5.1%], shards will be relocated away from this node
+[2016-07-25 21:48:51,640][INFO ][cluster.routing.allocation.decider] [ne_search] rerouting shards: [high disk watermark exceeded on one or more nodes]
+[2016-07-25 21:49:21,643][WARN ][cluster.routing.allocation.decider] [ne_search] high disk watermark [90%] exceeded on [sgkidTjARk6KfceXOrg-Qw][ne_search][/Users/Theo/Desktop/Nebula/elasticsearch/data/nebula/nodes/0] free: 11.9gb[5.1%], shards will be relocated away from this node
+[2016-07-25 21:49:51,646][WARN ][cluster.routing.allocation.decider] [ne_search] high disk watermark [90%] exceeded on [sgkidTjARk6KfceXOrg-Qw][ne_search][/Users/Theo/Desktop/Nebula/elasticsearch/data/nebula/nodes/0] free: 11.9gb[5.1%], shards will be relocated away from this node
+[2016-07-25 21:49:51,646][INFO ][cluster.routing.allocation.decider] [ne_search] rerouting shards: [high disk watermark exceeded on one or more nodes]
+[2016-07-25 21:50:21,653][WARN ][cluster.routing.allocation.decider] [ne_search] high disk watermark [90%] exceeded on [sgkidTjARk6KfceXOrg-Qw][ne_search][/Users/Theo/Desktop/Nebula/elasticsearch/data/nebula/nodes/0] free: 11.9gb[5.1%], shards will be relocated away from this node
+[2016-07-25 21:50:51,658][WARN ][cluster.routing.allocation.decider] [ne_search] high disk watermark [90%] exceeded on [sgkidTjARk6KfceXOrg-Qw][ne_search][/Users/Theo/Desktop/Nebula/elasticsearch/data/nebula/nodes/0] free: 11.9gb[5.1%], shards will be relocated away from this node
+[2016-07-25 21:50:51,658][INFO ][cluster.routing.allocation.decider] [ne_search] rerouting shards: [high disk watermark exceeded on one or more nodes]
+[2016-07-25 21:51:21,667][WARN ][cluster.routing.allocation.decider] [ne_search] high disk watermark [90%] exceeded on [sgkidTjARk6KfceXOrg-Qw][ne_search][/Users/Theo/Desktop/Nebula/elasticsearch/data/nebula/nodes/0] free: 11.9gb[5.1%], shards will be relocated away from this node
+[2016-07-25 21:51:51,670][WARN ][cluster.routing.allocation.decider] [ne_search] high disk watermark [90%] exceeded on [sgkidTjARk6KfceXOrg-Qw][ne_search][/Users/Theo/Desktop/Nebula/elasticsearch/data/nebula/nodes/0] free: 11.9gb[5.1%], shards will be relocated away from this node
+[2016-07-25 21:51:51,670][INFO ][cluster.routing.allocation.decider] [ne_search] rerouting shards: [high disk watermark exceeded on one or more nodes]
+[2016-07-25 21:52:21,676][WARN ][cluster.routing.allocation.decider] [ne_search] high disk watermark [90%] exceeded on [sgkidTjARk6KfceXOrg-Qw][ne_search][/Users/Theo/Desktop/Nebula/elasticsearch/data/nebula/nodes/0] free: 11.9gb[5.1%], shards will be relocated away from this node
+[2016-07-25 21:52:51,680][WARN ][cluster.routing.allocation.decider] [ne_search] high disk watermark [90%] exceeded on [sgkidTjARk6KfceXOrg-Qw][ne_search][/Users/Theo/Desktop/Nebula/elasticsearch/data/nebula/nodes/0] free: 11.9gb[5.1%], shards will be relocated away from this node
+[2016-07-25 21:52:51,681][INFO ][cluster.routing.allocation.decider] [ne_search] rerouting shards: [high disk watermark exceeded on one or more nodes]
+[2016-07-25 21:53:21,687][WARN ][cluster.routing.allocation.decider] [ne_search] high disk watermark [90%] exceeded on [sgkidTjARk6KfceXOrg-Qw][ne_search][/Users/Theo/Desktop/Nebula/elasticsearch/data/nebula/nodes/0] free: 11.9gb[5.1%], shards will be relocated away from this node
+[2016-07-25 21:53:51,694][WARN ][cluster.routing.allocation.decider] [ne_search] high disk watermark [90%] exceeded on [sgkidTjARk6KfceXOrg-Qw][ne_search][/Users/Theo/Desktop/Nebula/elasticsearch/data/nebula/nodes/0] free: 12.9gb[5.5%], shards will be relocated away from this node
+[2016-07-25 21:53:51,694][INFO ][cluster.routing.allocation.decider] [ne_search] rerouting shards: [high disk watermark exceeded on one or more nodes]
+[2016-07-25 21:54:21,701][WARN ][cluster.routing.allocation.decider] [ne_search] high disk watermark [90%] exceeded on [sgkidTjARk6KfceXOrg-Qw][ne_search][/Users/Theo/Desktop/Nebula/elasticsearch/data/nebula/nodes/0] free: 12.9gb[5.5%], shards will be relocated away from this node
+[2016-07-25 21:54:51,704][WARN ][cluster.routing.allocation.decider] [ne_search] high disk watermark [90%] exceeded on [sgkidTjARk6KfceXOrg-Qw][ne_search][/Users/Theo/Desktop/Nebula/elasticsearch/data/nebula/nodes/0] free: 12.9gb[5.5%], shards will be relocated away from this node
+[2016-07-25 21:54:51,704][INFO ][cluster.routing.allocation.decider] [ne_search] rerouting shards: [high disk watermark exceeded on one or more nodes]
+[2016-07-25 21:55:21,707][WARN ][cluster.routing.allocation.decider] [ne_search] high disk watermark [90%] exceeded on [sgkidTjARk6KfceXOrg-Qw][ne_search][/Users/Theo/Desktop/Nebula/elasticsearch/data/nebula/nodes/0] free: 12.9gb[5.5%], shards will be relocated away from this node
+[2016-07-25 21:55:51,712][WARN ][cluster.routing.allocation.decider] [ne_search] high disk watermark [90%] exceeded on [sgkidTjARk6KfceXOrg-Qw][ne_search][/Users/Theo/Desktop/Nebula/elasticsearch/data/nebula/nodes/0] free: 12.9gb[5.5%], shards will be relocated away from this node
+[2016-07-25 21:55:51,713][INFO ][cluster.routing.allocation.decider] [ne_search] rerouting shards: [high disk watermark exceeded on one or more nodes]
+[2016-07-25 21:56:21,716][WARN ][cluster.routing.allocation.decider] [ne_search] high disk watermark [90%] exceeded on [sgkidTjARk6KfceXOrg-Qw][ne_search][/Users/Theo/Desktop/Nebula/elasticsearch/data/nebula/nodes/0] free: 12.9gb[5.5%], shards will be relocated away from this node
+[2016-07-25 21:56:51,720][WARN ][cluster.routing.allocation.decider] [ne_search] high disk watermark [90%] exceeded on [sgkidTjARk6KfceXOrg-Qw][ne_search][/Users/Theo/Desktop/Nebula/elasticsearch/data/nebula/nodes/0] free: 12.9gb[5.5%], shards will be relocated away from this node
+[2016-07-25 21:56:51,720][INFO ][cluster.routing.allocation.decider] [ne_search] rerouting shards: [high disk watermark exceeded on one or more nodes]
+[2016-07-25 21:57:21,726][WARN ][cluster.routing.allocation.decider] [ne_search] high disk watermark [90%] exceeded on [sgkidTjARk6KfceXOrg-Qw][ne_search][/Users/Theo/Desktop/Nebula/elasticsearch/data/nebula/nodes/0] free: 12.9gb[5.5%], shards will be relocated away from this node
+[2016-07-25 21:57:47,075][DEBUG][action.search            ] [ne_search] [test_index][4], node[sgkidTjARk6KfceXOrg-Qw], [P], v[6], s[STARTED], a[id=QMruThdITjSBaRKSWhBbYA]: Failed to execute [org.elasticsearch.action.search.SearchRequest@2ead3e07]
+RemoteTransportException[[ne_search][127.0.0.1:9300][indices:data/read/search[phase/query]]]; nested: SearchParseException[failed to parse search source [{"query": {"terms": {"_id": "fbi14"}}}]]; nested: QueryParsingException[[terms] query does not support [_id]];
+Caused by: SearchParseException[failed to parse search source [{"query": {"terms": {"_id": "fbi14"}}}]]; nested: QueryParsingException[[terms] query does not support [_id]];
+	at org.elasticsearch.search.SearchService.parseSource(SearchService.java:855)
+	at org.elasticsearch.search.SearchService.createContext(SearchService.java:654)
+	at org.elasticsearch.search.SearchService.createAndPutContext(SearchService.java:620)
+	at org.elasticsearch.search.SearchService.executeQueryPhase(SearchService.java:371)
+	at org.elasticsearch.search.action.SearchServiceTransportAction$SearchQueryTransportHandler.messageReceived(SearchServiceTransportAction.java:368)
+	at org.elasticsearch.search.action.SearchServiceTransportAction$SearchQueryTransportHandler.messageReceived(SearchServiceTransportAction.java:365)
+	at org.elasticsearch.transport.TransportRequestHandler.messageReceived(TransportRequestHandler.java:33)
+	at org.elasticsearch.transport.RequestHandlerRegistry.processMessageReceived(RequestHandlerRegistry.java:75)
+	at org.elasticsearch.transport.TransportService$4.doRun(TransportService.java:376)
+	at org.elasticsearch.common.util.concurrent.AbstractRunnable.run(AbstractRunnable.java:37)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617)
+	at java.lang.Thread.run(Thread.java:745)
+Caused by: [test_index] QueryParsingException[[terms] query does not support [_id]]
+	at org.elasticsearch.index.query.TermsQueryParser.parse(TermsQueryParser.java:155)
+	at org.elasticsearch.index.query.QueryParseContext.parseInnerQuery(QueryParseContext.java:250)
+	at org.elasticsearch.index.query.IndexQueryParserService.innerParse(IndexQueryParserService.java:320)
+	at org.elasticsearch.index.query.IndexQueryParserService.parse(IndexQueryParserService.java:223)
+	at org.elasticsearch.index.query.IndexQueryParserService.parse(IndexQueryParserService.java:218)
+	at org.elasticsearch.search.query.QueryParseElement.parse(QueryParseElement.java:33)
+	at org.elasticsearch.search.SearchService.parseSource(SearchService.java:838)
+	... 12 more
+[2016-07-25 21:57:47,075][DEBUG][action.search            ] [ne_search] [test_index][1], node[sgkidTjARk6KfceXOrg-Qw], [P], v[6], s[STARTED], a[id=VoMKrXXkSuKXPls9gfIgFw]: Failed to execute [org.elasticsearch.action.search.SearchRequest@2ead3e07] lastShard [true]
+RemoteTransportException[[ne_search][127.0.0.1:9300][indices:data/read/search[phase/query]]]; nested: SearchParseException[failed to parse search source [{"query": {"terms": {"_id": "fbi14"}}}]]; nested: QueryParsingException[[terms] query does not support [_id]];
+Caused by: SearchParseException[failed to parse search source [{"query": {"terms": {"_id": "fbi14"}}}]]; nested: QueryParsingException[[terms] query does not support [_id]];
+	at org.elasticsearch.search.SearchService.parseSource(SearchService.java:855)
+	at org.elasticsearch.search.SearchService.createContext(SearchService.java:654)
+	at org.elasticsearch.search.SearchService.createAndPutContext(SearchService.java:620)
+	at org.elasticsearch.search.SearchService.executeQueryPhase(SearchService.java:371)
+	at org.elasticsearch.search.action.SearchServiceTransportAction$SearchQueryTransportHandler.messageReceived(SearchServiceTransportAction.java:368)
+	at org.elasticsearch.search.action.SearchServiceTransportAction$SearchQueryTransportHandler.messageReceived(SearchServiceTransportAction.java:365)
+	at org.elasticsearch.transport.TransportRequestHandler.messageReceived(TransportRequestHandler.java:33)
+	at org.elasticsearch.transport.RequestHandlerRegistry.processMessageReceived(RequestHandlerRegistry.java:75)
+	at org.elasticsearch.transport.TransportService$4.doRun(TransportService.java:376)
+	at org.elasticsearch.common.util.concurrent.AbstractRunnable.run(AbstractRunnable.java:37)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617)
+	at java.lang.Thread.run(Thread.java:745)
+Caused by: [test_index] QueryParsingException[[terms] query does not support [_id]]
+	at org.elasticsearch.index.query.TermsQueryParser.parse(TermsQueryParser.java:155)
+	at org.elasticsearch.index.query.QueryParseContext.parseInnerQuery(QueryParseContext.java:250)
+	at org.elasticsearch.index.query.IndexQueryParserService.innerParse(IndexQueryParserService.java:320)
+	at org.elasticsearch.index.query.IndexQueryParserService.parse(IndexQueryParserService.java:223)
+	at org.elasticsearch.index.query.IndexQueryParserService.parse(IndexQueryParserService.java:218)
+	at org.elasticsearch.search.query.QueryParseElement.parse(QueryParseElement.java:33)
+	at org.elasticsearch.search.SearchService.parseSource(SearchService.java:838)
+	... 12 more
+[2016-07-25 21:57:47,075][DEBUG][action.search            ] [ne_search] [test_index][0], node[sgkidTjARk6KfceXOrg-Qw], [P], v[6], s[STARTED], a[id=EXR-77kURL2TXFX2xE-xfA]: Failed to execute [org.elasticsearch.action.search.SearchRequest@2ead3e07] lastShard [true]
+RemoteTransportException[[ne_search][127.0.0.1:9300][indices:data/read/search[phase/query]]]; nested: SearchParseException[failed to parse search source [{"query": {"terms": {"_id": "fbi14"}}}]]; nested: QueryParsingException[[terms] query does not support [_id]];
+Caused by: SearchParseException[failed to parse search source [{"query": {"terms": {"_id": "fbi14"}}}]]; nested: QueryParsingException[[terms] query does not support [_id]];
+	at org.elasticsearch.search.SearchService.parseSource(SearchService.java:855)
+	at org.elasticsearch.search.SearchService.createContext(SearchService.java:654)
+	at org.elasticsearch.search.SearchService.createAndPutContext(SearchService.java:620)
+	at org.elasticsearch.search.SearchService.executeQueryPhase(SearchService.java:371)
+	at org.elasticsearch.search.action.SearchServiceTransportAction$SearchQueryTransportHandler.messageReceived(SearchServiceTransportAction.java:368)
+	at org.elasticsearch.search.action.SearchServiceTransportAction$SearchQueryTransportHandler.messageReceived(SearchServiceTransportAction.java:365)
+	at org.elasticsearch.transport.TransportRequestHandler.messageReceived(TransportRequestHandler.java:33)
+	at org.elasticsearch.transport.RequestHandlerRegistry.processMessageReceived(RequestHandlerRegistry.java:75)
+	at org.elasticsearch.transport.TransportService$4.doRun(TransportService.java:376)
+	at org.elasticsearch.common.util.concurrent.AbstractRunnable.run(AbstractRunnable.java:37)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617)
+	at java.lang.Thread.run(Thread.java:745)
+Caused by: [test_index] QueryParsingException[[terms] query does not support [_id]]
+	at org.elasticsearch.index.query.TermsQueryParser.parse(TermsQueryParser.java:155)
+	at org.elasticsearch.index.query.QueryParseContext.parseInnerQuery(QueryParseContext.java:250)
+	at org.elasticsearch.index.query.IndexQueryParserService.innerParse(IndexQueryParserService.java:320)
+	at org.elasticsearch.index.query.IndexQueryParserService.parse(IndexQueryParserService.java:223)
+	at org.elasticsearch.index.query.IndexQueryParserService.parse(IndexQueryParserService.java:218)
+	at org.elasticsearch.search.query.QueryParseElement.parse(QueryParseElement.java:33)
+	at org.elasticsearch.search.SearchService.parseSource(SearchService.java:838)
+	... 12 more
+[2016-07-25 21:57:47,075][DEBUG][action.search            ] [ne_search] [test_index][3], node[sgkidTjARk6KfceXOrg-Qw], [P], v[6], s[STARTED], a[id=68TzpNHkTweAfc_Yw8aH2A]: Failed to execute [org.elasticsearch.action.search.SearchRequest@2ead3e07] lastShard [true]
+RemoteTransportException[[ne_search][127.0.0.1:9300][indices:data/read/search[phase/query]]]; nested: SearchParseException[failed to parse search source [{"query": {"terms": {"_id": "fbi14"}}}]]; nested: QueryParsingException[[terms] query does not support [_id]];
+Caused by: SearchParseException[failed to parse search source [{"query": {"terms": {"_id": "fbi14"}}}]]; nested: QueryParsingException[[terms] query does not support [_id]];
+	at org.elasticsearch.search.SearchService.parseSource(SearchService.java:855)
+	at org.elasticsearch.search.SearchService.createContext(SearchService.java:654)
+	at org.elasticsearch.search.SearchService.createAndPutContext(SearchService.java:620)
+	at org.elasticsearch.search.SearchService.executeQueryPhase(SearchService.java:371)
+	at org.elasticsearch.search.action.SearchServiceTransportAction$SearchQueryTransportHandler.messageReceived(SearchServiceTransportAction.java:368)
+	at org.elasticsearch.search.action.SearchServiceTransportAction$SearchQueryTransportHandler.messageReceived(SearchServiceTransportAction.java:365)
+	at org.elasticsearch.transport.TransportRequestHandler.messageReceived(TransportRequestHandler.java:33)
+	at org.elasticsearch.transport.RequestHandlerRegistry.processMessageReceived(RequestHandlerRegistry.java:75)
+	at org.elasticsearch.transport.TransportService$4.doRun(TransportService.java:376)
+	at org.elasticsearch.common.util.concurrent.AbstractRunnable.run(AbstractRunnable.java:37)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617)
+	at java.lang.Thread.run(Thread.java:745)
+Caused by: [test_index] QueryParsingException[[terms] query does not support [_id]]
+	at org.elasticsearch.index.query.TermsQueryParser.parse(TermsQueryParser.java:155)
+	at org.elasticsearch.index.query.QueryParseContext.parseInnerQuery(QueryParseContext.java:250)
+	at org.elasticsearch.index.query.IndexQueryParserService.innerParse(IndexQueryParserService.java:320)
+	at org.elasticsearch.index.query.IndexQueryParserService.parse(IndexQueryParserService.java:223)
+	at org.elasticsearch.index.query.IndexQueryParserService.parse(IndexQueryParserService.java:218)
+	at org.elasticsearch.search.query.QueryParseElement.parse(QueryParseElement.java:33)
+	at org.elasticsearch.search.SearchService.parseSource(SearchService.java:838)
+	... 12 more
+[2016-07-25 21:57:47,075][DEBUG][action.search            ] [ne_search] [test_index][2], node[sgkidTjARk6KfceXOrg-Qw], [P], v[6], s[STARTED], a[id=67FUdy3BRf25DD13eD91ZQ]: Failed to execute [org.elasticsearch.action.search.SearchRequest@2ead3e07] lastShard [true]
+RemoteTransportException[[ne_search][127.0.0.1:9300][indices:data/read/search[phase/query]]]; nested: SearchParseException[failed to parse search source [{"query": {"terms": {"_id": "fbi14"}}}]]; nested: QueryParsingException[[terms] query does not support [_id]];
+Caused by: SearchParseException[failed to parse search source [{"query": {"terms": {"_id": "fbi14"}}}]]; nested: QueryParsingException[[terms] query does not support [_id]];
+	at org.elasticsearch.search.SearchService.parseSource(SearchService.java:855)
+	at org.elasticsearch.search.SearchService.createContext(SearchService.java:654)
+	at org.elasticsearch.search.SearchService.createAndPutContext(SearchService.java:620)
+	at org.elasticsearch.search.SearchService.executeQueryPhase(SearchService.java:371)
+	at org.elasticsearch.search.action.SearchServiceTransportAction$SearchQueryTransportHandler.messageReceived(SearchServiceTransportAction.java:368)
+	at org.elasticsearch.search.action.SearchServiceTransportAction$SearchQueryTransportHandler.messageReceived(SearchServiceTransportAction.java:365)
+	at org.elasticsearch.transport.TransportRequestHandler.messageReceived(TransportRequestHandler.java:33)
+	at org.elasticsearch.transport.RequestHandlerRegistry.processMessageReceived(RequestHandlerRegistry.java:75)
+	at org.elasticsearch.transport.TransportService$4.doRun(TransportService.java:376)
+	at org.elasticsearch.common.util.concurrent.AbstractRunnable.run(AbstractRunnable.java:37)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617)
+	at java.lang.Thread.run(Thread.java:745)
+Caused by: [test_index] QueryParsingException[[terms] query does not support [_id]]
+	at org.elasticsearch.index.query.TermsQueryParser.parse(TermsQueryParser.java:155)
+	at org.elasticsearch.index.query.QueryParseContext.parseInnerQuery(QueryParseContext.java:250)
+	at org.elasticsearch.index.query.IndexQueryParserService.innerParse(IndexQueryParserService.java:320)
+	at org.elasticsearch.index.query.IndexQueryParserService.parse(IndexQueryParserService.java:223)
+	at org.elasticsearch.index.query.IndexQueryParserService.parse(IndexQueryParserService.java:218)
+	at org.elasticsearch.search.query.QueryParseElement.parse(QueryParseElement.java:33)
+	at org.elasticsearch.search.SearchService.parseSource(SearchService.java:838)
+	... 12 more
+[2016-07-25 21:57:47,084][DEBUG][action.search            ] [ne_search] All shards failed for phase: [query]
+RemoteTransportException[[ne_search][127.0.0.1:9300][indices:data/read/search[phase/query]]]; nested: SearchParseException[failed to parse search source [{"query": {"terms": {"_id": "fbi14"}}}]]; nested: QueryParsingException[[terms] query does not support [_id]];
+Caused by: SearchParseException[failed to parse search source [{"query": {"terms": {"_id": "fbi14"}}}]]; nested: QueryParsingException[[terms] query does not support [_id]];
+	at org.elasticsearch.search.SearchService.parseSource(SearchService.java:855)
+	at org.elasticsearch.search.SearchService.createContext(SearchService.java:654)
+	at org.elasticsearch.search.SearchService.createAndPutContext(SearchService.java:620)
+	at org.elasticsearch.search.SearchService.executeQueryPhase(SearchService.java:371)
+	at org.elasticsearch.search.action.SearchServiceTransportAction$SearchQueryTransportHandler.messageReceived(SearchServiceTransportAction.java:368)
+	at org.elasticsearch.search.action.SearchServiceTransportAction$SearchQueryTransportHandler.messageReceived(SearchServiceTransportAction.java:365)
+	at org.elasticsearch.transport.TransportRequestHandler.messageReceived(TransportRequestHandler.java:33)
+	at org.elasticsearch.transport.RequestHandlerRegistry.processMessageReceived(RequestHandlerRegistry.java:75)
+	at org.elasticsearch.transport.TransportService$4.doRun(TransportService.java:376)
+	at org.elasticsearch.common.util.concurrent.AbstractRunnable.run(AbstractRunnable.java:37)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617)
+	at java.lang.Thread.run(Thread.java:745)
+Caused by: [test_index] QueryParsingException[[terms] query does not support [_id]]
+	at org.elasticsearch.index.query.TermsQueryParser.parse(TermsQueryParser.java:155)
+	at org.elasticsearch.index.query.QueryParseContext.parseInnerQuery(QueryParseContext.java:250)
+	at org.elasticsearch.index.query.IndexQueryParserService.innerParse(IndexQueryParserService.java:320)
+	at org.elasticsearch.index.query.IndexQueryParserService.parse(IndexQueryParserService.java:223)
+	at org.elasticsearch.index.query.IndexQueryParserService.parse(IndexQueryParserService.java:218)
+	at org.elasticsearch.search.query.QueryParseElement.parse(QueryParseElement.java:33)
+	at org.elasticsearch.search.SearchService.parseSource(SearchService.java:838)
+	... 12 more
+[2016-07-25 21:57:51,733][WARN ][cluster.routing.allocation.decider] [ne_search] high disk watermark [90%] exceeded on [sgkidTjARk6KfceXOrg-Qw][ne_search][/Users/Theo/Desktop/Nebula/elasticsearch/data/nebula/nodes/0] free: 12.9gb[5.5%], shards will be relocated away from this node
+[2016-07-25 21:57:51,733][INFO ][cluster.routing.allocation.decider] [ne_search] rerouting shards: [high disk watermark exceeded on one or more nodes]
+[2016-07-25 21:58:21,740][WARN ][cluster.routing.allocation.decider] [ne_search] high disk watermark [90%] exceeded on [sgkidTjARk6KfceXOrg-Qw][ne_search][/Users/Theo/Desktop/Nebula/elasticsearch/data/nebula/nodes/0] free: 12.9gb[5.5%], shards will be relocated away from this node
+[2016-07-25 21:58:51,744][WARN ][cluster.routing.allocation.decider] [ne_search] high disk watermark [90%] exceeded on [sgkidTjARk6KfceXOrg-Qw][ne_search][/Users/Theo/Desktop/Nebula/elasticsearch/data/nebula/nodes/0] free: 12.9gb[5.5%], shards will be relocated away from this node
+[2016-07-25 21:58:51,744][INFO ][cluster.routing.allocation.decider] [ne_search] rerouting shards: [high disk watermark exceeded on one or more nodes]
+[2016-07-25 21:59:21,747][WARN ][cluster.routing.allocation.decider] [ne_search] high disk watermark [90%] exceeded on [sgkidTjARk6KfceXOrg-Qw][ne_search][/Users/Theo/Desktop/Nebula/elasticsearch/data/nebula/nodes/0] free: 12.9gb[5.5%], shards will be relocated away from this node
+[2016-07-25 21:59:51,755][WARN ][cluster.routing.allocation.decider] [ne_search] high disk watermark [90%] exceeded on [sgkidTjARk6KfceXOrg-Qw][ne_search][/Users/Theo/Desktop/Nebula/elasticsearch/data/nebula/nodes/0] free: 12.9gb[5.5%], shards will be relocated away from this node
+[2016-07-25 21:59:51,755][INFO ][cluster.routing.allocation.decider] [ne_search] rerouting shards: [high disk watermark exceeded on one or more nodes]
+[2016-07-25 22:00:01,411][DEBUG][action.search            ] [ne_search] [test_index][3], node[sgkidTjARk6KfceXOrg-Qw], [P], v[6], s[STARTED], a[id=68TzpNHkTweAfc_Yw8aH2A]: Failed to execute [org.elasticsearch.action.search.SearchRequest@3c29d28f] lastShard [true]
+RemoteTransportException[[ne_search][127.0.0.1:9300][indices:data/read/search[phase/query]]]; nested: SearchParseException[failed to parse search source [{"query": {"ids": {"values": "fbi24"}}}]]; nested: QueryParsingException[[ids] query does not support [values]];
+Caused by: SearchParseException[failed to parse search source [{"query": {"ids": {"values": "fbi24"}}}]]; nested: QueryParsingException[[ids] query does not support [values]];
+	at org.elasticsearch.search.SearchService.parseSource(SearchService.java:855)
+	at org.elasticsearch.search.SearchService.createContext(SearchService.java:654)
+	at org.elasticsearch.search.SearchService.createAndPutContext(SearchService.java:620)
+	at org.elasticsearch.search.SearchService.executeQueryPhase(SearchService.java:371)
+	at org.elasticsearch.search.action.SearchServiceTransportAction$SearchQueryTransportHandler.messageReceived(SearchServiceTransportAction.java:368)
+	at org.elasticsearch.search.action.SearchServiceTransportAction$SearchQueryTransportHandler.messageReceived(SearchServiceTransportAction.java:365)
+	at org.elasticsearch.transport.TransportRequestHandler.messageReceived(TransportRequestHandler.java:33)
+	at org.elasticsearch.transport.RequestHandlerRegistry.processMessageReceived(RequestHandlerRegistry.java:75)
+	at org.elasticsearch.transport.TransportService$4.doRun(TransportService.java:376)
+	at org.elasticsearch.common.util.concurrent.AbstractRunnable.run(AbstractRunnable.java:37)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617)
+	at java.lang.Thread.run(Thread.java:745)
+Caused by: [test_index] QueryParsingException[[ids] query does not support [values]]
+	at org.elasticsearch.index.query.IdsQueryParser.parse(IdsQueryParser.java:105)
+	at org.elasticsearch.index.query.QueryParseContext.parseInnerQuery(QueryParseContext.java:250)
+	at org.elasticsearch.index.query.IndexQueryParserService.innerParse(IndexQueryParserService.java:320)
+	at org.elasticsearch.index.query.IndexQueryParserService.parse(IndexQueryParserService.java:223)
+	at org.elasticsearch.index.query.IndexQueryParserService.parse(IndexQueryParserService.java:218)
+	at org.elasticsearch.search.query.QueryParseElement.parse(QueryParseElement.java:33)
+	at org.elasticsearch.search.SearchService.parseSource(SearchService.java:838)
+	... 12 more
+[2016-07-25 22:00:01,411][DEBUG][action.search            ] [ne_search] [test_index][1], node[sgkidTjARk6KfceXOrg-Qw], [P], v[6], s[STARTED], a[id=VoMKrXXkSuKXPls9gfIgFw]: Failed to execute [org.elasticsearch.action.search.SearchRequest@3c29d28f] lastShard [true]
+RemoteTransportException[[ne_search][127.0.0.1:9300][indices:data/read/search[phase/query]]]; nested: SearchParseException[failed to parse search source [{"query": {"ids": {"values": "fbi24"}}}]]; nested: QueryParsingException[[ids] query does not support [values]];
+Caused by: SearchParseException[failed to parse search source [{"query": {"ids": {"values": "fbi24"}}}]]; nested: QueryParsingException[[ids] query does not support [values]];
+	at org.elasticsearch.search.SearchService.parseSource(SearchService.java:855)
+	at org.elasticsearch.search.SearchService.createContext(SearchService.java:654)
+	at org.elasticsearch.search.SearchService.createAndPutContext(SearchService.java:620)
+	at org.elasticsearch.search.SearchService.executeQueryPhase(SearchService.java:371)
+	at org.elasticsearch.search.action.SearchServiceTransportAction$SearchQueryTransportHandler.messageReceived(SearchServiceTransportAction.java:368)
+	at org.elasticsearch.search.action.SearchServiceTransportAction$SearchQueryTransportHandler.messageReceived(SearchServiceTransportAction.java:365)
+	at org.elasticsearch.transport.TransportRequestHandler.messageReceived(TransportRequestHandler.java:33)
+	at org.elasticsearch.transport.RequestHandlerRegistry.processMessageReceived(RequestHandlerRegistry.java:75)
+	at org.elasticsearch.transport.TransportService$4.doRun(TransportService.java:376)
+	at org.elasticsearch.common.util.concurrent.AbstractRunnable.run(AbstractRunnable.java:37)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617)
+	at java.lang.Thread.run(Thread.java:745)
+Caused by: [test_index] QueryParsingException[[ids] query does not support [values]]
+	at org.elasticsearch.index.query.IdsQueryParser.parse(IdsQueryParser.java:105)
+	at org.elasticsearch.index.query.QueryParseContext.parseInnerQuery(QueryParseContext.java:250)
+	at org.elasticsearch.index.query.IndexQueryParserService.innerParse(IndexQueryParserService.java:320)
+	at org.elasticsearch.index.query.IndexQueryParserService.parse(IndexQueryParserService.java:223)
+	at org.elasticsearch.index.query.IndexQueryParserService.parse(IndexQueryParserService.java:218)
+	at org.elasticsearch.search.query.QueryParseElement.parse(QueryParseElement.java:33)
+	at org.elasticsearch.search.SearchService.parseSource(SearchService.java:838)
+	... 12 more
+[2016-07-25 22:00:01,411][DEBUG][action.search            ] [ne_search] [test_index][2], node[sgkidTjARk6KfceXOrg-Qw], [P], v[6], s[STARTED], a[id=67FUdy3BRf25DD13eD91ZQ]: Failed to execute [org.elasticsearch.action.search.SearchRequest@3c29d28f] lastShard [true]
+RemoteTransportException[[ne_search][127.0.0.1:9300][indices:data/read/search[phase/query]]]; nested: SearchParseException[failed to parse search source [{"query": {"ids": {"values": "fbi24"}}}]]; nested: QueryParsingException[[ids] query does not support [values]];
+Caused by: SearchParseException[failed to parse search source [{"query": {"ids": {"values": "fbi24"}}}]]; nested: QueryParsingException[[ids] query does not support [values]];
+	at org.elasticsearch.search.SearchService.parseSource(SearchService.java:855)
+	at org.elasticsearch.search.SearchService.createContext(SearchService.java:654)
+	at org.elasticsearch.search.SearchService.createAndPutContext(SearchService.java:620)
+	at org.elasticsearch.search.SearchService.executeQueryPhase(SearchService.java:371)
+	at org.elasticsearch.search.action.SearchServiceTransportAction$SearchQueryTransportHandler.messageReceived(SearchServiceTransportAction.java:368)
+	at org.elasticsearch.search.action.SearchServiceTransportAction$SearchQueryTransportHandler.messageReceived(SearchServiceTransportAction.java:365)
+	at org.elasticsearch.transport.TransportRequestHandler.messageReceived(TransportRequestHandler.java:33)
+	at org.elasticsearch.transport.RequestHandlerRegistry.processMessageReceived(RequestHandlerRegistry.java:75)
+	at org.elasticsearch.transport.TransportService$4.doRun(TransportService.java:376)
+	at org.elasticsearch.common.util.concurrent.AbstractRunnable.run(AbstractRunnable.java:37)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617)
+	at java.lang.Thread.run(Thread.java:745)
+Caused by: [test_index] QueryParsingException[[ids] query does not support [values]]
+	at org.elasticsearch.index.query.IdsQueryParser.parse(IdsQueryParser.java:105)
+	at org.elasticsearch.index.query.QueryParseContext.parseInnerQuery(QueryParseContext.java:250)
+	at org.elasticsearch.index.query.IndexQueryParserService.innerParse(IndexQueryParserService.java:320)
+	at org.elasticsearch.index.query.IndexQueryParserService.parse(IndexQueryParserService.java:223)
+	at org.elasticsearch.index.query.IndexQueryParserService.parse(IndexQueryParserService.java:218)
+	at org.elasticsearch.search.query.QueryParseElement.parse(QueryParseElement.java:33)
+	at org.elasticsearch.search.SearchService.parseSource(SearchService.java:838)
+	... 12 more
+[2016-07-25 22:00:01,411][DEBUG][action.search            ] [ne_search] [test_index][4], node[sgkidTjARk6KfceXOrg-Qw], [P], v[6], s[STARTED], a[id=QMruThdITjSBaRKSWhBbYA]: Failed to execute [org.elasticsearch.action.search.SearchRequest@3c29d28f]
+RemoteTransportException[[ne_search][127.0.0.1:9300][indices:data/read/search[phase/query]]]; nested: SearchParseException[failed to parse search source [{"query": {"ids": {"values": "fbi24"}}}]]; nested: QueryParsingException[[ids] query does not support [values]];
+Caused by: SearchParseException[failed to parse search source [{"query": {"ids": {"values": "fbi24"}}}]]; nested: QueryParsingException[[ids] query does not support [values]];
+	at org.elasticsearch.search.SearchService.parseSource(SearchService.java:855)
+	at org.elasticsearch.search.SearchService.createContext(SearchService.java:654)
+	at org.elasticsearch.search.SearchService.createAndPutContext(SearchService.java:620)
+	at org.elasticsearch.search.SearchService.executeQueryPhase(SearchService.java:371)
+	at org.elasticsearch.search.action.SearchServiceTransportAction$SearchQueryTransportHandler.messageReceived(SearchServiceTransportAction.java:368)
+	at org.elasticsearch.search.action.SearchServiceTransportAction$SearchQueryTransportHandler.messageReceived(SearchServiceTransportAction.java:365)
+	at org.elasticsearch.transport.TransportRequestHandler.messageReceived(TransportRequestHandler.java:33)
+	at org.elasticsearch.transport.RequestHandlerRegistry.processMessageReceived(RequestHandlerRegistry.java:75)
+	at org.elasticsearch.transport.TransportService$4.doRun(TransportService.java:376)
+	at org.elasticsearch.common.util.concurrent.AbstractRunnable.run(AbstractRunnable.java:37)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617)
+	at java.lang.Thread.run(Thread.java:745)
+Caused by: [test_index] QueryParsingException[[ids] query does not support [values]]
+	at org.elasticsearch.index.query.IdsQueryParser.parse(IdsQueryParser.java:105)
+	at org.elasticsearch.index.query.QueryParseContext.parseInnerQuery(QueryParseContext.java:250)
+	at org.elasticsearch.index.query.IndexQueryParserService.innerParse(IndexQueryParserService.java:320)
+	at org.elasticsearch.index.query.IndexQueryParserService.parse(IndexQueryParserService.java:223)
+	at org.elasticsearch.index.query.IndexQueryParserService.parse(IndexQueryParserService.java:218)
+	at org.elasticsearch.search.query.QueryParseElement.parse(QueryParseElement.java:33)
+	at org.elasticsearch.search.SearchService.parseSource(SearchService.java:838)
+	... 12 more
+[2016-07-25 22:00:01,411][DEBUG][action.search            ] [ne_search] [test_index][0], node[sgkidTjARk6KfceXOrg-Qw], [P], v[6], s[STARTED], a[id=EXR-77kURL2TXFX2xE-xfA]: Failed to execute [org.elasticsearch.action.search.SearchRequest@3c29d28f] lastShard [true]
+RemoteTransportException[[ne_search][127.0.0.1:9300][indices:data/read/search[phase/query]]]; nested: SearchParseException[failed to parse search source [{"query": {"ids": {"values": "fbi24"}}}]]; nested: QueryParsingException[[ids] query does not support [values]];
+Caused by: SearchParseException[failed to parse search source [{"query": {"ids": {"values": "fbi24"}}}]]; nested: QueryParsingException[[ids] query does not support [values]];
+	at org.elasticsearch.search.SearchService.parseSource(SearchService.java:855)
+	at org.elasticsearch.search.SearchService.createContext(SearchService.java:654)
+	at org.elasticsearch.search.SearchService.createAndPutContext(SearchService.java:620)
+	at org.elasticsearch.search.SearchService.executeQueryPhase(SearchService.java:371)
+	at org.elasticsearch.search.action.SearchServiceTransportAction$SearchQueryTransportHandler.messageReceived(SearchServiceTransportAction.java:368)
+	at org.elasticsearch.search.action.SearchServiceTransportAction$SearchQueryTransportHandler.messageReceived(SearchServiceTransportAction.java:365)
+	at org.elasticsearch.transport.TransportRequestHandler.messageReceived(TransportRequestHandler.java:33)
+	at org.elasticsearch.transport.RequestHandlerRegistry.processMessageReceived(RequestHandlerRegistry.java:75)
+	at org.elasticsearch.transport.TransportService$4.doRun(TransportService.java:376)
+	at org.elasticsearch.common.util.concurrent.AbstractRunnable.run(AbstractRunnable.java:37)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617)
+	at java.lang.Thread.run(Thread.java:745)
+Caused by: [test_index] QueryParsingException[[ids] query does not support [values]]
+	at org.elasticsearch.index.query.IdsQueryParser.parse(IdsQueryParser.java:105)
+	at org.elasticsearch.index.query.QueryParseContext.parseInnerQuery(QueryParseContext.java:250)
+	at org.elasticsearch.index.query.IndexQueryParserService.innerParse(IndexQueryParserService.java:320)
+	at org.elasticsearch.index.query.IndexQueryParserService.parse(IndexQueryParserService.java:223)
+	at org.elasticsearch.index.query.IndexQueryParserService.parse(IndexQueryParserService.java:218)
+	at org.elasticsearch.search.query.QueryParseElement.parse(QueryParseElement.java:33)
+	at org.elasticsearch.search.SearchService.parseSource(SearchService.java:838)
+	... 12 more
+[2016-07-25 22:00:01,422][DEBUG][action.search            ] [ne_search] All shards failed for phase: [query]
+RemoteTransportException[[ne_search][127.0.0.1:9300][indices:data/read/search[phase/query]]]; nested: SearchParseException[failed to parse search source [{"query": {"ids": {"values": "fbi24"}}}]]; nested: QueryParsingException[[ids] query does not support [values]];
+Caused by: SearchParseException[failed to parse search source [{"query": {"ids": {"values": "fbi24"}}}]]; nested: QueryParsingException[[ids] query does not support [values]];
+	at org.elasticsearch.search.SearchService.parseSource(SearchService.java:855)
+	at org.elasticsearch.search.SearchService.createContext(SearchService.java:654)
+	at org.elasticsearch.search.SearchService.createAndPutContext(SearchService.java:620)
+	at org.elasticsearch.search.SearchService.executeQueryPhase(SearchService.java:371)
+	at org.elasticsearch.search.action.SearchServiceTransportAction$SearchQueryTransportHandler.messageReceived(SearchServiceTransportAction.java:368)
+	at org.elasticsearch.search.action.SearchServiceTransportAction$SearchQueryTransportHandler.messageReceived(SearchServiceTransportAction.java:365)
+	at org.elasticsearch.transport.TransportRequestHandler.messageReceived(TransportRequestHandler.java:33)
+	at org.elasticsearch.transport.RequestHandlerRegistry.processMessageReceived(RequestHandlerRegistry.java:75)
+	at org.elasticsearch.transport.TransportService$4.doRun(TransportService.java:376)
+	at org.elasticsearch.common.util.concurrent.AbstractRunnable.run(AbstractRunnable.java:37)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617)
+	at java.lang.Thread.run(Thread.java:745)
+Caused by: [test_index] QueryParsingException[[ids] query does not support [values]]
+	at org.elasticsearch.index.query.IdsQueryParser.parse(IdsQueryParser.java:105)
+	at org.elasticsearch.index.query.QueryParseContext.parseInnerQuery(QueryParseContext.java:250)
+	at org.elasticsearch.index.query.IndexQueryParserService.innerParse(IndexQueryParserService.java:320)
+	at org.elasticsearch.index.query.IndexQueryParserService.parse(IndexQueryParserService.java:223)
+	at org.elasticsearch.index.query.IndexQueryParserService.parse(IndexQueryParserService.java:218)
+	at org.elasticsearch.search.query.QueryParseElement.parse(QueryParseElement.java:33)
+	at org.elasticsearch.search.SearchService.parseSource(SearchService.java:838)
+	... 12 more
+[2016-07-25 22:00:21,759][WARN ][cluster.routing.allocation.decider] [ne_search] high disk watermark [90%] exceeded on [sgkidTjARk6KfceXOrg-Qw][ne_search][/Users/Theo/Desktop/Nebula/elasticsearch/data/nebula/nodes/0] free: 12.9gb[5.5%], shards will be relocated away from this node
+[2016-07-25 22:00:51,761][WARN ][cluster.routing.allocation.decider] [ne_search] high disk watermark [90%] exceeded on [sgkidTjARk6KfceXOrg-Qw][ne_search][/Users/Theo/Desktop/Nebula/elasticsearch/data/nebula/nodes/0] free: 12.9gb[5.5%], shards will be relocated away from this node
+[2016-07-25 22:00:51,769][INFO ][cluster.routing.allocation.decider] [ne_search] rerouting shards: [high disk watermark exceeded on one or more nodes]
+[2016-07-25 22:01:21,773][WARN ][cluster.routing.allocation.decider] [ne_search] high disk watermark [90%] exceeded on [sgkidTjARk6KfceXOrg-Qw][ne_search][/Users/Theo/Desktop/Nebula/elasticsearch/data/nebula/nodes/0] free: 12.9gb[5.5%], shards will be relocated away from this node
+[2016-07-25 22:01:51,780][WARN ][cluster.routing.allocation.decider] [ne_search] high disk watermark [90%] exceeded on [sgkidTjARk6KfceXOrg-Qw][ne_search][/Users/Theo/Desktop/Nebula/elasticsearch/data/nebula/nodes/0] free: 12.9gb[5.5%], shards will be relocated away from this node
+[2016-07-25 22:01:51,780][INFO ][cluster.routing.allocation.decider] [ne_search] rerouting shards: [high disk watermark exceeded on one or more nodes]
+[2016-07-25 22:02:21,782][WARN ][cluster.routing.allocation.decider] [ne_search] high disk watermark [90%] exceeded on [sgkidTjARk6KfceXOrg-Qw][ne_search][/Users/Theo/Desktop/Nebula/elasticsearch/data/nebula/nodes/0] free: 12.9gb[5.5%], shards will be relocated away from this node
+[2016-07-25 22:02:51,792][WARN ][cluster.routing.allocation.decider] [ne_search] high disk watermark [90%] exceeded on [sgkidTjARk6KfceXOrg-Qw][ne_search][/Users/Theo/Desktop/Nebula/elasticsearch/data/nebula/nodes/0] free: 12.9gb[5.5%], shards will be relocated away from this node
+[2016-07-25 22:02:51,800][INFO ][cluster.routing.allocation.decider] [ne_search] rerouting shards: [high disk watermark exceeded on one or more nodes]
+[2016-07-25 22:03:21,804][WARN ][cluster.routing.allocation.decider] [ne_search] high disk watermark [90%] exceeded on [sgkidTjARk6KfceXOrg-Qw][ne_search][/Users/Theo/Desktop/Nebula/elasticsearch/data/nebula/nodes/0] free: 12.9gb[5.5%], shards will be relocated away from this node
+[2016-07-25 22:03:51,806][WARN ][cluster.routing.allocation.decider] [ne_search] high disk watermark [90%] exceeded on [sgkidTjARk6KfceXOrg-Qw][ne_search][/Users/Theo/Desktop/Nebula/elasticsearch/data/nebula/nodes/0] free: 12.9gb[5.5%], shards will be relocated away from this node
+[2016-07-25 22:03:51,806][INFO ][cluster.routing.allocation.decider] [ne_search] rerouting shards: [high disk watermark exceeded on one or more nodes]
+[2016-07-25 22:04:21,812][WARN ][cluster.routing.allocation.decider] [ne_search] high disk watermark [90%] exceeded on [sgkidTjARk6KfceXOrg-Qw][ne_search][/Users/Theo/Desktop/Nebula/elasticsearch/data/nebula/nodes/0] free: 12.9gb[5.5%], shards will be relocated away from this node
+[2016-07-25 22:04:51,817][WARN ][cluster.routing.allocation.decider] [ne_search] high disk watermark [90%] exceeded on [sgkidTjARk6KfceXOrg-Qw][ne_search][/Users/Theo/Desktop/Nebula/elasticsearch/data/nebula/nodes/0] free: 12.9gb[5.5%], shards will be relocated away from this node
+[2016-07-25 22:04:51,817][INFO ][cluster.routing.allocation.decider] [ne_search] rerouting shards: [high disk watermark exceeded on one or more nodes]
+[2016-07-25 22:05:21,819][WARN ][cluster.routing.allocation.decider] [ne_search] high disk watermark [90%] exceeded on [sgkidTjARk6KfceXOrg-Qw][ne_search][/Users/Theo/Desktop/Nebula/elasticsearch/data/nebula/nodes/0] free: 12.9gb[5.5%], shards will be relocated away from this node
+[2016-07-25 22:05:51,823][WARN ][cluster.routing.allocation.decider] [ne_search] high disk watermark [90%] exceeded on [sgkidTjARk6KfceXOrg-Qw][ne_search][/Users/Theo/Desktop/Nebula/elasticsearch/data/nebula/nodes/0] free: 12.9gb[5.5%], shards will be relocated away from this node
+[2016-07-25 22:05:51,823][INFO ][cluster.routing.allocation.decider] [ne_search] rerouting shards: [high disk watermark exceeded on one or more nodes]
+[2016-07-25 22:06:21,829][WARN ][cluster.routing.allocation.decider] [ne_search] high disk watermark [90%] exceeded on [sgkidTjARk6KfceXOrg-Qw][ne_search][/Users/Theo/Desktop/Nebula/elasticsearch/data/nebula/nodes/0] free: 12.9gb[5.5%], shards will be relocated away from this node
+[2016-07-25 22:06:51,836][WARN ][cluster.routing.allocation.decider] [ne_search] high disk watermark [90%] exceeded on [sgkidTjARk6KfceXOrg-Qw][ne_search][/Users/Theo/Desktop/Nebula/elasticsearch/data/nebula/nodes/0] free: 12.9gb[5.5%], shards will be relocated away from this node
+[2016-07-25 22:06:51,836][INFO ][cluster.routing.allocation.decider] [ne_search] rerouting shards: [high disk watermark exceeded on one or more nodes]
+[2016-07-25 22:07:21,843][WARN ][cluster.routing.allocation.decider] [ne_search] high disk watermark [90%] exceeded on [sgkidTjARk6KfceXOrg-Qw][ne_search][/Users/Theo/Desktop/Nebula/elasticsearch/data/nebula/nodes/0] free: 12.9gb[5.5%], shards will be relocated away from this node
+[2016-07-25 22:07:51,849][WARN ][cluster.routing.allocation.decider] [ne_search] high disk watermark [90%] exceeded on [sgkidTjARk6KfceXOrg-Qw][ne_search][/Users/Theo/Desktop/Nebula/elasticsearch/data/nebula/nodes/0] free: 12.9gb[5.5%], shards will be relocated away from this node
+[2016-07-25 22:07:51,849][INFO ][cluster.routing.allocation.decider] [ne_search] rerouting shards: [high disk watermark exceeded on one or more nodes]
+[2016-07-25 22:08:21,853][WARN ][cluster.routing.allocation.decider] [ne_search] high disk watermark [90%] exceeded on [sgkidTjARk6KfceXOrg-Qw][ne_search][/Users/Theo/Desktop/Nebula/elasticsearch/data/nebula/nodes/0] free: 12.9gb[5.5%], shards will be relocated away from this node
+[2016-07-25 22:08:51,860][WARN ][cluster.routing.allocation.decider] [ne_search] high disk watermark [90%] exceeded on [sgkidTjARk6KfceXOrg-Qw][ne_search][/Users/Theo/Desktop/Nebula/elasticsearch/data/nebula/nodes/0] free: 12.9gb[5.5%], shards will be relocated away from this node
+[2016-07-25 22:08:51,860][INFO ][cluster.routing.allocation.decider] [ne_search] rerouting shards: [high disk watermark exceeded on one or more nodes]
+[2016-07-25 22:09:21,865][WARN ][cluster.routing.allocation.decider] [ne_search] high disk watermark [90%] exceeded on [sgkidTjARk6KfceXOrg-Qw][ne_search][/Users/Theo/Desktop/Nebula/elasticsearch/data/nebula/nodes/0] free: 12.9gb[5.5%], shards will be relocated away from this node
+[2016-07-25 22:09:51,869][WARN ][cluster.routing.allocation.decider] [ne_search] high disk watermark [90%] exceeded on [sgkidTjARk6KfceXOrg-Qw][ne_search][/Users/Theo/Desktop/Nebula/elasticsearch/data/nebula/nodes/0] free: 12.9gb[5.5%], shards will be relocated away from this node
+[2016-07-25 22:09:51,869][INFO ][cluster.routing.allocation.decider] [ne_search] rerouting shards: [high disk watermark exceeded on one or more nodes]
+[2016-07-25 22:10:21,875][WARN ][cluster.routing.allocation.decider] [ne_search] high disk watermark [90%] exceeded on [sgkidTjARk6KfceXOrg-Qw][ne_search][/Users/Theo/Desktop/Nebula/elasticsearch/data/nebula/nodes/0] free: 12.9gb[5.5%], shards will be relocated away from this node
+[2016-07-25 22:10:51,881][WARN ][cluster.routing.allocation.decider] [ne_search] high disk watermark [90%] exceeded on [sgkidTjARk6KfceXOrg-Qw][ne_search][/Users/Theo/Desktop/Nebula/elasticsearch/data/nebula/nodes/0] free: 12.9gb[5.5%], shards will be relocated away from this node
+[2016-07-25 22:10:51,882][INFO ][cluster.routing.allocation.decider] [ne_search] rerouting shards: [high disk watermark exceeded on one or more nodes]
+[2016-07-25 22:11:21,885][WARN ][cluster.routing.allocation.decider] [ne_search] high disk watermark [90%] exceeded on [sgkidTjARk6KfceXOrg-Qw][ne_search][/Users/Theo/Desktop/Nebula/elasticsearch/data/nebula/nodes/0] free: 12.9gb[5.5%], shards will be relocated away from this node
+[2016-07-25 22:11:51,892][WARN ][cluster.routing.allocation.decider] [ne_search] high disk watermark [90%] exceeded on [sgkidTjARk6KfceXOrg-Qw][ne_search][/Users/Theo/Desktop/Nebula/elasticsearch/data/nebula/nodes/0] free: 12.9gb[5.5%], shards will be relocated away from this node
+[2016-07-25 22:11:51,892][INFO ][cluster.routing.allocation.decider] [ne_search] rerouting shards: [high disk watermark exceeded on one or more nodes]
+[2016-07-25 22:12:21,895][WARN ][cluster.routing.allocation.decider] [ne_search] high disk watermark [90%] exceeded on [sgkidTjARk6KfceXOrg-Qw][ne_search][/Users/Theo/Desktop/Nebula/elasticsearch/data/nebula/nodes/0] free: 12.9gb[5.5%], shards will be relocated away from this node
+[2016-07-25 22:12:51,897][WARN ][cluster.routing.allocation.decider] [ne_search] high disk watermark [90%] exceeded on [sgkidTjARk6KfceXOrg-Qw][ne_search][/Users/Theo/Desktop/Nebula/elasticsearch/data/nebula/nodes/0] free: 12.9gb[5.5%], shards will be relocated away from this node
+[2016-07-25 22:12:51,897][INFO ][cluster.routing.allocation.decider] [ne_search] rerouting shards: [high disk watermark exceeded on one or more nodes]
+[2016-07-25 22:13:21,900][WARN ][cluster.routing.allocation.decider] [ne_search] high disk watermark [90%] exceeded on [sgkidTjARk6KfceXOrg-Qw][ne_search][/Users/Theo/Desktop/Nebula/elasticsearch/data/nebula/nodes/0] free: 12.9gb[5.5%], shards will be relocated away from this node
+[2016-07-25 22:13:51,905][WARN ][cluster.routing.allocation.decider] [ne_search] high disk watermark [90%] exceeded on [sgkidTjARk6KfceXOrg-Qw][ne_search][/Users/Theo/Desktop/Nebula/elasticsearch/data/nebula/nodes/0] free: 12.9gb[5.5%], shards will be relocated away from this node
+[2016-07-25 22:13:51,905][INFO ][cluster.routing.allocation.decider] [ne_search] rerouting shards: [high disk watermark exceeded on one or more nodes]
+[2016-07-25 22:14:21,912][WARN ][cluster.routing.allocation.decider] [ne_search] high disk watermark [90%] exceeded on [sgkidTjARk6KfceXOrg-Qw][ne_search][/Users/Theo/Desktop/Nebula/elasticsearch/data/nebula/nodes/0] free: 12.9gb[5.5%], shards will be relocated away from this node
+[2016-07-25 22:14:51,919][WARN ][cluster.routing.allocation.decider] [ne_search] high disk watermark [90%] exceeded on [sgkidTjARk6KfceXOrg-Qw][ne_search][/Users/Theo/Desktop/Nebula/elasticsearch/data/nebula/nodes/0] free: 12.9gb[5.5%], shards will be relocated away from this node
+[2016-07-25 22:14:51,920][INFO ][cluster.routing.allocation.decider] [ne_search] rerouting shards: [high disk watermark exceeded on one or more nodes]
+[2016-07-25 22:15:21,922][WARN ][cluster.routing.allocation.decider] [ne_search] high disk watermark [90%] exceeded on [sgkidTjARk6KfceXOrg-Qw][ne_search][/Users/Theo/Desktop/Nebula/elasticsearch/data/nebula/nodes/0] free: 12.9gb[5.5%], shards will be relocated away from this node
+[2016-07-25 22:15:51,926][WARN ][cluster.routing.allocation.decider] [ne_search] high disk watermark [90%] exceeded on [sgkidTjARk6KfceXOrg-Qw][ne_search][/Users/Theo/Desktop/Nebula/elasticsearch/data/nebula/nodes/0] free: 12.9gb[5.5%], shards will be relocated away from this node
+[2016-07-25 22:15:51,926][INFO ][cluster.routing.allocation.decider] [ne_search] rerouting shards: [high disk watermark exceeded on one or more nodes]
+[2016-07-25 22:16:21,932][WARN ][cluster.routing.allocation.decider] [ne_search] high disk watermark [90%] exceeded on [sgkidTjARk6KfceXOrg-Qw][ne_search][/Users/Theo/Desktop/Nebula/elasticsearch/data/nebula/nodes/0] free: 12.9gb[5.5%], shards will be relocated away from this node
+[2016-07-25 22:16:51,936][WARN ][cluster.routing.allocation.decider] [ne_search] high disk watermark [90%] exceeded on [sgkidTjARk6KfceXOrg-Qw][ne_search][/Users/Theo/Desktop/Nebula/elasticsearch/data/nebula/nodes/0] free: 12.9gb[5.5%], shards will be relocated away from this node
+[2016-07-25 22:16:51,936][INFO ][cluster.routing.allocation.decider] [ne_search] rerouting shards: [high disk watermark exceeded on one or more nodes]
+[2016-07-25 22:17:21,943][WARN ][cluster.routing.allocation.decider] [ne_search] high disk watermark [90%] exceeded on [sgkidTjARk6KfceXOrg-Qw][ne_search][/Users/Theo/Desktop/Nebula/elasticsearch/data/nebula/nodes/0] free: 12.9gb[5.5%], shards will be relocated away from this node
+[2016-07-25 22:17:51,945][WARN ][cluster.routing.allocation.decider] [ne_search] high disk watermark [90%] exceeded on [sgkidTjARk6KfceXOrg-Qw][ne_search][/Users/Theo/Desktop/Nebula/elasticsearch/data/nebula/nodes/0] free: 12.9gb[5.5%], shards will be relocated away from this node
+[2016-07-25 22:17:51,953][INFO ][cluster.routing.allocation.decider] [ne_search] rerouting shards: [high disk watermark exceeded on one or more nodes]
+[2016-07-25 22:18:21,958][WARN ][cluster.routing.allocation.decider] [ne_search] high disk watermark [90%] exceeded on [sgkidTjARk6KfceXOrg-Qw][ne_search][/Users/Theo/Desktop/Nebula/elasticsearch/data/nebula/nodes/0] free: 12.9gb[5.5%], shards will be relocated away from this node
+[2016-07-25 22:18:51,970][WARN ][cluster.routing.allocation.decider] [ne_search] high disk watermark [90%] exceeded on [sgkidTjARk6KfceXOrg-Qw][ne_search][/Users/Theo/Desktop/Nebula/elasticsearch/data/nebula/nodes/0] free: 12.9gb[5.5%], shards will be relocated away from this node
+[2016-07-25 22:18:51,970][INFO ][cluster.routing.allocation.decider] [ne_search] rerouting shards: [high disk watermark exceeded on one or more nodes]
+[2016-07-25 22:19:21,983][WARN ][cluster.routing.allocation.decider] [ne_search] high disk watermark [90%] exceeded on [sgkidTjARk6KfceXOrg-Qw][ne_search][/Users/Theo/Desktop/Nebula/elasticsearch/data/nebula/nodes/0] free: 12.9gb[5.5%], shards will be relocated away from this node

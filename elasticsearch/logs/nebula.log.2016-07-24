@@ -1,0 +1,24 @@
+[2016-07-24 13:15:39,062][WARN ][cluster.routing.allocation.decider] [ne_search] high disk watermark [90%] exceeded on [qSSn4ePwSq-vNZSMxNbkcw][ne_search][/Users/Theo/Desktop/Nebula/elasticsearch/data/nebula/nodes/0] free: 12.4gb[5.3%], shards will be relocated away from this node
+[2016-07-24 13:15:39,479][INFO ][cluster.routing.allocation.decider] [ne_search] rerouting shards: [high disk watermark exceeded on one or more nodes]
+[2016-07-24 13:15:39,860][INFO ][cluster.metadata         ] [ne_search] [.marvel-es-1-2016.07.24] creating index, cause [auto(bulk api)], templates [.marvel-es-1], shards [1]/[1], mappings [node, shards, _default_, index_stats, index_recovery, cluster_state, cluster_stats, node_stats, indices_stats]
+[2016-07-24 13:15:40,086][INFO ][cluster.routing.allocation] [ne_search] Cluster health status changed from [RED] to [YELLOW] (reason: [shards started [[.marvel-es-1-2016.07.24][0]] ...]).
+[2016-07-24 13:15:40,108][INFO ][cluster.metadata         ] [ne_search] [.marvel-es-1-2016.07.24] update_mapping [cluster_stats]
+[2016-07-24 13:15:40,149][INFO ][cluster.metadata         ] [ne_search] [.marvel-es-1-2016.07.24] update_mapping [node_stats]
+[2016-07-24 13:15:40,171][INFO ][cluster.metadata         ] [ne_search] [.marvel-es-1-2016.07.24] update_mapping [indices_stats]
+[2016-07-24 13:16:09,486][WARN ][cluster.routing.allocation.decider] [ne_search] high disk watermark [90%] exceeded on [qSSn4ePwSq-vNZSMxNbkcw][ne_search][/Users/Theo/Desktop/Nebula/elasticsearch/data/nebula/nodes/0] free: 11.7gb[5%], shards will be relocated away from this node
+[2016-07-24 13:16:39,488][WARN ][cluster.routing.allocation.decider] [ne_search] high disk watermark [90%] exceeded on [qSSn4ePwSq-vNZSMxNbkcw][ne_search][/Users/Theo/Desktop/Nebula/elasticsearch/data/nebula/nodes/0] free: 11.7gb[5%], shards will be relocated away from this node
+[2016-07-24 13:16:39,488][INFO ][cluster.routing.allocation.decider] [ne_search] rerouting shards: [high disk watermark exceeded on one or more nodes]
+[2016-07-24 13:17:09,490][WARN ][cluster.routing.allocation.decider] [ne_search] high disk watermark [90%] exceeded on [qSSn4ePwSq-vNZSMxNbkcw][ne_search][/Users/Theo/Desktop/Nebula/elasticsearch/data/nebula/nodes/0] free: 11.7gb[5%], shards will be relocated away from this node
+[2016-07-24 13:17:39,494][WARN ][cluster.routing.allocation.decider] [ne_search] high disk watermark [90%] exceeded on [qSSn4ePwSq-vNZSMxNbkcw][ne_search][/Users/Theo/Desktop/Nebula/elasticsearch/data/nebula/nodes/0] free: 11.7gb[5%], shards will be relocated away from this node
+[2016-07-24 13:17:39,494][INFO ][cluster.routing.allocation.decider] [ne_search] rerouting shards: [high disk watermark exceeded on one or more nodes]
+[2016-07-24 13:18:09,497][WARN ][cluster.routing.allocation.decider] [ne_search] high disk watermark [90%] exceeded on [qSSn4ePwSq-vNZSMxNbkcw][ne_search][/Users/Theo/Desktop/Nebula/elasticsearch/data/nebula/nodes/0] free: 11.7gb[5%], shards will be relocated away from this node
+[2016-07-24 13:18:39,501][WARN ][cluster.routing.allocation.decider] [ne_search] high disk watermark [90%] exceeded on [qSSn4ePwSq-vNZSMxNbkcw][ne_search][/Users/Theo/Desktop/Nebula/elasticsearch/data/nebula/nodes/0] free: 11.7gb[5%], shards will be relocated away from this node
+[2016-07-24 13:18:39,501][INFO ][cluster.routing.allocation.decider] [ne_search] rerouting shards: [high disk watermark exceeded on one or more nodes]
+[2016-07-24 13:19:09,507][WARN ][cluster.routing.allocation.decider] [ne_search] high disk watermark [90%] exceeded on [qSSn4ePwSq-vNZSMxNbkcw][ne_search][/Users/Theo/Desktop/Nebula/elasticsearch/data/nebula/nodes/0] free: 11.7gb[5%], shards will be relocated away from this node
+[2016-07-24 13:19:39,514][WARN ][cluster.routing.allocation.decider] [ne_search] high disk watermark [90%] exceeded on [qSSn4ePwSq-vNZSMxNbkcw][ne_search][/Users/Theo/Desktop/Nebula/elasticsearch/data/nebula/nodes/0] free: 11.7gb[5%], shards will be relocated away from this node
+[2016-07-24 13:19:39,514][INFO ][cluster.routing.allocation.decider] [ne_search] rerouting shards: [high disk watermark exceeded on one or more nodes]
+[2016-07-24 13:20:09,517][WARN ][cluster.routing.allocation.decider] [ne_search] high disk watermark [90%] exceeded on [qSSn4ePwSq-vNZSMxNbkcw][ne_search][/Users/Theo/Desktop/Nebula/elasticsearch/data/nebula/nodes/0] free: 11.7gb[5%], shards will be relocated away from this node
+[2016-07-24 16:14:22,624][INFO ][node                     ] [ne_search] stopping ...
+[2016-07-24 16:14:22,802][INFO ][node                     ] [ne_search] stopped
+[2016-07-24 16:14:22,803][INFO ][node                     ] [ne_search] closing ...
+[2016-07-24 16:14:22,838][INFO ][node                     ] [ne_search] closed
