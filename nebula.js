@@ -20,6 +20,11 @@ var pipelines = {
         file: "pipelines/cosmos.py",
         args: ["data/crescent tfidf.csv",
             "data/crescent_raw"]
+     },    
+     sirius: {
+        file: "pipelines/TwoView.py",
+        args: ["data/crescent tfidf.csv",
+            "data/crescent_raw"]
      },
      twitter: {
         file: "pipelines/twitter.py",
