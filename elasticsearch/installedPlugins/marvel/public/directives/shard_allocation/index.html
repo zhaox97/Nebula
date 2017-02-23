@@ -1,0 +1,21 @@
+<div class="marvel-cluster-view light">
+  <div class="legend">
+    <div>
+      <span class="loading pull-right" ng-if="loading"><i class="fa fa-spinner fa-pulse"></i> Loading</span>
+      <span class="title">Shard Legend</span>
+      <span class="shard">&nbsp;</span>
+      <span class="shard-label">Primary</span>
+      <span class="shard replica">&nbsp;</span>
+      <span class="shard-label">Replica</span>
+      <span class="shard relocating">&nbsp;</span>
+      <span class="shard-label">Relocating</span>
+      <span class="shard initializing">&nbsp;</span>
+      <span class="shard-label">Initializing</span>
+      <span class="shard emergency" ng-if="isIndexView">&nbsp;</span>
+      <span class="shard-label" ng-if="isIndexView">Unassigned Primary</span>
+      <span class="shard unassigned replica" ng-if="isIndexView">&nbsp;</span>
+      <span class="shard-label" ng-if="isIndexView">Unassigned Replica</span>
+    </div>
+  </div>
+  <cluster-view shard-stats="shardStats" total-count="totalCount" labels="labels" showing="showing"></cluster-view>
+</div>
