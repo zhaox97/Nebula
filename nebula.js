@@ -224,7 +224,11 @@ function Nebula(io, pipelineAddr) {
                 room.name = roomName;
                 room.count = 1;
                 room.points = new Map();
+                room.observation_points = new Map();
+                room.attribute_points = new Map();
                 room.similarity_weights = new Map();
+                room.observation_similarity_weights = new Map();
+                room.attribute_similarity_weights = new Map();
 
                 /* Create a pipeline client for this room */
                 if (!pipelineAddr) {
@@ -306,7 +310,9 @@ function Nebula(io, pipelineAddr) {
                 self.rooms[roomName] = socket.room = room;
                 invoke(room.pipelineSocket, "reset");
             }
-            else {
+            else 
+            {
+                //Join an existing room
                 socket.room = self.rooms[roomName];
                 socket.room.count += 1;
                 console.log(socket.room.count + " people now in room " + roomName);
@@ -326,7 +332,8 @@ function Nebula(io, pipelineAddr) {
          */
         // TODO: send isObservation to the handleAction function to tell the
         // pipeline which data blob to use
-        socket.on('action', function(data, isObservation) {
+        socket.on('action', function(data, isObservation) 
+        {
             if (socket.room) {
                 self.handleAction(data, socket.room);
                 socket.broadcast.to(socket.roomName).emit('action', data, isObservation);
@@ -342,9 +349,10 @@ function Nebula(io, pipelineAddr) {
             if (socket.room) {
                 if (data.type === "oli") {
                     invoke(socket.room.pipelineSocket, "update", 
-                        {interaction: "oli", type: "classic", points: oli(socket.room)});			
+                        {interaction: "oli", type: "classic",view:isObservation ,points: oli(socket.room)});			
                 }
-                else {
+                else 
+                {
                     data.interaction = data.type;
                     invoke(socket.room.pipelineSocket, "update", data);
                 }
@@ -401,7 +409,7 @@ Nebula.prototype.handleMessage = function(room, msg) {
     var obj = JSON.parse(msg.toString());
     if (obj.func) {
         if (obj.func === "update") {
-            this.handleUpdate(room, obj.contents);
+            this.handleUpdate(room, obj.contents,obj.interaction);
         } else if (obj.func === "get") {
             this.io.to(room.name).emit("get", obj.contents, true);
         } else if (obj.func === "set") {
@@ -418,9 +426,10 @@ Nebula.prototype.handleMessage = function(room, msg) {
  */
 // TODO: get isObservation from the pipeline to tell the UI which view/panel
 // should be updated
-Nebula.prototype.handleUpdate = function(room, res) {
+Nebula.prototype.handleUpdate = function(room, res,interaction) 
+{
     console.log("Handle update called");
-
+ 
     var update = {};
     update.points = [];
     if (res.documents) {
@@ -437,10 +446,12 @@ Nebula.prototype.handleUpdate = function(room, res) {
     if (res.similarity_weights) {
         update.similarity_weights = res.similarity_weights;
     }
+    
     updateRoom(room, update);
     
     // Tell the UI which view/panel to update here by replacing true with isObservation
     this.io.to(room.name).emit('update', update, true);
+    
 };
 
 /* Updates our state for each room upon an update from the pipeline */
@@ -497,7 +508,8 @@ var sendRoom = function(room) {
 };
 
 /* Sends a message to a pipeline, enscapsulating it in an RPC-like fashion */
-var invoke = function(socket, func, data) {
+var invoke = function(socket, func, data)
+{
     var obj = {"func": func, "contents": data};
     socket.send(JSON.stringify(obj));
 };
