@@ -23,7 +23,7 @@ var pipelines = {
      },    
      sirius: {
         file: "pipelines/TwoView.py",
-        args: ["data/crescent tfidf.csv",
+        args: ["data/Animal_Data_small.csv",
             "data/crescent_raw"]
      },
      twitter: {
@@ -330,12 +330,12 @@ function Nebula(io, pipelineAddr) {
         /* Listens for actions from the clients, tracking them and then
          * broadcasting them to all other clients within the room.
          */
-        // TODO: send isObservation to the handleAction function to tell the
+        // DONE/TODO: send isObservation to the handleAction function to tell the
         // pipeline which data blob to use
         socket.on('action', function(data, isObservation) 
         {
             if (socket.room) {
-                self.handleAction(data, socket.room,isObservation);
+                self.handleAction(data, socket.room);
                 socket.broadcast.to(socket.roomName).emit('action', data, isObservation);
             }
         });
@@ -346,8 +346,12 @@ function Nebula(io, pipelineAddr) {
         // TODO: use isObservation to tell the pipeline which data blob to use.
         // isObservation will be null when a search is done
         socket.on('update', function(data, isObservation) {
-            if (socket.room) {
-                if (data.type === "oli") {
+            if (socket.room)
+            {
+                console.log(data)
+                console.log(isObservation)
+                if (data.type === "oli")
+                {
                     invoke(socket.room.pipelineSocket, "update", 
                         {interaction: "oli", type: "classic",view:isObservation ,points: oli(socket.room)});			
                 }
@@ -384,23 +388,40 @@ function Nebula(io, pipelineAddr) {
 /* Handles an action received by the client, updating the state of the room
  * as necessary.
  */
- //change here
-Nebula.prototype.handleAction = function(action, room, view) 
+
+Nebula.prototype.handleAction = function(action, room) 
 {
     if (action.type === "move") 
     {
         
-        if (room.points.has(action.id)) {
+        
+        if (room.points.has(action.id)) 
+        {
+            console.log("point moved in document view")
             room.points.get(action.id).pos = action.pos;
         }
-        else {
+        else if(room.attribute_points.has(action.id)) 
+        {
+            console.log("point moved in attribute view")
+            room.attribute_points.get(action.id).pos = action.pos;
+        }
+        else 
+        {
             console.log("Point not found in room for move: " + action.id);
    
-      }
+        }
     }
-    else if (action.type === "select") {
-        if (room.points.has(action.id)) {
+    else if (action.type === "select") 
+    {
+        if (room.points.has(action.id)) 
+        {
+            console.log("point selected in document view")  
             room.points.get(action.id).selected = action.state;
+        }
+        else if (room.attribute_points.has(action.id)) 
+        {
+            console.log("point selected in attribute view")
+            room.attribute_points.get(action.id).selected = action.state;
         }
         else {
             console.log("Point not found in room for select: " + action.id);
@@ -413,11 +434,11 @@ Nebula.prototype.handleAction = function(action, room, view)
 // UI which view/panel to update. true is stubbed in for now
 Nebula.prototype.handleMessage = function(room, msg) {
     var obj = JSON.parse(msg.toString());
-    var x = obj.contents
+    
     
     if (obj.func) {
         if (obj.func === "update") {
-            this.handleUpdate(room, obj.contents,obj.contents.interaction);
+            this.handleUpdate(room, obj.contents,obj.contents.view);
         } else if (obj.func === "get") {
             this.io.to(room.name).emit("get", obj.contents, true);
         } else if (obj.func === "set") {
@@ -437,15 +458,17 @@ Nebula.prototype.handleMessage = function(room, msg) {
 Nebula.prototype.handleUpdate = function(room, res,interaction) 
 {
     console.log("Handle update called");
-   
+    
+    //console.log(res.ATTRIBUTE.attr_list)
+    
     //similarity_weights
    
-    if(interaction == "none" ) 
-     { 
+    
             var update = {};
             update.points = [];
             if (res.documents) 
             {
+                
                 for (var i=0; i < res.documents.length; i++) 
                 {
                     var doc = res.documents[i];
@@ -473,12 +496,11 @@ Nebula.prototype.handleUpdate = function(room, res,interaction)
         update.similarity_weights = res.similarity_weights;
       }
        updateRoom(room, update,true);
+       console.log("this.io.to(room.name).emit(update, update, true)")
        this.io.to(room.name).emit('update', update, true);
     
-    }
     
-   if(interaction == "none" ) 
-     { 
+  
             var update_attr = {};
             update_attr.points = [];
             
@@ -513,9 +535,10 @@ Nebula.prototype.handleUpdate = function(room, res,interaction)
         update.similarity_weights = res.ATTRIBUTE.similarity_weights;
       }
        updateRoom(room, update_attr,false);
+        console.log("this.io.to(room.name).emit(update, update, false)")
        this.io.to(room.name).emit('update', update_attr, false);
     
-    }
+
     
     // Tell the UI which view/panel to update here by replacing true with isObservation
     
@@ -525,7 +548,7 @@ Nebula.prototype.handleUpdate = function(room, res,interaction)
 var updateRoom = function(room, update, view) 
 {
    
-   
+    console.log("Inside updateRoom");
     if(view)
     {
     if (update.points) 
@@ -562,14 +585,15 @@ if(!view)
     if (update.points) {
         for (var i=0; i < update.points.length; i++) {
             var point = update.points[i];
-            if (room.points.has(point.id)) {
+            if (room.attribute_points.has(point.id))
+            {
                 if (point.pos)
-                    room.points.get(point.id).pos = point.pos;
+                    room.attribute_points.get(point.id).pos = point.pos;
                 if (point.relevance)
-                    room.points.get(point.id).relevance = point.relevance;
+                    room.attribute_points.get(point.id).relevance = point.relevance;
             }
             else {
-                room.points.set(point.id, point);
+                room.attribute_points.set(point.id, point);
             }
         }
     }
