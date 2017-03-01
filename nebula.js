@@ -317,7 +317,7 @@ function Nebula(io, pipelineAddr) {
                 socket.room.count += 1;
                 console.log(socket.room.count + " people now in room " + roomName);
                 
-                // TODO: Tell the UI which view/panel to update here by replacing true
+                // ??????TODO: Tell the UI which view/panel to update here by replacing true
                 // with isObservation or by repeating this line with false to
                 // send this message to the other UI as well
                 socket.emit('update', sendRoom(socket.room), true);
@@ -343,7 +343,7 @@ function Nebula(io, pipelineAddr) {
         /* Listens for update requests from the client, executing the update
          * and then sending the results to all clients.
          */
-        // TODO: use isObservation to tell the pipeline which data blob to use.
+        // Done/TODO: use isObservation to tell the pipeline which data blob to use.
         // isObservation will be null when a search is done
         socket.on('update', function(data, isObservation) {
             if (socket.room)
@@ -353,7 +353,7 @@ function Nebula(io, pipelineAddr) {
                 if (data.type === "oli")
                 {
                     invoke(socket.room.pipelineSocket, "update", 
-                        {interaction: "oli", type: "classic",view:isObservation ,points: oli(socket.room)});			
+                        {interaction: "oli", type: "classic",view:isObservation ,points: oli(socket.room,isObservation)});			
                 }
                 else 
                 {
@@ -397,13 +397,14 @@ Nebula.prototype.handleAction = function(action, room)
         
         if (room.points.has(action.id)) 
         {
-            console.log("point moved in document view")
+            
             room.points.get(action.id).pos = action.pos;
         }
         else if(room.attribute_points.has(action.id)) 
         {
-            console.log("point moved in attribute view")
+            
             room.attribute_points.get(action.id).pos = action.pos;
+            
         }
         else 
         {
@@ -422,6 +423,7 @@ Nebula.prototype.handleAction = function(action, room)
         {
             console.log("point selected in attribute view")
             room.attribute_points.get(action.id).selected = action.state;
+           
         }
         else {
             console.log("Point not found in room for select: " + action.id);
@@ -430,7 +432,7 @@ Nebula.prototype.handleAction = function(action, room)
 };
 
 /* Handles a message from the pipeline, encapsulated in an RPC-like fashion */
-// TODO: get isObservation from the pipeline to pass it on to the UI to tell the
+// /TODO: get isObservation from the pipeline to pass it on to the UI to tell the
 // UI which view/panel to update. true is stubbed in for now
 Nebula.prototype.handleMessage = function(room, msg) {
     var obj = JSON.parse(msg.toString());
@@ -438,7 +440,7 @@ Nebula.prototype.handleMessage = function(room, msg) {
     
     if (obj.func) {
         if (obj.func === "update") {
-            this.handleUpdate(room, obj.contents,obj.contents.view);
+            this.handleUpdate(room, obj.contents);
         } else if (obj.func === "get") {
             this.io.to(room.name).emit("get", obj.contents, true);
         } else if (obj.func === "set") {
@@ -455,19 +457,22 @@ Nebula.prototype.handleMessage = function(room, msg) {
  */
 // TODO: get isObservation from the pipeline to tell the UI which view/panel
 // should be updated
-Nebula.prototype.handleUpdate = function(room, res,interaction) 
+Nebula.prototype.handleUpdate = function(room, res) 
 {
     console.log("Handle update called");
     
-    //console.log(res.ATTRIBUTE.attr_list)
+    console.log(res.interaction)
+    console.log(res.view)
     
     //similarity_weights
    
-    
+     if((res.interaction=="none") || (res.view))
+      {
+            console.log("(res.interaction==none) || (res.view)")
             var update = {};
             update.points = [];
             if (res.documents) 
-            {
+             {
                 
                 for (var i=0; i < res.documents.length; i++) 
                 {
@@ -477,16 +482,15 @@ Nebula.prototype.handleUpdate = function(room, res,interaction)
                     obj.pos = doc.low_d;
                     obj.type = "observation";
                     for (var j=0; j< res.ATTRIBUTE.similarity_weights.length;j++)
-                    {
+                     {
                         weight = res.ATTRIBUTE.similarity_weights[j]
                         
                         if(weight.id == obj.id)
                         {  
-                           doc_relevance=weight.weight
+                           obj.relevance=weight.weight
                            
                         }  
-                    }
-                    obj.relevance = doc_relevance;
+                     }
                     update.points.push(obj);
                 }
             }
@@ -495,12 +499,15 @@ Nebula.prototype.handleUpdate = function(room, res,interaction)
       {
         update.similarity_weights = res.similarity_weights;
       }
+       console.log(update.similarity_weights)
        updateRoom(room, update,true);
-       console.log("this.io.to(room.name).emit(update, update, true)")
+      // console.log("this.io.to(room.name).emit(update, update, true)")
        this.io.to(room.name).emit('update', update, true);
+    }
     
-    
-  
+  if((res.interaction=="none") || (!res.view))
+      {
+            console.log("(res.interaction==none) || (!res.view)")
             var update_attr = {};
             update_attr.points = [];
             
@@ -518,13 +525,12 @@ Nebula.prototype.handleUpdate = function(room, res,interaction)
                         weight = res.similarity_weights[j]
                          if(weight.id == obj.id)
                         {  
-                           doc_relevance=weight.weight
+                           obj.relevance=weight.weight
                            
                         }
                         
                     }
-                   
-                    obj.relevance = doc_relevance;
+ 
                     update_attr.points.push(obj);
                     
                 }
@@ -532,13 +538,13 @@ Nebula.prototype.handleUpdate = function(room, res,interaction)
    
     if (res.ATTRIBUTE.similarity_weights) 
       {
-        update.similarity_weights = res.ATTRIBUTE.similarity_weights;
+        update_attr.similarity_weights = res.ATTRIBUTE.similarity_weights;
       }
        updateRoom(room, update_attr,false);
-        console.log("this.io.to(room.name).emit(update, update, false)")
+       // console.log("this.io.to(room.name).emit(update, update, false)")
        this.io.to(room.name).emit('update', update_attr, false);
     
-
+}
     
     // Tell the UI which view/panel to update here by replacing true with isObservation
     
@@ -548,7 +554,7 @@ Nebula.prototype.handleUpdate = function(room, res,interaction)
 var updateRoom = function(room, update, view) 
 {
    
-    console.log("Inside updateRoom");
+    //console.log("Inside updateRoom");
     if(view)
     {
     if (update.points) 
@@ -614,16 +620,36 @@ if(!view)
 /* Runs inverse MDS on the points in a room. For inverse MDS,
  * only the selected points are included in the algorithm. 
  */
-var oli = function(room) {
+var oli = function(room,isObservation) 
+{
     var points = {};
-    for (var key of room.points.keys()) {
+    if(isObservation)
+    {
+       for (var key of room.points.keys()) 
+       {
         var point = room.points.get(key);
-        if (point.selected) {
+        if (point.selected) 
+           {
             var p = {};
             p.lowD = point.pos;
             points[key] = p;
+          }
         }
     }
+    if(!isObservation)
+    {
+       for (var key of room.attribute_points.keys()) 
+       {
+        var point = room.attribute_points.get(key);
+        if (point.selected) 
+           {
+            var p = {};
+            p.lowD = point.pos;
+            points[key] = p;
+          }
+        }
+    }
+   
     return points;
 };
 
