@@ -408,6 +408,9 @@ Nebula.prototype.handleMessage = function(room, msg)
 {
  
     var obj = JSON.parse(msg.toString());
+    
+    console.log(obj.contents)
+    
     if (obj.func) 
     {
         if (obj.func === "update") 
