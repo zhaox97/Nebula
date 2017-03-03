@@ -229,7 +229,8 @@ function Nebula(io, pipelineAddr) {
                 room.similarity_weights = new Map();
                 room.observation_similarity_weights = new Map();
                 room.attribute_similarity_weights = new Map();
-
+                room.observation_data = []
+                room.attribute_data = []
                 /* Create a pipeline client for this room */
                 if (!pipelineAddr) {
                     var pythonArgs = ["-u"];
@@ -369,8 +370,14 @@ function Nebula(io, pipelineAddr) {
         // TODO: send isObservation to the pipeline to tell it which data blob
         // to use
         socket.on('get', function(data, isObservation) {
-            if (socket.room) {
-                invoke(socket.room.pipelineSocket, "get", data);
+            if (socket.room) 
+            {
+                console.log("Get data called")
+                console.log(socket.room.name)
+                
+                
+                 //this.io.to(socket.room.name).emit("get", obj.contents, true);
+                //invoke(socket.room.pipelineSocket, "get", data);
             }
         });
 
@@ -416,12 +423,12 @@ Nebula.prototype.handleAction = function(action, room)
     {
         if (room.points.has(action.id)) 
         {
-            console.log("point selected in document view")  
+            
             room.points.get(action.id).selected = action.state;
         }
         else if (room.attribute_points.has(action.id)) 
         {
-            console.log("point selected in attribute view")
+           
             room.attribute_points.get(action.id).selected = action.state;
            
         }
@@ -461,14 +468,13 @@ Nebula.prototype.handleUpdate = function(room, res)
 {
     console.log("Handle update called");
     
-    console.log(res.interaction)
-    console.log(res.view)
+    
     
     //similarity_weights
    
   //   if((res.interaction=="none") || (res.view))
    //   {
-            console.log("(res.interaction==none) || (res.view)")
+           
             var update = {};
             update.points = [];
             if (res.documents) 
@@ -478,7 +484,14 @@ Nebula.prototype.handleUpdate = function(room, res)
                 {
                     var doc = res.documents[i];
                     var obj = {};
+                    var data = {};
+                   
+                    data.id = doc.doc_id
+                    data.value = doc.doc_attributes
+                    room.observation_data.push(data)
+                    
                     obj.id = doc.doc_id;
+                    
                     //if((res.interaction=="none") || (res.view))
                     //{
                        obj.pos = doc.low_d;
@@ -504,12 +517,9 @@ Nebula.prototype.handleUpdate = function(room, res)
       {
         update.similarity_weights = res.similarity_weights;
       }
-       console.log("##################################")
-       console.log(update.points)
+      
        updateRoom(room, update,true);
-       console.log("*********************************")
-       console.log(update.points)
-       console.log("##################################")
+       
       // console.log("this.io.to(room.name).emit(update, update, true)")
       
        this.io.to(room.name).emit('update', update, true);
@@ -517,7 +527,7 @@ Nebula.prototype.handleUpdate = function(room, res)
     
   //if((res.interaction=="none") || (!res.view))
     //  {
-            console.log("(res.interaction==none) || (!res.view)")
+           
             var update_attr = {};
             update_attr.points = [];
             
@@ -527,7 +537,11 @@ Nebula.prototype.handleUpdate = function(room, res)
                 {
                     var attr = res.ATTRIBUTE.attr_list[i];
                     var obj = {};
+                    var data_attr = {}
                     obj.id = attr.attr_id;
+                    data_attr.id = attr.attr_id
+                    data_attr.value = attr.attribute_docs
+                    room.attribute_data.push(data_attr)
                    // if((res.interaction=="none") || (!res.view))
                    // {
                         obj.pos = attr.low_d;
@@ -554,13 +568,11 @@ Nebula.prototype.handleUpdate = function(room, res)
       {
         update_attr.similarity_weights = res.ATTRIBUTE.similarity_weights;
       }
-       console.log("************************************")
-       console.log( update_attr.points)
+     //  console.log("############################")
+      // console.log("############################")
+      console.log(room.attribute_data)
        updateRoom(room, update_attr,false);
-       console.log("####################################")
-       console.log( update_attr.points)
-       console.log("************************************")
-       // console.log("this.io.to(room.name).emit(update, update, false)")
+     
        this.io.to(room.name).emit('update', update_attr, false);
     
 //}
