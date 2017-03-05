@@ -23,7 +23,7 @@ var pipelines = {
      },    
      sirius: {
         file: "pipelines/TwoView.py",
-        args: ["data/Animal_Data_small.csv",
+        args: ["data/Animal_Data_study.csv",
             "data/crescent_raw"]
      },
      twitter: {
@@ -374,7 +374,36 @@ function Nebula(io, pipelineAddr) {
             {
                 console.log("Get data called")
                 console.log(socket.room.name)
+                console.log("Data =")
+                console.log(data)
                 
+                
+                
+                if(isObservation)
+                {
+                   /*var observation_data = socket.room.observation_data
+                   for(var i in  observation_data)
+                   {
+                    if (observation_data[i].id == data.id )
+                      {
+                        socket.emit("get",observation_data[i] , isObservation); 
+                      }
+                   }*/
+                   invoke(socket.room.pipelineSocket, "get", data)
+                } 
+                if(!isObservation)
+                {
+                   var attribute_data = socket.room.attribute_data
+                   for(var i in   attribute_data)
+                   {
+                    if ( attribute_data[i].id == data.id )
+                      {
+                        socket.emit("get", attribute_data[i] , isObservation); 
+                      }
+                   }
+                }  
+               // this.io.to(socket.room.name).emit("get", , isObservation);   
+               
                 
                  //this.io.to(socket.room.name).emit("get", obj.contents, true);
                 //invoke(socket.room.pipelineSocket, "get", data);
@@ -486,7 +515,9 @@ Nebula.prototype.handleUpdate = function(room, res)
                     var obj = {};
                     var data = {};
                    
+                    data.type='raw'
                     data.id = doc.doc_id
+                    
                     data.value = doc.doc_attributes
                     room.observation_data.push(data)
                     
@@ -517,7 +548,7 @@ Nebula.prototype.handleUpdate = function(room, res)
       {
         update.similarity_weights = res.similarity_weights;
       }
-      
+      // console.log(room.observation_data)
        updateRoom(room, update,true);
        
       // console.log("this.io.to(room.name).emit(update, update, true)")
@@ -538,10 +569,12 @@ Nebula.prototype.handleUpdate = function(room, res)
                     var attr = res.ATTRIBUTE.attr_list[i];
                     var obj = {};
                     var data_attr = {}
-                    obj.id = attr.attr_id;
+                    
+                    data_attr.type ='raw'
                     data_attr.id = attr.attr_id
                     data_attr.value = attr.attribute_docs
                     room.attribute_data.push(data_attr)
+                    obj.id = attr.attr_id;
                    // if((res.interaction=="none") || (!res.view))
                    // {
                         obj.pos = attr.low_d;
@@ -568,9 +601,8 @@ Nebula.prototype.handleUpdate = function(room, res)
       {
         update_attr.similarity_weights = res.ATTRIBUTE.similarity_weights;
       }
-     //  console.log("############################")
-      // console.log("############################")
-      console.log(room.attribute_data)
+     
+       //console.log(room.attribute_data)
        updateRoom(room, update_attr,false);
      
        this.io.to(room.name).emit('update', update_attr, false);
