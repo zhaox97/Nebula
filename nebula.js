@@ -517,7 +517,7 @@ Nebula.prototype.handleUpdate = function(room, res)
                    
                     data.type='raw'
                     data.id = doc.doc_id
-                    
+                    console.log(data.id)
                     data.value = doc.doc_attributes
                     room.observation_data.push(data)
                     
@@ -526,7 +526,7 @@ Nebula.prototype.handleUpdate = function(room, res)
                     //if((res.interaction=="none") || (res.view))
                     //{
                        obj.pos = doc.low_d;
-                    
+                       console.log(doc.low_d)
                     //}
                     
                     obj.type = "observation";
@@ -572,6 +572,7 @@ Nebula.prototype.handleUpdate = function(room, res)
                     
                     data_attr.type ='raw'
                     data_attr.id = attr.attr_id
+                    
                     data_attr.value = attr.attribute_docs
                     room.attribute_data.push(data_attr)
                     obj.id = attr.attr_id;
@@ -604,7 +605,6 @@ Nebula.prototype.handleUpdate = function(room, res)
      
        //console.log(room.attribute_data)
        updateRoom(room, update_attr,false);
-     
        this.io.to(room.name).emit('update', update_attr, false);
     
 //}
