@@ -349,8 +349,8 @@ function Nebula(io, pipelineAddr) {
         socket.on('update', function(data, isObservation) {
             if (socket.room)
             {
-                console.log(data)
-                console.log(isObservation)
+              
+                
                 if (data.type === "oli")
                 {
                     invoke(socket.room.pipelineSocket, "update", 
@@ -372,23 +372,10 @@ function Nebula(io, pipelineAddr) {
         socket.on('get', function(data, isObservation) {
             if (socket.room) 
             {
-                console.log("Get data called")
-                console.log(socket.room.name)
-                console.log("Data =")
-                console.log(data)
-                
                 
                 
                 if(isObservation)
                 {
-                   /*var observation_data = socket.room.observation_data
-                   for(var i in  observation_data)
-                   {
-                    if (observation_data[i].id == data.id )
-                      {
-                        socket.emit("get",observation_data[i] , isObservation); 
-                      }
-                   }*/
                    invoke(socket.room.pipelineSocket, "get", data)
                 } 
                 if(!isObservation)
@@ -517,7 +504,6 @@ Nebula.prototype.handleUpdate = function(room, res)
                    
                     data.type='raw'
                     data.id = doc.doc_id
-                    console.log(data.id)
                     data.value = doc.doc_attributes
                     room.observation_data.push(data)
                     
@@ -526,7 +512,7 @@ Nebula.prototype.handleUpdate = function(room, res)
                     //if((res.interaction=="none") || (res.view))
                     //{
                        obj.pos = doc.low_d;
-                       console.log(doc.low_d)
+                      
                     //}
                     
                     obj.type = "observation";
