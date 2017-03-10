@@ -20,6 +20,11 @@ var pipelines = {
         file: "pipelines/cosmos.py",
         args: ["data/crescent tfidf.csv",
             "data/crescent_raw"]
+     },    
+     sirius: {
+        file: "pipelines/TwoView.py",
+        args: ["data/Animal_Data_study.csv",
+            "data/crescent_raw"]
      },
      twitter: {
         file: "pipelines/twitter.py",
@@ -219,8 +224,13 @@ function Nebula(io, pipelineAddr) {
                 room.name = roomName;
                 room.count = 1;
                 room.points = new Map();
+                room.observation_points = new Map();
+                room.attribute_points = new Map();
                 room.similarity_weights = new Map();
-
+                room.observation_similarity_weights = new Map();
+                room.attribute_similarity_weights = new Map();
+                room.observation_data = []
+                room.attribute_data = []
                 /* Create a pipeline client for this room */
                 if (!pipelineAddr) {
                     var pythonArgs = ["-u"];
@@ -301,11 +311,17 @@ function Nebula(io, pipelineAddr) {
                 self.rooms[roomName] = socket.room = room;
                 invoke(room.pipelineSocket, "reset");
             }
-            else {
+            else 
+            {
+                //Join an existing room
                 socket.room = self.rooms[roomName];
                 socket.room.count += 1;
                 console.log(socket.room.count + " people now in room " + roomName);
-                socket.emit('update', sendRoom(socket.room));
+                
+                // ??????TODO: Tell the UI which view/panel to update here by replacing true
+                // with isObservation or by repeating this line with false to
+                // send this message to the other UI as well
+                socket.emit('update', sendRoom(socket.room), true);
             }
             
             // Reset the csvFilePath to null for future UIs
@@ -315,23 +331,33 @@ function Nebula(io, pipelineAddr) {
         /* Listens for actions from the clients, tracking them and then
          * broadcasting them to all other clients within the room.
          */
-        socket.on('action', function(data) {
+        // DONE/TODO: send isObservation to the handleAction function to tell the
+        // pipeline which data blob to use
+        socket.on('action', function(data, isObservation) 
+        {
             if (socket.room) {
                 self.handleAction(data, socket.room);
-                socket.broadcast.to(socket.roomName).emit('action', data);
+                socket.broadcast.to(socket.roomName).emit('action', data, isObservation);
             }
         });
 
         /* Listens for update requests from the client, executing the update
          * and then sending the results to all clients.
          */
-        socket.on('update', function(data) {
-            if (socket.room) {
-                if (data.type === "oli") {
+        // Done/TODO: use isObservation to tell the pipeline which data blob to use.
+        // isObservation will be null when a search is done
+        socket.on('update', function(data, isObservation) {
+            if (socket.room)
+            {
+              
+                
+                if (data.type === "oli")
+                {
                     invoke(socket.room.pipelineSocket, "update", 
-                        {interaction: "oli", type: "classic", points: oli(socket.room)});			
+                        {interaction: "oli", type: "classic",view:isObservation ,points: oli(socket.room,isObservation)});			
                 }
-                else {
+                else 
+                {
                     data.interaction = data.type;
                     invoke(socket.room.pipelineSocket, "update", data);
                 }
@@ -341,9 +367,33 @@ function Nebula(io, pipelineAddr) {
         /* Listens for get requests to get information about the underlying data,
          * such as the original text of the document or the type.
          */
-        socket.on('get', function(data) {
-            if (socket.room) {
-                invoke(socket.room.pipelineSocket, "get", data);
+        // TODO: send isObservation to the pipeline to tell it which data blob
+        // to use
+        socket.on('get', function(data, isObservation) {
+            if (socket.room) 
+            {
+                
+                
+                if(isObservation)
+                {
+                   invoke(socket.room.pipelineSocket, "get", data)
+                } 
+                if(!isObservation)
+                {
+                   var attribute_data = socket.room.attribute_data
+                   for(var i in   attribute_data)
+                   {
+                    if ( attribute_data[i].id == data.id )
+                      {
+                        socket.emit("get", attribute_data[i] , isObservation); 
+                      }
+                   }
+                }  
+               // this.io.to(socket.room.name).emit("get", , isObservation);   
+               
+                
+                 //this.io.to(socket.room.name).emit("get", obj.contents, true);
+                //invoke(socket.room.pipelineSocket, "get", data);
             }
         });
 
@@ -352,6 +402,7 @@ function Nebula(io, pipelineAddr) {
             if (socket.room) {
                 invoke(socket.room.pipelineSocket, "reset");
                 socket.room.points = new Map();
+                
             }
         });
     });
@@ -360,18 +411,42 @@ function Nebula(io, pipelineAddr) {
 /* Handles an action received by the client, updating the state of the room
  * as necessary.
  */
-Nebula.prototype.handleAction = function(action, room) {
-    if (action.type === "move") {
-        if (room.points.has(action.id)) {
+
+Nebula.prototype.handleAction = function(action, room) 
+{
+    if (action.type === "move") 
+    {
+        
+        
+        if (room.points.has(action.id)) 
+        {
+            
             room.points.get(action.id).pos = action.pos;
         }
-        else {
+        else if(room.attribute_points.has(action.id)) 
+        {
+            
+            room.attribute_points.get(action.id).pos = action.pos;
+            
+        }
+        else 
+        {
             console.log("Point not found in room for move: " + action.id);
+   
         }
     }
-    else if (action.type === "select") {
-        if (room.points.has(action.id)) {
+    else if (action.type === "select") 
+    {
+        if (room.points.has(action.id)) 
+        {
+            
             room.points.get(action.id).selected = action.state;
+        }
+        else if (room.attribute_points.has(action.id)) 
+        {
+           
+            room.attribute_points.get(action.id).selected = action.state;
+           
         }
         else {
             console.log("Point not found in room for select: " + action.id);
@@ -380,13 +455,17 @@ Nebula.prototype.handleAction = function(action, room) {
 };
 
 /* Handles a message from the pipeline, encapsulated in an RPC-like fashion */
+// /TODO: get isObservation from the pipeline to pass it on to the UI to tell the
+// UI which view/panel to update. true is stubbed in for now
 Nebula.prototype.handleMessage = function(room, msg) {
     var obj = JSON.parse(msg.toString());
+    
+    
     if (obj.func) {
         if (obj.func === "update") {
             this.handleUpdate(room, obj.contents);
         } else if (obj.func === "get") {
-            this.io.to(room.name).emit("get", obj.contents);
+            this.io.to(room.name).emit("get", obj.contents, true);
         } else if (obj.func === "set") {
             this.io.to(room.name).emit("set", obj.contents);
         } else if (obj.func === "reset") {
@@ -399,32 +478,137 @@ Nebula.prototype.handleMessage = function(room, msg) {
 /* Handles updates received by the client, running the necessary processes
  * and updating the room as necessary.
  */
-Nebula.prototype.handleUpdate = function(room, res) {
+// TODO: get isObservation from the pipeline to tell the UI which view/panel
+// should be updated
+Nebula.prototype.handleUpdate = function(room, res) 
+{
     console.log("Handle update called");
-
-    var update = {};
-    update.points = [];
-    if (res.documents) {
-        for (var i=0; i < res.documents.length; i++) {
-            var doc = res.documents[i];
-            var obj = {};
-            obj.id = doc.doc_id;
-            obj.pos = doc.low_d;
-            obj.type = doc.type;
-            obj.relevance = doc.doc_relevance;
-            update.points.push(obj);
-        }
-    }
-    if (res.similarity_weights) {
+    
+    
+    
+    //similarity_weights
+   
+  //   if((res.interaction=="none") || (res.view))
+   //   {
+           
+            var update = {};
+            update.points = [];
+            if (res.documents) 
+             {
+                
+                for (var i=0; i < res.documents.length; i++) 
+                {
+                    var doc = res.documents[i];
+                    var obj = {};
+                    var data = {};
+                   
+                    data.type='raw'
+                    data.id = doc.doc_id
+                    data.value = doc.doc_attributes
+                    room.observation_data.push(data)
+                    
+                    obj.id = doc.doc_id;
+                    
+                    //if((res.interaction=="none") || (res.view))
+                    //{
+                       obj.pos = doc.low_d;
+                      
+                    //}
+                    
+                    obj.type = "observation";
+                    for (var j=0; j< res.ATTRIBUTE.similarity_weights.length;j++)
+                     {
+                        weight = res.ATTRIBUTE.similarity_weights[j]
+                        
+                        if(weight.id == obj.id)
+                        {  
+                           obj.relevance=weight.weight
+                           
+                        }  
+                     }
+                    update.points.push(obj);
+                }
+            }
+   
+      if (res.similarity_weights) 
+      {
         update.similarity_weights = res.similarity_weights;
-    }
-    updateRoom(room, update);
-    this.io.to(room.name).emit('update', update);
+      }
+      // console.log(room.observation_data)
+       updateRoom(room, update,true);
+       
+      // console.log("this.io.to(room.name).emit(update, update, true)")
+      
+       this.io.to(room.name).emit('update', update, true);
+ //   }
+    
+  //if((res.interaction=="none") || (!res.view))
+    //  {
+           
+            var update_attr = {};
+            update_attr.points = [];
+            
+            if (res.ATTRIBUTE.attr_list) 
+            {
+                for (var i=0; i < res.ATTRIBUTE.attr_list.length; i++) 
+                {
+                    var attr = res.ATTRIBUTE.attr_list[i];
+                    var obj = {};
+                    var data_attr = {}
+                    
+                    data_attr.type ='raw'
+                    data_attr.id = attr.attr_id
+                    
+                    data_attr.value = attr.attribute_docs
+                    room.attribute_data.push(data_attr)
+                    obj.id = attr.attr_id;
+                   // if((res.interaction=="none") || (!res.view))
+                   // {
+                        obj.pos = attr.low_d;
+                   // }
+                    
+                    obj.type = "attribute";
+                    for (var j=0; j< res.similarity_weights.length;j++)
+                    {
+                        weight = res.similarity_weights[j]
+                         if(weight.id == obj.id)
+                        {  
+                           obj.relevance=weight.weight
+                           
+                        }
+                        
+                    }
+ 
+                    update_attr.points.push(obj);
+                    
+                }
+            }
+   
+    if (res.ATTRIBUTE.similarity_weights) 
+      {
+        update_attr.similarity_weights = res.ATTRIBUTE.similarity_weights;
+      }
+     
+       //console.log(room.attribute_data)
+       updateRoom(room, update_attr,false);
+       this.io.to(room.name).emit('update', update_attr, false);
+    
+//}
+    
+    // Tell the UI which view/panel to update here by replacing true with isObservation
+    
 };
 
 /* Updates our state for each room upon an update from the pipeline */
-var updateRoom = function(room, update) {
-    if (update.points) {
+var updateRoom = function(room, update, view) 
+{
+   
+    //console.log("Inside updateRoom");
+    if(view)
+    {
+    if (update.points) 
+    {
+        
         for (var i=0; i < update.points.length; i++) {
             var point = update.points[i];
             if (room.points.has(point.id)) {
@@ -449,21 +633,72 @@ var updateRoom = function(room, update) {
             }
         }
     }
+}
+
+if(!view)
+    {
+    if (update.points) {
+        for (var i=0; i < update.points.length; i++) {
+            var point = update.points[i];
+            if (room.attribute_points.has(point.id))
+            {
+                if (point.pos)
+                    room.attribute_points.get(point.id).pos = point.pos;
+                if (point.relevance)
+                    room.attribute_points.get(point.id).relevance = point.relevance;
+            }
+            else {
+                room.attribute_points.set(point.id, point);
+            }
+        }
+    }
+    if (update.similarity_weights) {
+        for (var i=0; i < update.similarity_weights.length; i++) {
+            var weight = update.similarity_weights[i];
+            if (room.attribute_similarity_weights.has(weight.id)) {
+                room.attribute_similarity_weights.get(weight.id).weight = weight.weight;
+            }
+            else {
+                room.attribute_similarity_weights.set(weight.id, weight);
+            }
+        }
+    }
+}
 };
 
 /* Runs inverse MDS on the points in a room. For inverse MDS,
  * only the selected points are included in the algorithm. 
  */
-var oli = function(room) {
+var oli = function(room,isObservation) 
+{
     var points = {};
-    for (var key of room.points.keys()) {
+    if(isObservation)
+    {
+       for (var key of room.points.keys()) 
+       {
         var point = room.points.get(key);
-        if (point.selected) {
+        if (point.selected) 
+           {
             var p = {};
             p.lowD = point.pos;
             points[key] = p;
+          }
         }
     }
+    if(!isObservation)
+    {
+       for (var key of room.attribute_points.keys()) 
+       {
+        var point = room.attribute_points.get(key);
+        if (point.selected) 
+           {
+            var p = {};
+            p.lowD = point.pos;
+            points[key] = p;
+          }
+        }
+    }
+   
     return points;
 };
 
@@ -476,7 +711,8 @@ var sendRoom = function(room) {
 };
 
 /* Sends a message to a pipeline, enscapsulating it in an RPC-like fashion */
-var invoke = function(socket, func, data) {
+var invoke = function(socket, func, data)
+{
     var obj = {"func": func, "contents": data};
     socket.send(JSON.stringify(obj));
 };
