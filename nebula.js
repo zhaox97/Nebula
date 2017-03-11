@@ -23,7 +23,7 @@ var pipelines = {
      },    
      sirius: {
         file: "pipelines/TwoView.py",
-        args: ["data/Animal_Data_study.csv",
+        args: ["data/Animal_Data_small.csv",
             "data/crescent_raw"]
      },
      twitter: {
