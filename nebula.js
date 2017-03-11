@@ -483,8 +483,9 @@ Nebula.prototype.handleMessage = function(room, msg) {
 Nebula.prototype.handleUpdate = function(room, res) 
 {
     console.log("Handle update called");
-    
-    
+    console.log("************************")
+    console.log(res.prototype)
+    console.log("************************")
     
     //similarity_weights
    
@@ -516,16 +517,26 @@ Nebula.prototype.handleUpdate = function(room, res)
                     //}
                     
                     obj.type = "observation";
-                    for (var j=0; j< res.ATTRIBUTE.similarity_weights.length;j++)
-                     {
-                        weight = res.ATTRIBUTE.similarity_weights[j]
+                    if(res.prototype==1)
+                    {
+                        for (var j=0; j< res.ATTRIBUTE.similarity_weights.length;j++)
+                         {
+                             weight = res.ATTRIBUTE.similarity_weights[j]
                         
-                        if(weight.id == obj.id)
-                        {  
-                           obj.relevance=weight.weight
+                              if(weight.id == obj.id)
+                              {  
+                                 obj.relevance=weight.weight
                            
-                        }  
+                              }  
+                         }
                      }
+                     if(res.prototype==2)
+                    {
+                      console.log(doc.doc_id)
+                      console.log(doc.doc_relevance) 
+                      obj.relevance= doc.doc_relevance
+                    }
+                     
                     update.points.push(obj);
                 }
             }
@@ -568,17 +579,25 @@ Nebula.prototype.handleUpdate = function(room, res)
                    // }
                     
                     obj.type = "attribute";
-                    for (var j=0; j< res.similarity_weights.length;j++)
+                    if(res.prototype==1)
                     {
-                        weight = res.similarity_weights[j]
-                         if(weight.id == obj.id)
-                        {  
-                           obj.relevance=weight.weight
+                        for (var j=0; j< res.similarity_weights.length;j++)
+                        {
+                            weight = res.similarity_weights[j]
+                            if(weight.id == obj.id)
+                            {  
+                               obj.relevance=weight.weight
                            
-                        }
+                            }
                         
+                         }
+                     }
+                     if(res.prototype==2)
+                    {
+                      console.log(attr.attr_id)
+                      console.log(attr.attr_relevance) 
+                      obj.relevance= attr.attr_relevance
                     }
- 
                     update_attr.points.push(obj);
                     
                 }
