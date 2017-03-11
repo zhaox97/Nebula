@@ -16,6 +16,8 @@ def main():
     
     pipeline = nebula.pipeline.Pipeline()
     
+    #Create an ImportanceModel object from the nebula.model module, starts out empty
+    relevance_model = nebula.model.ImportanceModel()
    
     # Create a SimilarityModel object from the nebula.model module, which does 
     # forward and inverse MDS
@@ -29,6 +31,7 @@ def main():
     connector = nebula.connector.ZeroMQConnector(port=int(sys.argv[1]))
     
     
+    pipeline.append_model(relevance_model)
     pipeline.append_model(similarity_model)
     
     # Note: a pipeline contains exactly one data controller
