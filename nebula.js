@@ -483,10 +483,7 @@ Nebula.prototype.handleMessage = function(room, msg) {
 Nebula.prototype.handleUpdate = function(room, res) 
 {
     console.log("Handle update called");
-    console.log("************************")
-    console.log(res.prototype)
-    console.log("************************")
-    
+   
     //similarity_weights
    
   //   if((res.interaction=="none") || (res.view))
@@ -532,8 +529,7 @@ Nebula.prototype.handleUpdate = function(room, res)
                      }
                      if(res.prototype==2)
                     {
-                      console.log(doc.doc_id)
-                      console.log(doc.doc_relevance) 
+                     
                       obj.relevance= doc.doc_relevance
                     }
                      
@@ -594,8 +590,7 @@ Nebula.prototype.handleUpdate = function(room, res)
                      }
                      if(res.prototype==2)
                     {
-                      console.log(attr.attr_id)
-                      console.log(attr.attr_relevance) 
+                      
                       obj.relevance= attr.attr_relevance
                     }
                     update_attr.points.push(obj);
