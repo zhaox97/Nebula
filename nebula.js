@@ -514,25 +514,22 @@ Nebula.prototype.handleUpdate = function(room, res)
                     //}
                     
                     obj.type = "observation";
-                    if(res.prototype==1)
-                    {
-                        for (var j=0; j< res.ATTRIBUTE.similarity_weights.length;j++)
+                    if ( res.ATTRIBUTE.similarity_weights)
+                    { 
+                      for (var j=0; j< res.ATTRIBUTE.similarity_weights.length;j++)
                          {
                              weight = res.ATTRIBUTE.similarity_weights[j]
                         
                               if(weight.id == obj.id)
                               {  
+                                 
                                  obj.relevance=weight.weight
+                                 
                            
                               }  
                          }
-                     }
-                     if(res.prototype==2)
-                    {
-                     
-                      obj.relevance= doc.doc_relevance
                     }
-                     
+    
                     update.points.push(obj);
                 }
             }
@@ -575,7 +572,7 @@ Nebula.prototype.handleUpdate = function(room, res)
                    // }
                     
                     obj.type = "attribute";
-                    if(res.prototype==1)
+                    if(res.similarity_weights)
                     {
                         for (var j=0; j< res.similarity_weights.length;j++)
                         {
@@ -583,16 +580,12 @@ Nebula.prototype.handleUpdate = function(room, res)
                             if(weight.id == obj.id)
                             {  
                                obj.relevance=weight.weight
+                               
                            
                             }
                         
                          }
                      }
-                     if(res.prototype==2)
-                    {
-                      
-                      obj.relevance= attr.attr_relevance
-                    }
                     update_attr.points.push(obj);
                     
                 }
@@ -630,6 +623,7 @@ var updateRoom = function(room, update, view)
                     room.points.get(point.id).pos = point.pos;
                 if (point.relevance)
                     room.points.get(point.id).relevance = point.relevance;
+                
             }
             else {
                 room.points.set(point.id, point);
@@ -660,6 +654,7 @@ if(!view)
                     room.attribute_points.get(point.id).pos = point.pos;
                 if (point.relevance)
                     room.attribute_points.get(point.id).relevance = point.relevance;
+                  
             }
             else {
                 room.attribute_points.set(point.id, point);
