@@ -354,7 +354,7 @@ function Nebula(io, pipelineAddr) {
                 if (data.type === "oli")
                 {
                     invoke(socket.room.pipelineSocket, "update", 
-                        {interaction: "oli", type: "classic",view:isObservation ,points: oli(socket.room,isObservation), prototype: 2});			
+                        {interaction: "oli", type: "classic",view:isObservation ,points: oli(socket.room,isObservation), prototype: 1});			
                 }
                 else 
                 {
@@ -470,7 +470,7 @@ Nebula.prototype.handleMessage = function(room, msg) {
             this.io.to(room.name).emit("set", obj.contents);
         } else if (obj.func === "reset") {
             this.io.to(room.name).emit("reset");
-            invoke(room.pipelineSocket, "update", {interaction: "none",  prototype: 2});
+            invoke(room.pipelineSocket, "update", {interaction: "none",  prototype: 1});
         }
     }
 };
