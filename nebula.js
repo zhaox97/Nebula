@@ -321,11 +321,13 @@ function Nebula(io, pipelineAddr)
         
         socket.on('action', function(data) 
         {
-           
+            console.log("Action Data")
+            console.log(data)
             if (socket.room) 
             {
                 self.handleAction(data, socket.room);
                 //emit update actions to other rooms
+                console.log("socket.broadcast.to")
                 socket.broadcast.to(socket.roomName).emit('action', data);
             }
         });
@@ -409,7 +411,7 @@ Nebula.prototype.handleMessage = function(room, msg)
  
     var obj = JSON.parse(msg.toString());
     
-    console.log(obj.contents)
+    
     
     if (obj.func) 
     {
