@@ -321,13 +321,11 @@ function Nebula(io, pipelineAddr)
         
         socket.on('action', function(data) 
         {
-            console.log("Action Data")
-            console.log(data)
+           
             if (socket.room) 
             {
                 self.handleAction(data, socket.room);
-                //emit update actions to other rooms
-                console.log("socket.broadcast.to")
+                //emit update actions to other rooms  
                 socket.broadcast.to(socket.roomName).emit('action', data);
             }
         });
@@ -542,6 +540,7 @@ var oli = function(room)
             points[key] = p;
         }
     }
+   
     return points;
 };
 
