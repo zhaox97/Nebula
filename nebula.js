@@ -14,7 +14,7 @@ module.exports = Nebula;
 var pipelines = {
     andromeda: { 
         file: "pipelines/andromeda.py",
-        args: ["data/Animal_Data_study.csv"]
+        args: ["data/Andromeda_ML_Ex.csv"]
      },
      cosmos: {
         file: "pipelines/cosmos.py",
@@ -162,6 +162,150 @@ function Nebula(io, pipelineAddr) {
             if (errors.length == 0) {
                 socket.emit("csvDataReady");
             }                        
+        });
+        
+        socket.on("changeData", function(data, room, pipeline, args) {
+            // Create the csvFilePath
+            csvFilePath = "data/" + room + "_data.csv";
+
+            // Set exec to be a function that calls the command line
+            var exec = require('child_process').exec;
+
+            // Initialize errors to be an empty array to capture any errors
+            var errors = [];
+            // Create the command to use on the command line
+            var command = "echo \"" + data + "\" > " + csvFilePath; 
+            
+            // Execute the command and cature any errors or printouts
+            exec(command, "-e",
+                function (error, stdout, stderr) {
+                    // Print out any stdout captured to the console
+                    if (stdout) {
+                        console.log('stdout: ' + stdout);
+                    }
+                    
+                    // Put any errors in the errors array
+                    if (error) {
+                        errors.push(error);
+                    }
+                    
+                    // Put any errors in the errors array and print them out to
+                    // the console
+                    if (stderr) {
+                        console.log('stderr: ' + stderr);
+                        errors.push(error);
+                    }
+                    
+                    // Only print out non-null errors
+                    if (error !== null) {
+                         console.log('exec error: ' + error);
+                    }
+                });
+                
+            // Only emit the "csvDataReady" message to the client if no errors
+            // were encountered while attempting to create the custom CSV file
+            if (errors.length == 0) {
+                socket.emit("csvDataReady");
+            }
+            
+            // Kill the Python script associated with the empty room
+            var name = socket.roomName;
+            var roomData = self.rooms[name];
+            roomData.pipelineInstance.stdin.pause();
+            roomData.pipelineInstance.kill('SIGKILL');
+            
+            
+            
+//            socket.emit("newDataReady");
+
+            var pipelineArgsCopy = [];
+
+            var room = {};
+            room.name = name;
+            room.count = self.rooms[name].count;
+            room.points = new Map();
+            room.similarity_weights = new Map();
+
+            /* Create a pipeline client for this room */
+            var pythonArgs = ["-u"];
+            if (pipeline in pipelines) {
+                if (pipelines[pipeline].args.length > 0) {
+
+                    // Iterate through the pipeline's arguments. If there
+                    // is a CSV file defined and csvFilePath is not null,
+                    // put the csvFilePath in the pipelineArgsCopy.
+                    // Otherwise, just copy the pipeline arg into
+                    // pipelineArgsCopy. This supports both a custom CSV
+                    // file and a default CSV file
+                    var pipelineArgs = pipelines[pipeline].args;
+                    var i;
+                    for (i = 0; i < pipelineArgs.length; i++) {
+                        if (pipelineArgs[i].indexOf(".csv") > -1 && csvFilePath) {
+                            pipelineArgsCopy.push(csvFilePath);
+                        }
+                        else {
+                            pipelineArgsCopy.push(pipelineArgs[i]);
+                        }
+                    }
+                }
+                pythonArgs.push(pipelines[pipeline].file);
+                pythonArgs.push(port.toString());
+                pythonArgs = pythonArgs.concat(pipelineArgsCopy);
+            }
+            else {
+                pythonArgs.push(pipelines.cosmos.file);
+                pythonArgs.push(port.toString());
+                pythonArgs = pythonArgs.concat(pipelines.cosmos.args);
+            }
+            for (var key in args) {
+                if (args.hasOwnProperty(key)) {
+                    pythonArgs.push("--" + key);
+                    pythonArgs.push(args[key]);
+                }
+            }
+            console.log(pythonArgs);
+
+            var pipelineInstance = spawn("python2.7", pythonArgs, {stdout: "inherit"});
+
+            pipelineInstance.on("error", function(err) {
+                console.log("python2.7.exe not found. Trying python.exe");
+                pipelineInstance = spawn("python", pythonArgs, {stdout: "inherit"});
+
+                pipelineInstance.stdout.on("data", function(data) {
+                    console.log("Pipeline: " + data.toString());
+                });
+                pipelineInstance.stderr.on("data", function(data) {
+                    console.log("Pipeline error: " + data.toString());
+                });
+            });
+
+            pipelineInstance.stdout.on("data", function(data) {
+                console.log("Pipeline: " + data.toString());
+            });
+            pipelineInstance.stderr.on("data", function(data) {
+                console.log("Pipeline error: " + data.toString());
+            });
+
+            room.pipelineInstance = pipelineInstance;
+
+            /* Connect to the pipeline */
+            pipelineAddr = pipelineAddr || "tcp://127.0.0.1:" + port.toString();
+            room.pipelineSocket = zmq.socket('pair');
+            room.pipelineSocket.connect(pipelineAddr);
+
+            pipelineAddr = null;
+            port += 1;
+
+            /* Listens for messages from the pipeline */
+            room.pipelineSocket.on('message', function (msg) {
+                    self.handleMessage(room, msg);
+            });
+
+            self.rooms[name] = socket.room = room;
+            invoke(room.pipelineSocket, "reset");
+            
+            // Reset the csvFilePath to null for future UIs
+            csvFilePath = null;
         });
         
         socket.on("setCSV", function(csvName) {
