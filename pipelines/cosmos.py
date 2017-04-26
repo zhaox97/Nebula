@@ -2,6 +2,7 @@ import nebula.connector
 import nebula.data
 import nebula.model
 import nebula.pipeline
+import nebula.tf
 
 import sys
 import zerorpc
@@ -16,6 +17,9 @@ def main():
     
     # Create a Pipeline object from the nebula.pipeline module
     pipeline = nebula.pipeline.Pipeline()
+
+    #tfModel = nebula.tf.TFModel()
+    topic_model = nebula.model.TopicModel()
     
     # Create an ActiveSetModel object from the nebula.model module, starts out empty
     relevance_model = nebula.model.ActiveSetModel()
@@ -42,6 +46,8 @@ def main():
     # The order that the models are
     # added is the order in which they are executed in the forward pipeline.
     # IMPORTANT: They are executed in reverse order in the inverse pipeline
+    #pipeline.append_model(tfModel)
+    pipeline.append_model(topic_model)
     pipeline.append_model(relevance_model)
     pipeline.append_model(similarity_model)
     
