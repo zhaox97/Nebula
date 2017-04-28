@@ -30,16 +30,18 @@ var pipelines = {
         args: ["data/crescent tfidf.csv",
             "data/crescent_raw"]
      },
+     BigDataCosmos: {
+        file: "pipelines/BigDataCosmos.py",
+        args: []
+     },
      elasticsearch: {
         file: "pipelines/espipeline.py",
         args: []
      }
 };
 
-var port = 5555;
 
-var nextSessionNumber = 0;
-var usedSessionNumbers = [];
+var port = 5555;
 
 /* Nebula class constructor */
 function Nebula(io, pipelineAddr) {
@@ -72,41 +74,14 @@ function Nebula(io, pipelineAddr) {
          */
         socket.on('disconnect', function() {
             var name = socket.roomName;
-            var roomData = self.rooms[name];
-            console.log('Client disconnecting from ' + socket.roomName);
+            console.log('I am disconnected  from ' + socket.roomName);
 
-            if (roomData && roomData.count) {
-                console.log("Count of room: " + roomData.count);
-                roomData.count -= 1;
-                if (roomData.count <= 0) {
-                    console.log("Room " + name + " now empty");
-                    
-                    // Get the session number of the current session
-                    var sessionNumber;
-                    var index = name.length - 1;
-                    var sessionNumberFound = false;
-                    while (!sessionNumberFound && index >= 0) {
-                        var number = Number(name.substring(index, name.length));
-                        if (Number.isNaN(number)) {
-                            sessionNumber = Number(name.substring(index+1, name.length))
-                            sessionNumberFound = true;
-                        }
-                        index--;
-                    }
-                    
-                    // Remove the room number associated with this room from
-                    // usedSessionNumbers
-                    var sessionNumIndex = usedSessionNumbers.indexOf(sessionNumber);
-                    var usedSessionNums1 = usedSessionNumbers.slice(0, sessionNumIndex);
-                    var usedSessionNums2 = usedSessionNumbers.slice(sessionNumIndex+1, usedSessionNumbers.length);
-                    usedSessionNumbers = usedSessionNums1.concat(usedSessionNums2);
-                    
-                    // Kill the Python script associated with the empty room
-                    roomData.pipelineInstance.stdin.pause();
-                    roomData.pipelineInstance.kill('SIGKILL');
-                    
-                    // Remove the empty room from the list of rooms
-                    delete self.rooms[name];
+
+            if (self.rooms[socket.room] && self.rooms[socket.room].count) {
+                console.log("Count of room"+self.rooms[socket.room].count);
+                self.rooms[socket.room].count -= 1;
+                if (self.rooms[socket.room].count <= 0) {
+                        console.log("Room " + socket.room + " now empty");
                 }
             }
         }); 
@@ -163,52 +138,42 @@ function Nebula(io, pipelineAddr) {
                 socket.emit("csvDataReady");
             }                        
         });
-        
-        socket.on("setCSV", function(csvName) {
-            csvFilePath = "data/" + csvName;
-            socket.emit("csvDataReady");
-        });
-
-        /* 
-         * Allows the server to be in control of session names
-         */
-        socket.on("getSessionName", function(ui) {
-            // Create the new session name and send it back to the UI
-            var sessionName = ui + nextSessionNumber;
-            socket.emit("receiveSessionName", sessionName);
-            
-            // Keep track of used session numbers
-            usedSessionNumbers.push(nextSessionNumber);
-            
-            // Determine the next session number. If we're getting too close to
-            // the MAX_VALUE, start looking at old session numbers to see if an
-            // old number can be used
-            if (nextSessionNumber == Number.MAX_VALUE || (nextSessionNumber+1) > Number.MAX_VALUE) {
-                
-                // Start back at 0 and check for session numbers that are no
-                // longer being used. 0 would be the oldest session number, and
-                // therefore is the most likely to no longer be used. Continue
-                // incrementing until an unused session number is found or we
-                // reach MAX_VALUE again
-                // NOTE: THERE IS NO PROTECTION AGAINST NOT BEING ABLE TO FIND
-                // A NEW SESSION NUMBER
-                nextSessionNumber = 0;
-                while (usedSessionNumber.indexOf(nextSessionNumber) >= 0 &&
-                  nextSessionNumber < Number.MAX_VALUE) {
-                    nextSessionNumber++;
-                }
-            }
-            else {
-                nextSessionNumber++;                
-            }
-        });
 
         /* Lets a client join a room. If the room doesn't next exist yet,
          * initiate it and send the new room to the client. Otherwise, send
          * the client the current state of the room.
          */
+         
+          socket.on('appendES',function(term)
+
+{
+
+console.log("Directory name = " + term)
+
+var addDocES = spawn("python2.7", ["/Volumes/Drive-Two/Research/Nebula/Nebula-Pipeline/nebula/input_file.py",term], {stdout: "inherit"});
+
+addDocES.stdout.on("data", function(data)
+
+{
+
+console.log("Pipeline: " + data.toString());
+
+});
+
+addDocES.stderr.on("data", function(data)
+
+{
+
+console.log("Pipeline error: " + data.toString());
+
+});
+
+console.log("Directory name = " + term)
+
+}); 
         socket.on('join', function(roomName, user, pipeline, args) {
             console.log('Join called!');
+            console.log("Pipeline = " + pipeline)
             socket.roomName = roomName;
             socket.user = user;
             socket.join(roomName);
@@ -259,8 +224,9 @@ function Nebula(io, pipelineAddr) {
                             pythonArgs.push(args[key]);
                         }
                     }
+                    console.log("*******************************");
                     console.log(pythonArgs);
-
+                    console.log("*******************************");
                     var pipelineInstance = spawn("python2.7", pythonArgs, {stdout: "inherit"});
 
                     pipelineInstance.on("error", function(err) {
@@ -281,8 +247,6 @@ function Nebula(io, pipelineAddr) {
                     pipelineInstance.stderr.on("data", function(data) {
                         console.log("Pipeline error: " + data.toString());
                     });
-                    
-                    room.pipelineInstance = pipelineInstance;
                 }
 
                 /* Connect to the pipeline */
