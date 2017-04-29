@@ -77,8 +77,9 @@ function Nebula(io, pipelineAddr) {
             console.log('Client disconnecting from ' + socket.roomName);
 
             if (roomData && roomData.count) {
-                console.log("Count of room: " + roomData.count);
                 roomData.count -= 1;
+                console.log("Count of room: " + roomData.count);
+                
                 if (roomData.count <= 0) {
                     console.log("Room " + name + " now empty");
                     
@@ -243,6 +244,8 @@ function Nebula(io, pipelineAddr) {
         * the client the current state of the room.
         */
         socket.on('join', function(roomName, user, pipeline, args) {
+            console.log("Join called!");
+            
             socket.roomName = roomName;
             socket.user = user;
             socket.join(roomName);
@@ -296,6 +299,9 @@ function Nebula(io, pipelineAddr) {
                             pythonArgs.push(args[key]);
                         }
                     }
+                    
+                    console.log(pythonArgs);
+                    console.log("");
 
                     var pipelineInstance = spawn("python2.7", pythonArgs, {stdout: "inherit"});
 
