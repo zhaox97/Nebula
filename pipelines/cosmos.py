@@ -29,7 +29,8 @@ def main():
     # Create a SimilarityModel object from the nebula.model module, which does 
     # forward and inverse MDS
     # projections and stores the current set of similarity weights
-    similarity_model = nebula.model.SimilarityModel()
+    #similarity_model = nebula.model.SimilarityModel()
+    similarity_model = nebula.model.TopicSimilarityModel()
     
     # Create a CSVDataController object from the nebula.data module, providing
     # a CSV file to load data from and the path to a folder containing the raw

@@ -418,6 +418,10 @@ Nebula.prototype.handleUpdate = function(room, res) {
     if (res.similarity_weights) {
         update.similarity_weights = res.similarity_weights;
     }
+    //This grabs the word cloud data, should there be any.
+    if (res.cloud) {
+        update.cloud = res.cloud;
+    }
     updateRoom(room, update);
     this.io.to(room.name).emit('update', update);
 };
