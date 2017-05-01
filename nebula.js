@@ -1,4 +1,5 @@
 var spawn = require('child_process').spawn;
+var fs = require("fs");
 var async = require('async');
 var zmq = require('zmq');
 
@@ -60,11 +61,10 @@ function Nebula(io, pipelineAddr) {
 
     /* Accept new WebSocket clients */
     io.on('connection', function(socket) {
-
+        
         /* When a client requests the list of rooms, send them the list */
-        socket.on('list.rooms',function() {
-            socket.emit('list.rooms.repose',socket.rooms,io.sockets.adapter.rooms);
-            socket.emit('list.rooms.session',socket.rooms);
+        socket.on('list.sessions',function() {
+            socket.emit('list.sessions.repose',io.sockets.adapter.rooms);
         });
 
         /* When clients disconnect, remove them from the room. If the room is
@@ -73,11 +73,13 @@ function Nebula(io, pipelineAddr) {
         socket.on('disconnect', function() {
             var name = socket.roomName;
             var roomData = self.rooms[name];
+            
             console.log('Client disconnecting from ' + socket.roomName);
 
             if (roomData && roomData.count) {
-                console.log("Count of room: " + roomData.count);
                 roomData.count -= 1;
+                console.log("Count of room: " + roomData.count);
+                
                 if (roomData.count <= 0) {
                     console.log("Room " + name + " now empty");
                     
@@ -107,6 +109,9 @@ function Nebula(io, pipelineAddr) {
                     
                     // Remove the empty room from the list of rooms
                     delete self.rooms[name];
+
+                    // Delete the room's CSV file
+                    deleteFile("data/" + name + "_data.csv");
                 }
             }
         }); 
@@ -122,7 +127,6 @@ function Nebula(io, pipelineAddr) {
         socket.on('setData', function(data, room) {
             // Create the csvFilePath
             csvFilePath = "data/" + room + "_data.csv";
-
             // Set exec to be a function that calls the command line
             var exec = require('child_process').exec;
 
@@ -130,32 +134,31 @@ function Nebula(io, pipelineAddr) {
             var errors = [];
             // Create the command to use on the command line
             var command = "echo \"" + data + "\" > " + csvFilePath; 
-            
+         
             // Execute the command and cature any errors or printouts
-            exec(command, "-e",
-                function (error, stdout, stderr) {
-                    // Print out any stdout captured to the console
-                    if (stdout) {
-                        console.log('stdout: ' + stdout);
-                    }
-                    
-                    // Put any errors in the errors array
-                    if (error) {
-                        errors.push(error);
-                    }
-                    
-                    // Put any errors in the errors array and print them out to
-                    // the console
-                    if (stderr) {
-                        console.log('stderr: ' + stderr);
-                        errors.push(error);
-                    }
-                    
-                    // Only print out non-null errors
-                    if (error !== null) {
-                         console.log('exec error: ' + error);
-                    }
-                });
+            exec(command, "-e", function (error, stdout, stderr) {
+                // Print out any stdout captured to the console
+                if (stdout) {
+                    console.log('Creating CSV file: ' + stdout);
+                }
+
+                // Put any errors in the errors array
+                if (error) {
+                    errors.push(error);
+                }
+
+                // Put any errors in the errors array and print them out to
+                // the console
+                if (stderr) {
+                    console.log('Creating CSV file stderr: ' + stderr);
+                    errors.push(error);
+                }
+
+                // Only print out non-null errors
+                if (error !== null) {
+                    console.log('Creating CSV file exec error: ' + error);
+                }
+            });
                 
             // Only emit the "csvDataReady" message to the client if no errors
             // were encountered while attempting to create the custom CSV file
@@ -207,11 +210,46 @@ function Nebula(io, pipelineAddr) {
          * initiate it and send the new room to the client. Otherwise, send
          * the client the current state of the room.
          */
+        socket.on('leave', function() {  
+    	    var roomname = socket.roomName;
+            socket.room.count -= 1; 
+            socket.leave(socket.roomName);
+            socket.emit('leave',roomname);
+     	    
+     	    if(socket.room.count <= 0) {
+     	        var filePath= "data/" + roomname + "_data.csv";
+     	        deleteFile(filePath);
+     	    }
+     	 
+        });
+
+        // function to delete a file
+        function deleteFile(filePath) {
+     	    fs.stat(filePath, function(err, data) {
+                if (err) {
+                    console.log('File ' + filePath + ' does not exist');
+                }
+                else {
+                    fs.unlink(filePath, function(err) {
+                        if (err) {
+                            return console.error("Error unlinking file: " + err);
+                        }
+                    });
+                }
+            });
+        }
+        
+       /*  a client/ a room. If the room doesn't next exist yet,
+        * initiate it and send the new room to the client. Otherwise, send
+        * the client the current state of the room.
+        */
         socket.on('join', function(roomName, user, pipeline, args) {
-            console.log('Join called!');
+            console.log("Join called!");
+            
             socket.roomName = roomName;
             socket.user = user;
             socket.join(roomName);
+
             var pipelineArgsCopy = [];
 
             if (!self.rooms[roomName]) {
@@ -226,7 +264,7 @@ function Nebula(io, pipelineAddr) {
                     var pythonArgs = ["-u"];
                     if (pipeline in pipelines) {
                         if (pipelines[pipeline].args.length > 0) {
-                            
+
                             // Iterate through the pipeline's arguments. If there
                             // is a CSV file defined and csvFilePath is not null,
                             // put the csvFilePath in the pipelineArgsCopy.
@@ -251,21 +289,25 @@ function Nebula(io, pipelineAddr) {
                     else {
                         pythonArgs.push(pipelines.cosmos.file);
                         pythonArgs.push(port.toString());
-                        pythonArgs = pythonArgs.concat(pipelines.cosmos.args);
+                       pythonArgs = pythonArgs.concat(pipelines.cosmos.args);
                     }
+                    
+                    // used in case of CosmosRadar
                     for (var key in args) {
                         if (args.hasOwnProperty(key)) {
                             pythonArgs.push("--" + key);
                             pythonArgs.push(args[key]);
                         }
                     }
+                    
                     console.log(pythonArgs);
+                    console.log("");
 
                     var pipelineInstance = spawn("python2.7", pythonArgs, {stdout: "inherit"});
 
                     pipelineInstance.on("error", function(err) {
                         console.log("python2.7.exe not found. Trying python.exe");
-                        pipelineInstance = spawn("python", pythonArgs, {stdout: "inherit"});
+                        pipelineInstance = spawn("python", pythonArgs,{stdout: "inherit"});
 
                         pipelineInstance.stdout.on("data", function(data) {
                             console.log("Pipeline: " + data.toString());
@@ -275,8 +317,13 @@ function Nebula(io, pipelineAddr) {
                         });
                     });
 
+                    /*Data received  by node app from python process, 
+                     * ouptut this data to output stream(on 'data'), 
+                     * we want to convert that received data into a string and 
+                     * append it to the overall data String
+                     */
                     pipelineInstance.stdout.on("data", function(data) {
-                        console.log("Pipeline: " + data.toString());
+                        console.log("Pipeline STDOUT: " + data.toString());
                     });
                     pipelineInstance.stderr.on("data", function(data) {
                         console.log("Pipeline error: " + data.toString());
@@ -287,6 +334,7 @@ function Nebula(io, pipelineAddr) {
 
                 /* Connect to the pipeline */
                 pipelineAddr = pipelineAddr || "tcp://127.0.0.1:" + port.toString();
+
                 room.pipelineSocket = zmq.socket('pair');
                 room.pipelineSocket.connect(pipelineAddr);
 
@@ -295,7 +343,7 @@ function Nebula(io, pipelineAddr) {
 
                 /* Listens for messages from the pipeline */
                 room.pipelineSocket.on('message', function (msg) {
-                        self.handleMessage(room, msg);
+                     self.handleMessage(room, msg);
                 });
 
                 self.rooms[roomName] = socket.room = room;
@@ -304,10 +352,10 @@ function Nebula(io, pipelineAddr) {
             else {
                 socket.room = self.rooms[roomName];
                 socket.room.count += 1;
-                console.log(socket.room.count + " people now in room " + roomName);
+
                 socket.emit('update', sendRoom(socket.room));
             }
-            
+
             // Reset the csvFilePath to null for future UIs
             csvFilePath = null;
         });
@@ -318,6 +366,8 @@ function Nebula(io, pipelineAddr) {
         socket.on('action', function(data) {
             if (socket.room) {
                 self.handleAction(data, socket.room);
+                
+                //emit update actions to other rooms  
                 socket.broadcast.to(socket.roomName).emit('action', data);
             }
         });
@@ -382,14 +432,21 @@ Nebula.prototype.handleAction = function(action, room) {
 /* Handles a message from the pipeline, encapsulated in an RPC-like fashion */
 Nebula.prototype.handleMessage = function(room, msg) {
     var obj = JSON.parse(msg.toString());
+    
     if (obj.func) {
         if (obj.func === "update") {
+            // returns the data to user based on interaction(search/delete node/move slider)
             this.handleUpdate(room, obj.contents);
-        } else if (obj.func === "get") {
+        }
+        else if (obj.func === "get") {
+            //getting data when user clicks a node(document) and send it to the client    
             this.io.to(room.name).emit("get", obj.contents);
-        } else if (obj.func === "set") {
+        } 
+        else if (obj.func === "set") {
             this.io.to(room.name).emit("set", obj.contents);
-        } else if (obj.func === "reset") {
+        } 
+        else if (obj.func === "reset") {
+            // takes place either when users joins the room or when he hits reset button
             this.io.to(room.name).emit("reset");
             invoke(room.pipelineSocket, "update", {interaction: "none"});
         }
@@ -399,9 +456,14 @@ Nebula.prototype.handleMessage = function(room, msg) {
 /* Handles updates received by the client, running the necessary processes
  * and updating the room as necessary.
  */
+/*he didn't modify the weight vector, it is the same
+ * this function is called with all updates ( search/delete/ relevance slider)
+ *  it stores the data from pipeline to save in the room (points/similarity weights) by calling
+ *  updateRoom function
+ */
 Nebula.prototype.handleUpdate = function(room, res) {
     console.log("Handle update called");
-
+   
     var update = {};
     update.points = [];
     if (res.documents) {
@@ -415,23 +477,29 @@ Nebula.prototype.handleUpdate = function(room, res) {
             update.points.push(obj);
         }
     }
+
     if (res.similarity_weights) {
         update.similarity_weights = res.similarity_weights;
     }
+  
     updateRoom(room, update);
     this.io.to(room.name).emit('update', update);
 };
 
 /* Updates our state for each room upon an update from the pipeline */
+/* modifies the values inside room array*/
 var updateRoom = function(room, update) {
     if (update.points) {
-        for (var i=0; i < update.points.length; i++) {
+    	for (var i=0; i < update.points.length; i++) {
             var point = update.points[i];
+          
             if (room.points.has(point.id)) {
-                if (point.pos)
+                if (point.pos) {
                     room.points.get(point.id).pos = point.pos;
-                if (point.relevance)
-                    room.points.get(point.id).relevance = point.relevance;
+                }
+                if (point.relevance) {
+                    room.points.get(point.id).relevance = +point.relevance;
+                }
             }
             else {
                 room.points.set(point.id, point);
@@ -441,8 +509,9 @@ var updateRoom = function(room, update) {
     if (update.similarity_weights) {
         for (var i=0; i < update.similarity_weights.length; i++) {
             var weight = update.similarity_weights[i];
+         
             if (room.similarity_weights.has(weight.id)) {
-                room.similarity_weights.get(weight.id).weight = weight.weight;
+            	room.similarity_weights.get(weight.id).weight = weight.weight;
             }
             else {
                 room.similarity_weights.set(weight.id, weight);
@@ -457,13 +526,15 @@ var updateRoom = function(room, update) {
 var oli = function(room) {
     var points = {};
     for (var key of room.points.keys()) {
-        var point = room.points.get(key);
+    	var point = room.points.get(key);
+    	
         if (point.selected) {
             var p = {};
             p.lowD = point.pos;
             points[key] = p;
         }
     }
+   
     return points;
 };
 
