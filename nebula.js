@@ -412,6 +412,7 @@ Nebula.prototype.handleUpdate = function(room, res) {
             obj.pos = doc.low_d;
             obj.type = doc.type;
             obj.relevance = doc.doc_relevance;
+            obj.col = doc.color;
             update.points.push(obj);
         }
     }
