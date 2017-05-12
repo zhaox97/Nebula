@@ -15,7 +15,7 @@ def main():
     pipeline = nebula.pipeline.Pipeline()
    
     relevance = nebula.model.ActiveSetModel()
-    similarity = nebula.model.SimilarityModel()
+    similarity = nebula.model.TopicSimilarityModel()
     topic_model = nebula.model.TopicModel()
     data_controller = nebula.data.ESController()
     tfModel = nebula.tf.TFModel()
