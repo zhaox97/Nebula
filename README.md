@@ -8,6 +8,8 @@ For all platforms, Python 2.7 must be installed for Nebula-Pipeline to work. It 
 
 ``pip install --upgrade pip``
 
+Similarly, Java must be installed for the project to run correctly. It can be installed from [here](https://www.java.com/en/download/).
+
 ## Windows
 Install the Node.js from their website [here](nodejs.org). Select the LTS version.
 
