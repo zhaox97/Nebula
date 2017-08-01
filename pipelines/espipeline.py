@@ -1,5 +1,7 @@
+import sys
+sys.path.append('Nebula-Pipeline')
 import nebula.connector
-import nebula.data
+import nebula.data 
 import nebula.model
 import nebula.pipeline
 import nebula.tf
