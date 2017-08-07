@@ -50,6 +50,9 @@ Next, you can install all the pipeline dependencies with the command:
 
 Again, you may need to use `sudo`.
 
+## Docker Installation
+For a guide on how to install and run this project using Docker, visit the Readme in the `Cosmos-Dockerized` repository.
+
 # User Guide
 
 You can launch the Node.js server by running `npm start` from the root directory. This will start the server (default listening on port 8081). All accessible web clients are located in the CosmosD3 folder. The files in this folder are exposed in the web server through the `/cosmos` URI. For example, the CosmosTwitter client can be accessed via `/cosmos/CosmosTwitter.html`. Navigating to the root page at `localhost:8081/` will return the default client, `/cosmos/CosmosD3.html`.
