@@ -58,6 +58,7 @@ Multiple clients of the same type can be opened simultaneously, and all clients 
 
 When the first client is loaded from the server, it can specify which pipeline to load, which are described below. This pipeline is then started by the Node.js server, by spawning a Python instance. Each pipeline gets started on port 5555, and the server automatically connects to it once it is started. Because each is run on the same port, only one pipeline can currently be run. Again, this simply enables us to test each client, and could easily be modified for more robust use.
 
+Currently, the labels for each document view is set to the four strongest words associated with each document. While there may be some repeats, the labels are meant to give the user a brief understanding of what each document may be about without having to make an interaction with it. 
 # Developer Notes
 
 When initialing cloning from git, be sure to either run `git clone` with the `--recursive` command, or run `git submodule init` followed by `git submodule update` to pull in the CosmosD3 submodule that contains the web client code.
