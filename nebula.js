@@ -472,7 +472,6 @@ Nebula.prototype.handleUpdate = function(room, res) {
             var obj = {};
             obj.id = doc.doc_id;
             obj.displayTitle = doc.display_title
-            console.log(obj.displayTitle)
             obj.pos = doc.low_d;
             obj.type = doc.type;
             obj.relevance = doc.doc_relevance;
