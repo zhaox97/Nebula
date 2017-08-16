@@ -22,8 +22,8 @@ def main():
 
 
     pipeline.append_model(tfModel)
-    pipeline.append_model(topic_model)
     pipeline.append_model(relevance)
+    pipeline.append_model(topic_model)
     pipeline.append_model(similarity)
     pipeline.set_data_controller(data_controller)
     
