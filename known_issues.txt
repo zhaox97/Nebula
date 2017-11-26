@@ -1,0 +1,16 @@
+-- More immediate
+1) Get is not implemented for the data.py class.
+2) The color scale is always 0-1; should be based on data values.
+3) It still asks me for a CSV
+3.5) createDataEntry should be called automatically.
+
+-- Less Immediate
+4) Better ways to input new combinations:
+    4i) Recall Previous
+    4ii) Start from existing
+    4iii) Random
+5) Better ways to change existing combinations:
+    5i) Plus/minus 10/100%
+6) Use new frontend (andromeda refresh)
+7) Make it easy to use (maybe create a module?), and to integrate into existing
+code.
