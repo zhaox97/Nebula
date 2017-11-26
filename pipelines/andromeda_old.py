@@ -11,13 +11,11 @@ def main():
         print "Usage: python main.py <port> <csv file path> <pipeline arguments>"
     
     csvfile = sys.argv[2]
-
-    print 'oh shit we in this bitch swag'
     
     pipeline = nebula.pipeline.Pipeline()
    
     andromeda = nebula.model.AndromedaModel(dist_func="euclidean")
-    data_controller = nebula.data.HyperOptimController()
+    data_controller = nebula.data.CSVDataController(csvfile)
    
     pipeline.append_model(andromeda)
     pipeline.set_data_controller(data_controller)
