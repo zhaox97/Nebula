@@ -64,7 +64,7 @@ function Nebula(io, pipelineAddr) {
         
         /* When a client requests the list of rooms, send them the list */
         socket.on('list.sessions',function() {
-            socket.emit('list.sessions.repose',io.sockets.adapter.rooms);
+            socket.emit('list.sessions.response', io.sockets.adapter.rooms);
         });
 
         /* When clients disconnect, remove them from the room. If the room is
