@@ -13,17 +13,20 @@ Similarly, Java must be installed for the project to run correctly. It can be in
 ## Windows
 Install the Node.js from their website [here](nodejs.org). Select the LTS version.
 
-NOTE: Any LTS version at or below 4.4.7 will not work correctly. As soon as a new version is released, the rest of the install instructions should work fine, but as of this writing a new version has not been released. To fix this issue, you must run `npm install -g npm`, and then go into your `~\AppData\Roaming\npm\node_modules\npm` directory and run the command `npm install node-gyp@3.4.0`. With this, the remaining instructions should work. Any LTS Node.js version after 4.4.7 should not need to the aforementioned steps.
+NOTE: Any LTS version at or below 4.4.7 will not work correctly.  As of this writing, the newest version is 8.11.1 LTS, with which the rest of the instructions should work fine. To fix this issue, you must run `npm install -g npm`, and then go into your `~\AppData\Roaming\npm\node_modules\npm` directory and run the command `npm install node-gyp@3.4.0`. With this, the remaining instructions should work. Any LTS Node.js version after 4.4.7 should not need to the aforementioned steps.
 
 Install the Visual C++ Build Tools, found [here](http://landinghub.visualstudio.com/visual-cpp-build-tools). Then tell the Node package manager to use this version by running:
 
 ``npm config set msvs_version 2015``
 
-Finally, for the Nebula-Pipeline to work, the Python packages numpy and scipy must be installed before running the setup below. One option is to use a Python distribution that has these packages preinstalled, such as [Anaconda](https://www.continuum.io/downloads). If you already have the traditional Python distribution installed, the best way to install these packages is by downloading them from the site [here](http://www.lfd.uci.edu/~gohlke/pythonlibs/). Download the files `numpy-1.11.1+mkl-cp27-cp27m-win_amd64.whl` and `scipy-0.17.1-cp27-cp27m-win_amd64.whl` (or the 32-bit version if that's the Python version you're running), and run the following commands in the directory these files are in:
+Finally, for the Nebula-Pipeline to work, the Python 2.7 packages numpy and scipy must be installed before running the setup below. If you already have the traditional Python distribution installed, the best way to install these packages is by downloading them from the site [here](http://www.lfd.uci.edu/~gohlke/pythonlibs/). Download the files `numpy-1.13.1+mkl-cp27-cp27m-win_amd64.whl` and `scipy-1.0.1-cp27-cp27m-win_amd64.whl` (or the 32-bit version if that's the Python version you're running), and run the following commands in the directory these files are in:
 
-``pip install numpy-1.11.1+mkl-cp27-cp27m-win_amd64.whl``
+``pip install numpy-1.13.1+mkl-cp27-cp27m-win_amd64.whl``
 
-``pip install scipy-0.17.1-cp27-cp27m-win_amd64.whl``
+``pip install scipy-1.0.1-cp27-cp27m-win_amd64.whl``
+
+One option is to use a Python distribution that has these packages preinstalled, such as [Anaconda](https://www.continuum.io/downloads); this is not recommended as it can lead to problems with Node.js finding the correct executable file, especially if you use both Python 2.7 and 3.5. 
+
 
 ## OS X
 Install [HomeBrew](http://brew.sh/). Then use HomeBrew to install zeromq and pkg-config:
