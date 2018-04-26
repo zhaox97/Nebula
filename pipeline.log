@@ -1,0 +1,1164 @@
+2018-01-16 14:17:46,066 - nebula.pipeline - INFO - Executing pipeline
+Data: {u'interaction': u'none'}
+2018-01-16 14:17:46,798 - nebula.pipeline - INFO - Timing info
+CSVDataController.run average time: 0.000004 seconds
+CSVDataController.run max time: 0.000004 seconds
+AndromedaModel.forward average time: 0.731990 seconds
+AndromedaModel.forward max time: 0.731990 seconds
+AndromedaModel.inverse average time: 0.000021 seconds
+AndromedaModel.inverse max time: 0.000021 seconds
+
+2018-01-16 14:18:42,605 - nebula.pipeline - INFO - Executing pipeline
+Data: {u'interaction': u'pi', u'type': u'pi', u'value': 0.6455223880597015, u'param': u'Bipedal'}
+2018-01-16 14:18:42,920 - nebula.pipeline - INFO - Timing info
+CSVDataController.run average time: 0.000004 seconds
+CSVDataController.run max time: 0.000004 seconds
+AndromedaModel.forward average time: 0.523656 seconds
+AndromedaModel.forward max time: 0.731990 seconds
+AndromedaModel.inverse average time: 0.000045 seconds
+AndromedaModel.inverse max time: 0.000069 seconds
+
+2018-01-16 14:18:47,305 - nebula.pipeline - INFO - Executing pipeline
+Data: {u'interaction': u'pi', u'type': u'pi', u'value': 0.6455223880597015, u'param': u'Bulbous'}
+2018-01-16 14:18:47,529 - nebula.pipeline - INFO - Timing info
+CSVDataController.run average time: 0.000004 seconds
+CSVDataController.run max time: 0.000005 seconds
+AndromedaModel.forward average time: 0.423576 seconds
+AndromedaModel.forward max time: 0.731990 seconds
+AndromedaModel.inverse average time: 0.000061 seconds
+AndromedaModel.inverse max time: 0.000092 seconds
+
+2018-01-16 14:18:52,416 - nebula.pipeline - INFO - Executing pipeline
+Data: {u'interaction': u'pi', u'type': u'pi', u'value': 0.29104477611940305, u'param': u'Cave'}
+2018-01-16 14:18:52,701 - nebula.pipeline - INFO - Timing info
+CSVDataController.run average time: 0.000004 seconds
+CSVDataController.run max time: 0.000005 seconds
+AndromedaModel.forward average time: 0.388907 seconds
+AndromedaModel.forward max time: 0.731990 seconds
+AndromedaModel.inverse average time: 0.000062 seconds
+AndromedaModel.inverse max time: 0.000092 seconds
+
+2018-01-16 14:19:05,787 - nebula.pipeline - INFO - Executing pipeline
+Data: {u'interaction': u'none'}
+2018-01-16 14:19:06,264 - nebula.pipeline - INFO - Timing info
+CSVDataController.run average time: 0.000004 seconds
+CSVDataController.run max time: 0.000005 seconds
+AndromedaModel.forward average time: 0.406349 seconds
+AndromedaModel.forward max time: 0.731990 seconds
+AndromedaModel.inverse average time: 0.000053 seconds
+AndromedaModel.inverse max time: 0.000092 seconds
+
+2018-02-01 13:58:28,901 - nebula.pipeline - INFO - Executing pipeline
+Data: {u'interaction': u'none'}
+2018-02-01 13:58:29,858 - nebula.pipeline - INFO - Timing info
+CSVDataController.run average time: 0.000029 seconds
+CSVDataController.run max time: 0.000029 seconds
+AndromedaModel.forward average time: 0.938379 seconds
+AndromedaModel.forward max time: 0.938379 seconds
+AndromedaModel.inverse average time: 0.000035 seconds
+AndromedaModel.inverse max time: 0.000035 seconds
+
+2018-02-01 13:58:29,875 - nebula.pipeline - INFO - Executing pipeline
+Data: {u'interaction': u'none'}
+2018-02-01 13:58:30,461 - nebula.pipeline - INFO - Timing info
+CSVDataController.run average time: 0.000016 seconds
+CSVDataController.run max time: 0.000029 seconds
+AndromedaModel.forward average time: 0.762033 seconds
+AndromedaModel.forward max time: 0.938379 seconds
+AndromedaModel.inverse average time: 0.000024 seconds
+AndromedaModel.inverse max time: 0.000035 seconds
+
+2018-02-01 14:00:18,547 - nebula.pipeline - INFO - Executing pipeline
+Data: {u'interaction': u'none'}
+2018-02-01 14:00:19,067 - nebula.pipeline - INFO - Timing info
+CSVDataController.run average time: 0.000006 seconds
+CSVDataController.run max time: 0.000006 seconds
+AndromedaModel.forward average time: 0.519654 seconds
+AndromedaModel.forward max time: 0.519654 seconds
+AndromedaModel.inverse average time: 0.000021 seconds
+AndromedaModel.inverse max time: 0.000021 seconds
+
+2018-02-01 16:50:30,010 - nebula.pipeline - INFO - Executing pipeline
+Data: {u'interaction': u'none'}
+2018-02-01 16:50:30,821 - nebula.pipeline - INFO - Timing info
+CSVDataController.run average time: 0.000008 seconds
+CSVDataController.run max time: 0.000008 seconds
+AndromedaModel.forward average time: 0.782916 seconds
+AndromedaModel.forward max time: 0.782916 seconds
+AndromedaModel.inverse average time: 0.000034 seconds
+AndromedaModel.inverse max time: 0.000034 seconds
+
+2018-02-01 16:51:35,909 - nebula.pipeline - INFO - Executing pipeline
+Data: {u'interaction': u'pi', u'type': u'pi', u'value': 0.46828358208955234, u'param': u'Agility'}
+2018-02-01 16:51:36,121 - nebula.pipeline - INFO - Timing info
+CSVDataController.run average time: 0.000007 seconds
+CSVDataController.run max time: 0.000008 seconds
+AndromedaModel.forward average time: 0.497560 seconds
+AndromedaModel.forward max time: 0.782916 seconds
+AndromedaModel.inverse average time: 0.000051 seconds
+AndromedaModel.inverse max time: 0.000068 seconds
+
+2018-03-19 14:12:09,096 - nebula.pipeline - INFO - Executing pipeline
+Data: {u'interaction': u'none'}
+2018-03-19 14:12:10,231 - nebula.pipeline - INFO - Timing info
+CSVDataController.run average time: 0.000014 seconds
+CSVDataController.run max time: 0.000014 seconds
+AndromedaModel.forward average time: 1.115121 seconds
+AndromedaModel.forward max time: 1.115121 seconds
+AndromedaModel.inverse average time: 0.000048 seconds
+AndromedaModel.inverse max time: 0.000048 seconds
+
+2018-03-19 14:12:33,423 - nebula.pipeline - INFO - Executing pipeline
+Data: {u'interaction': u'pi', u'type': u'pi', u'value': 0.36800373134328357, u'param': u'Active'}
+2018-03-19 14:12:33,783 - nebula.pipeline - INFO - Timing info
+CSVDataController.run average time: 0.000009 seconds
+CSVDataController.run max time: 0.000014 seconds
+AndromedaModel.forward average time: 0.737244 seconds
+AndromedaModel.forward max time: 1.115121 seconds
+AndromedaModel.inverse average time: 0.000060 seconds
+AndromedaModel.inverse max time: 0.000071 seconds
+
+2018-03-19 14:12:38,619 - nebula.pipeline - INFO - Executing pipeline
+Data: {u'interaction': u'pi', u'type': u'pi', u'value': 1, u'param': u'Active'}
+2018-03-19 14:12:38,751 - nebula.pipeline - INFO - Timing info
+CSVDataController.run average time: 0.000008 seconds
+CSVDataController.run max time: 0.000014 seconds
+AndromedaModel.forward average time: 0.535196 seconds
+AndromedaModel.forward max time: 1.115121 seconds
+AndromedaModel.inverse average time: 0.000085 seconds
+AndromedaModel.inverse max time: 0.000136 seconds
+
+2018-03-19 14:12:43,448 - nebula.pipeline - INFO - Executing pipeline
+Data: {u'interaction': u'pi', u'type': u'pi', u'value': 0, u'param': u'Active'}
+2018-03-19 14:12:44,000 - nebula.pipeline - INFO - Timing info
+CSVDataController.run average time: 0.000007 seconds
+CSVDataController.run max time: 0.000014 seconds
+AndromedaModel.forward average time: 0.539427 seconds
+AndromedaModel.forward max time: 1.115121 seconds
+AndromedaModel.inverse average time: 0.000081 seconds
+AndromedaModel.inverse max time: 0.000136 seconds
+
+2018-03-19 14:12:55,837 - nebula.pipeline - INFO - Executing pipeline
+Data: {u'interaction': u'pi', u'type': u'pi', u'value': 0.004197761194029845, u'param': u'Active'}
+2018-03-19 14:12:56,338 - nebula.pipeline - INFO - Timing info
+CSVDataController.run average time: 0.000007 seconds
+CSVDataController.run max time: 0.000014 seconds
+AndromedaModel.forward average time: 0.531541 seconds
+AndromedaModel.forward max time: 1.115121 seconds
+AndromedaModel.inverse average time: 0.000082 seconds
+AndromedaModel.inverse max time: 0.000136 seconds
+
+2018-03-19 14:13:10,027 - nebula.pipeline - INFO - Executing pipeline
+Data: {u'interaction': u'pi', u'type': u'pi', u'value': 0.5359141791044777, u'param': u'Agility'}
+2018-03-19 14:13:10,308 - nebula.pipeline - INFO - Timing info
+CSVDataController.run average time: 0.000007 seconds
+CSVDataController.run max time: 0.000014 seconds
+AndromedaModel.forward average time: 0.489672 seconds
+AndromedaModel.forward max time: 1.115121 seconds
+AndromedaModel.inverse average time: 0.000083 seconds
+AndromedaModel.inverse max time: 0.000136 seconds
+
+2018-03-19 14:13:12,838 - nebula.pipeline - INFO - Executing pipeline
+Data: {u'interaction': u'pi', u'type': u'pi', u'value': 0.7971082089552238, u'param': u'Agility'}
+2018-03-19 14:13:13,041 - nebula.pipeline - INFO - Timing info
+CSVDataController.run average time: 0.000007 seconds
+CSVDataController.run max time: 0.000014 seconds
+AndromedaModel.forward average time: 0.448655 seconds
+AndromedaModel.forward max time: 1.115121 seconds
+AndromedaModel.inverse average time: 0.000085 seconds
+AndromedaModel.inverse max time: 0.000136 seconds
+
+2018-03-19 14:14:00,362 - nebula.pipeline - INFO - Executing pipeline
+Data: {u'interaction': u'pi', u'type': u'pi', u'value': 1, u'param': u'Agility'}
+2018-03-19 14:14:00,513 - nebula.pipeline - INFO - Timing info
+CSVDataController.run average time: 0.000007 seconds
+CSVDataController.run max time: 0.000014 seconds
+AndromedaModel.forward average time: 0.411288 seconds
+AndromedaModel.forward max time: 1.115121 seconds
+AndromedaModel.inverse average time: 0.000087 seconds
+AndromedaModel.inverse max time: 0.000136 seconds
+
+2018-03-19 14:14:03,498 - nebula.pipeline - INFO - Executing pipeline
+Data: {u'interaction': u'pi', u'type': u'pi', u'value': 1, u'param': u'Agility'}
+2018-03-19 14:14:03,644 - nebula.pipeline - INFO - Timing info
+CSVDataController.run average time: 0.000007 seconds
+CSVDataController.run max time: 0.000014 seconds
+AndromedaModel.forward average time: 0.381749 seconds
+AndromedaModel.forward max time: 1.115121 seconds
+AndromedaModel.inverse average time: 0.000087 seconds
+AndromedaModel.inverse max time: 0.000136 seconds
+
+2018-03-19 14:14:05,980 - nebula.pipeline - INFO - Executing pipeline
+Data: {u'interaction': u'pi', u'type': u'pi', u'value': 0.9900000000000001, u'param': u'Agility'}
+2018-03-19 14:14:06,138 - nebula.pipeline - INFO - Timing info
+CSVDataController.run average time: 0.000007 seconds
+CSVDataController.run max time: 0.000014 seconds
+AndromedaModel.forward average time: 0.359391 seconds
+AndromedaModel.forward max time: 1.115121 seconds
+AndromedaModel.inverse average time: 0.000087 seconds
+AndromedaModel.inverse max time: 0.000136 seconds
+
+2018-03-19 14:14:07,722 - nebula.pipeline - INFO - Executing pipeline
+Data: {u'interaction': u'pi', u'type': u'pi', u'value': 0.9900000000000001, u'param': u'Agility'}
+2018-03-19 14:14:07,880 - nebula.pipeline - INFO - Timing info
+CSVDataController.run average time: 0.000007 seconds
+CSVDataController.run max time: 0.000014 seconds
+AndromedaModel.forward average time: 0.340995 seconds
+AndromedaModel.forward max time: 1.115121 seconds
+AndromedaModel.inverse average time: 0.000087 seconds
+AndromedaModel.inverse max time: 0.000136 seconds
+
+2018-03-19 14:14:09,430 - nebula.pipeline - INFO - Executing pipeline
+Data: {u'interaction': u'pi', u'type': u'pi', u'value': 0.9900000000000001, u'param': u'Agility'}
+2018-03-19 14:14:09,585 - nebula.pipeline - INFO - Timing info
+CSVDataController.run average time: 0.000007 seconds
+CSVDataController.run max time: 0.000014 seconds
+AndromedaModel.forward average time: 0.325406 seconds
+AndromedaModel.forward max time: 1.115121 seconds
+AndromedaModel.inverse average time: 0.000088 seconds
+AndromedaModel.inverse max time: 0.000136 seconds
+
+2018-03-19 14:18:22,913 - nebula.pipeline - INFO - Executing pipeline
+Data: {u'interaction': u'pi', u'type': u'pi', u'value': 0.004197761194029845, u'param': u'Agility'}
+2018-03-19 14:18:23,414 - nebula.pipeline - INFO - Timing info
+CSVDataController.run average time: 0.000007 seconds
+CSVDataController.run max time: 0.000014 seconds
+AndromedaModel.forward average time: 0.336380 seconds
+AndromedaModel.forward max time: 1.115121 seconds
+AndromedaModel.inverse average time: 0.000088 seconds
+AndromedaModel.inverse max time: 0.000136 seconds
+
+2018-04-10 12:04:01,536 - nebula.pipeline - INFO - Executing pipeline
+Data: {u'interaction': u'none'}
+2018-04-10 12:04:02,359 - nebula.pipeline - INFO - Timing info
+CSVDataController.run average time: 0.000008 seconds
+CSVDataController.run max time: 0.000008 seconds
+AndromedaModel.forward average time: 0.814009 seconds
+AndromedaModel.forward max time: 0.814009 seconds
+AndromedaModel.inverse average time: 0.000033 seconds
+AndromedaModel.inverse max time: 0.000033 seconds
+
+2018-04-10 12:18:20,460 - nebula.pipeline - INFO - Executing pipeline
+Data: {u'interaction': u'none'}
+2018-04-10 12:18:20,995 - nebula.pipeline - INFO - Timing info
+CSVDataController.run average time: 0.000005 seconds
+CSVDataController.run max time: 0.000005 seconds
+AndromedaModel.forward average time: 0.534428 seconds
+AndromedaModel.forward max time: 0.534428 seconds
+AndromedaModel.inverse average time: 0.000018 seconds
+AndromedaModel.inverse max time: 0.000018 seconds
+
+2018-04-11 12:29:13,923 - nebula.pipeline - INFO - Executing pipeline
+Data: {u'interaction': u'none'}
+2018-04-11 12:29:14,670 - nebula.pipeline - INFO - Timing info
+CSVDataController.run average time: 0.000004 seconds
+CSVDataController.run max time: 0.000004 seconds
+AndromedaModel.forward average time: 0.727929 seconds
+AndromedaModel.forward max time: 0.727929 seconds
+AndromedaModel.inverse average time: 0.000019 seconds
+AndromedaModel.inverse max time: 0.000019 seconds
+
+2018-04-16 13:56:03,990 - nebula.pipeline - INFO - Executing pipeline
+Data: {u'interaction': u'none'}
+2018-04-16 13:56:05,146 - nebula.pipeline - INFO - Timing info
+CSVDataController.run average time: 0.000004 seconds
+CSVDataController.run max time: 0.000004 seconds
+AndromedaModel.forward average time: 1.140425 seconds
+AndromedaModel.forward max time: 1.140425 seconds
+AndromedaModel.inverse average time: 0.000019 seconds
+AndromedaModel.inverse max time: 0.000019 seconds
+
+2018-04-16 14:04:45,569 - nebula.pipeline - INFO - Executing pipeline
+Data: {u'interaction': u'none'}
+2018-04-16 14:04:46,038 - nebula.pipeline - INFO - Timing info
+CSVDataController.run average time: 0.000006 seconds
+CSVDataController.run max time: 0.000006 seconds
+AndromedaModel.forward average time: 0.467962 seconds
+AndromedaModel.forward max time: 0.467962 seconds
+AndromedaModel.inverse average time: 0.000033 seconds
+AndromedaModel.inverse max time: 0.000033 seconds
+
+2018-04-16 14:05:17,477 - nebula.pipeline - INFO - Executing pipeline
+Data: {u'interaction': u'none'}
+2018-04-16 14:05:17,936 - nebula.pipeline - INFO - Timing info
+CSVDataController.run average time: 0.000006 seconds
+CSVDataController.run max time: 0.000006 seconds
+AndromedaModel.forward average time: 0.458731 seconds
+AndromedaModel.forward max time: 0.458731 seconds
+AndromedaModel.inverse average time: 0.000019 seconds
+AndromedaModel.inverse max time: 0.000019 seconds
+
+2018-04-16 14:07:04,303 - nebula.pipeline - INFO - Executing pipeline
+Data: {u'interaction': u'none'}
+2018-04-16 14:07:04,760 - nebula.pipeline - INFO - Timing info
+CSVDataController.run average time: 0.000005 seconds
+CSVDataController.run max time: 0.000005 seconds
+AndromedaModel.forward average time: 0.456330 seconds
+AndromedaModel.forward max time: 0.456330 seconds
+AndromedaModel.inverse average time: 0.000024 seconds
+AndromedaModel.inverse max time: 0.000024 seconds
+
+2018-04-16 14:08:03,369 - nebula.pipeline - INFO - Executing pipeline
+Data: {u'interaction': u'none'}
+2018-04-16 14:08:03,802 - nebula.pipeline - INFO - Timing info
+CSVDataController.run average time: 0.000006 seconds
+CSVDataController.run max time: 0.000006 seconds
+AndromedaModel.forward average time: 0.432709 seconds
+AndromedaModel.forward max time: 0.432709 seconds
+AndromedaModel.inverse average time: 0.000020 seconds
+AndromedaModel.inverse max time: 0.000020 seconds
+
+2018-04-16 14:14:45,632 - nebula.pipeline - INFO - Executing pipeline
+Data: {u'interaction': u'none'}
+2018-04-16 14:14:46,185 - nebula.pipeline - INFO - Timing info
+CSVDataController.run average time: 0.000006 seconds
+CSVDataController.run max time: 0.000006 seconds
+AndromedaModel.forward average time: 0.551586 seconds
+AndromedaModel.forward max time: 0.551586 seconds
+AndromedaModel.inverse average time: 0.000044 seconds
+AndromedaModel.inverse max time: 0.000044 seconds
+
+2018-04-16 14:14:57,625 - nebula.pipeline - INFO - Executing pipeline
+Data: {u'interaction': u'pi', u'type': u'pi', u'value': 0.35634328358208955, u'param': u'Active'}
+2018-04-16 14:14:57,947 - nebula.pipeline - INFO - Timing info
+CSVDataController.run average time: 0.000008 seconds
+CSVDataController.run max time: 0.000010 seconds
+AndromedaModel.forward average time: 0.436498 seconds
+AndromedaModel.forward max time: 0.551586 seconds
+AndromedaModel.inverse average time: 0.000090 seconds
+AndromedaModel.inverse max time: 0.000137 seconds
+
+2018-04-16 14:15:09,759 - nebula.pipeline - INFO - Executing pipeline
+Data: {u'interaction': u'pi', u'type': u'pi', u'value': 0.8227611940298508, u'param': u'Active'}
+2018-04-16 14:15:09,935 - nebula.pipeline - INFO - Timing info
+CSVDataController.run average time: 0.000007 seconds
+CSVDataController.run max time: 0.000010 seconds
+AndromedaModel.forward average time: 0.349519 seconds
+AndromedaModel.forward max time: 0.551586 seconds
+AndromedaModel.inverse average time: 0.000083 seconds
+AndromedaModel.inverse max time: 0.000137 seconds
+
+2018-04-16 14:15:12,854 - nebula.pipeline - INFO - Executing pipeline
+Data: {u'interaction': u'pi', u'type': u'pi', u'value': 1, u'param': u'Active'}
+2018-04-16 14:15:12,991 - nebula.pipeline - INFO - Timing info
+CSVDataController.run average time: 0.000007 seconds
+CSVDataController.run max time: 0.000010 seconds
+AndromedaModel.forward average time: 0.296224 seconds
+AndromedaModel.forward max time: 0.551586 seconds
+AndromedaModel.inverse average time: 0.000096 seconds
+AndromedaModel.inverse max time: 0.000137 seconds
+
+2018-04-16 14:21:15,286 - nebula.pipeline - INFO - Executing pipeline
+Data: {u'interaction': u'pi', u'type': u'pi', u'value': 1, u'param': u'Active'}
+2018-04-16 14:21:15,451 - nebula.pipeline - INFO - Timing info
+CSVDataController.run average time: 0.000007 seconds
+CSVDataController.run max time: 0.000010 seconds
+AndromedaModel.forward average time: 0.263822 seconds
+AndromedaModel.forward max time: 0.551586 seconds
+AndromedaModel.inverse average time: 0.000116 seconds
+AndromedaModel.inverse max time: 0.000197 seconds
+
+2018-04-16 14:25:05,463 - nebula.pipeline - INFO - Executing pipeline
+Data: {u'interaction': u'none'}
+2018-04-16 14:25:05,968 - nebula.pipeline - INFO - Timing info
+CSVDataController.run average time: 0.000004 seconds
+CSVDataController.run max time: 0.000004 seconds
+AndromedaModel.forward average time: 0.493962 seconds
+AndromedaModel.forward max time: 0.493962 seconds
+AndromedaModel.inverse average time: 0.000021 seconds
+AndromedaModel.inverse max time: 0.000021 seconds
+
+2018-04-16 14:28:22,886 - nebula.pipeline - INFO - Executing pipeline
+Data: {u'interaction': u'none'}
+2018-04-16 14:28:23,436 - nebula.pipeline - INFO - Timing info
+CSVDataController.run average time: 0.000005 seconds
+CSVDataController.run max time: 0.000005 seconds
+AndromedaModel.forward average time: 0.538607 seconds
+AndromedaModel.forward max time: 0.538607 seconds
+AndromedaModel.inverse average time: 0.000034 seconds
+AndromedaModel.inverse max time: 0.000034 seconds
+
+2018-04-16 14:30:55,606 - nebula.pipeline - INFO - Executing pipeline
+Data: {u'interaction': u'none'}
+2018-04-16 14:30:56,126 - nebula.pipeline - INFO - Timing info
+CSVDataController.run average time: 0.000007 seconds
+CSVDataController.run max time: 0.000007 seconds
+AndromedaModel.forward average time: 0.509012 seconds
+AndromedaModel.forward max time: 0.509012 seconds
+AndromedaModel.inverse average time: 0.000027 seconds
+AndromedaModel.inverse max time: 0.000027 seconds
+
+2018-04-16 14:33:10,508 - nebula.pipeline - INFO - Executing pipeline
+Data: {u'interaction': u'pi', u'type': u'pi', u'value': 0.3003731343283582, u'param': u'Active'}
+2018-04-16 14:33:10,858 - nebula.pipeline - INFO - Timing info
+CSVDataController.run average time: 0.000008 seconds
+CSVDataController.run max time: 0.000010 seconds
+AndromedaModel.forward average time: 0.429031 seconds
+AndromedaModel.forward max time: 0.509012 seconds
+AndromedaModel.inverse average time: 0.000083 seconds
+AndromedaModel.inverse max time: 0.000139 seconds
+
+2018-04-16 14:33:13,653 - nebula.pipeline - INFO - Executing pipeline
+Data: {u'interaction': u'pi', u'type': u'pi', u'value': 0.701492537313433, u'param': u'Active'}
+2018-04-16 14:33:13,887 - nebula.pipeline - INFO - Timing info
+CSVDataController.run average time: 0.000008 seconds
+CSVDataController.run max time: 0.000010 seconds
+AndromedaModel.forward average time: 0.363983 seconds
+AndromedaModel.forward max time: 0.509012 seconds
+AndromedaModel.inverse average time: 0.000093 seconds
+AndromedaModel.inverse max time: 0.000139 seconds
+
+2018-04-16 14:33:21,488 - nebula.pipeline - INFO - Executing pipeline
+Data: {u'interaction': u'pi', u'type': u'pi', u'value': 0.4216417910447762, u'param': u'Active'}
+2018-04-16 14:33:21,851 - nebula.pipeline - INFO - Timing info
+CSVDataController.run average time: 0.000008 seconds
+CSVDataController.run max time: 0.000010 seconds
+AndromedaModel.forward average time: 0.363584 seconds
+AndromedaModel.forward max time: 0.509012 seconds
+AndromedaModel.inverse average time: 0.000091 seconds
+AndromedaModel.inverse max time: 0.000139 seconds
+
+2018-04-16 14:33:23,994 - nebula.pipeline - INFO - Executing pipeline
+Data: {u'interaction': u'pi', u'type': u'pi', u'value': 0.22574626865671643, u'param': u'Active'}
+2018-04-16 14:33:24,403 - nebula.pipeline - INFO - Timing info
+CSVDataController.run average time: 0.000007 seconds
+CSVDataController.run max time: 0.000010 seconds
+AndromedaModel.forward average time: 0.372649 seconds
+AndromedaModel.forward max time: 0.509012 seconds
+AndromedaModel.inverse average time: 0.000091 seconds
+AndromedaModel.inverse max time: 0.000139 seconds
+
+2018-04-16 14:33:26,609 - nebula.pipeline - INFO - Executing pipeline
+Data: {u'interaction': u'pi', u'type': u'pi', u'value': 0.8041044776119405, u'param': u'Active'}
+2018-04-16 14:33:26,820 - nebula.pipeline - INFO - Timing info
+CSVDataController.run average time: 0.000008 seconds
+CSVDataController.run max time: 0.000010 seconds
+AndromedaModel.forward average time: 0.345482 seconds
+AndromedaModel.forward max time: 0.509012 seconds
+AndromedaModel.inverse average time: 0.000099 seconds
+AndromedaModel.inverse max time: 0.000141 seconds
+
+2018-04-16 14:42:40,992 - nebula.pipeline - INFO - Executing pipeline
+Data: {u'interaction': u'none'}
+2018-04-16 14:42:41,536 - nebula.pipeline - INFO - Timing info
+CSVDataController.run average time: 0.000006 seconds
+CSVDataController.run max time: 0.000006 seconds
+AndromedaModel.forward average time: 0.532686 seconds
+AndromedaModel.forward max time: 0.532686 seconds
+AndromedaModel.inverse average time: 0.000021 seconds
+AndromedaModel.inverse max time: 0.000021 seconds
+
+2018-04-16 14:44:48,991 - nebula.pipeline - INFO - Executing pipeline
+Data: {u'interaction': u'none'}
+2018-04-16 14:44:49,447 - nebula.pipeline - INFO - Timing info
+CSVDataController.run average time: 0.000005 seconds
+CSVDataController.run max time: 0.000005 seconds
+AndromedaModel.forward average time: 0.455035 seconds
+AndromedaModel.forward max time: 0.455035 seconds
+AndromedaModel.inverse average time: 0.000018 seconds
+AndromedaModel.inverse max time: 0.000018 seconds
+
+2018-04-16 14:52:04,227 - nebula.pipeline - INFO - Executing pipeline
+Data: {u'interaction': u'none'}
+2018-04-16 14:52:04,766 - nebula.pipeline - INFO - Timing info
+CSVDataController.run average time: 0.000006 seconds
+CSVDataController.run max time: 0.000006 seconds
+AndromedaModel.forward average time: 0.539013 seconds
+AndromedaModel.forward max time: 0.539013 seconds
+AndromedaModel.inverse average time: 0.000020 seconds
+AndromedaModel.inverse max time: 0.000020 seconds
+
+2018-04-16 14:53:29,003 - nebula.pipeline - INFO - Executing pipeline
+Data: {u'interaction': u'none'}
+2018-04-16 14:53:29,535 - nebula.pipeline - INFO - Timing info
+CSVDataController.run average time: 0.000006 seconds
+CSVDataController.run max time: 0.000006 seconds
+AndromedaModel.forward average time: 0.531250 seconds
+AndromedaModel.forward max time: 0.531250 seconds
+AndromedaModel.inverse average time: 0.000019 seconds
+AndromedaModel.inverse max time: 0.000019 seconds
+
+2018-04-16 14:53:39,511 - nebula.pipeline - INFO - Executing pipeline
+Data: {u'interaction': u'pi', u'type': u'pi', u'value': 0.23507462686567163, u'param': u'Active'}
+2018-04-16 14:53:39,911 - nebula.pipeline - INFO - Timing info
+CSVDataController.run average time: 0.000005 seconds
+CSVDataController.run max time: 0.000006 seconds
+AndromedaModel.forward average time: 0.465324 seconds
+AndromedaModel.forward max time: 0.531250 seconds
+AndromedaModel.inverse average time: 0.000044 seconds
+AndromedaModel.inverse max time: 0.000068 seconds
+
+2018-04-16 14:55:07,984 - nebula.pipeline - INFO - Executing pipeline
+Data: {u'interaction': u'none'}
+2018-04-16 14:55:08,532 - nebula.pipeline - INFO - Timing info
+CSVDataController.run average time: 0.000006 seconds
+CSVDataController.run max time: 0.000006 seconds
+AndromedaModel.forward average time: 0.546845 seconds
+AndromedaModel.forward max time: 0.546845 seconds
+AndromedaModel.inverse average time: 0.000019 seconds
+AndromedaModel.inverse max time: 0.000019 seconds
+
+2018-04-16 14:55:16,787 - nebula.pipeline - INFO - Executing pipeline
+Data: {u'interaction': u'pi', u'type': u'pi', u'value': 0.3003731343283582, u'param': u'Active'}
+2018-04-16 14:55:17,101 - nebula.pipeline - INFO - Timing info
+CSVDataController.run average time: 0.000006 seconds
+CSVDataController.run max time: 0.000006 seconds
+AndromedaModel.forward average time: 0.430105 seconds
+AndromedaModel.forward max time: 0.546845 seconds
+AndromedaModel.inverse average time: 0.000049 seconds
+AndromedaModel.inverse max time: 0.000078 seconds
+
+2018-04-18 12:57:08,005 - nebula.pipeline - INFO - Executing pipeline
+Data: {u'interaction': u'none'}
+2018-04-18 12:57:08,883 - nebula.pipeline - INFO - Timing info
+CSVDataController.run average time: 0.000007 seconds
+CSVDataController.run max time: 0.000007 seconds
+AndromedaModel.forward average time: 0.859526 seconds
+AndromedaModel.forward max time: 0.859526 seconds
+AndromedaModel.inverse average time: 0.000029 seconds
+AndromedaModel.inverse max time: 0.000029 seconds
+
+2018-04-18 12:58:26,060 - nebula.pipeline - INFO - Executing pipeline
+Data: {u'interaction': u'none'}
+2018-04-18 12:58:26,625 - nebula.pipeline - INFO - Timing info
+CSVDataController.run average time: 0.000006 seconds
+CSVDataController.run max time: 0.000006 seconds
+AndromedaModel.forward average time: 0.565064 seconds
+AndromedaModel.forward max time: 0.565064 seconds
+AndromedaModel.inverse average time: 0.000065 seconds
+AndromedaModel.inverse max time: 0.000065 seconds
+
+2018-04-18 12:58:41,144 - nebula.pipeline - INFO - Executing pipeline
+Data: {u'interaction': u'pi', u'type': u'pi', u'value': 0.2444029850746269, u'param': u'Active'}
+2018-04-18 12:58:41,521 - nebula.pipeline - INFO - Timing info
+CSVDataController.run average time: 0.000005 seconds
+CSVDataController.run max time: 0.000006 seconds
+AndromedaModel.forward average time: 0.470563 seconds
+AndromedaModel.forward max time: 0.565064 seconds
+AndromedaModel.inverse average time: 0.000081 seconds
+AndromedaModel.inverse max time: 0.000096 seconds
+
+2018-04-18 13:03:36,479 - nebula.pipeline - INFO - Executing pipeline
+Data: {u'interaction': u'none'}
+2018-04-18 13:03:37,381 - nebula.pipeline - INFO - Timing info
+CSVDataController.run average time: 0.000006 seconds
+CSVDataController.run max time: 0.000006 seconds
+AndromedaModel.forward average time: 0.880172 seconds
+AndromedaModel.forward max time: 0.880172 seconds
+AndromedaModel.inverse average time: 0.000036 seconds
+AndromedaModel.inverse max time: 0.000036 seconds
+
+2018-04-18 13:06:47,570 - nebula.pipeline - INFO - Executing pipeline
+Data: {u'interaction': u'none'}
+2018-04-18 13:06:48,137 - nebula.pipeline - INFO - Timing info
+CSVDataController.run average time: 0.000005 seconds
+CSVDataController.run max time: 0.000005 seconds
+AndromedaModel.forward average time: 0.566350 seconds
+AndromedaModel.forward max time: 0.566350 seconds
+AndromedaModel.inverse average time: 0.000019 seconds
+AndromedaModel.inverse max time: 0.000019 seconds
+
+2018-04-18 13:10:14,599 - nebula.pipeline - INFO - Executing pipeline
+Data: {u'interaction': u'none'}
+2018-04-18 13:10:15,069 - nebula.pipeline - INFO - Timing info
+CSVDataController.run average time: 0.000004 seconds
+CSVDataController.run max time: 0.000004 seconds
+AndromedaModel.forward average time: 0.468767 seconds
+AndromedaModel.forward max time: 0.468767 seconds
+AndromedaModel.inverse average time: 0.000016 seconds
+AndromedaModel.inverse max time: 0.000016 seconds
+
+2018-04-18 13:10:22,734 - nebula.pipeline - INFO - Executing pipeline
+Data: {u'interaction': u'pi', u'type': u'pi', u'value': 0.23507462686567163, u'param': u'Active'}
+2018-04-18 13:10:23,086 - nebula.pipeline - INFO - Timing info
+CSVDataController.run average time: 0.000005 seconds
+CSVDataController.run max time: 0.000006 seconds
+AndromedaModel.forward average time: 0.409993 seconds
+AndromedaModel.forward max time: 0.468767 seconds
+AndromedaModel.inverse average time: 0.000057 seconds
+AndromedaModel.inverse max time: 0.000099 seconds
+
+2018-04-18 13:17:24,527 - nebula.pipeline - INFO - Executing pipeline
+Data: {u'interaction': u'none'}
+2018-04-18 13:17:25,048 - nebula.pipeline - INFO - Timing info
+CSVDataController.run average time: 0.000006 seconds
+CSVDataController.run max time: 0.000006 seconds
+AndromedaModel.forward average time: 0.520699 seconds
+AndromedaModel.forward max time: 0.520699 seconds
+AndromedaModel.inverse average time: 0.000029 seconds
+AndromedaModel.inverse max time: 0.000029 seconds
+
+2018-04-18 13:20:12,716 - nebula.pipeline - INFO - Executing pipeline
+Data: {u'interaction': u'pi', u'type': u'pi', u'value': 0.3003731343283582, u'param': u'Agility'}
+2018-04-18 13:20:13,055 - nebula.pipeline - INFO - Timing info
+CSVDataController.run average time: 0.000008 seconds
+CSVDataController.run max time: 0.000009 seconds
+AndromedaModel.forward average time: 0.429281 seconds
+AndromedaModel.forward max time: 0.520699 seconds
+AndromedaModel.inverse average time: 0.000057 seconds
+AndromedaModel.inverse max time: 0.000086 seconds
+
+2018-04-18 13:23:08,743 - nebula.pipeline - INFO - Executing pipeline
+Data: {u'interaction': u'none'}
+2018-04-18 13:23:09,188 - nebula.pipeline - INFO - Timing info
+CSVDataController.run average time: 0.000005 seconds
+CSVDataController.run max time: 0.000005 seconds
+AndromedaModel.forward average time: 0.444368 seconds
+AndromedaModel.forward max time: 0.444368 seconds
+AndromedaModel.inverse average time: 0.000018 seconds
+AndromedaModel.inverse max time: 0.000018 seconds
+
+2018-04-18 13:30:05,615 - nebula.pipeline - INFO - Executing pipeline
+Data: {u'interaction': u'none'}
+2018-04-18 13:30:06,057 - nebula.pipeline - INFO - Timing info
+CSVDataController.run average time: 0.000006 seconds
+CSVDataController.run max time: 0.000006 seconds
+AndromedaModel.forward average time: 0.441294 seconds
+AndromedaModel.forward max time: 0.441294 seconds
+AndromedaModel.inverse average time: 0.000018 seconds
+AndromedaModel.inverse max time: 0.000018 seconds
+
+2018-04-18 13:32:32,314 - nebula.pipeline - INFO - Executing pipeline
+Data: {u'interaction': u'none'}
+2018-04-18 13:32:32,938 - nebula.pipeline - INFO - Timing info
+CSVDataController.run average time: 0.000010 seconds
+CSVDataController.run max time: 0.000010 seconds
+AndromedaModel.forward average time: 0.624009 seconds
+AndromedaModel.forward max time: 0.624009 seconds
+AndromedaModel.inverse average time: 0.000031 seconds
+AndromedaModel.inverse max time: 0.000031 seconds
+
+2018-04-18 13:37:35,904 - nebula.pipeline - INFO - Executing pipeline
+Data: {u'interaction': u'none'}
+2018-04-18 13:37:36,492 - nebula.pipeline - INFO - Timing info
+CSVDataController.run average time: 0.000008 seconds
+CSVDataController.run max time: 0.000008 seconds
+AndromedaModel.forward average time: 0.587784 seconds
+AndromedaModel.forward max time: 0.587784 seconds
+AndromedaModel.inverse average time: 0.000019 seconds
+AndromedaModel.inverse max time: 0.000019 seconds
+
+2018-04-18 13:41:36,279 - nebula.pipeline - INFO - Executing pipeline
+Data: {u'interaction': u'none'}
+2018-04-18 13:41:36,792 - nebula.pipeline - INFO - Timing info
+CSVDataController.run average time: 0.000007 seconds
+CSVDataController.run max time: 0.000007 seconds
+AndromedaModel.forward average time: 0.512313 seconds
+AndromedaModel.forward max time: 0.512313 seconds
+AndromedaModel.inverse average time: 0.000022 seconds
+AndromedaModel.inverse max time: 0.000022 seconds
+
+2018-04-18 13:41:46,580 - nebula.pipeline - INFO - Executing pipeline
+Data: {u'interaction': u'none'}
+2018-04-18 13:41:47,147 - nebula.pipeline - INFO - Timing info
+CSVDataController.run average time: 0.000004 seconds
+CSVDataController.run max time: 0.000004 seconds
+AndromedaModel.forward average time: 0.567041 seconds
+AndromedaModel.forward max time: 0.567041 seconds
+AndromedaModel.inverse average time: 0.000011 seconds
+AndromedaModel.inverse max time: 0.000011 seconds
+
+2018-04-18 13:45:28,192 - nebula.pipeline - INFO - Executing pipeline
+Data: {u'interaction': u'none'}
+2018-04-18 13:45:28,663 - nebula.pipeline - INFO - Timing info
+CSVDataController.run average time: 0.000005 seconds
+CSVDataController.run max time: 0.000005 seconds
+AndromedaModel.forward average time: 0.470042 seconds
+AndromedaModel.forward max time: 0.470042 seconds
+AndromedaModel.inverse average time: 0.000019 seconds
+AndromedaModel.inverse max time: 0.000019 seconds
+
+2018-04-18 13:52:07,470 - nebula.pipeline - INFO - Executing pipeline
+Data: {u'interaction': u'none'}
+2018-04-18 13:52:07,979 - nebula.pipeline - INFO - Timing info
+CSVDataController.run average time: 0.000005 seconds
+CSVDataController.run max time: 0.000005 seconds
+AndromedaModel.forward average time: 0.509404 seconds
+AndromedaModel.forward max time: 0.509404 seconds
+AndromedaModel.inverse average time: 0.000029 seconds
+AndromedaModel.inverse max time: 0.000029 seconds
+
+2018-04-18 14:04:24,533 - nebula.pipeline - INFO - Executing pipeline
+Data: {u'interaction': u'none'}
+2018-04-18 14:04:24,999 - nebula.pipeline - INFO - Timing info
+CSVDataController.run average time: 0.000010 seconds
+CSVDataController.run max time: 0.000010 seconds
+AndromedaModel.forward average time: 0.465306 seconds
+AndromedaModel.forward max time: 0.465306 seconds
+AndromedaModel.inverse average time: 0.000036 seconds
+AndromedaModel.inverse max time: 0.000036 seconds
+
+2018-04-18 14:35:51,577 - nebula.pipeline - INFO - Executing pipeline
+Data: {u'interaction': u'none'}
+2018-04-18 14:35:52,124 - nebula.pipeline - INFO - Timing info
+CSVDataController.run average time: 0.000006 seconds
+CSVDataController.run max time: 0.000006 seconds
+AndromedaModel.forward average time: 0.535136 seconds
+AndromedaModel.forward max time: 0.535136 seconds
+AndromedaModel.inverse average time: 0.000024 seconds
+AndromedaModel.inverse max time: 0.000024 seconds
+
+2018-04-18 14:37:36,950 - nebula.pipeline - INFO - Executing pipeline
+Data: {u'interaction': u'none'}
+2018-04-18 14:37:37,447 - nebula.pipeline - INFO - Timing info
+CSVDataController.run average time: 0.000006 seconds
+CSVDataController.run max time: 0.000006 seconds
+AndromedaModel.forward average time: 0.485264 seconds
+AndromedaModel.forward max time: 0.485264 seconds
+AndromedaModel.inverse average time: 0.000033 seconds
+AndromedaModel.inverse max time: 0.000033 seconds
+
+2018-04-18 14:40:30,508 - nebula.pipeline - INFO - Executing pipeline
+Data: {u'interaction': u'pi', u'type': u'pi', u'value': 0.09514925373134325, u'param': u'Agility'}
+2018-04-18 14:40:30,941 - nebula.pipeline - INFO - Timing info
+CSVDataController.run average time: 0.000007 seconds
+CSVDataController.run max time: 0.000008 seconds
+AndromedaModel.forward average time: 0.443922 seconds
+AndromedaModel.forward max time: 0.485264 seconds
+AndromedaModel.inverse average time: 0.000085 seconds
+AndromedaModel.inverse max time: 0.000136 seconds
+
+2018-04-18 14:40:39,735 - nebula.pipeline - INFO - Executing pipeline
+Data: {u'interaction': u'pi', u'type': u'pi', u'value': 0.6921641791044776, u'param': u'Active'}
+2018-04-18 14:40:39,977 - nebula.pipeline - INFO - Timing info
+CSVDataController.run average time: 0.000008 seconds
+CSVDataController.run max time: 0.000009 seconds
+AndromedaModel.forward average time: 0.376428 seconds
+AndromedaModel.forward max time: 0.485264 seconds
+AndromedaModel.inverse average time: 0.000105 seconds
+AndromedaModel.inverse max time: 0.000145 seconds
+
+2018-04-19 12:57:09,691 - nebula.pipeline - INFO - Executing pipeline
+Data: {u'interaction': u'none'}
+2018-04-19 12:57:10,290 - nebula.pipeline - INFO - Timing info
+CSVDataController.run average time: 0.000004 seconds
+CSVDataController.run max time: 0.000004 seconds
+AndromedaModel.forward average time: 0.589188 seconds
+AndromedaModel.forward max time: 0.589188 seconds
+AndromedaModel.inverse average time: 0.000026 seconds
+AndromedaModel.inverse max time: 0.000026 seconds
+
+2018-04-19 13:26:11,358 - nebula.pipeline - INFO - Executing pipeline
+Data: {u'interaction': u'none'}
+2018-04-19 13:27:02,723 - nebula.pipeline - INFO - Executing pipeline
+Data: {u'interaction': u'none'}
+2018-04-19 13:28:28,467 - nebula.pipeline - INFO - Executing pipeline
+Data: {u'interaction': u'none'}
+2018-04-19 13:28:28,984 - nebula.pipeline - INFO - Timing info
+CSVDataController.run average time: 0.000006 seconds
+CSVDataController.run max time: 0.000006 seconds
+AndromedaModel.forward average time: 0.516495 seconds
+AndromedaModel.forward max time: 0.516495 seconds
+AndromedaModel.inverse average time: 0.000019 seconds
+AndromedaModel.inverse max time: 0.000019 seconds
+
+2018-04-19 13:32:54,313 - nebula.pipeline - INFO - Executing pipeline
+Data: {u'interaction': u'none'}
+2018-04-19 13:32:54,887 - nebula.pipeline - INFO - Timing info
+CSVDataController.run average time: 0.000005 seconds
+CSVDataController.run max time: 0.000005 seconds
+AndromedaModel.forward average time: 0.573840 seconds
+AndromedaModel.forward max time: 0.573840 seconds
+AndromedaModel.inverse average time: 0.000032 seconds
+AndromedaModel.inverse max time: 0.000032 seconds
+
+2018-04-19 14:05:15,417 - nebula.pipeline - INFO - Executing pipeline
+Data: {u'interaction': u'none'}
+2018-04-19 14:05:16,211 - nebula.pipeline - INFO - Timing info
+CSVDataController.run average time: 0.000007 seconds
+CSVDataController.run max time: 0.000007 seconds
+AndromedaModel.forward average time: 0.769019 seconds
+AndromedaModel.forward max time: 0.769019 seconds
+AndromedaModel.inverse average time: 0.000024 seconds
+AndromedaModel.inverse max time: 0.000024 seconds
+
+2018-04-19 14:13:16,935 - nebula.pipeline - INFO - Executing pipeline
+Data: {u'interaction': u'none'}
+2018-04-19 14:13:17,501 - nebula.pipeline - INFO - Timing info
+CSVDataController.run average time: 0.000015 seconds
+CSVDataController.run max time: 0.000015 seconds
+AndromedaModel.forward average time: 0.553710 seconds
+AndromedaModel.forward max time: 0.553710 seconds
+AndromedaModel.inverse average time: 0.000042 seconds
+AndromedaModel.inverse max time: 0.000042 seconds
+
+2018-04-24 10:31:59,284 - nebula.pipeline - INFO - Executing pipeline
+Data: {u'interaction': u'none'}
+2018-04-24 10:32:00,102 - nebula.pipeline - INFO - Timing info
+CSVDataController.run average time: 0.000005 seconds
+CSVDataController.run max time: 0.000005 seconds
+AndromedaModel.forward average time: 0.789749 seconds
+AndromedaModel.forward max time: 0.789749 seconds
+AndromedaModel.inverse average time: 0.000043 seconds
+AndromedaModel.inverse max time: 0.000043 seconds
+
+2018-04-24 10:32:54,074 - nebula.pipeline - INFO - Executing pipeline
+Data: {u'interaction': u'pi', u'type': u'pi', u'value': 0.2, u'param': u'Grizzly Bear'}
+2018-04-24 10:32:54,104 - nebula.pipeline - INFO - Timing info
+CSVDataController.run average time: 0.000005 seconds
+CSVDataController.run max time: 0.000005 seconds
+AndromedaModel.forward average time: 0.394906 seconds
+AndromedaModel.forward max time: 0.789749 seconds
+AndromedaModel.inverse average time: 0.000046 seconds
+AndromedaModel.inverse max time: 0.000050 seconds
+
+2018-04-24 10:37:29,085 - nebula.pipeline - INFO - Executing pipeline
+Data: {u'interaction': u'none'}
+2018-04-24 10:37:29,886 - nebula.pipeline - INFO - Timing info
+CSVDataController.run average time: 0.000006 seconds
+CSVDataController.run max time: 0.000006 seconds
+AndromedaModel.forward average time: 0.734612 seconds
+AndromedaModel.forward max time: 0.734612 seconds
+AndromedaModel.inverse average time: 0.000028 seconds
+AndromedaModel.inverse max time: 0.000028 seconds
+
+2018-04-24 10:37:41,893 - nebula.pipeline - INFO - Executing pipeline
+Data: {u'interaction': u'pi', u'type': u'pi', u'value': 0.29104477611940305, u'param': u'Active'}
+2018-04-24 10:37:42,256 - nebula.pipeline - INFO - Timing info
+CSVDataController.run average time: 0.000005 seconds
+CSVDataController.run max time: 0.000006 seconds
+AndromedaModel.forward average time: 0.524772 seconds
+AndromedaModel.forward max time: 0.734612 seconds
+AndromedaModel.inverse average time: 0.000048 seconds
+AndromedaModel.inverse max time: 0.000068 seconds
+
+2018-04-24 10:40:11,788 - nebula.pipeline - INFO - Executing pipeline
+Data: {u'interaction': u'none'}
+2018-04-24 10:40:12,566 - nebula.pipeline - INFO - Timing info
+CSVDataController.run average time: 0.000004 seconds
+CSVDataController.run max time: 0.000004 seconds
+AndromedaModel.forward average time: 0.761473 seconds
+AndromedaModel.forward max time: 0.761473 seconds
+AndromedaModel.inverse average time: 0.000022 seconds
+AndromedaModel.inverse max time: 0.000022 seconds
+
+2018-04-24 10:40:22,733 - nebula.pipeline - INFO - Executing pipeline
+Data: {u'interaction': u'pi', u'type': u'pi', u'value': 0.22, u'param': u'Grizzly Bear'}
+2018-04-24 10:40:22,772 - nebula.pipeline - INFO - Timing info
+CSVDataController.run average time: 0.000009 seconds
+CSVDataController.run max time: 0.000013 seconds
+AndromedaModel.forward average time: 0.380787 seconds
+AndromedaModel.forward max time: 0.761473 seconds
+AndromedaModel.inverse average time: 0.000073 seconds
+AndromedaModel.inverse max time: 0.000124 seconds
+
+2018-04-24 10:41:57,256 - nebula.pipeline - INFO - Executing pipeline
+Data: {u'interaction': u'none'}
+2018-04-24 10:41:57,809 - nebula.pipeline - INFO - Timing info
+CSVDataController.run average time: 0.000008 seconds
+CSVDataController.run max time: 0.000008 seconds
+AndromedaModel.forward average time: 0.552792 seconds
+AndromedaModel.forward max time: 0.552792 seconds
+AndromedaModel.inverse average time: 0.000029 seconds
+AndromedaModel.inverse max time: 0.000029 seconds
+
+2018-04-24 10:42:19,789 - nebula.pipeline - INFO - Executing pipeline
+Data: {u'interaction': u'pi', u'type': u'pi', u'value': 0.28, u'param': u'Active'}
+2018-04-24 10:42:20,175 - nebula.pipeline - INFO - Timing info
+CSVDataController.run average time: 0.000009 seconds
+CSVDataController.run max time: 0.000010 seconds
+AndromedaModel.forward average time: 0.468973 seconds
+AndromedaModel.forward max time: 0.552792 seconds
+AndromedaModel.inverse average time: 0.000093 seconds
+AndromedaModel.inverse max time: 0.000157 seconds
+
+2018-04-24 10:42:46,426 - nebula.pipeline - INFO - Executing pipeline
+Data: {u'interaction': u'pi', u'type': u'pi', u'value': 0.58, u'param': u'Arctic'}
+2018-04-24 10:42:46,798 - nebula.pipeline - INFO - Timing info
+CSVDataController.run average time: 0.000008 seconds
+CSVDataController.run max time: 0.000010 seconds
+AndromedaModel.forward average time: 0.436688 seconds
+AndromedaModel.forward max time: 0.552792 seconds
+AndromedaModel.inverse average time: 0.000093 seconds
+AndromedaModel.inverse max time: 0.000157 seconds
+
+2018-04-24 10:42:46,804 - nebula.pipeline - INFO - Executing pipeline
+Data: {u'interaction': u'pi', u'type': u'pi', u'value': 0.58, u'param': u'Arctic'}
+2018-04-24 10:42:47,271 - nebula.pipeline - INFO - Timing info
+CSVDataController.run average time: 0.000007 seconds
+CSVDataController.run max time: 0.000010 seconds
+AndromedaModel.forward average time: 0.444175 seconds
+AndromedaModel.forward max time: 0.552792 seconds
+AndromedaModel.inverse average time: 0.000083 seconds
+AndromedaModel.inverse max time: 0.000157 seconds
+
+2018-04-25 10:40:27,725 - nebula.pipeline - INFO - Executing pipeline
+Data: {u'interaction': u'none'}
+2018-04-25 10:40:28,238 - nebula.pipeline - INFO - Timing info
+CSVDataController.run average time: 0.000036 seconds
+CSVDataController.run max time: 0.000036 seconds
+AndromedaModel.forward average time: 0.504250 seconds
+AndromedaModel.forward max time: 0.504250 seconds
+AndromedaModel.inverse average time: 0.000051 seconds
+AndromedaModel.inverse max time: 0.000051 seconds
+
+2018-04-25 10:40:50,469 - nebula.pipeline - INFO - Executing pipeline
+Data: {u'interaction': u'pi', u'type': u'pi', u'value': 0.62, u'param': u'Furry'}
+2018-04-25 10:40:50,765 - nebula.pipeline - INFO - Timing info
+CSVDataController.run average time: 0.000022 seconds
+CSVDataController.run max time: 0.000036 seconds
+AndromedaModel.forward average time: 0.399985 seconds
+AndromedaModel.forward max time: 0.504250 seconds
+AndromedaModel.inverse average time: 0.000067 seconds
+AndromedaModel.inverse max time: 0.000082 seconds
+
+2018-04-25 10:41:15,691 - nebula.pipeline - INFO - Executing pipeline
+Data: {u'interaction': u'pi', u'type': u'pi', u'value': 0.55, u'param': u'Active'}
+2018-04-25 10:41:15,941 - nebula.pipeline - INFO - Timing info
+CSVDataController.run average time: 0.000016 seconds
+CSVDataController.run max time: 0.000036 seconds
+AndromedaModel.forward average time: 0.349828 seconds
+AndromedaModel.forward max time: 0.504250 seconds
+AndromedaModel.inverse average time: 0.000075 seconds
+AndromedaModel.inverse max time: 0.000091 seconds
+
+2018-04-25 10:41:15,946 - nebula.pipeline - INFO - Executing pipeline
+Data: {u'interaction': u'pi', u'type': u'pi', u'value': 0.55, u'param': u'Active'}
+2018-04-25 10:41:16,192 - nebula.pipeline - INFO - Timing info
+CSVDataController.run average time: 0.000014 seconds
+CSVDataController.run max time: 0.000036 seconds
+AndromedaModel.forward average time: 0.323587 seconds
+AndromedaModel.forward max time: 0.504250 seconds
+AndromedaModel.inverse average time: 0.000086 seconds
+AndromedaModel.inverse max time: 0.000119 seconds
+
+2018-04-25 10:41:38,040 - nebula.pipeline - INFO - Executing pipeline
+Data: {u'interaction': u'pi', u'type': u'pi', u'value': 0.39, u'param': u'Hairless'}
+2018-04-25 10:41:38,239 - nebula.pipeline - INFO - Timing info
+CSVDataController.run average time: 0.000013 seconds
+CSVDataController.run max time: 0.000036 seconds
+AndromedaModel.forward average time: 0.298749 seconds
+AndromedaModel.forward max time: 0.504250 seconds
+AndromedaModel.inverse average time: 0.000088 seconds
+AndromedaModel.inverse max time: 0.000119 seconds
+
+2018-04-25 10:41:38,244 - nebula.pipeline - INFO - Executing pipeline
+Data: {u'interaction': u'pi', u'type': u'pi', u'value': 0.39, u'param': u'Hairless'}
+2018-04-25 10:41:38,527 - nebula.pipeline - INFO - Timing info
+CSVDataController.run average time: 0.000011 seconds
+CSVDataController.run max time: 0.000036 seconds
+AndromedaModel.forward average time: 0.296097 seconds
+AndromedaModel.forward max time: 0.504250 seconds
+AndromedaModel.inverse average time: 0.000087 seconds
+AndromedaModel.inverse max time: 0.000119 seconds
+
+2018-04-25 10:41:38,533 - nebula.pipeline - INFO - Executing pipeline
+Data: {u'interaction': u'pi', u'type': u'pi', u'value': 0.39, u'param': u'Hairless'}
+2018-04-25 10:41:38,818 - nebula.pipeline - INFO - Timing info
+CSVDataController.run average time: 0.000010 seconds
+CSVDataController.run max time: 0.000036 seconds
+AndromedaModel.forward average time: 0.294352 seconds
+AndromedaModel.forward max time: 0.504250 seconds
+AndromedaModel.inverse average time: 0.000085 seconds
+AndromedaModel.inverse max time: 0.000119 seconds
+
+2018-04-25 10:41:38,825 - nebula.pipeline - INFO - Executing pipeline
+Data: {u'interaction': u'pi', u'type': u'pi', u'value': 0.39, u'param': u'Hairless'}
+2018-04-25 10:41:39,079 - nebula.pipeline - INFO - Timing info
+CSVDataController.run average time: 0.000010 seconds
+CSVDataController.run max time: 0.000036 seconds
+AndromedaModel.forward average time: 0.289285 seconds
+AndromedaModel.forward max time: 0.504250 seconds
+AndromedaModel.inverse average time: 0.000085 seconds
+AndromedaModel.inverse max time: 0.000119 seconds
+
+2018-04-26 13:28:45,554 - nebula.pipeline - INFO - Executing pipeline
+Data: {u'interaction': u'none'}
+2018-04-26 13:28:46,396 - nebula.pipeline - INFO - Timing info
+CSVDataController.run average time: 0.000034 seconds
+CSVDataController.run max time: 0.000034 seconds
+AndromedaModel.forward average time: 0.817105 seconds
+AndromedaModel.forward max time: 0.817105 seconds
+AndromedaModel.inverse average time: 0.000037 seconds
+AndromedaModel.inverse max time: 0.000037 seconds
+
+2018-04-26 13:30:50,252 - nebula.pipeline - INFO - Executing pipeline
+Data: {u'interaction': u'pi', u'type': u'pi', u'value': 0.41, u'param': u'Active'}
+2018-04-26 13:30:50,552 - nebula.pipeline - INFO - Timing info
+CSVDataController.run average time: 0.000019 seconds
+CSVDataController.run max time: 0.000034 seconds
+AndromedaModel.forward average time: 0.558314 seconds
+AndromedaModel.forward max time: 0.817105 seconds
+AndromedaModel.inverse average time: 0.000050 seconds
+AndromedaModel.inverse max time: 0.000063 seconds
+
+2018-04-26 13:31:04,739 - nebula.pipeline - INFO - Executing pipeline
+Data: {u'interaction': u'pi', u'type': u'pi', u'value': 0.53, u'param': u'Arctic'}
+2018-04-26 13:31:05,132 - nebula.pipeline - INFO - Timing info
+CSVDataController.run average time: 0.000015 seconds
+CSVDataController.run max time: 0.000034 seconds
+AndromedaModel.forward average time: 0.494564 seconds
+AndromedaModel.forward max time: 0.817105 seconds
+AndromedaModel.inverse average time: 0.000079 seconds
+AndromedaModel.inverse max time: 0.000137 seconds
+
+2018-04-26 13:31:05,137 - nebula.pipeline - INFO - Executing pipeline
+Data: {u'interaction': u'pi', u'type': u'pi', u'value': 0.53, u'param': u'Arctic'}
+2018-04-26 13:31:05,576 - nebula.pipeline - INFO - Timing info
+CSVDataController.run average time: 0.000012 seconds
+CSVDataController.run max time: 0.000034 seconds
+AndromedaModel.forward average time: 0.480453 seconds
+AndromedaModel.forward max time: 0.817105 seconds
+AndromedaModel.inverse average time: 0.000072 seconds
+AndromedaModel.inverse max time: 0.000137 seconds
+
+2018-04-26 15:00:38,098 - nebula.pipeline - INFO - Executing pipeline
+Data: {u'interaction': u'none'}
+2018-04-26 15:00:38,605 - nebula.pipeline - INFO - Timing info
+CSVDataController.run average time: 0.000008 seconds
+CSVDataController.run max time: 0.000008 seconds
+AndromedaModel.forward average time: 0.497883 seconds
+AndromedaModel.forward max time: 0.497883 seconds
+AndromedaModel.inverse average time: 0.000034 seconds
+AndromedaModel.inverse max time: 0.000034 seconds
+
+2018-04-26 15:00:47,726 - nebula.pipeline - INFO - Executing pipeline
+Data: {u'interaction': u'pi', u'type': u'pi', u'value': 0.34, u'param': u'Active'}
+2018-04-26 15:00:48,020 - nebula.pipeline - INFO - Timing info
+CSVDataController.run average time: 0.000007 seconds
+CSVDataController.run max time: 0.000008 seconds
+AndromedaModel.forward average time: 0.395437 seconds
+AndromedaModel.forward max time: 0.497883 seconds
+AndromedaModel.inverse average time: 0.000062 seconds
+AndromedaModel.inverse max time: 0.000090 seconds
+
+2018-04-26 15:00:59,319 - nebula.pipeline - INFO - Executing pipeline
+Data: {u'interaction': u'pi', u'type': u'pi', u'value': 0.13, u'param': u'Agility'}
+2018-04-26 15:00:59,670 - nebula.pipeline - INFO - Timing info
+CSVDataController.run average time: 0.000006 seconds
+CSVDataController.run max time: 0.000008 seconds
+AndromedaModel.forward average time: 0.380618 seconds
+AndromedaModel.forward max time: 0.497883 seconds
+AndromedaModel.inverse average time: 0.000065 seconds
+AndromedaModel.inverse max time: 0.000090 seconds
+
+2018-04-26 15:00:59,675 - nebula.pipeline - INFO - Executing pipeline
+Data: {u'interaction': u'pi', u'type': u'pi', u'value': 0.13, u'param': u'Agility'}
+2018-04-26 15:01:00,067 - nebula.pipeline - INFO - Timing info
+CSVDataController.run average time: 0.000006 seconds
+CSVDataController.run max time: 0.000008 seconds
+AndromedaModel.forward average time: 0.383333 seconds
+AndromedaModel.forward max time: 0.497883 seconds
+AndromedaModel.inverse average time: 0.000061 seconds
+AndromedaModel.inverse max time: 0.000090 seconds
+
+2018-04-26 15:01:08,561 - nebula.pipeline - INFO - Executing pipeline
+Data: {u'interaction': u'pi', u'type': u'pi', u'value': 0.31, u'param': u'Bush'}
+2018-04-26 15:01:08,942 - nebula.pipeline - INFO - Timing info
+CSVDataController.run average time: 0.000006 seconds
+CSVDataController.run max time: 0.000008 seconds
+AndromedaModel.forward average time: 0.380001 seconds
+AndromedaModel.forward max time: 0.497883 seconds
+AndromedaModel.inverse average time: 0.000077 seconds
+AndromedaModel.inverse max time: 0.000140 seconds
+
+2018-04-26 15:01:08,950 - nebula.pipeline - INFO - Executing pipeline
+Data: {u'interaction': u'pi', u'type': u'pi', u'value': 0.31, u'param': u'Bush'}
+2018-04-26 15:01:09,317 - nebula.pipeline - INFO - Timing info
+CSVDataController.run average time: 0.000006 seconds
+CSVDataController.run max time: 0.000008 seconds
+AndromedaModel.forward average time: 0.374964 seconds
+AndromedaModel.forward max time: 0.497883 seconds
+AndromedaModel.inverse average time: 0.000081 seconds
+AndromedaModel.inverse max time: 0.000140 seconds
+
+2018-04-26 15:01:09,323 - nebula.pipeline - INFO - Executing pipeline
+Data: {u'interaction': u'pi', u'type': u'pi', u'value': 0.31, u'param': u'Bush'}
+2018-04-26 15:01:09,717 - nebula.pipeline - INFO - Timing info
+CSVDataController.run average time: 0.000006 seconds
+CSVDataController.run max time: 0.000008 seconds
+AndromedaModel.forward average time: 0.377601 seconds
+AndromedaModel.forward max time: 0.497883 seconds
+AndromedaModel.inverse average time: 0.000078 seconds
+AndromedaModel.inverse max time: 0.000140 seconds
+
+2018-04-26 15:01:09,723 - nebula.pipeline - INFO - Executing pipeline
+Data: {u'interaction': u'pi', u'type': u'pi', u'value': 0.31, u'param': u'Bush'}
+2018-04-26 15:01:10,206 - nebula.pipeline - INFO - Timing info
+CSVDataController.run average time: 0.000005 seconds
+CSVDataController.run max time: 0.000008 seconds
+AndromedaModel.forward average time: 0.390687 seconds
+AndromedaModel.forward max time: 0.497883 seconds
+AndromedaModel.inverse average time: 0.000075 seconds
+AndromedaModel.inverse max time: 0.000140 seconds
+
+2018-04-26 15:01:25,176 - nebula.pipeline - INFO - Executing pipeline
+Data: {u'interaction': u'pi', u'type': u'pi', u'value': 0.15, u'param': u'Domestic'}
+2018-04-26 15:01:25,589 - nebula.pipeline - INFO - Timing info
+CSVDataController.run average time: 0.000006 seconds
+CSVDataController.run max time: 0.000009 seconds
+AndromedaModel.forward average time: 0.389475 seconds
+AndromedaModel.forward max time: 0.497883 seconds
+AndromedaModel.inverse average time: 0.000083 seconds
+AndromedaModel.inverse max time: 0.000148 seconds
+
+2018-04-26 15:01:25,596 - nebula.pipeline - INFO - Executing pipeline
+Data: {u'interaction': u'pi', u'type': u'pi', u'value': 0.15, u'param': u'Domestic'}
+2018-04-26 15:01:26,006 - nebula.pipeline - INFO - Timing info
+CSVDataController.run average time: 0.000006 seconds
+CSVDataController.run max time: 0.000009 seconds
+AndromedaModel.forward average time: 0.391488 seconds
+AndromedaModel.forward max time: 0.497883 seconds
+AndromedaModel.inverse average time: 0.000080 seconds
+AndromedaModel.inverse max time: 0.000148 seconds
+
+2018-04-26 15:01:26,013 - nebula.pipeline - INFO - Executing pipeline
+Data: {u'interaction': u'pi', u'type': u'pi', u'value': 0.15, u'param': u'Domestic'}
+2018-04-26 15:01:26,505 - nebula.pipeline - INFO - Timing info
+CSVDataController.run average time: 0.000006 seconds
+CSVDataController.run max time: 0.000009 seconds
+AndromedaModel.forward average time: 0.400577 seconds
+AndromedaModel.forward max time: 0.497883 seconds
+AndromedaModel.inverse average time: 0.000078 seconds
+AndromedaModel.inverse max time: 0.000148 seconds
+
+2018-04-26 15:01:26,511 - nebula.pipeline - INFO - Executing pipeline
+Data: {u'interaction': u'pi', u'type': u'pi', u'value': 0.15, u'param': u'Domestic'}
+2018-04-26 15:01:27,097 - nebula.pipeline - INFO - Timing info
+CSVDataController.run average time: 0.000006 seconds
+CSVDataController.run max time: 0.000009 seconds
+AndromedaModel.forward average time: 0.416039 seconds
+AndromedaModel.forward max time: 0.586126 seconds
+AndromedaModel.inverse average time: 0.000078 seconds
+AndromedaModel.inverse max time: 0.000148 seconds
+
+2018-04-26 15:01:27,103 - nebula.pipeline - INFO - Executing pipeline
+Data: {u'interaction': u'pi', u'type': u'pi', u'value': 0.15, u'param': u'Domestic'}
+2018-04-26 15:01:27,611 - nebula.pipeline - INFO - Timing info
+CSVDataController.run average time: 0.000005 seconds
+CSVDataController.run max time: 0.000009 seconds
+AndromedaModel.forward average time: 0.423069 seconds
+AndromedaModel.forward max time: 0.586126 seconds
+AndromedaModel.inverse average time: 0.000076 seconds
+AndromedaModel.inverse max time: 0.000148 seconds
+
+2018-04-26 15:01:27,618 - nebula.pipeline - INFO - Executing pipeline
+Data: {u'interaction': u'pi', u'type': u'pi', u'value': 0.15, u'param': u'Domestic'}
+2018-04-26 15:01:28,127 - nebula.pipeline - INFO - Timing info
+CSVDataController.run average time: 0.000005 seconds
+CSVDataController.run max time: 0.000009 seconds
+AndromedaModel.forward average time: 0.429169 seconds
+AndromedaModel.forward max time: 0.586126 seconds
+AndromedaModel.inverse average time: 0.000077 seconds
+AndromedaModel.inverse max time: 0.000148 seconds
+
+2018-04-26 15:01:28,135 - nebula.pipeline - INFO - Executing pipeline
+Data: {u'interaction': u'pi', u'type': u'pi', u'value': 0.15, u'param': u'Domestic'}
+2018-04-26 15:01:28,773 - nebula.pipeline - INFO - Timing info
+CSVDataController.run average time: 0.000005 seconds
+CSVDataController.run max time: 0.000009 seconds
+AndromedaModel.forward average time: 0.443036 seconds
+AndromedaModel.forward max time: 0.637180 seconds
+AndromedaModel.inverse average time: 0.000078 seconds
+AndromedaModel.inverse max time: 0.000148 seconds
+
+2018-04-26 15:01:28,778 - nebula.pipeline - INFO - Executing pipeline
+Data: {u'interaction': u'pi', u'type': u'pi', u'value': 0.15, u'param': u'Domestic'}
+2018-04-26 15:01:29,241 - nebula.pipeline - INFO - Timing info
+CSVDataController.run average time: 0.000005 seconds
+CSVDataController.run max time: 0.000009 seconds
+AndromedaModel.forward average time: 0.444299 seconds
+AndromedaModel.forward max time: 0.637180 seconds
+AndromedaModel.inverse average time: 0.000080 seconds
+AndromedaModel.inverse max time: 0.000148 seconds
+
