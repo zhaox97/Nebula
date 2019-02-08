@@ -357,7 +357,7 @@ function Nebula(io, pipelineAddr) {
 
                 /* Listens for messages from the pipeline */
                 room.pipelineSocket.on('message', function (msg) {
-                     self.handleMessage(room, msg);
+                    self.handleMessage(room, msg);
                 });
 
                 self.rooms[roomName] = socket.room = room;
@@ -412,8 +412,8 @@ function Nebula(io, pipelineAddr) {
                             {interaction: "oli", type: "classic", points: oli(socket.room)});			
                     }
                     else {
-                        invoke(socket.room.pipelineSocket, "update", 
--                        {interaction: "oli", type: "classic", view:isObservation , points: oli(socket.room,isObservation), prototype: 2});
+                        invoke(socket.room.pipelineSocket, "update",
+                            {interaction: "oli", type: "classic", points: oli(socket.room, isObservation), view:isObservation, prototype: 2});
                     }
                 }
                 else {
@@ -460,7 +460,7 @@ Nebula.prototype.handleAction = function(action, room) {
         if (room.points.has(action.id)) {
             room.points.get(action.id).pos = action.pos;
         }
-        else if (typeof(room.attribute_points) == "undefined") {
+        else if (typeof(room.attribute_points) != "undefined" && room.attribute_points.has(action.id)) {
             room.attribute_points.get(action.id).pos = action.pos;
         }
         else {
@@ -471,7 +471,7 @@ Nebula.prototype.handleAction = function(action, room) {
         if (room.points.has(action.id)) {
             room.points.get(action.id).selected = action.state;
         }
-        else if (room.attribute_points.has(action.id)) {
+        else if (typeof(room.attribute_points) != "undefined" && room.attribute_points.has(action.id)) {
             room.attribute_points.get(action.id).selected = action.state;
         }
         else {
@@ -529,8 +529,6 @@ Nebula.prototype.handleUpdate = function(room, res) {
             obj.relevance = doc.doc_relevance;
             
             if (typeof(room.observation_data) != "undefined") {
-//                console.log("RESPONSE:");
-//                console.log(res);
                 var data = {};   
                 data.type='raw'
                 data.id = doc.doc_id
@@ -538,7 +536,7 @@ Nebula.prototype.handleUpdate = function(room, res) {
                 room.observation_data.push(data)
                                     
                 obj.type = "observation";
-                if (res.ATTRIBUTE.similarity_weights) { 
+                if (res.ATTRIBUTE.similarity_weights) {
                     for (var j=0; j< res.ATTRIBUTE.similarity_weights.length; j++) {
                         weight = res.ATTRIBUTE.similarity_weights[j]
                         if (weight.id == obj.id) {  
@@ -557,8 +555,14 @@ Nebula.prototype.handleUpdate = function(room, res) {
         update.similarity_weights = res.similarity_weights;
     }
   
-    updateRoom(room, update);
-    this.io.to(room.name).emit('update', update);
+    if (typeof(room.observation_data) != "underfined") {
+        updateRoom(room, update, true);
+        this.io.to(room.name).emit('update', update, true);
+    }
+    else {
+        updateRoom(room, update);
+        this.io.to(room.name).emit('update', update);
+    }
     
     if (typeof(room.observation_data) != "undefined") {
         var update_attr = {};
@@ -597,8 +601,14 @@ Nebula.prototype.handleUpdate = function(room, res) {
             update_attr.similarity_weights = res.ATTRIBUTE.similarity_weights;
         }
      
-        updateRoom(room, update_attr,false);
-        this.io.to(room.name).emit('update', update_attr, false);
+        if (typeof(room.observation_data) != "undefined") {
+            updateRoom(room, update_attr, false);
+            this.io.to(room.name).emit('update', update_attr, false);
+        }
+//        else {
+//            updateRoom(room, update_attr, false);
+//            this.io.to(room.name).emit('update', update_attr, false);
+//        }
 
     // Tell the UI which view/panel to update here by replacing true with isObservation
     }
