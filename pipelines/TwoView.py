@@ -1,5 +1,5 @@
 import nebula.connector
-import nebula.data
+from nebula.data_controller.SIRIUS_CSVDataController import SIRIUS_CSVDataController
 import nebula.model
 import nebula.pipeline
 
@@ -24,7 +24,7 @@ def main():
     similarity_model = nebula.model.SIRIUSSimilarityModel(dist_func="euclidean")
     
     
-    data_controller = nebula.data.SIRIUSCSVDataController(csvfile, raw_folder)
+    data_controller = SIRIUS_CSVDataController(csvfile, raw_folder)
    
     
     connector = nebula.connector.ZeroMQConnector(port=int(sys.argv[1]))

@@ -1,5 +1,5 @@
 import nebula.connector
-import nebula.data
+from nebula.data_controller.CSVDataController import CSVDataController
 import nebula.model
 import nebula.pipeline
 
@@ -31,7 +31,7 @@ def main():
     # a CSV file to load data from and the path to a folder containing the raw
     # text for each document. 
     # IMPORTANT: The CSV file should not be changed hereafter
-    data_controller = nebula.data.CSVDataController(csvfile, raw_folder)
+    data_controller = CSVDataController(csvfile, raw_folder)
    
     # Create a ZeroMQConnector object from the nebula.connector module, which
     # defines a method for listening for the three types of user defined 

@@ -1,5 +1,5 @@
 import nebula.connector
-import nebula.data
+from nebula.data_controller.ESController import ESController
 import nebula.model
 import nebula.pipeline
 import nebula.tf
@@ -16,7 +16,7 @@ def main():
    
     relevance = nebula.model.ActiveSetModel()
     similarity = nebula.model.SimilarityModel()
-    data_controller = nebula.data.ESController()
+    data_controller = ESController()
     tfModel = nebula.tf.TFModel()
 
 
