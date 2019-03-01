@@ -1,6 +1,7 @@
 import nebula.connector
 from nebula.data_controller.CSVDataController import CSVDataController
-import nebula.model
+from nebula.model.ActiveSetModel import ActiveSetModel
+from nebula.model.CompositeModel import CompositeModel
 import nebula.pipeline
 
 import sys
@@ -16,8 +17,8 @@ def main():
     
     pipeline = nebula.pipeline.Pipeline()
    
-    relevance = nebula.model.ActiveSetModel()
-    composite = nebula.model.CompositeModel()
+    relevance = ActiveSetModel()
+    composite = CompositeModel()
     data_controller = CSVDataController(csvfile, raw_folder)
    
     pipeline.append_model(relevance)

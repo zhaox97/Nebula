@@ -1,6 +1,6 @@
 import nebula.connector
 from nebula.data_controller.CSVDataController import CSVDataController
-import nebula.model
+from nebula.model.AndromedaModel import AndromedaModel
 import nebula.pipeline
 
 import sys
@@ -14,7 +14,7 @@ def main():
     
     pipeline = nebula.pipeline.Pipeline()
    
-    andromeda = nebula.model.AndromedaModel(dist_func="euclidean")
+    andromeda = AndromedaModel(dist_func="euclidean")
     data_controller = CSVDataController(csvfile)
    
     pipeline.append_model(andromeda)

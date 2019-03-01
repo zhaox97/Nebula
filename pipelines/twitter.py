@@ -1,6 +1,7 @@
 import nebula.connector
 from nebula.data_controller.TwitterDataController import TwitterDataController
-import nebula.model
+from nebula.model.ActiveSetModel import ActiveSetModel
+from nebula.model.SimilarityModel import SimilarityModel
 import nebula.pipeline
 
 import sys
@@ -17,8 +18,8 @@ def main():
     
     pipeline = nebula.pipeline.Pipeline()
    
-    relevance = nebula.model.ActiveSetModel()
-    similarity = nebula.model.SimilarityModel()
+    relevance = ActiveSetModel()
+    similarity = SimilarityModel()
     data_controller = TwitterDataController(access_token=access_token,
                                                         access_token_secret=access_token_secret,
                                                         consumer_key=consumer_key,

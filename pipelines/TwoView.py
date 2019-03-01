@@ -1,6 +1,7 @@
 import nebula.connector
 from nebula.data_controller.SIRIUS_CSVDataController import SIRIUS_CSVDataController
-import nebula.model
+from nebula.model.ImportanceModel import ImportanceModel
+from nebula.model.SIRIUS_SimilarityModel import SIRIUS_SimilarityModel
 import nebula.pipeline
 
 import sys
@@ -16,12 +17,12 @@ def main():
     pipeline = nebula.pipeline.Pipeline()
     
     #Create an ImportanceModel object from the nebula.model module, starts out empty
-    relevance_model = nebula.model.ImportanceModel()
+    relevance_model = ImportanceModel()
    
     # Create a SimilarityModel object from the nebula.model module, which does 
     # forward and inverse MDS
     # projections and stores the current set of similarity weights
-    similarity_model = nebula.model.SIRIUSSimilarityModel(dist_func="euclidean")
+    similarity_model = SIRIUS_SimilarityModel(dist_func="euclidean")
     
     
     data_controller = SIRIUS_CSVDataController(csvfile, raw_folder)

@@ -1,6 +1,7 @@
 import nebula.connector
 from nebula.data_controller.CSVDataController import CSVDataController
-import nebula.model
+from nebula.model.ActiveSetModel import ActiveSetModel
+from nebula.model.SimilarityModel import SimilarityModel
 import nebula.pipeline
 
 import sys
@@ -18,14 +19,14 @@ def main():
     pipeline = nebula.pipeline.Pipeline()
     
     # Create an ActiveSetModel object from the nebula.model module, starts out empty
-    relevance_model = nebula.model.ActiveSetModel()
+    relevance_model = ActiveSetModel()
     
     ### Continue from here
     
     # Create a SimilarityModel object from the nebula.model module, which does 
     # forward and inverse MDS
     # projections and stores the current set of similarity weights
-    similarity_model = nebula.model.SimilarityModel()
+    similarity_model = SimilarityModel()
     
     # Create a CSVDataController object from the nebula.data module, providing
     # a CSV file to load data from and the path to a folder containing the raw

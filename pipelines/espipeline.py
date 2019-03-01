@@ -1,8 +1,9 @@
 import nebula.connector
 from nebula.data_controller.ESController import ESController
-import nebula.model
+from nebula.model.ActiveSetModel import ActiveSetModel
+from nebula.model.SimilarityModel import SimilarityModel
 import nebula.pipeline
-import nebula.tf
+from nebula.model.tf import TFModel
 
 import sys
 import zerorpc
@@ -14,10 +15,10 @@ def main():
     
     pipeline = nebula.pipeline.Pipeline()
    
-    relevance = nebula.model.ActiveSetModel()
-    similarity = nebula.model.SimilarityModel()
+    relevance = ActiveSetModel()
+    similarity = SimilarityModel()
     data_controller = ESController()
-    tfModel = nebula.tf.TFModel()
+    tfModel = TFModel()
 
 
     pipeline.append_model(tfModel)
