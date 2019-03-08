@@ -27,6 +27,17 @@ RUN npm install
 
 RUN pip install -e /www/Nebula-Pipeline
 
+# Install tmux
+#RUN apt install -y tmux
+
 EXPOSE 8081
+
+# Attempt to run npm withing a tmux sesssion
+# Docker only seems to care about whatever command it's being launched with,
+# meaning once the associated process ends, the Docker container stops running
+# My hope was to make Docker "care" about a tmux session as opposed to npm,
+# which would let you go in and restart npm as desired, but I couldn't quite
+# get this working...
+#CMD ["sh", "-c",  "tmux new-session -d -s nebula_session1 && tmux send-keys -t nebula_session1 'npm start' ENTER"]
 
 CMD ["npm", "start"]
