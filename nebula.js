@@ -11,36 +11,41 @@ var zmq = require('zmq');
 /* Export the Nebula class */
 module.exports = Nebula;
 
+/* Location of the raw data for the Crescent dataset */
+var crescentRawDataPath = "data/text/crescent_raw";
+
 /* The pipelines available to use */
+var flatTextUIs = ["cosmos", "sirius", "composite"];
 var pipelines = {
     andromeda: { 
         file: "pipelines/andromeda.py",
-        args: ["data/Animal_Data_study.csv"]
+        defaultData: "data/highD/Animal_Data_study.csv"
      },
      cosmos: {
         file: "pipelines/cosmos.py",
-        args: ["data/crescent tfidf.csv",
-            "data/crescent_raw"]
+        defaultData: "data/text/crescent tfidf.csv"
      },
      sirius: {
         file: "pipelines/TwoView.py",
-        args: ["data/Animal_Data_small.csv",
-            "data/crescent_raw"]
+        defaultData: "data/highD/Animal_Data_paper.csv"
      },
      twitter: {
         file: "pipelines/twitter.py",
-        args: []
      },
      composite: {
         file: "pipelines/composite.py",
-        args: ["data/crescent tfidf.csv",
-            "data/crescent_raw"]
+        defaultData: "data/text/crescent tfidf.csv"
      },
      elasticsearch: {
         file: "pipelines/espipeline.py",
         args: []
      }
 };
+
+/* The locations of the different types of datasets on the server */
+var textDataFolder = "data/text/";
+var highDDataFolder = "data/highD/";
+var customCSVFolder = "data/customCSV/";
 
 var port = 5555;
 
@@ -116,10 +121,34 @@ function Nebula(io, pipelineAddr) {
                     delete self.rooms[name];
 
                     // Delete the room's CSV file
-                    deleteFile("data/" + name + "_data.csv");
+                    deleteFile(customCSVFolder + name + "_data.csv");
                 }
             }
-        }); 
+        });
+        
+        
+        /* When the client starts trying to select a file, provide a list of
+         * possible files to choose from
+         */
+        socket.on('getDefaultFileList', function(isTextOnlyUI, ui) {
+            // Grab all the text CSV files
+            var textDataList = fs.readdirSync(textDataFolder)
+                .filter(data => data.endsWith(".csv"))
+                .map(data => data = "text/" + data);
+            
+            // Grab the highD text files if the UI can support non-text data
+            var highDDataList = []
+            if (!isTextOnlyUI) {
+                highDDataList = fs.readdirSync(highDDataFolder)
+                    .filter(data => data.endsWith(".csv"))
+                    .map(data => data = "highD/" + data);
+            }
+            
+            // Provide the list of available datasets to the client
+            socket.emit("receiveDefaultFileList",
+                textDataList.concat(highDDataList),
+                pipelines[ui]["defaultData"].substring("data/".length));
+        });
 
 
         // Use the csvFilePath to store the name of a user-defined CSV file
@@ -131,7 +160,7 @@ function Nebula(io, pipelineAddr) {
          */
         socket.on('setData', function(data, room) {
             // Create the csvFilePath
-            csvFilePath = "data/" + room + "_data.csv";
+            csvFilePath = customCSVFolder + room + "_data.csv";
             // Set exec to be a function that calls the command line
             var exec = require('child_process').exec;
 
@@ -172,6 +201,7 @@ function Nebula(io, pipelineAddr) {
             }                        
         });
         
+        /* Allows the client to specify a CSV file already on the server to use */
         socket.on("setCSV", function(csvName) {
             csvFilePath = "data/" + csvName;
             socket.emit("csvDataReady");
@@ -222,7 +252,7 @@ function Nebula(io, pipelineAddr) {
             socket.emit('leave',roomname);
      	    
      	    if(socket.room.count <= 0) {
-     	        var filePath= "data/" + roomname + "_data.csv";
+     	        var filePath= customCSVFolder + roomname + "_data.csv";
      	        deleteFile(filePath);
      	    }
      	 
@@ -249,8 +279,7 @@ function Nebula(io, pipelineAddr) {
         * the client the current state of the room.
         */
         socket.on('join', function(roomName, user, pipeline, args) {
-            console.log("Join called!");
-            
+            console.log("Join called for " + pipeline + "pipeline; room " + roomName);
             socket.roomName = roomName;
             socket.user = user;
             socket.join(roomName);
@@ -277,25 +306,38 @@ function Nebula(io, pipelineAddr) {
                 if (!pipelineAddr) {
                     var pythonArgs = ["-u"];
                     if (pipeline in pipelines) {
-                        if (pipelines[pipeline].args.length > 0) {
-
-                            // Iterate through the pipeline's arguments. If there
-                            // is a CSV file defined and csvFilePath is not null,
-                            // put the csvFilePath in the pipelineArgsCopy.
-                            // Otherwise, just copy the pipeline arg into
-                            // pipelineArgsCopy. This supports both a custom CSV
-                            // file and a default CSV file
-                            var pipelineArgs = pipelines[pipeline].args;
-                            var i;
-                            for (i = 0; i < pipelineArgs.length; i++) {
-                                if (pipelineArgs[i].indexOf(".csv") > -1 && csvFilePath) {
-                                    pipelineArgsCopy.push(csvFilePath);
-                                }
-                                else {
-                                    pipelineArgsCopy.push(pipelineArgs[i]);
-                                }
-                            }
+//                        if (pipelines[pipeline].args.length > 0) {
+//
+//                            // Iterate through the pipeline's arguments. If there
+//                            // is a CSV file defined and csvFilePath is not null,
+//                            // put the csvFilePath in the pipelineArgsCopy.
+//                            // Otherwise, just copy the pipeline arg into
+//                            // pipelineArgsCopy. This supports both a custom CSV
+//                            // file and a default CSV file
+//                            var pipelineArgs = pipelines[pipeline].args;
+//                            var i;
+//                            for (i = 0; i < pipelineArgs.length; i++) {
+//                                if (pipelineArgs[i].indexOf(".csv") > -1 && csvFilePath) {
+//                                    pipelineArgsCopy.push(csvFilePath);
+//                                }
+//                                else {
+//                                    pipelineArgsCopy.push(pipelineArgs[i]);
+//                                }
+//                            }
+//                        }
+                        
+                        // A CSV file path should have already been set. This
+                        // file path should be used to indicate where to find
+                        // the desired file
+                        pipelineArgsCopy.push(csvFilePath);
+                        
+                        // If the UI supports reading flat text files, tell the
+                        // pipeline where to find the files
+                        if (flatTextUIs.indexOf(pipeline) >= 0) {
+                            pipelineArgsCopy.push(crescentRawDataPath);
                         }
+                        
+                        // Set the remaining pipeline args
                         pythonArgs.push(pipelines[pipeline].file);
                         pythonArgs.push(port.toString());
                         pythonArgs = pythonArgs.concat(pipelineArgsCopy);
@@ -303,7 +345,7 @@ function Nebula(io, pipelineAddr) {
                     else {
                         pythonArgs.push(pipelines.cosmos.file);
                         pythonArgs.push(port.toString());
-                       pythonArgs = pythonArgs.concat(pipelines.cosmos.args);
+                        pythonArgs = pythonArgs.concat(pipelines.cosmos.args);
                     }
                     
                     // used in case of CosmosRadar
