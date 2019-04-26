@@ -15,7 +15,7 @@ module.exports = Nebula;
 var crescentRawDataPath = "data/text/crescent_raw";
 
 /* The pipelines available to use */
-var flatTextUIs = ["cosmos", "sirius", "composite"];
+var flatTextUIs = ["cosmos", "composite", "sirius", "centaurus"];
 var pipelines = {
     andromeda: { 
         file: "pipelines/andromeda.py",
@@ -26,7 +26,11 @@ var pipelines = {
         defaultData: "data/text/crescent tfidf.csv"
      },
      sirius: {
-        file: "pipelines/TwoView.py",
+        file: "pipelines/sirius.py",
+        defaultData: "data/highD/Animal_Data_paper.csv"
+     },
+     centaurus: {
+        file: "pipelines/centaurus.py",
         defaultData: "data/highD/Animal_Data_paper.csv"
      },
      twitter: {
@@ -293,7 +297,7 @@ function Nebula(io, pipelineAddr) {
                 room.points = new Map();
                 room.similarity_weights = new Map();
                 
-                if (pipeline == "sirius") {
+                if (pipeline == "sirius" || pipeline == "centaurus") {
                     room.observation_points = new Map();
                     room.attribute_points = new Map();
                     room.observation_similarity_weights = new Map();
@@ -409,7 +413,7 @@ function Nebula(io, pipelineAddr) {
                 socket.room = self.rooms[roomName];
                 socket.room.count += 1;
 
-                if (pipeline == "sirius") {
+                if (pipeline == "sirius" || pipeline == "centaurus") {
                     // ??????TODO: Tell the UI which view/panel to update here by replacing true
                     // with isObservation or by repeating this line with false to
                     // send this message to the other UI as well

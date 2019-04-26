@@ -1,7 +1,7 @@
 import nebula.connector
-from nebula.data_controller.SIRIUS_CSVDataController import SIRIUS_CSVDataController
+from nebula.data_controller.TwoView_CSVDataController import TwoView_CSVDataController
 from nebula.model.ImportanceModel import ImportanceModel
-from nebula.model.SIRIUS_SimilarityModel import SIRIUS_SimilarityModel
+from nebula.model.TwoView_SimilarityModel import TwoView_SimilarityModel
 import nebula.pipeline
 
 import sys
@@ -17,15 +17,15 @@ def main():
     pipeline = nebula.pipeline.Pipeline()
     
     #Create an ImportanceModel object from the nebula.model module, starts out empty
-    relevance_model = ImportanceModel()
+    relevance_model = ImportanceModel(should_query=True)
    
     # Create a SimilarityModel object from the nebula.model module, which does 
     # forward and inverse MDS
     # projections and stores the current set of similarity weights
-    similarity_model = SIRIUS_SimilarityModel(dist_func="euclidean")
+    similarity_model = TwoView_SimilarityModel(dist_func="euclidean")
     
     
-    data_controller = SIRIUS_CSVDataController(csvfile, raw_folder)
+    data_controller = TwoView_CSVDataController(csvfile, raw_folder)
    
     
     connector = nebula.connector.ZeroMQConnector(port=int(sys.argv[1]))
