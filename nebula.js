@@ -135,6 +135,10 @@ function Nebula(io, pipelineAddr) {
          * possible files to choose from
          */
         socket.on('getDefaultFileList', function(isTextOnlyUI, ui) {
+            if (ui == "radar") {
+                ui = "cosmos";
+            }
+            
             // Grab all the text CSV files
             var textDataList = fs.readdirSync(textDataFolder)
                 .filter(data => data.endsWith(".csv"))
@@ -344,7 +348,9 @@ function Nebula(io, pipelineAddr) {
                         // Set the remaining pipeline args
                         pythonArgs.push(pipelines[pipeline].file);
                         pythonArgs.push(port.toString());
-                        pythonArgs = pythonArgs.concat(pipelineArgsCopy);
+                        if (pipeline != "twitter" && pipeline != "elasticsearch") {
+                            pythonArgs = pythonArgs.concat(pipelineArgsCopy);
+                        }
                     }
                     else {
                         pythonArgs.push(pipelines.cosmos.file);
