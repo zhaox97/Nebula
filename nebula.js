@@ -51,6 +51,8 @@ var textDataFolder = "data/text/";
 var highDDataFolder = "data/highD/";
 var customCSVFolder = "data/customCSV/";
 
+var sirius_prototype = 2;
+
 var port = 5555;
 
 var nextSessionNumber = 0;
@@ -457,6 +459,7 @@ function Nebula(io, pipelineAddr) {
          * and then sending the results to all clients.
          */
         socket.on('update', function(data, isObservation) {
+        // socket.on('update', function(data, interactionParams, isObservation) {
             if (socket.room) {
                 if (data.type === "oli") {
                     if (typeof(isObservation) == "undefined") {
@@ -466,11 +469,14 @@ function Nebula(io, pipelineAddr) {
                     else {
                         invoke(socket.room.pipelineSocket, "update",
                             {interaction: "oli", type: "classic", points: oli(socket.room, isObservation), view:isObservation, prototype: 2});
+                            //{interaction: "oli", type: "classic", points: oli(socket.room, isObservation), interaction_params: interactionParams, prototype: sirius_prototype});
                     }
                 }
                 else {
+                    // console.log("PROCESSING INTERACTION: " + data.type);
                     data.interaction = data.type;
                     invoke(socket.room.pipelineSocket, "update", data);
+                    // invoke(socket.room.pipelineSocket, "update", {interaction: data.interaction, interaction_params: interactionParams, prototype: sirius_prototype});
                 }
             }
         });
@@ -552,6 +558,7 @@ Nebula.prototype.handleMessage = function(room, msg) {
             // takes place either when users joins the room or when he hits reset button
             this.io.to(room.name).emit("reset");
             invoke(room.pipelineSocket, "update", {interaction: "none", prototype: 2});
+            // invoke(room.pipelineSocket, "update", {interaction: "none", prototype: sirius_prototype});
         }
     }
 };
