@@ -3,6 +3,22 @@ This project acts as the visualization controller. It is a Node.js server that m
 
 # Installation
 There are two different installation strategies: Using Docker or following more traditional installation strategies. Docker lets you get a new machine up and running within minutes, but it can require rebuilding Docker images to see changes reflected in one of our UIs, depending on what you're changing and how you're running your Docker containers.
+## Additional Installation for fast WMDS
+1. The system needs to have OpenCL installed for GPU and/or CPU (For further instruction, please refer to Requirement of https://github.com/sajal-vt/Claret)
+2. Install pyopencl for Python-OpenCL binding
+```
+pip install pyopencl
+```
+## Integration of fast wmds
+1. python distributable "claret" from https://github.com/sajal-vt/Claret was copied into Nebula/Nebula-Pipeline/nebula/model/
+2. Import in SimilarityModel.py
+```
+from claret import wmds
+```
+3. Call wmds.reduce method from forward method without computing the pairwise distances
+```
+low_d = wmds.reduce(high_d, weights, dimensions=self.low_dimensions)
+```
 
 Regardless of which method you choose, you first need to **clone this repository (and the CosmosD3 and Nebula-Pipeline repositories)** onto your local machine. When initialing cloning from git, be sure to either run `git clone` with the `--recursive` flag (recommended), or run `git submodule init` followed by `git submodule update` to pull in the CosmosD3 and Nebula-Pipeline submodules.
 
