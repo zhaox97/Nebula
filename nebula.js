@@ -289,7 +289,7 @@ function Nebula(io, pipelineAddr) {
         * the client the current state of the room.
         */
         socket.on('join', function(roomName, user, pipeline, args) {
-            console.log("Join called for " + pipeline + "pipeline; room " + roomName);
+            console.log("Join called for " + pipeline + " pipeline; room " + roomName);
             socket.roomName = roomName;
             socket.user = user;
             socket.join(roomName);
@@ -304,9 +304,7 @@ function Nebula(io, pipelineAddr) {
                 room.similarity_weights = new Map();
                 
                 if (pipeline == "sirius" || pipeline == "centaurus") {
-                    room.observation_points = new Map();
                     room.attribute_points = new Map();
-                    room.observation_similarity_weights = new Map();
                     room.attribute_similarity_weights = new Map();
                     room.observation_data = [];
                     room.attribute_data = [];
@@ -316,25 +314,6 @@ function Nebula(io, pipelineAddr) {
                 if (!pipelineAddr) {
                     var pythonArgs = ["-u"];
                     if (pipeline in pipelines) {
-//                        if (pipelines[pipeline].args.length > 0) {
-//
-//                            // Iterate through the pipeline's arguments. If there
-//                            // is a CSV file defined and csvFilePath is not null,
-//                            // put the csvFilePath in the pipelineArgsCopy.
-//                            // Otherwise, just copy the pipeline arg into
-//                            // pipelineArgsCopy. This supports both a custom CSV
-//                            // file and a default CSV file
-//                            var pipelineArgs = pipelines[pipeline].args;
-//                            var i;
-//                            for (i = 0; i < pipelineArgs.length; i++) {
-//                                if (pipelineArgs[i].indexOf(".csv") > -1 && csvFilePath) {
-//                                    pipelineArgsCopy.push(csvFilePath);
-//                                }
-//                                else {
-//                                    pipelineArgsCopy.push(pipelineArgs[i]);
-//                                }
-//                            }
-//                        }
                         
                         // A CSV file path should have already been set. This
                         // file path should be used to indicate where to find
@@ -422,10 +401,8 @@ function Nebula(io, pipelineAddr) {
                 socket.room.count += 1;
 
                 if (pipeline == "sirius" || pipeline == "centaurus") {
-                    // ??????TODO: Tell the UI which view/panel to update here by replacing true
-                    // with isObservation or by repeating this line with false to
-                    // send this message to the other UI as well
-                    socket.emit('update', sendRoom(socket.room), true);
+                    socket.emit('update', sendRoom(socket.room, true), true);
+                    socket.emit('update', sendRoom(socket.room, false), false);
                 }
                 else {
                     socket.emit('update', sendRoom(socket.room));
@@ -760,10 +737,16 @@ var oli = function(room, isObservation) {
 };
 
 /* Copies the room details we want to send to the client to a new object */
-var sendRoom = function(room) {
+var sendRoom = function(room, isObservation) {
     var modRoom = {};
-    modRoom.points = Array.from(room.points.values());
-    modRoom.similarity_weights = Array.from(room.similarity_weights.values());
+    if (typeof(isObservation) == "undefined" || isObservation) {
+        modRoom.points = Array.from(room.points.values());
+        modRoom.similarity_weights = Array.from(room.similarity_weights.values());
+    }
+    else if (!isObservation) {
+        modRoom.points = Array.from(room.attribute_points.values());
+        modRoom.similarity_weights = Array.from(room.attribute_similarity_weights.values());
+    }
     return modRoom;
 };
 
