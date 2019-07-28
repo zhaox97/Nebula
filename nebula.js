@@ -385,7 +385,7 @@ function Nebula(io, pipelineAddr) {
                         });
                     });
 
-                    /*Data received  by node app from python process, 
+                    /* Data received by node app from python process, 
                      * ouptut this data to output stream(on 'data'), 
                      * we want to convert that received data into a string and 
                      * append it to the overall data String
@@ -439,8 +439,6 @@ function Nebula(io, pipelineAddr) {
         /* Listens for actions from the clients, tracking them and then
          * broadcasting them to all other clients within the room.
          */
-        // DONE/TODO: send isObservation to the handleAction function to tell the
--        // pipeline which data blob to use
         socket.on('action', function(data, isObservation) {
             if (socket.room) {
                 self.handleAction(data, socket.room);
@@ -458,8 +456,7 @@ function Nebula(io, pipelineAddr) {
         /* Listens for update requests from the client, executing the update
          * and then sending the results to all clients.
          */
-        socket.on('update', function(data, isObservation) {
-        // socket.on('update', function(data, interactionParams, isObservation) {
+        socket.on('update', function(data, isObservation, prototype, obsFeedback, attrFeedback) {
             if (socket.room) {
                 if (data.type === "oli") {
                     if (typeof(isObservation) == "undefined") {
@@ -468,15 +465,15 @@ function Nebula(io, pipelineAddr) {
                     }
                     else {
                         invoke(socket.room.pipelineSocket, "update",
-                            {interaction: "oli", type: "classic", points: oli(socket.room, isObservation), view:isObservation, prototype: 2});
-                            //{interaction: "oli", type: "classic", points: oli(socket.room, isObservation), interaction_params: interactionParams, prototype: sirius_prototype});
+                            {interaction: "oli", type: "classic", points: oli(socket.room, isObservation), docFeedback: obsFeedback, view:isObservation, prototype: prototype, attrFeedback: attrFeedback});
                     }
                 }
                 else {
-                    // console.log("PROCESSING INTERACTION: " + data.type);
                     data.interaction = data.type;
+                    if ("obsFeedback" in data) {
+                        data["docFeedback"] = data["obsFeedback"];
+                    }
                     invoke(socket.room.pipelineSocket, "update", data);
-                    // invoke(socket.room.pipelineSocket, "update", {interaction: data.interaction, interaction_params: interactionParams, prototype: sirius_prototype});
                 }
             }
         });
@@ -557,21 +554,16 @@ Nebula.prototype.handleMessage = function(room, msg) {
         else if (obj.func === "reset") {
             // takes place either when users joins the room or when he hits reset button
             this.io.to(room.name).emit("reset");
-            invoke(room.pipelineSocket, "update", {interaction: "none", prototype: 2});
-            // invoke(room.pipelineSocket, "update", {interaction: "none", prototype: sirius_prototype});
+            invoke(room.pipelineSocket, "update", {interaction: "none", prototype: sirius_prototype});
         }
     }
 };
 
 /* Handles updates received by the client, running the necessary processes
  * and updating the room as necessary.
- */
-// TODO: get isObservation from the pipeline to tell the UI which view/panel
-// should be updated
-/*he didn't modify the weight vector, it is the same
- * this function is called with all updates ( search/delete/ relevance slider)
- *  it stores the data from pipeline to save in the room (points/similarity weights) by calling
- *  updateRoom function
+ * This function is called with all updates (search/delete/relevance slider).
+ * It stores the data from pipeline to save in the room (points/similarity weights) by calling
+ * updateRoom function
  */
 Nebula.prototype.handleUpdate = function(room, res) {
     console.log("Handle update called");
@@ -669,7 +661,6 @@ Nebula.prototype.handleUpdate = function(room, res) {
 //            this.io.to(room.name).emit('update', update_attr, false);
 //        }
 
-    // Tell the UI which view/panel to update here by replacing true with isObservation
     }
 };
 
