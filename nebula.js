@@ -2,6 +2,7 @@ var spawn = require('child_process').spawn;
 var fs = require("fs");
 var async = require('async');
 var zmq = require('zmq');
+var csv = require('csvtojson');
 
 /* Load the databases we need */
 //var monk = require('monk');
@@ -164,6 +165,56 @@ function Nebula(io, pipelineAddr) {
         // Use the csvFilePath to store the name of a user-defined CSV file
         var csvFilePath = null;
         
+        /* Helper function to tell the client that the CSV file is now ready for them
+        * to use. They are also sent a copy of the data
+        */
+        var csvFileReady = function(csvFilePath) {
+            
+            // Let the client know that the CSV file is now ready to be used on
+            // the server
+            socket.emit("csvDataReady");
+            
+            // Prepare to parse the CSV file
+            var converter = new csv.Converter({constructResult:false});
+            var csvData = [];
+            
+            // Read each line of the CSV file one at a time and parse it
+            converter.on("data", function (data) {
+                csvData.push(JSON.parse(data.toString('utf8')));
+            });
+            
+            // If we experience an error while parsing the CSV file, print an
+            // error message
+            converter.on('error', (err)=> {
+                console.log("An error occurred while parsing the CSV file: " + csvFilePath);
+                console.log(err);
+            });
+            
+            // When we have completed parsing the CSV file, send the results to
+            // the client
+            converter.on('done', (err)=> {
+                if (err) {
+                    console.log("An error occurred while parsing the CSV file: " + csvFilePath);
+                    console.log(err);
+                }
+                
+                // On certain OSs, like Windows, an extra, blank line may be read
+                // Check for this and remove it if it exists
+                var lastObservation = csvData[csvData.length-1];
+                var lastObservationKeys = Object.keys(lastObservation);
+                if (lastObservationKeys.length = 1 && lastObservation[lastObservationKeys[0]] == "") {
+                    csvData.pop();
+                }
+                
+                // Provide the CSV data to the client
+                socket.emit("csvDataReadComplete", csvData);
+            });
+            
+
+            // Read and parse the CSV file as a stream
+            fs.createReadStream(csvFilePath).pipe(converter);
+        };
+        
         /* When the client sends a "setData" message with the data and room name,
          * generate a new file using the room name that contains the given data.
          * Set the csvFilePath variable appropriately
@@ -180,7 +231,7 @@ function Nebula(io, pipelineAddr) {
             var command = "echo \"" + data + "\" > " + csvFilePath; 
          
             // Execute the command and cature any errors or printouts
-            exec(command, "-e", function (error, stdout, stderr) {
+            var childProcess = exec(command, "-e", function (error, stdout, stderr) {
                 // Print out any stdout captured to the console
                 if (stdout) {
                     console.log('Creating CSV file: ' + stdout);
@@ -188,33 +239,29 @@ function Nebula(io, pipelineAddr) {
 
                 // Put any errors in the errors array
                 if (error) {
-                    errors.push(error);
+                    console.log('Creating CSV file error: ' + error);
                 }
 
                 // Put any errors in the errors array and print them out to
                 // the console
                 if (stderr) {
                     console.log('Creating CSV file stderr: ' + stderr);
-                    errors.push(error);
-                }
-
-                // Only print out non-null errors
-                if (error !== null) {
-                    console.log('Creating CSV file exec error: ' + error);
                 }
             });
-                
-            // Only emit the "csvDataReady" message to the client if no errors
-            // were encountered while attempting to create the custom CSV file
-            if (errors.length == 0) {
-                socket.emit("csvDataReady");
-            }                        
+            
+            childProcess.on("close", function() {
+                // Only emit the "csvDataReady" message to the client if no errors
+                // were encountered while attempting to create the custom CSV file
+                if (errors.length == 0) {
+                    csvFileReady(csvFilePath);
+                }
+            });
         });
         
         /* Allows the client to specify a CSV file already on the server to use */
         socket.on("setCSV", function(csvName) {
             csvFilePath = "data/" + csvName;
-            socket.emit("csvDataReady");
+            csvFileReady(csvFilePath);
         });
 
         /* 
@@ -262,7 +309,7 @@ function Nebula(io, pipelineAddr) {
             socket.emit('leave',roomname);
      	    
      	    if(socket.room.count <= 0) {
-     	        var filePath= customCSVFolder + roomname + "_data.csv";
+     	        var filePath = customCSVFolder + roomname + "_data.csv";
      	        deleteFile(filePath);
      	    }
      	 
