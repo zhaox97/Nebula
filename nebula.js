@@ -2,7 +2,7 @@ var spawn = require('child_process').spawn;
 var fs = require("fs");
 var async = require('async');
 var zmq = require('zmq');
-var csv = require('csvtojson');
+var readline = require('readline');
 
 /* Load the databases we need */
 //var monk = require('monk');
@@ -175,28 +175,44 @@ function Nebula(io, pipelineAddr) {
             socket.emit("csvDataReady");
             
             // Prepare to parse the CSV file
-            var converter = new csv.Converter({constructResult:false});
             var csvData = [];
-            
-            // Read each line of the CSV file one at a time and parse it
-            converter.on("data", function (data) {
-                csvData.push(JSON.parse(data.toString('utf8')));
+            const rl = readline.createInterface({
+                input: fs.createReadStream(csvFilePath),
+                crlfDelay: Infinity
             });
-            
-            // If we experience an error while parsing the CSV file, print an
-            // error message
-            converter.on('error', (err)=> {
-                console.log("An error occurred while parsing the CSV file: " + csvFilePath);
+
+            // Print any error messages we encounter
+            rl.on('error', function (err) {
+                console.log("Error while parsing CSV file: " + csvFilePath);
                 console.log(err);
             });
-            
-            // When we have completed parsing the CSV file, send the results to
-            // the client
-            converter.on('done', (err)=> {
-                if (err) {
-                    console.log("An error occurred while parsing the CSV file: " + csvFilePath);
-                    console.log(err);
+
+            // Read each line of the CSV file one at a time and parse it
+            var columnHeaders = [];
+            rl.on('line', function (data) {                
+                var dataColumns = data.split(",");
+                
+                // If we haven't saved any column names yet, do so first
+                if (columnHeaders.length == 0) {
+                    columnHeaders = dataColumns;
                 }
+                
+                // Process each individual line of data in the CSV file
+                else {
+                    var dataObj = {};
+                    var i;
+                    for (i = 0; i < dataColumns.length; i++) {
+                        var key = columnHeaders[i];
+                        var value = dataColumns[i];
+                        dataObj[key] = value
+                    }
+                    csvData.push(dataObj);
+                }
+                
+            });
+            
+            // All lines are read, file is closed now.
+            rl.on('close', function () {
                 
                 // On certain OSs, like Windows, an extra, blank line may be read
                 // Check for this and remove it if it exists
@@ -209,10 +225,6 @@ function Nebula(io, pipelineAddr) {
                 // Provide the CSV data to the client
                 socket.emit("csvDataReadComplete", csvData);
             });
-            
-
-            // Read and parse the CSV file as a stream
-            fs.createReadStream(csvFilePath).pipe(converter);
         };
         
         /* When the client sends a "setData" message with the data and room name,
