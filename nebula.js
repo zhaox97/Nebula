@@ -492,7 +492,7 @@ function Nebula(io, pipelineAddr) {
         /* Listens for update requests from the client, executing the update
          * and then sending the results to all clients.
          */
-        socket.on('update', function(data, isObservation, prototype, obsFeedback, attrFeedback) {
+        socket.on('update', function(data, isObservation, prototype, obsFeedback, attrFeedback, obsForage, attrForage) {
             if (socket.room) {
                 if (data.type === "oli") {
                     if (typeof(isObservation) == "undefined") {
@@ -501,13 +501,18 @@ function Nebula(io, pipelineAddr) {
                     }
                     else {
                         invoke(socket.room.pipelineSocket, "update",
-                            {interaction: "oli", type: "classic", points: oli(socket.room, isObservation), docFeedback: obsFeedback, view:isObservation, prototype: prototype, attrFeedback: attrFeedback});
+                            {interaction: "oli", type: "classic", points: oli(socket.room, isObservation),
+                                docFeedback: obsFeedback, attrFeedback: attrFeedback, docForage: docForage, attrForage: attrForage,
+                                view:isObservation, prototype: prototype});
                     }
                 }
                 else {
                     data.interaction = data.type;
                     if ("obsFeedback" in data) {
                         data["docFeedback"] = data["obsFeedback"];
+                    }
+                    if ("obsForage" in data) {
+                        data["docForage"] = data["obsForage"];
                     }
                     invoke(socket.room.pipelineSocket, "update", data);
                 }
