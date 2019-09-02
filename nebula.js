@@ -377,6 +377,9 @@ function Nebula(io, pipelineAddr) {
                         // A CSV file path should have already been set. This
                         // file path should be used to indicate where to find
                         // the desired file
+                        if (!csvFilePath) {
+                            csvFilePath = pipelines[pipeline].defaultData;
+                        }
                         pipelineArgsCopy.push(csvFilePath);
                         
                         // If the UI supports reading flat text files, tell the
@@ -395,7 +398,8 @@ function Nebula(io, pipelineAddr) {
                     else {
                         pythonArgs.push(pipelines.cosmos.file);
                         pythonArgs.push(port.toString());
-                        pythonArgs = pythonArgs.concat(pipelines.cosmos.args);
+                        pythonArgs.push(pipelines.cosmos.defaultData);
+                        pythonArgs.push(crescentRawDataPath);
                     }
                     
                     // used in case of CosmosRadar
