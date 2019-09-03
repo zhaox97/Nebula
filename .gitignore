@@ -9,4 +9,4 @@ elasticsearch/data
 !.elasticbeanstalk/*.global.yml
 *.pages
 *.DS_STORE
-data/customCSV/*
+data/customCSV/*.csv
