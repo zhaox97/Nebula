@@ -12,8 +12,22 @@ var readline = require('readline');
 /* Export the Nebula class */
 module.exports = Nebula;
 
-/* Location of the raw data for the Crescent dataset */
-var crescentRawDataPath = "data/text/crescent_raw";
+/* Location of the data for the Crescent dataset */
+var textDataPath = "data/text/";
+var crescentRawDataPath = textDataPath + "crescent_raw";
+var crescentTFIDF = textDataPath + "crescent tfidf.csv";
+var crescentTopicModel = textDataPath + "crescent_topics.csv";
+
+/* Location of the data for the UK Health dataset */
+var ukHealthRawDataPath = textDataPath + "uk_health_raw";
+var ukHealthTFIDF = textDataPath + "uk_health.csv";
+
+/* Map CSV files for text data to raw text location */
+var textRawDataMappings = {};
+textRawDataMappings[crescentTFIDF] = crescentRawDataPath;
+textRawDataMappings[crescentTopicModel] = crescentRawDataPath;
+textRawDataMappings[ukHealthTFIDF] = ukHealthRawDataPath;
+textRawDataMappings[textDataPath + "uk_health_sm.csv"] = ukHealthRawDataPath;
 
 /* The pipelines available to use */
 var flatTextUIs = ["cosmos", "composite", "sirius", "centaurus"];
@@ -24,7 +38,7 @@ var pipelines = {
      },
      cosmos: {
         file: "pipelines/cosmos.py",
-        defaultData: "data/text/crescent tfidf.csv"
+        defaultData: textDataPath + "crescent tfidf.csv"
      },
      sirius: {
         file: "pipelines/sirius.py",
@@ -39,7 +53,7 @@ var pipelines = {
      },
      composite: {
         file: "pipelines/composite.py",
-        defaultData: "data/text/crescent tfidf.csv"
+        defaultData: textDataPath + "crescent tfidf.csv"
      },
      elasticsearch: {
         file: "pipelines/espipeline.py",
@@ -189,12 +203,14 @@ function Nebula(io, pipelineAddr) {
 
             // Read each line of the CSV file one at a time and parse it
             var columnHeaders = [];
+            var firstColumnName;
             rl.on('line', function (data) {                
                 var dataColumns = data.split(",");
                 
                 // If we haven't saved any column names yet, do so first
                 if (columnHeaders.length == 0) {
                     columnHeaders = dataColumns;
+                    firstColumnName = columnHeaders[0];
                 }
                 
                 // Process each individual line of data in the CSV file
@@ -223,7 +239,7 @@ function Nebula(io, pipelineAddr) {
                 }
                 
                 // Provide the CSV data to the client
-                socket.emit("csvDataReadComplete", csvData);
+                socket.emit("csvDataReadComplete", csvData, firstColumnName);
             });
         };
         
@@ -385,7 +401,7 @@ function Nebula(io, pipelineAddr) {
                         // If the UI supports reading flat text files, tell the
                         // pipeline where to find the files
                         if (flatTextUIs.indexOf(pipeline) >= 0) {
-                            pipelineArgsCopy.push(crescentRawDataPath);
+                            pipelineArgsCopy.push(textRawDataMappings[csvFilePath]);
                         }
                         
                         // Set the remaining pipeline args
