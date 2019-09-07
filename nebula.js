@@ -426,6 +426,17 @@ function Nebula(io, pipelineAddr) {
                         }
                     }
                     
+                    // Dynamically determine which distance function should be
+                    // used
+                    if (pythonArgs.indexOf("--dist_func") < 0) {
+                        if (csvFilePath.startsWith(textDataPath)) {
+                            pythonArgs.push("--dist_func", "cosine");
+                        }
+                        else {
+                            pythonArgs.push("--dist_func", "euclidean");
+                        }
+                    }
+                    
                     console.log(pythonArgs);
                     console.log("");
 
