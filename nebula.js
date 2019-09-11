@@ -429,7 +429,8 @@ function Nebula(io, pipelineAddr) {
                     // Dynamically determine which distance function should be
                     // used
                     if (pythonArgs.indexOf("--dist_func") < 0) {
-                        if (csvFilePath.startsWith(textDataPath)) {
+                        if (pipeline === "twitter" || pipeline === "elasticsearch" ||
+                                csvFilePath.startsWith(textDataPath)) {
                             pythonArgs.push("--dist_func", "cosine");
                         }
                         else {
