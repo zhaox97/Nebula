@@ -26,6 +26,12 @@ def main():
     nltk_stopwords = open(nltk_stopwords_location, "r").readlines()
     for i in range(0, len(nltk_stopwords)):
         nltk_stopwords[i] = nltk_stopwords[i][:-1]
+        
+    # Parse additional stopwords
+    additional_stopwords_location = "additional_stopwords.txt"
+    additional_stopwords = open(additional_stopwords_location, "r").readlines()
+    for i in range(0, len(additional_stopwords)):
+        additional_stopwords[i] = additional_stopwords[i][:-1]
     
     # Parse all the files in the specified directory
     directory = sys.argv[-2]
@@ -74,7 +80,7 @@ def main():
                         
                     # Ensure that the word length is still > 1
                     if len(word) > 1:
-                        if word.lower() not in nltk_stopwords:
+                        if word.lower() not in nltk_stopwords and word.lower() not in additional_stopwords:
                             add_word(file_name, word)
     
     # Calculate the TF-IDF values
