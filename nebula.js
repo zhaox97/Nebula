@@ -847,6 +847,20 @@ var oli = function(room, isObservation) {
     }
 console.log("line824");
 console.log(points);
+
+
+var fs = require('fs');
+
+//create a file named mynewfile1.txt:
+fs.appendFile('mynewfile1.txt', 'Hello content!', function (err) {
+  if (err) throw err;
+  console.log('Saved!');
+});
+
+
+
+
+
     return points;
 };
 
