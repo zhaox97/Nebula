@@ -497,20 +497,20 @@ function Nebula(io, pipelineAddr) {
          * and then sending the results to all clients.
          */
         socket.on('update', function(data, isObservation, prototype, obsFeedback, attrFeedback, obsForage, attrForage) {
-          console.log("line500");
-          console.log(data);
-          console.log("============");
-          console.log(isObservation);
-          console.log("============");
-          console.log(prototype);
-          console.log("============");
-          console.log(obsFeedback);
-          console.log("============");
-          console.log(attrFeedback);
-          console.log("============");
-          console.log(obsForage);
-          console.log("============");
-          console.log(attrForage);
+          // console.log("line500");
+          // console.log(data);
+          // console.log("============");
+          // console.log(isObservation);
+          // console.log("============");
+          // console.log(prototype);
+          // console.log("============");
+          // console.log(obsFeedback);
+          // console.log("============");
+          // console.log(attrFeedback);
+          // console.log("============");
+          // console.log(obsForage);
+          // console.log("============");
+          // console.log(attrForage);
 
             if (socket.room) {
                 if (data.type === "oli") {
@@ -638,8 +638,10 @@ Nebula.prototype.handleMessage = function(room, msg) {
  */
 Nebula.prototype.handleUpdate = function(room, res) {
     console.log("Handle update called");
-    console.log("line 630");
-    console.log(res);
+
+    // console.log("line 630");
+    // console.log(res);
+
     var update = {};
     update.points = [];
     if (res.documents) {
@@ -732,8 +734,10 @@ Nebula.prototype.handleUpdate = function(room, res) {
 //            updateRoom(room, update_attr, false);
 //            this.io.to(room.name).emit('update', update_attr, false);
 //        }
-      console.log("line724");
-      console.log(update);
+
+
+      // console.log("line724");
+      // console.log(update);
     }
 };
 
@@ -805,10 +809,11 @@ var updateRoom = function(room, update, view) {
  * only the selected points are included in the algorithm.
  */
 var oli = function(room, isObservation) {
-    console.log("line797");
-    console.log(room);
-    console.log("============");
-    console.log(isObservation);
+    // console.log("line797");
+    // console.log(room);
+    // console.log("============");
+    // console.log(isObservation);
+
     var points = {};
 
     if (typeof(isObservation) == "undefined" || isObservation) {
@@ -862,7 +867,7 @@ var sendRoom = function(room, isObservation) {
 /* Sends a message to a pipeline, enscapsulating it in an RPC-like fashion */
 var invoke = function(socket, func, data) {
     var obj = {"func": func, "contents": data};
-    console.log("line846");
-    console.log(obj);
+    // console.log("line846");
+    // console.log(obj);
     socket.send(JSON.stringify(obj));
 };
