@@ -504,7 +504,7 @@ function Nebula(io, pipelineAddr) {
         /* Listens for update requests from the client, executing the update
          * and then sending the results to all clients.
          */
-        socket.on('update', function(data, isObservation, prototype, obsFeedback, attrFeedback, obsForage, attrForage) {
+        socket.on('update', function(data, isObservation, prototype, obsFeedback, attrFeedback, obsForage, attrForage, questionNum) {
           // console.log("line500");
           // console.log(data);
           // console.log("============");
@@ -524,11 +524,11 @@ function Nebula(io, pipelineAddr) {
                 if (data.type === "oli") {
                     if (typeof(isObservation) == "undefined") {
                         invoke(socket.room.pipelineSocket, "update",
-                            {interaction: "oli", type: "classic", points: oli(socket.room)});
+                            {interaction: "oli", type: "classic", points: oli(socket.room, questionNum)});
                     }
                     else {
                         invoke(socket.room.pipelineSocket, "update",
-                            {interaction: "oli", type: "classic", points: oli(socket.room, isObservation),
+                            {interaction: "oli", type: "classic", points: oli(socket.room, 0, isObservation),
                                 docFeedback: obsFeedback, attrFeedback: attrFeedback, docForage: obsForage, attrForage: attrForage,
                                 view:isObservation, prototype: prototype});
                     }
@@ -816,7 +816,7 @@ var updateRoom = function(room, update, view) {
 /* Runs inverse MDS on the points in a room. For inverse MDS,
  * only the selected points are included in the algorithm.
  */
-var oli = function(room, isObservation) {
+var oli = function(room, questionNum, isObservation) {
     // console.log("line797");
     // console.log(room);
     // console.log("============");
@@ -854,14 +854,29 @@ var oli = function(room, isObservation) {
         }
     }
 console.log("line824");
-//console.log(points);
 console.log(room.name);
+console.log(questionNum);
+console.log(points);
+
+// write to file
+var fileData = 'NodeJSAdd: ' +
+              '{ "RoonName":"' + room.name + '", ' +
+              '"QuestionNum":' + questionNum + ', ' + //// TODO: popout window for num
+              '"Timestamp":' + new Date().getTime() + ', ' +
+              '"Status":"old", ' +
+              '"Points":' + JSON.stringify(points) + '} \n\n';
+
 
 //var fs = require('fs');
-fs.appendFile('mynewfile1.txt', 'Hello content!', function (err) {
+fs.appendFile('UserStudy.txt', fileData, function (err) {
   if (err) throw err;
   console.log('Saved!');
 });
+
+// Python code for txt analysis
+// fileData = '{ "RoonName":"ming", "Timetamp":1570590508689, "Status":"old", "Points":{"Moose":{"type":"selected","lowD":[-0.6999560278714444,0.36791766620728317]},"Fox":{"type":"sample","lowD":[0.30114942607000933,0.28911563550156966]},"Rat":{"type":"sample","lowD":[0.10730775422390554,0.6250761750298731]},"Deer":{"type":"selected","lowD":[-0.702435808531331,0.5093364276782754]}}}'
+// y = json.loads(fileData)
+// print(y["Points"]["Moose"]["type"])
 
 
     return points;
