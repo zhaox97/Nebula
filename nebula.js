@@ -504,7 +504,7 @@ function Nebula(io, pipelineAddr) {
         /* Listens for update requests from the client, executing the update
          * and then sending the results to all clients.
          */
-        socket.on('update', function(data, isObservation, prototype, obsFeedback, attrFeedback, obsForage, attrForage, questionNum) {
+        socket.on('update', function(data, isObservation, prototype, obsFeedback, attrFeedback, obsForage, attrForage) {
           // console.log("line500");
           // console.log(data);
           // console.log("============");
@@ -524,7 +524,7 @@ function Nebula(io, pipelineAddr) {
                 if (data.type === "oli") {
                     if (typeof(isObservation) == "undefined") {
                         invoke(socket.room.pipelineSocket, "update",
-                            {interaction: "oli", type: "classic", points: oli(socket.room, questionNum)});
+                            {interaction: "oli", type: "classic", points: oli(socket.room, data.questionNum)});
                     }
                     else {
                         invoke(socket.room.pipelineSocket, "update",
