@@ -59,6 +59,14 @@ var port = 5555;
 var nextSessionNumber = 0;
 var usedSessionNumbers = [];
 
+
+var fs = require('fs');
+//create a file named mynewfile1.txt:
+// fs.appendFile('mynewfile1.txt', 'Hello content!', function (err) {
+//   if (err) throw err;
+//   console.log('Saved!');
+// });
+
 /* Nebula class constructor */
 function Nebula(io, pipelineAddr) {
     /* This allows you to use "Nebula(obj)" as well as "new Nebula(obj)" */
@@ -846,19 +854,12 @@ var oli = function(room, isObservation) {
         }
     }
 console.log("line824");
-console.log(points);
-
-
-var fs = require('fs');
-
-//create a file named mynewfile1.txt:
-fs.appendFile('mynewfile1.txt', 'Hello content!', function (err) {
+//console.log(points);
+console.log(room.name);
+fs.appendFile('mynewfile1.log', 'Hello content!', function (err) {
   if (err) throw err;
   console.log('Saved!');
 });
-
-
-
 
 
     return points;
