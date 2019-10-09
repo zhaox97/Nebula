@@ -855,16 +855,12 @@ var oli = function(room, isObservation) {
     }
 console.log("line824");
 //console.log(points);
-<<<<<<< HEAD
 console.log(room.name);
 fs.appendFile('mynewfile1.log', 'Hello content!', function (err) {
   if (err) throw err;
   console.log('Saved!');
 });
 
-=======
-console.log(room);
->>>>>>> 31a1da55aff4892a33bd426b6214598b897ece55
 
     return points;
 };
