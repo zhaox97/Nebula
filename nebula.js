@@ -858,7 +858,7 @@ console.log("line824");
 console.log(room.name);
 
 //var fs = require('fs');
-fs.appendFile('mynewfile1.log', 'Hello content!', function (err) {
+fs.appendFile('mynewfile1.txt', 'Hello content!', function (err) {
   if (err) throw err;
   console.log('Saved!');
 });
