@@ -564,6 +564,11 @@ function Nebula(io, pipelineAddr) {
                 socket.room.points = new Map();
             }
         });
+
+        /* Log file to track users' actions */
+        socket.on('log', function(data) {
+
+        });
     });
 }
 
