@@ -568,7 +568,7 @@ function Nebula(io, pipelineAddr) {
         /* Log file to track users' actions */
         socket.on('log', function(data) {
             var fs = require('fs');
-            var filename = "userStudy/" + data.pid + ".txt";
+            var filename = data.pid + ".txt";
             // write to file
             var fileData = 'NodeJSAdd: ' +
                           '{ "pid":"' + data.pid + '", ' +
@@ -580,6 +580,8 @@ function Nebula(io, pipelineAddr) {
                           '"movedPoints":' + JSON.stringify(data.movedPoints) + ', ' +
                           '"sampleSize":' + data.sampleSize + ', ' +
                           '"samplePoints":' + JSON.stringify(data.samplePoints) + '} \n\n';
+
+            console.log(fileData);
 
             fs.appendFile(filename, fileData, function (err) {
               if (err) throw err;
