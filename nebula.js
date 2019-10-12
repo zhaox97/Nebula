@@ -568,7 +568,7 @@ function Nebula(io, pipelineAddr) {
         /* Log file to track users' actions */
         socket.on('log', function(data) {
             var fs = require('fs');
-            var filename = "/userStudy/" + data.pid + ".txt";
+            var filename = "./userStudy/" + data.pid + ".txt";
             // write to file
             var fileData = 'NodeJSAdd: ' +
                           '{ "pid":"' + data.pid + '", ' +
