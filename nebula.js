@@ -570,20 +570,23 @@ function Nebula(io, pipelineAddr) {
             var fs = require('fs');
             var filename = "userStudy/" + data.pid + ".txt";
             // write to file
-            var fileData = 'NodeJSAdd: ' +
-                          '{ "pid":"' + data.pid + '", ' +
-                          '"status":"' + data.status + '", ' +
-                          '"message":"' + data.message + '", ' +
-                          '"questionNum":' + data.questionNum + ', ' +
-                          '"timestamp":' + new Date().getTime() + ', ' +
-                          '"movedSize":' + data.movedSize + ', ' +
-                          '"movedPoints":' + JSON.stringify(data.movedPoints) + ', ' +
-                          '"sampleSize":' + data.sampleSize + ', ' +
-                          '"samplePoints":' + JSON.stringify(data.samplePoints) + '} \n\n';
+            // var fileData = 'NodeJSAdd:' +
+            //               '{ "pid":"' + data.pid + '", ' +
+            //               '"status":"' + data.status + '", ' +
+            //               '"message":"' + data.message + '", ' +
+            //               '"questionNum":' + data.questionNum + ', ' +
+            //               '"timestamp":' + new Date().getTime() + ', ' +
+            //               '"movedSize":' + data.movedSize + ', ' +
+            //               '"movedPoints":' + JSON.stringify(data.movedPoints) + ', ' +
+            //               '"sampleSize":' + data.sampleSize + ', ' +
+            //               '"samplePoints":' + JSON.stringify(data.samplePoints) + '}\n';
 
-            console.log(fileData);
+            // fs.appendFile(filename, fileData, function (err) {
+            //   if (err) throw err;
+            //   console.log('Saved!');
+            // });
 
-            fs.appendFile(filename, fileData, function (err) {
+            fs.appendFile(filename, data.content, function (err) {
               if (err) throw err;
               console.log('Saved!');
             });
