@@ -569,23 +569,8 @@ function Nebula(io, pipelineAddr) {
         socket.on('log', function(data) {
             var fs = require('fs');
             var filename = "userStudy/" + data.pid + ".txt";
+
             // write to file
-            // var fileData = 'NodeJSAdd:' +
-            //               '{ "pid":"' + data.pid + '", ' +
-            //               '"status":"' + data.status + '", ' +
-            //               '"message":"' + data.message + '", ' +
-            //               '"questionNum":' + data.questionNum + ', ' +
-            //               '"timestamp":' + new Date().getTime() + ', ' +
-            //               '"movedSize":' + data.movedSize + ', ' +
-            //               '"movedPoints":' + JSON.stringify(data.movedPoints) + ', ' +
-            //               '"sampleSize":' + data.sampleSize + ', ' +
-            //               '"samplePoints":' + JSON.stringify(data.samplePoints) + '}\n';
-
-            // fs.appendFile(filename, fileData, function (err) {
-            //   if (err) throw err;
-            //   console.log('Saved!');
-            // });
-
             fs.appendFile(filename, data.content, function (err) {
               if (err) throw err;
               console.log('Saved!');
