@@ -857,8 +857,8 @@ var oli = function(room, isObservation) {
             }
         }
     }
-console.log("line824");
-console.log(points);
+// console.log("line824");
+// console.log(points);
     return points;
 };
 
