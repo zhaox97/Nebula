@@ -1,1 +1,0 @@
-{ "pid":"zihao225", "status":"Drag Handle", "questionNum":1, "timestamp":1571929759561, "param":"Swims", "oriValue":0.07518113765629926, "newValue":0}

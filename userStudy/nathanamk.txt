@@ -1,6 +1,0 @@
-{ "pid":"nathanamk", "status":"Drag Handle", "questionNum":3, "timestamp":1571929561683, "param":"Buckteeth", "oriValue":0.013888888888888907, "newValue":1}
-{ "pid":"nathanamk", "status":"Drag Handle", "questionNum":3, "timestamp":1571929641672, "param":"Buckteeth", "oriValue":0.9900000000000001, "newValue":1}
-{ "pid":"nathanamk", "status":"Drag Handle", "questionNum":4, "timestamp":1571929652296, "param":"Cave", "oriValue":0.00014084507042256056, "newValue":1}
-{ "pid":"nathanamk", "status":"Drag Handle", "questionNum":4, "timestamp":1571929697674, "param":"Cave", "oriValue":0.9900000000000004, "newValue":0.006529850746268601}
-{ "pid":"nathanamk", "status":"Drag Handle", "questionNum":4, "timestamp":1571929702396, "param":"Buckteeth", "oriValue":0.9802380616988309, "newValue":0.006529850746268601}
-{ "pid":"nathanamk", "status":"Drag Handle", "questionNum":4, "timestamp":1571929710102, "param":"Cave", "oriValue":0.5009630052035015, "newValue":0}
