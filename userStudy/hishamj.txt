@@ -1,0 +1,1 @@
+{ "pid":"hishamj", "status":"Drag Handle", "questionNum":3, "timestamp":1571930068980, "param":"Buckteeth", "oriValue":0.013888888888888907, "newValue":0}

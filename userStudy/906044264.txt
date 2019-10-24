@@ -1,0 +1,2 @@
+{ "pid":"906044264", "status":"Drag Handle", "questionNum":1, "timestamp":1571929639036, "param":"Active", "oriValue":0.013888888888888907, "newValue":0.2397388059701492}
+{ "pid":"906044264", "status":"Update Button", "message":"moved 0 points", "questionNum":9, "timestamp":1571929707113, "movedSize":0, "movedPoints":{}}

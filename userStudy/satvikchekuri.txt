@@ -1,0 +1,2 @@
+{ "pid":"satvikchekuri", "status":"Update Button", "message":"moved 0 points", "questionNum":1, "timestamp":1571895985418, "movedSize":0, "movedPoints":{}}
+{ "pid":"satvikchekuri", "status":"Drag Handle", "questionNum":1, "timestamp":1571895996720, "param":"water-project-cost-sharing", "oriValue":0.05882352941176473, "newValue":0.05882352941176473}

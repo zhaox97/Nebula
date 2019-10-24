@@ -1,0 +1,2 @@
+{ "pid":"fanz8", "status":"Update Button", "message":"moved 0 points", "questionNum":1, "timestamp":1571929704421, "movedSize":0, "movedPoints":{}}
+{ "pid":"fanz8", "status":"Drag Handle", "questionNum":1, "timestamp":1571929875106, "param":"Buckteeth", "oriValue":0.013888888888888907, "newValue":0}
