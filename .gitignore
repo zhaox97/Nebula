@@ -10,3 +10,4 @@ elasticsearch/data
 *.pages
 *.DS_STORE
 data/customCSV/*.csv
+/userStudy/*
