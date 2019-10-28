@@ -3,6 +3,7 @@ var fs = require("fs");
 var async = require('async');
 var zmq = require('zmq');
 var readline = require('readline');
+const getPort = require('get-port');
 
 /* Load the databases we need */
 //var monk = require('monk');
@@ -68,7 +69,9 @@ var customCSVFolder = "data/customCSV/";
 
 var sirius_prototype = 2;
 
-var port = 5555;
+// An array to track the ports being processed to eliminate race conditions
+// as much as possible
+var portsInProcess = [];
 
 var nextSessionNumber = 0;
 var usedSessionNumbers = [];
@@ -386,106 +389,115 @@ function Nebula(io, pipelineAddr) {
                 }
 
                 /* Create a pipeline client for this room */
-                if (!pipelineAddr) {
-                    var pythonArgs = ["-u"];
-                    if (pipeline in pipelines) {
-                        
-                        // A CSV file path should have already been set. This
-                        // file path should be used to indicate where to find
-                        // the desired file
-                        if (!csvFilePath) {
-                            csvFilePath = pipelines[pipeline].defaultData;
-                        }
-                        pipelineArgsCopy.push(csvFilePath);
-                        
-                        // If the UI supports reading flat text files, tell the
-                        // pipeline where to find the files
-                        if (flatTextUIs.indexOf(pipeline) >= 0) {
-                            pipelineArgsCopy.push(textRawDataMappings[csvFilePath]);
-                        }
-                        
-                        // Set the remaining pipeline args
-                        pythonArgs.push(pipelines[pipeline].file);
-                        pythonArgs.push(port.toString());
-                        if (pipeline != "twitter" && pipeline != "elasticsearch") {
-                            pythonArgs = pythonArgs.concat(pipelineArgsCopy);
-                        }
+                (async () => {
+                    // First, grab a valid open port
+                    var port;
+                    while (!port && portsInProcess.indexOf(port) < 0) {
+                        port = await getPort();
                     }
-                    else {
-                        pythonArgs.push(pipelines.cosmos.file);
-                        pythonArgs.push(port.toString());
-                        pythonArgs.push(pipelines.cosmos.defaultData);
-                        pythonArgs.push(crescentRawDataPath);
-                    }
+                    portsInProcess.push(port);
                     
-                    // used in case of CosmosRadar
-                    for (var key in args) {
-                        if (args.hasOwnProperty(key)) {
-                            pythonArgs.push("--" + key);
-                            pythonArgs.push(args[key]);
-                        }
-                    }
-                    
-                    // Dynamically determine which distance function should be
-                    // used
-                    if (pythonArgs.indexOf("--dist_func") < 0) {
-                        if (pipeline === "twitter" || pipeline === "elasticsearch" ||
-                                csvFilePath.startsWith(textDataPath)) {
-                            pythonArgs.push("--dist_func", "cosine");
+                    if (!pipelineAddr) {
+                        var pythonArgs = ["-u"];
+                        if (pipeline in pipelines) {
+
+                            // A CSV file path should have already been set. This
+                            // file path should be used to indicate where to find
+                            // the desired file
+                            if (!csvFilePath) {
+                                csvFilePath = pipelines[pipeline].defaultData;
+                            }
+                            pipelineArgsCopy.push(csvFilePath);
+
+                            // If the UI supports reading flat text files, tell the
+                            // pipeline where to find the files
+                            if (flatTextUIs.indexOf(pipeline) >= 0) {
+                                pipelineArgsCopy.push(textRawDataMappings[csvFilePath]);
+                            }
+
+                            // Set the remaining pipeline args
+                            pythonArgs.push(pipelines[pipeline].file);
+                            pythonArgs.push(port.toString());
+                            if (pipeline != "twitter" && pipeline != "elasticsearch") {
+                                pythonArgs = pythonArgs.concat(pipelineArgsCopy);
+                            }
                         }
                         else {
-                            pythonArgs.push("--dist_func", "euclidean");
+                            pythonArgs.push(pipelines.cosmos.file);
+                            pythonArgs.push(port.toString());
+                            pythonArgs.push(pipelines.cosmos.defaultData);
+                            pythonArgs.push(crescentRawDataPath);
                         }
-                    }
-                    
-                    console.log(pythonArgs);
-                    console.log("");
 
-                    var pipelineInstance = spawn("python2.7", pythonArgs, {stdout: "inherit"});
+                        // used in case of CosmosRadar
+                        for (var key in args) {
+                            if (args.hasOwnProperty(key)) {
+                                pythonArgs.push("--" + key);
+                                pythonArgs.push(args[key]);
+                            }
+                        }
 
-                    pipelineInstance.on("error", function(err) {
-                        console.log("python2.7.exe not found. Trying python.exe");
-                        pipelineInstance = spawn("python", pythonArgs,{stdout: "inherit"});
+                        // Dynamically determine which distance function should be
+                        // used
+                        if (pythonArgs.indexOf("--dist_func") < 0) {
+                            if (pipeline === "twitter" || pipeline === "elasticsearch" ||
+                                    csvFilePath.startsWith(textDataPath)) {
+                                pythonArgs.push("--dist_func", "cosine");
+                            }
+                            else {
+                                pythonArgs.push("--dist_func", "euclidean");
+                            }
+                        }
 
+                        console.log(pythonArgs);
+                        console.log("");
+
+                        var pipelineInstance = spawn("python2.7", pythonArgs, {stdout: "inherit"});
+
+                        pipelineInstance.on("error", function(err) {
+                            console.log("python2.7.exe not found. Trying python.exe");
+                            pipelineInstance = spawn("python", pythonArgs,{stdout: "inherit"});
+
+                            pipelineInstance.stdout.on("data", function(data) {
+                                console.log("Pipeline: " + data.toString());
+                            });
+                            pipelineInstance.stderr.on("data", function(data) {
+                                console.log("Pipeline error: " + data.toString());
+                            });
+                        });
+
+                        /* Data received by node app from python process, 
+                         * ouptut this data to output stream(on 'data'), 
+                         * we want to convert that received data into a string and 
+                         * append it to the overall data String
+                         */
                         pipelineInstance.stdout.on("data", function(data) {
-                            console.log("Pipeline: " + data.toString());
+                            console.log("Pipeline STDOUT: " + data.toString());
                         });
                         pipelineInstance.stderr.on("data", function(data) {
                             console.log("Pipeline error: " + data.toString());
                         });
+
+                        room.pipelineInstance = pipelineInstance;
+                    }
+
+                    /* Connect to the pipeline */
+                    pipelineAddr = pipelineAddr || "tcp://127.0.0.1:" + port.toString();
+
+                    room.pipelineSocket = zmq.socket('pair');
+                    room.pipelineSocket.connect(pipelineAddr);
+
+                    pipelineAddr = null;
+                    portsInProcess.splice(portsInProcess.indexOf(port), 1);
+
+                    /* Listens for messages from the pipeline */
+                    room.pipelineSocket.on('message', function (msg) {
+                        self.handleMessage(room, msg);
                     });
 
-                    /* Data received by node app from python process, 
-                     * ouptut this data to output stream(on 'data'), 
-                     * we want to convert that received data into a string and 
-                     * append it to the overall data String
-                     */
-                    pipelineInstance.stdout.on("data", function(data) {
-                        console.log("Pipeline STDOUT: " + data.toString());
-                    });
-                    pipelineInstance.stderr.on("data", function(data) {
-                        console.log("Pipeline error: " + data.toString());
-                    });
-                    
-                    room.pipelineInstance = pipelineInstance;
-                }
-
-                /* Connect to the pipeline */
-                pipelineAddr = pipelineAddr || "tcp://127.0.0.1:" + port.toString();
-
-                room.pipelineSocket = zmq.socket('pair');
-                room.pipelineSocket.connect(pipelineAddr);
-
-                pipelineAddr = null;
-                port += 1;
-
-                /* Listens for messages from the pipeline */
-                room.pipelineSocket.on('message', function (msg) {
-                    self.handleMessage(room, msg);
-                });
-
-                self.rooms[roomName] = socket.room = room;
-                invoke(room.pipelineSocket, "reset");
+                    self.rooms[roomName] = socket.room = room;
+                    invoke(room.pipelineSocket, "reset");
+                })();
             }
             else {
                 socket.room = self.rooms[roomName];
