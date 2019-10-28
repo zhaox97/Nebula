@@ -3,7 +3,7 @@ var fs = require("fs");
 var async = require('async');
 var zmq = require('zmq');
 var readline = require('readline');
-const getPort = require('get-port');
+var getPort = require('get-port');
 
 /* Load the databases we need */
 //var monk = require('monk');
@@ -371,28 +371,34 @@ function Nebula(io, pipelineAddr) {
             socket.roomName = roomName;
             socket.user = user;
             socket.join(roomName);
-
+            
             var pipelineArgsCopy = [];
 
-            if (!self.rooms[roomName]) {
-                var room = {};
-                room.name = roomName;
-                room.count = 1;
-                room.points = new Map();
-                room.similarity_weights = new Map();
-                
-                if (pipeline == "sirius" || pipeline == "centaurus") {
-                    room.attribute_points = new Map();
-                    room.attribute_similarity_weights = new Map();
-                    room.observation_data = [];
-                    room.attribute_data = [];
-                }
+            // Beging an asynchronous call so that we can dynamically grab an
+            // open port number as well as manipulate csvFilePath approproately.
+            // The way that the code is written effectively makes this asynchronous
+            // call synchronous
+            (async () => {
+                if (!self.rooms[roomName]) {
+                    var room = {};
+                    room.name = roomName;
+                    room.count = 1;
+                    room.points = new Map();
+                    room.similarity_weights = new Map();
 
-                /* Create a pipeline client for this room */
-                (async () => {
+                    if (pipeline == "sirius" || pipeline == "centaurus") {
+                        room.attribute_points = new Map();
+                        room.attribute_similarity_weights = new Map();
+                        room.observation_data = [];
+                        room.attribute_data = [];
+                    }
+
+                    /* Create a pipeline client for this room */
                     // First, grab a valid open port
                     var port;
-                    while (!port && portsInProcess.indexOf(port) < 0) {
+                    while (!port || portsInProcess.indexOf(port) >= 0) {
+                        // This is the line of code that requires the
+                        // asynchronous call
                         port = await getPort();
                     }
                     portsInProcess.push(port);
@@ -497,23 +503,23 @@ function Nebula(io, pipelineAddr) {
 
                     self.rooms[roomName] = socket.room = room;
                     invoke(room.pipelineSocket, "reset");
-                })();
-            }
-            else {
-                socket.room = self.rooms[roomName];
-                socket.room.count += 1;
-
-                if (pipeline == "sirius" || pipeline == "centaurus") {
-                    socket.emit('update', sendRoom(socket.room, true), true);
-                    socket.emit('update', sendRoom(socket.room, false), false);
                 }
                 else {
-                    socket.emit('update', sendRoom(socket.room));
-                }
-            }
+                    socket.room = self.rooms[roomName];
+                    socket.room.count += 1;
 
-            // Reset the csvFilePath to null for future UIs
-            csvFilePath = null;
+                    if (pipeline == "sirius" || pipeline == "centaurus") {
+                        socket.emit('update', sendRoom(socket.room, true), true);
+                        socket.emit('update', sendRoom(socket.room, false), false);
+                    }
+                    else {
+                        socket.emit('update', sendRoom(socket.room));
+                    }
+                }
+
+                // Reset the csvFilePath to null for future UIs
+                csvFilePath = null;
+            })();
         });
 
         /* Listens for actions from the clients, tracking them and then
