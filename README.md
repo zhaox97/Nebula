@@ -93,8 +93,9 @@ For all platforms, **Python 2.7** must be installed for Nebula-Pipeline to work.
 
 Similarly, **Java** must be installed for the project to run correctly. It can be installed from [here](https://www.java.com/en/download/).
 
+Also, install **Node.js** version 8.X [here](https://nodejs.org/dist/latest-v8.x/). Note that this is an older version of Node.js, which is required for ZMQ to work properly (as described [here](https://github.com/JustinTulloss/zeromq.node/issues/525)). Also note that versions at or below 4.4.6 will likely not work correctly either.
+
 ### Windows
-Install the **Node.js** from their website [here](nodejs.org). Select the LTS version.
 
 NOTE: Any LTS version at or below 4.4.7 will not work correctly.  As of this writing, the newest version is 8.11.1 LTS, with which the rest of the instructions should work fine. To fix this issue, you must run `npm install -g npm`, and then go into your `~\AppData\Roaming\npm\node_modules\npm` directory and run the command `npm install node-gyp@3.4.0`. With this, the remaining instructions should work. Any LTS Node.js version after 4.4.7 should not need to the aforementioned steps.
 
