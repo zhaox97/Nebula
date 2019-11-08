@@ -108,14 +108,14 @@ function Nebula(io, pipelineAddr) {
             var name = socket.roomName;
             var roomData = self.rooms[name];
             
-            console.log('Client disconnecting from ' + socket.roomName);
+            console.log(socket.roomName + ': Client disconnecting');
 
             if (roomData && roomData.count) {
                 roomData.count -= 1;
-                console.log("Count of room: " + roomData.count);
+                console.log(socket.roomName + ": Count of room = " + roomData.count);
                 
                 if (roomData.count <= 0) {
-                    console.log("Room " + name + " now empty");
+                    console.log(socket.roomName + ": Room now empty");
                     
                     // Get the session number of the current session
                     var sessionNumber;
@@ -200,7 +200,7 @@ function Nebula(io, pipelineAddr) {
 
             // Print any error messages we encounter
             rl.on('error', function (err) {
-                console.log("Error while parsing CSV file: " + csvFilePath);
+                console.log(socket.roomName + ": Error while parsing CSV file: " + csvFilePath);
                 console.log(err);
             });
 
@@ -265,18 +265,18 @@ function Nebula(io, pipelineAddr) {
             var childProcess = exec(command, "-e", function (error, stdout, stderr) {
                 // Print out any stdout captured to the console
                 if (stdout) {
-                    console.log('Creating CSV file: ' + stdout);
+                    console.log(socket.roomName + ': Creating CSV file stdout: ' + stdout);
                 }
 
                 // Put any errors in the errors array
                 if (error) {
-                    console.log('Creating CSV file error: ' + error);
+                    console.log(socket.roomName + ': Creating CSV file error: ' + error);
                 }
 
                 // Put any errors in the errors array and print them out to
                 // the console
                 if (stderr) {
-                    console.log('Creating CSV file stderr: ' + stderr);
+                    console.log(socket.roomName + ': Creating CSV file stderr: ' + stderr);
                 }
             });
             
@@ -350,12 +350,12 @@ function Nebula(io, pipelineAddr) {
         function deleteFile(filePath) {
      	    fs.stat(filePath, function(err, data) {
                 if (err) {
-                    console.log('File ' + filePath + ' does not exist');
+                    console.log(socket.roomName + ': File ' + filePath + ' does not exist');
                 }
                 else {
                     fs.unlink(filePath, function(err) {
                         if (err) {
-                            return console.error("Error unlinking file: " + err);
+                            return console.error(socket.roomName + ": Error unlinking file: " + err);
                         }
                     });
                 }
@@ -367,7 +367,7 @@ function Nebula(io, pipelineAddr) {
         * the client the current state of the room.
         */
         socket.on('join', function(roomName, user, pipeline, args) {
-            console.log("Join called for " + pipeline + " pipeline; room " + roomName);
+            console.log(roomName + ": Join called for " + pipeline + " pipeline");
             socket.roomName = roomName;
             socket.user = user;
             socket.join(roomName);
@@ -455,20 +455,21 @@ function Nebula(io, pipelineAddr) {
                             }
                         }
 
+                        console.log(socket.roomName);
                         console.log(pythonArgs);
                         console.log("");
 
                         var pipelineInstance = spawn("python2.7", pythonArgs, {stdout: "inherit"});
 
                         pipelineInstance.on("error", function(err) {
-                            console.log("python2.7.exe not found. Trying python.exe");
+                            console.log(socket.roomName + ": python2.7.exe not found. Trying python.exe");
                             pipelineInstance = spawn("python", pythonArgs,{stdout: "inherit"});
 
                             pipelineInstance.stdout.on("data", function(data) {
-                                console.log("Pipeline: " + data.toString());
+                                console.log(socket.roomName + " Pipeline: " + data.toString());
                             });
                             pipelineInstance.stderr.on("data", function(data) {
-                                console.log("Pipeline error: " + data.toString());
+                                console.log(socket.roomName + " Pipeline error: " + data.toString());
                             });
                         });
 
@@ -478,10 +479,10 @@ function Nebula(io, pipelineAddr) {
                          * append it to the overall data String
                          */
                         pipelineInstance.stdout.on("data", function(data) {
-                            console.log("Pipeline STDOUT: " + data.toString());
+                            console.log(socket.roomName + " Pipeline STDOUT: " + data.toString());
                         });
                         pipelineInstance.stderr.on("data", function(data) {
-                            console.log("Pipeline error: " + data.toString());
+                            console.log(socket.roomName + " Pipeline error: " + data.toString());
                         });
 
                         room.pipelineInstance = pipelineInstance;
@@ -610,7 +611,7 @@ Nebula.prototype.handleAction = function(action, room) {
             room.attribute_points.get(action.id).pos = action.pos;
         }
         else {
-            console.log("Point not found in room for move: " + action.id);
+            console.log(socket.roomName + ": Point not found in room for move: " + action.id);
         }
     }
     else if (action.type === "select") {
@@ -621,7 +622,7 @@ Nebula.prototype.handleAction = function(action, room) {
             room.attribute_points.get(action.id).selected = action.state;
         }
         else {
-            console.log("Point not found in room for select: " + action.id);
+            console.log(socket.roomName + ": Point not found in room for select: " + action.id);
         }
     }
 };
@@ -657,7 +658,7 @@ Nebula.prototype.handleMessage = function(room, msg) {
  * updateRoom function
  */
 Nebula.prototype.handleUpdate = function(room, res) {
-    console.log("Handle update called");
+    console.log(room.name + ": Handle update called");
    
     var update = {};
     update.points = [];
