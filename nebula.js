@@ -104,13 +104,13 @@ function Nebula(io, pipelineAddr) {
         /* When clients disconnect, remove them from the room. If the room is
          * now empty, delete it.
          */
-        socket.on('disconnect', function() {
+        function disconnectClient() {
             var name = socket.roomName;
             var roomData = self.rooms[name];
             
             console.log(socket.roomName + ': Client disconnecting');
 
-            if (roomData && roomData.count) {
+            if (roomData && roomData.hasOwnProperty("count")) {
                 roomData.count -= 1;
                 console.log(socket.roomName + ": Count of room = " + roomData.count);
                 
@@ -146,9 +146,20 @@ function Nebula(io, pipelineAddr) {
 
                     // Delete the room's CSV file
                     deleteFile(customCSVFolder + name + "_data.csv");
+                    
+                    // Make sure the room is no longer maintained by Socket.io
+                    delete io.sockets.adapter.rooms[name];
                 }
             }
-        });
+        };
+        
+        socket.on('disconnect', disconnectClient);
+        
+        // When we have a client who is still communicating via Socket.io but
+        // wants to change to a different session/dataset, we need to use a
+        // different message than "disconnect" since this has special meaning
+        // and will cease all communications with that specific client
+        socket.on('session-change', disconnectClient);
         
         
         /* When the client starts trying to select a file, provide a list of
@@ -484,7 +495,7 @@ function Nebula(io, pipelineAddr) {
                         pipelineInstance.stderr.on("data", function(data) {
                             console.log(socket.roomName + " Pipeline error: " + data.toString());
                         });
-
+                        
                         room.pipelineInstance = pipelineInstance;
                     }
 
