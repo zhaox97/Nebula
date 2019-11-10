@@ -34,11 +34,11 @@ Next, **`cd` into the directory** where your cloned repository lives. You should
 
 For example, I call my image `nebulaserver`. The `.` simply specifies your current directory as the location of the desired Dockerfile is located. Make sure you don't have any errors or warnings in building your image (aside from deprecation warnings; these are to be expected). Assuming everything went smoothly, you now have a Docker image ready.
 
-*Developer Tip:* If you have already used Docker before and are trying to create a new, updated image (based on changes to the Docker file). Use the `--no-cache` flag to force Docker to completely rebuild the image from scratch (i.e., without any cached information): `docker build --no-cache -t imageName .` This may take longer for Docker to create the image.
+*Developer Tip:* If you have already used Docker before and are trying to create a new, updated image (based on changes to the Docker file), use the `--no-cache` flag to force Docker to completely rebuild the image from scratch (i.e., without any cached information): `docker build --no-cache -t imageName .` This may take longer for Docker to create the image.
 
 Your docker image is not yet running. To run it, you need to use `docker run -p hostPort:containerPort imageName`. This **runs the given image (e.g., `nebulaserver`) within a container**, where the image is running the given application on `containerPort` (which for us is `8081`, as defined in app.js; this port is then "exposed" to the host machine with the `EXPOSE` command in the Dockerfile). This container port is then mapped to the given host port, which can be any unused port you want it to be (e.g, `80`). Your app should now be ready for you to use. You will see in your console printout from within your container print to the terminal window that you launched your container in. Note, however, that your container will be unresponsive to any keyboard input from this terminal window (including the typical `CTRL+C` to stop the Node.js server).
 
-Note: I recommend you run a longer command to start your container... See below for details:
+*Note:* I recommend you run a longer command to start your container... See below for details:
 
 **Recommended Command for Mac users**:
 
