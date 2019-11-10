@@ -34,6 +34,8 @@ Next, **`cd` into the directory** where your cloned repository lives. You should
 
 For example, I call my image `nebulaserver`. The `.` simply specifies your current directory as the location of the desired Dockerfile is located. Make sure you don't have any errors or warnings in building your image (aside from deprecation warnings; these are to be expected). Assuming everything went smoothly, you now have a Docker image ready.
 
+*Developer Tip:* If you have already used Docker before and are trying to create a new, updated image (based on changes to the Docker file). Use the `--no-cache` flag to force Docker to completely rebuild the image from scratch (i.e., without any cached information): `docker build --no-cache -t imageName .` This may take longer for Docker to create the image.
+
 Your docker image is not yet running. To run it, you need to use `docker run -p hostPort:containerPort imageName`. This **runs the given image (e.g., `nebulaserver`) within a container**, where the image is running the given application on `containerPort` (which for us is `8081`, as defined in app.js; this port is then "exposed" to the host machine with the `EXPOSE` command in the Dockerfile). This container port is then mapped to the given host port, which can be any unused port you want it to be (e.g, `80`). Your app should now be ready for you to use. You will see in your console printout from within your container print to the terminal window that you launched your container in. Note, however, that your container will be unresponsive to any keyboard input from this terminal window (including the typical `CTRL+C` to stop the Node.js server).
 
 Note: I recommend you run a longer command to start your container... See below for details:
@@ -70,10 +72,10 @@ As previously mentioned, you can add more to your `docker run` command to make i
    * **Note for Windows users**: Windows users should use '\' instead of '/' when defining the file paths on your local machine, but keep '/' for the host machine. See the recommended command above for an example.
 * `-d` : You can run your Docker container run in a detached state. According to the official [docs](https://docs.docker.com/engine/reference/run/#detached--d), "by design, containers started in detached mode exit when the root process used to run the container exits." Therefore, using this detached state may be useful if you want your Docker container to continue after the main process (dictated by CMD) terminates. However, it does mean that the container's output will no longer be printed out to your host's terminal.
 
-#### Stopping, Starting, Attaching and Removing Containers
+#### Stopping, Starting, Attaching, Seeing Logs, and Removing Containers
 To stop a container, you need the container's name. If you forgot it or didn't specify a name, you can get the information by running `docker ps`. Then, run `docker stop containerName`. Following my examples above, I would run `docker stop nebula_runner1`.
 
-Note, however, that this doesn't completely remove the container; it has merely stopped running. Using `docker ps -a` will show you all containers, including those that aren't currently running. What this lets you do is run `docker start containerName` to restart the same, previously defined container (including all the mounting settings you used when you initially ran the container). However, notice that you are starting the container in a detached state. To attach to a container that you are detached to (either by starting a pre-existing container or using the `-d` flag mentioned above, you can use the command `docker attach containerName`. Attaching to a container will allow you to start seeing any *new* output in that container, but you will not be able to see any previous output in that container.
+Note, however, that this doesn't completely remove the container; it has merely stopped running. Using `docker ps -a` will show you all containers, including those that aren't currently running. What this lets you do is run `docker start containerName` to restart the same, previously defined container (including all the mounting settings you used when you initially ran the container). However, notice that you are starting the container in a detached state. To attach to a container that you are detached to (either by starting a pre-existing container or using the `-d` flag mentioned above, you can use the command `docker attach containerName`. Attaching to a container will allow you to start seeing any *new* output in that container, but you will not be able to see any previous output in that container. To see old logs, use the `docker log containerName`. Using the `-f` flag for this command will allow you to see new logs as they happen as well.
 
 Have images or containers you want to get rid of? One of these commands may help you (with more information available [here](https://linuxize.com/post/how-to-remove-docker-images-containers-volumes-and-networks/):
 * `docker container rm containerID` : Removes the container with the specified containerID, which is either the container's ID number or its name (which can both be obtained using `docker ps -a`)
@@ -133,11 +135,13 @@ With this, all the Node dependencies should be installed.
 
 Next, you can install all the **pipeline dependencies** with the command:
 
-``pip install ./path/to/Nebula-Pipeline`` (if you are going to develop you can use ``pip install -e ./path/to/Nebula-Pipeline``)
+``pip install ./path/to/Nebula-Pipeline``
+
+*Developer Tip:* If you are going to develop, you can use ``pip install -e ./path/to/Nebula-Pipeline``
 
 Again, you may need to use `sudo`.
 
-You can now launch the Node.js server by running `npm start` from the root directory. This will start the server locally (default listening on port 8081). You should now be able to connect to the server via `localhost:8081/`.
+You can now launch the Node.js server by running `npx nodemon start` from the root directory. This will start the server locally (default listening on port 8081). You should now be able to connect to the server via `localhost:8081/`.
 
 ## User Guide
 
