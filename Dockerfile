@@ -4,16 +4,19 @@ RUN mkdir /www
 WORKDIR /www
 RUN apt-get update
 
-RUN apt-get install -y libzmq-dev npm nodejs-legacy python python-pip
-RUN apt-get update && \
-	apt-get install -y openjdk-8-jdk && \
+# Install node v8.16.2 and npm version 6.4.1
+RUN apt-get install -y curl && \
+        curl -sL https://deb.nodesource.com/setup_8.x | bash - && \
+        apt-get install -y nodejs
+
+RUN apt-get install -y libzmq-dev python python-pip
+RUN apt-get install -y openjdk-8-jdk && \
 	apt-get install -y ant && \
 	apt-get clean;
 	
 # Fix certificate issues, found as of 
 # https://bugs.launchpad.net/ubuntu/+source/ca-certificates-java/+bug/983302
-RUN apt-get update && \
-	apt-get install ca-certificates-java && \
+RUN apt-get install ca-certificates-java && \
 	apt-get clean && \
 	update-ca-certificates -f;
 
@@ -30,6 +33,9 @@ RUN pip install -e /www/Nebula-Pipeline
 # Install tmux
 #RUN apt install -y tmux
 
+# Install nodemon specifically here so that we can use the command below
+RUN npm install -g nodemon
+
 EXPOSE 8081
 
 # Attempt to run npm withing a tmux sesssion
@@ -40,4 +46,4 @@ EXPOSE 8081
 # get this working...
 #CMD ["sh", "-c",  "tmux new-session -d -s nebula_session1 && tmux send-keys -t nebula_session1 'npm start' ENTER"]
 
-CMD ["npm", "start"]
+CMD ["nodemon", "-L", "start"]
