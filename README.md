@@ -120,16 +120,25 @@ Install **[HomeBrew](http://brew.sh/)**. Then use HomeBrew to install zeromq and
 ``brew install zeromq pkg-config``
 
 ### Debian/Ubuntu
-Install the **libzmq-dev, npm, and nodejs-legacy packages**:
+Install the **npm and nodejs packages**:
 
-``sudo apt-get install libzmq-dev npm nodejs-legacy``
+``sudo apt-get install apt-get install -y curl && \
+        curl -sL https://deb.nodesource.com/setup_8.x | bash - && \
+        apt-get install -y nodejs``
+
+If you have issues installing npm/nodejs, you may find some help [here](https://www.digitalocean.com/community/tutorials/how-to-install-node-js-on-ubuntu-16-04).
+
+Also install the **libzmq package**:
+``apt-get install -y libzmq-dev``
+
+*Note:* You can largely follow the [Dockerfile](https://github.com/DiscoveryAnalyticsCenter/Nebula/blob/master/Dockerfile) to install this project via command line. Please refer to it if you have any issues during installation.
 
 ### All Platforms
 Once these platform specific dependencies have be installed, you can install all the required **Node.js modules** using:
 
 ``npm install``
 
-Note: on Linux and OS X you may need to use ``sudo``.
+*Note:* on Linux and OS X you may need to use ``sudo``. Additionally, if you have problems with the installation, you may need to change the permissions for the node_modules directory using `chown -R yourusername:yourusername node_modules` (which is discussed more [here](https://github.com/Automattic/node-canvas/issues/1188)).
 
 With this, all the Node dependencies should be installed. 
 
