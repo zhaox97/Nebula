@@ -373,6 +373,9 @@ function Nebula(io, pipelineAddr) {
             });
         }
         
+        var startTime;
+        var logPath;
+        
        /*  a client/ a room. If the room doesn't next exist yet,
         * initiate it and send the new room to the client. Otherwise, send
         * the client the current state of the room.
@@ -382,6 +385,13 @@ function Nebula(io, pipelineAddr) {
             socket.roomName = roomName;
             socket.user = user;
             socket.join(roomName);
+            
+            if (pipeline === "centaurus") {
+                startTime = new Date();
+                var dateTimeStr = startTime.toDateString() + "-" + startTime.toLocaleTimeString();
+                logFilePath = "data/logs/" + roomName + "--" + dateTimeStr.replace(/ /g, "-") + ".csv";
+                log("start");
+            }
             
             var pipelineArgsCopy = [];
 
@@ -607,6 +617,70 @@ function Nebula(io, pipelineAddr) {
                 socket.room.points = new Map();
             }
         });
+        
+        /* Logs interaction data */
+        socket.on('log', function(interactionType, obsFeedback, attrFeedback, obsForage, attrForage, data) {
+            log(interactionType, obsFeedback, attrFeedback, obsForage, attrForage, data);
+        });
+        
+        function log(interactionType, obsFeedback=null, attrFeedback=null, obsForage=null, attrForage=null, data=null) {
+            // Set exec to be a function that calls the command line
+            var exec = require('child_process').exec;
+
+            // Initialize errors to be an empty array to capture any errors
+            var errors = [];
+            
+            // Calculate the amount of time elapsed as min:sec.millisec
+            var timeElapse = new Date() - startTime;
+            timeElapse = Math.floor(timeElapse/1000/60) + ":" + (timeElapse/1000%60);
+            
+            // Get the data to write out to console
+            var logData = timeElapse + "," + interactionType + "," + obsFeedback + "," + attrFeedback + "," + obsForage + "," + attrForage + ",";
+            if (typeof(data) === "object" && data) {
+                var dataStr;
+                
+                if (interactionType === "projection interaction") {
+                    dataStr = "[";
+                    data.forEach(function(point) {
+                        Object.keys(point).forEach(function(key) {
+                            dataStr += "{" + key + ": " + point[key] + "}, ";
+                        });
+                    });
+                }
+                else if (interactionType === "change relevance") {
+                    dataStr = "{";
+                    Object.keys(data).forEach(function(key) {
+                        dataStr += key + ": " + data[key] + ", ";
+                    });
+                }
+                logData += dataStr.substring(0, dataStr.length-2) + "}";
+            }
+            else {
+                logData += data;
+            }
+            
+            // Create the command to use on the command line
+            var command = "echo \"" + logData + "\" >> " + logFilePath; 
+         
+            // Execute the command and cature any errors or printouts
+            var childProcess = exec(command, "-e", function (error, stdout, stderr) {
+                // Print out any stdout captured to the console
+                if (stdout) {
+                    console.log(socket.roomName + ': Logging stdout: ' + stdout);
+                }
+
+                // Put any errors in the errors array
+                if (error) {
+                    console.log(socket.roomName + ': Logging error: ' + error);
+                }
+
+                // Put any errors in the errors array and print them out to
+                // the console
+                if (stderr) {
+                    console.log(socket.roomName + ': Logging stderr: ' + stderr);
+                }
+            });
+        }
     });
 }
 
