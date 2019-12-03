@@ -18,6 +18,7 @@ var textDataPath = "data/text/";
 var crescentRawDataPath = textDataPath + "crescent_raw";
 var crescentTFIDF = textDataPath + "crescent tfidf.csv";
 var crescentTopicModel = textDataPath + "crescent_topics.csv";
+var crescentTopicModelTranspose = textDataPath + "crescent_topics_transpose.csv";
 
 /* Location of the data for the UK Health dataset */
 var ukHealthRawDataPath = textDataPath + "uk_health_raw";
@@ -27,6 +28,7 @@ var ukHealthTFIDF = textDataPath + "uk_health.csv";
 var textRawDataMappings = {};
 textRawDataMappings[crescentTFIDF] = crescentRawDataPath;
 textRawDataMappings[crescentTopicModel] = crescentRawDataPath;
+textRawDataMappings[crescentTopicModelTranspose] = crescentRawDataPath;
 textRawDataMappings[ukHealthTFIDF] = ukHealthRawDataPath;
 textRawDataMappings[textDataPath + "uk_health_sm.csv"] = ukHealthRawDataPath;
 
@@ -596,17 +598,7 @@ function Nebula(io, pipelineAddr) {
          */
         socket.on('get', function(data, isObservation) {
             if (socket.room) {
-                if (typeof(isObservation) == "undefined" || isObservation) {
-                    invoke(socket.room.pipelineSocket, "get", data);
-                }
-                else {
-                    var attribute_data = socket.room.attribute_data
-                    for(var i in   attribute_data) {
-                        if (attribute_data[i].id == data.id) {
-                            socket.emit("get", attribute_data[i] , isObservation); 
-                        }
-                    }
-                }
+                invoke(socket.room.pipelineSocket, "get", data);
             }
         });
 
