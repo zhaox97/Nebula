@@ -32,7 +32,7 @@ textRawDataMappings[ukHealthTFIDF] = ukHealthRawDataPath;
 /* The pipelines available to use */
 var flatTextUIs = ["cosmos", "composite", "sirius", "centaurus"];
 var pipelines = {
-    andromeda: { 
+    andromeda: {
         file: "pipelines/andromeda.py",
         defaultData: "data/highD/Animal_Data_study.csv"
      },
@@ -78,7 +78,7 @@ var usedSessionNumbers = [];
 /* Nebula class constructor */
 function Nebula(io, pipelineAddr) {
     /* This allows you to use "Nebula(obj)" as well as "new Nebula(obj)" */
-    if (!(this instanceof Nebula)) { 
+    if (!(this instanceof Nebula)) {
         return new Nebula(io);
     }
 
@@ -94,7 +94,7 @@ function Nebula(io, pipelineAddr) {
 
     /* Accept new WebSocket clients */
     io.on('connection', function(socket) {
-        
+
         /* When a client requests the list of rooms, send them the list */
         socket.on('list.sessions',function() {
             socket.emit('list.sessions.response', io.sockets.adapter.rooms);
@@ -106,16 +106,16 @@ function Nebula(io, pipelineAddr) {
         function disconnectClient() {
             var name = socket.roomName;
             var roomData = self.rooms[name];
-            
+
             console.log(socket.roomName + ': Client disconnecting');
 
             if (roomData && roomData.hasOwnProperty("count")) {
                 roomData.count -= 1;
                 console.log(socket.roomName + ": Count of room = " + roomData.count);
-                
+
                 if (roomData.count <= 0) {
                     console.log(socket.roomName + ": Room now empty");
-                    
+
                     // Get the session number of the current session
                     var sessionNumber;
                     var index = name.length - 1;
@@ -128,39 +128,39 @@ function Nebula(io, pipelineAddr) {
                         }
                         index--;
                     }
-                    
+
                     // Remove the room number associated with this room from
                     // usedSessionNumbers
                     var sessionNumIndex = usedSessionNumbers.indexOf(sessionNumber);
                     var usedSessionNums1 = usedSessionNumbers.slice(0, sessionNumIndex);
                     var usedSessionNums2 = usedSessionNumbers.slice(sessionNumIndex+1, usedSessionNumbers.length);
                     usedSessionNumbers = usedSessionNums1.concat(usedSessionNums2);
-                    
+
                     // Kill the Python script associated with the empty room
                     roomData.pipelineInstance.stdin.pause();
                     roomData.pipelineInstance.kill('SIGKILL');
-                    
+
                     // Remove the empty room from the list of rooms
                     delete self.rooms[name];
 
                     // Delete the room's CSV file
                     deleteFile(customCSVFolder + name + "_data.csv");
-                    
+
                     // Make sure the room is no longer maintained by Socket.io
                     delete io.sockets.adapter.rooms[name];
                 }
             }
         };
-        
+
         socket.on('disconnect', disconnectClient);
-        
+
         // When we have a client who is still communicating via Socket.io but
         // wants to change to a different session/dataset, we need to use a
         // different message than "disconnect" since this has special meaning
         // and will cease all communications with that specific client
         socket.on('session-change', disconnectClient);
-        
-        
+
+
         /* When the client starts trying to select a file, provide a list of
          * possible files to choose from
          */
@@ -168,12 +168,12 @@ function Nebula(io, pipelineAddr) {
             if (ui == "radar") {
                 ui = "cosmos";
             }
-            
+
             // Grab all the text CSV files
             var textDataList = fs.readdirSync(textDataFolder)
                 .filter(data => data.endsWith(".csv"))
                 .map(data => data = "text/" + data);
-            
+
             // Grab the highD text files if the UI can support non-text data
             var highDDataList = []
             if (!isTextOnlyUI) {
@@ -181,7 +181,7 @@ function Nebula(io, pipelineAddr) {
                     .filter(data => data.endsWith(".csv"))
                     .map(data => data = "highD/" + data);
             }
-            
+
             // Provide the list of available datasets to the client
             socket.emit("receiveDefaultFileList",
                 textDataList.concat(highDDataList),
@@ -191,16 +191,16 @@ function Nebula(io, pipelineAddr) {
 
         // Use the csvFilePath to store the name of a user-defined CSV file
         var csvFilePath = null;
-        
+
         /* Helper function to tell the client that the CSV file is now ready for them
         * to use. They are also sent a copy of the data
         */
         var csvFileReady = function(csvFilePath) {
-            
+
             // Let the client know that the CSV file is now ready to be used on
             // the server
             socket.emit("csvDataReady");
-            
+
             // Prepare to parse the CSV file
             var csvData = [];
             const rl = readline.createInterface({
@@ -217,15 +217,15 @@ function Nebula(io, pipelineAddr) {
             // Read each line of the CSV file one at a time and parse it
             var columnHeaders = [];
             var firstColumnName;
-            rl.on('line', function (data) {                
+            rl.on('line', function (data) {
                 var dataColumns = data.split(",");
-                
+
                 // If we haven't saved any column names yet, do so first
                 if (columnHeaders.length == 0) {
                     columnHeaders = dataColumns;
                     firstColumnName = columnHeaders[0];
                 }
-                
+
                 // Process each individual line of data in the CSV file
                 else {
                     var dataObj = {};
@@ -237,12 +237,12 @@ function Nebula(io, pipelineAddr) {
                     }
                     csvData.push(dataObj);
                 }
-                
+
             });
-            
+
             // All lines are read, file is closed now.
             rl.on('close', function () {
-                
+
                 // On certain OSs, like Windows, an extra, blank line may be read
                 // Check for this and remove it if it exists
                 var lastObservation = csvData[csvData.length-1];
@@ -250,12 +250,12 @@ function Nebula(io, pipelineAddr) {
                 if (lastObservationKeys.length = 1 && lastObservation[lastObservationKeys[0]] == "") {
                     csvData.pop();
                 }
-                
+
                 // Provide the CSV data to the client
                 socket.emit("csvDataReadComplete", csvData, firstColumnName);
             });
         };
-        
+
         /* When the client sends a "setData" message with the data and room name,
          * generate a new file using the room name that contains the given data.
          * Set the csvFilePath variable appropriately
@@ -269,8 +269,8 @@ function Nebula(io, pipelineAddr) {
             // Initialize errors to be an empty array to capture any errors
             var errors = [];
             // Create the command to use on the command line
-            var command = "echo \"" + data + "\" > " + csvFilePath; 
-         
+            var command = "echo \"" + data + "\" > " + csvFilePath;
+
             // Execute the command and cature any errors or printouts
             var childProcess = exec(command, "-e", function (error, stdout, stderr) {
                 // Print out any stdout captured to the console
@@ -289,7 +289,7 @@ function Nebula(io, pipelineAddr) {
                     console.log(socket.roomName + ': Creating CSV file stderr: ' + stderr);
                 }
             });
-            
+
             childProcess.on("close", function() {
                 // Only emit the "csvDataReady" message to the client if no errors
                 // were encountered while attempting to create the custom CSV file
@@ -298,29 +298,29 @@ function Nebula(io, pipelineAddr) {
                 }
             });
         });
-        
+
         /* Allows the client to specify a CSV file already on the server to use */
         socket.on("setCSV", function(csvName) {
             csvFilePath = "data/" + csvName;
             csvFileReady(csvFilePath);
         });
 
-        /* 
+        /*
          * Allows the server to be in control of session names
          */
         socket.on("getSessionName", function(ui) {
             // Create the new session name and send it back to the UI
             var sessionName = ui + nextSessionNumber;
             socket.emit("receiveSessionName", sessionName);
-            
+
             // Keep track of used session numbers
             usedSessionNumbers.push(nextSessionNumber);
-            
+
             // Determine the next session number. If we're getting too close to
             // the MAX_VALUE, start looking at old session numbers to see if an
             // old number can be used
             if (nextSessionNumber == Number.MAX_VALUE || (nextSessionNumber+1) > Number.MAX_VALUE) {
-                
+
                 // Start back at 0 and check for session numbers that are no
                 // longer being used. 0 would be the oldest session number, and
                 // therefore is the most likely to no longer be used. Continue
@@ -335,7 +335,7 @@ function Nebula(io, pipelineAddr) {
                 }
             }
             else {
-                nextSessionNumber++;                
+                nextSessionNumber++;
             }
         });
 
@@ -343,17 +343,17 @@ function Nebula(io, pipelineAddr) {
          * initiate it and send the new room to the client. Otherwise, send
          * the client the current state of the room.
          */
-        socket.on('leave', function() {  
+        socket.on('leave', function() {
     	    var roomname = socket.roomName;
-            socket.room.count -= 1; 
+            socket.room.count -= 1;
             socket.leave(socket.roomName);
             socket.emit('leave',roomname);
-     	    
+
      	    if(socket.room.count <= 0) {
      	        var filePath = customCSVFolder + roomname + "_data.csv";
      	        deleteFile(filePath);
      	    }
-     	 
+
         });
 
         // function to delete a file
@@ -371,7 +371,7 @@ function Nebula(io, pipelineAddr) {
                 }
             });
         }
-        
+
        /*  a client/ a room. If the room doesn't next exist yet,
         * initiate it and send the new room to the client. Otherwise, send
         * the client the current state of the room.
@@ -381,7 +381,7 @@ function Nebula(io, pipelineAddr) {
             socket.roomName = roomName;
             socket.user = user;
             socket.join(roomName);
-            
+
             var pipelineArgsCopy = [];
 
             // Beging an asynchronous call so that we can dynamically grab an
@@ -412,7 +412,7 @@ function Nebula(io, pipelineAddr) {
                         port = await getPort();
                     }
                     portsInProcess.push(port);
-                    
+
                     if (!pipelineAddr) {
                         var pythonArgs = ["-u"];
                         if (pipeline in pipelines) {
@@ -483,9 +483,9 @@ function Nebula(io, pipelineAddr) {
                             });
                         });
 
-                        /* Data received by node app from python process, 
-                         * ouptut this data to output stream(on 'data'), 
-                         * we want to convert that received data into a string and 
+                        /* Data received by node app from python process,
+                         * ouptut this data to output stream(on 'data'),
+                         * we want to convert that received data into a string and
                          * append it to the overall data String
                          */
                         pipelineInstance.stdout.on("data", function(data) {
@@ -494,7 +494,7 @@ function Nebula(io, pipelineAddr) {
                         pipelineInstance.stderr.on("data", function(data) {
                             console.log(socket.roomName + " Pipeline error: " + data.toString());
                         });
-                        
+
                         room.pipelineInstance = pipelineInstance;
                     }
 
@@ -539,7 +539,7 @@ function Nebula(io, pipelineAddr) {
         socket.on('action', function(data, isObservation) {
             if (socket.room) {
                 self.handleAction(data, socket.room);
-                
+
                 //emit update actions to other rooms
                 if (typeof(isObservation) == "undefined") {
                     socket.broadcast.to(socket.roomName).emit('action', data);
@@ -557,8 +557,8 @@ function Nebula(io, pipelineAddr) {
             if (socket.room) {
                 if (data.type === "oli") {
                     if (typeof(isObservation) == "undefined") {
-                        invoke(socket.room.pipelineSocket, "update", 
-                            {interaction: "oli", type: "classic", points: oli(socket.room)});			
+                        invoke(socket.room.pipelineSocket, "update",
+                            {interaction: "oli", type: "classic", points: oli(socket.room)});
                     }
                     else {
                         invoke(socket.room.pipelineSocket, "update",
@@ -625,24 +625,35 @@ Nebula.prototype.handleAction = function(action, room) {
             console.log(socket.roomName + ": Point not found in room for select: " + action.id);
         }
     }
+    else if (action.type === "sample") {
+        if (room.points.has(action.id)) {
+            room.points.get(action.id).sample = action.state;
+        }
+        else if (typeof(room.attribute_points) != "undefined" && room.attribute_points.has(action.id)) {
+            room.attribute_points.get(action.id).sample = action.state;
+        }
+        else {
+            console.log(socket.roomName + ": Point not found in room for sampling: " + action.id);
+        }
+    }
 };
 
 /* Handles a message from the pipeline, encapsulated in an RPC-like fashion */
 Nebula.prototype.handleMessage = function(room, msg) {
     var obj = JSON.parse(msg.toString());
-    
+
     if (obj.func) {
         if (obj.func === "update") {
             // returns the data to user based on interaction(search/delete node/move slider)
             this.handleUpdate(room, obj.contents);
         }
         else if (obj.func === "get") {
-            //getting data when user clicks a node(document) and send it to the client    
+            //getting data when user clicks a node(document) and send it to the client
             this.io.to(room.name).emit("get", obj.contents, true);
-        } 
+        }
         else if (obj.func === "set") {
             this.io.to(room.name).emit("set", obj.contents);
-        } 
+        }
         else if (obj.func === "reset") {
             // takes place either when users joins the room or when he hits reset button
             this.io.to(room.name).emit("reset");
@@ -659,7 +670,7 @@ Nebula.prototype.handleMessage = function(room, msg) {
  */
 Nebula.prototype.handleUpdate = function(room, res) {
     console.log(room.name + ": Handle update called");
-   
+
     var update = {};
     update.points = [];
     if (res.documents) {
@@ -670,26 +681,26 @@ Nebula.prototype.handleUpdate = function(room, res) {
             obj.pos = doc.low_d;
             obj.type = doc.type;
             obj.relevance = doc.doc_relevance;
-            
+
             if (typeof(room.observation_data) != "undefined") {
-                var data = {};   
+                var data = {};
                 data.type='raw'
                 data.id = doc.doc_id
                 data.value = doc.doc_attributes
                 room.observation_data.push(data)
-                                    
+
                 obj.type = "observation";
                 if (res.ATTRIBUTE.similarity_weights) {
                     for (var j=0; j< res.ATTRIBUTE.similarity_weights.length; j++) {
                         weight = res.ATTRIBUTE.similarity_weights[j]
-                        if (weight.id == obj.id) {  
+                        if (weight.id == obj.id) {
                             obj.relevance = weight.weight
-                        }  
+                        }
                     }
                 }
             }
-            
-            
+
+
             update.points.push(obj);
         }
     }
@@ -697,7 +708,7 @@ Nebula.prototype.handleUpdate = function(room, res) {
     if (res.similarity_weights) {
         update.similarity_weights = res.similarity_weights;
     }
-  
+
     if (typeof(room.observation_data) != "underfined") {
         updateRoom(room, update, true);
         this.io.to(room.name).emit('update', update, true);
@@ -706,7 +717,7 @@ Nebula.prototype.handleUpdate = function(room, res) {
         updateRoom(room, update);
         this.io.to(room.name).emit('update', update);
     }
-    
+
     if (typeof(room.observation_data) != "undefined") {
         var update_attr = {};
         update_attr.points = [];
@@ -729,21 +740,21 @@ Nebula.prototype.handleUpdate = function(room, res) {
                 if(res.similarity_weights) {
                     for (var j=0; j< res.similarity_weights.length;j++) {
                         weight = res.similarity_weights[j]
-                        if(weight.id == obj.id) {  
+                        if(weight.id == obj.id) {
                            obj.relevance=weight.weight
                         }
                     }
                 }
-                
+
                 update_attr.points.push(obj);
 
             }
         }
-   
+
         if (res.ATTRIBUTE.similarity_weights) {
             update_attr.similarity_weights = res.ATTRIBUTE.similarity_weights;
         }
-     
+
         if (typeof(room.observation_data) != "undefined") {
             updateRoom(room, update_attr, false);
             this.io.to(room.name).emit('update', update_attr, false);
@@ -821,17 +832,24 @@ var updateRoom = function(room, update, view) {
 };
 
 /* Runs inverse MDS on the points in a room. For inverse MDS,
- * only the selected points are included in the algorithm. 
+ * only the selected points are included in the algorithm.
  */
 var oli = function(room, isObservation) {
     var points = {};
-    
+
     if (typeof(isObservation) == "undefined" || isObservation) {
         for (var key of room.points.keys()) {
             var point = room.points.get(key);
 
             if (point.selected) {
                 var p = {};
+                p.type = "selected";
+                p.lowD = point.pos;
+                points[key] = p;
+            }
+            if (point.sample) {
+                var p = {};
+                p.type = "sample";
                 p.lowD = point.pos;
                 points[key] = p;
             }
@@ -847,7 +865,7 @@ var oli = function(room, isObservation) {
             }
         }
     }
-   
+
     return points;
 };
 
