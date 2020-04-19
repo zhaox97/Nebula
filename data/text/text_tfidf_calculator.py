@@ -12,7 +12,7 @@ def main():
     # First check to ensure that we have the proper number of parameters
     if len(sys.argv) < 3 or not (len(sys.argv) == 4 and sys.argv[1] == "--contains_url") or len(sys.argv) > 4:
         print "Error: Incorrect usage"
-        print "Usage: 'python text_tfidf_calculator.py [--contains_url] ./directory/path csv_file_name.csv"
+        print "Usage: 'python text_tfidf_calculator.py [--contains_url] ./directory/path/ output_csv_file_name.csv"
         sys.exit()
         
     # Determine whether a URL should be parsed from the first line of the files
@@ -156,7 +156,7 @@ def add_word(file_name, word):
 # Examples: say vs says
 def check_word_contains(word1, word2):
     valid_word_endings = ["ing", "ed", "d", "s", "er", "est"]
-    if word1.startswith(word2):
+    if word1.startswith(word2) or (word1.startswith(word2[:-1]) and not word1.isdigit() and not word2.isdigit()):
         if len(word1) == len(word2):
             return True
         else:
