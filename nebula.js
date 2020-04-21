@@ -58,6 +58,10 @@ var pipelines = {
      elasticsearch: {
         file: "pipelines/espipeline.py",
         args: []
+     },
+     omniview: {
+        file: "pipelines/omniview.py",
+        args: []
      }
 };
 
@@ -434,7 +438,7 @@ function Nebula(io, pipelineAddr) {
                             // Set the remaining pipeline args
                             pythonArgs.push(pipelines[pipeline].file);
                             pythonArgs.push(port.toString());
-                            if (pipeline != "twitter" && pipeline != "elasticsearch") {
+                            if (pipeline != "twitter" && pipeline != "elasticsearch" && pipeline != "omniview") {
                                 pythonArgs = pythonArgs.concat(pipelineArgsCopy);
                             }
                         }
@@ -457,6 +461,7 @@ function Nebula(io, pipelineAddr) {
                         // used
                         if (pythonArgs.indexOf("--dist_func") < 0) {
                             if (pipeline === "twitter" || pipeline === "elasticsearch" ||
+                                    pipeline === "omniview" ||
                                     csvFilePath.startsWith(textDataPath)) {
                                 pythonArgs.push("--dist_func", "cosine");
                             }

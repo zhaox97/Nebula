@@ -5,14 +5,19 @@ WORKDIR /www
 RUN apt-get update
 
 # Install node v8.16.2 and npm version 6.4.1
+# This version is necessary for zmq
 RUN apt-get install -y curl && \
         curl -sL https://deb.nodesource.com/setup_8.x | bash - && \
         apt-get install -y nodejs
 
 RUN apt-get install -y libzmq-dev python python-pip
+
+# Fix certificate issues, found as of 
+# https://bugs.launchpad.net/ubuntu/+source/ca-certificates-java/+bug/983302
 RUN apt-get install -y openjdk-8-jdk && \
 	apt-get install -y ant && \
-	apt-get clean;
+	apt-get clean && \
+	update-ca-certificates -f;
 	
 # Fix certificate issues, found as of 
 # https://bugs.launchpad.net/ubuntu/+source/ca-certificates-java/+bug/983302
@@ -28,7 +33,13 @@ RUN pip install --upgrade pip
 COPY . /www
 RUN npm install
 
-RUN pip install -e /www/Nebula-Pipeline
+RUN pip install -e ./Nebula-Pipeline
+#RUN pip install numpy scipy cython zerorpc tweepy nltk elasticsearch
+#RUN python -m nltk.downloader stopwords
+
+# Install Nathan Wycoff's version of sklearn
+COPY ./lib/ /opt/lib
+RUN pip install -U /opt/lib/scikit_learn-0.19.dev0-cp27-cp27mu-linux_x86_64.whl
 
 # Install tmux
 #RUN apt install -y tmux
