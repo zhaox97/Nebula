@@ -689,7 +689,9 @@ Nebula.prototype.handleUpdate = function(room, res) {
             obj.pos = doc.low_d;
             obj.type = doc.type;
             obj.relevance = doc.doc_relevance;
-            obj.color = doc.dolor;
+            if (obj.col) {
+                obj.col = doc.dolor;
+            }
 
             if (typeof(room.observation_data) != "undefined") {
                 var data = {};
