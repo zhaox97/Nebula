@@ -689,7 +689,7 @@ Nebula.prototype.handleUpdate = function(room, res) {
             obj.pos = doc.low_d;
             obj.type = doc.type;
             obj.relevance = doc.doc_relevance;
-            if (obj.col) {
+            if (doc.color) {
                 obj.col = doc.dolor;
             }
 
