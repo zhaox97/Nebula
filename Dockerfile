@@ -15,7 +15,7 @@ RUN apt-get install -y libzmq-dev python python-pip
 # Fix certificate issues, found as of 
 # https://bugs.launchpad.net/ubuntu/+source/ca-certificates-java/+bug/983302
 RUN apt-get update && \
-        install -y openjdk-8-jdk && \
+        apt-get install -y openjdk-8-jdk && \
 	apt-get install -y ant && \
         apt-get install ca-certificates-java && \
 	apt-get clean && \
@@ -31,7 +31,7 @@ RUN npm install
 
 RUN pip install -e ./Nebula-Pipeline
 #RUN pip install numpy scipy cython zerorpc tweepy nltk elasticsearch
-#RUN python -m nltk.downloader stopwords
+RUN python -m nltk.downloader stopwords
 
 # Install Nathan Wycoff's version of sklearn
 COPY ./lib/ /opt/lib
