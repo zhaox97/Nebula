@@ -14,9 +14,10 @@ RUN apt-get install -y libzmq-dev python python-pip
 
 # Fix certificate issues, found as of 
 # https://bugs.launchpad.net/ubuntu/+source/ca-certificates-java/+bug/983302
-RUN apt-get install -y openjdk-8-jdk && \
+RUN apt-get update && \
+        install -y openjdk-8-jdk && \
 	apt-get install -y ant && \
-	apt-get install ca-certificates-java && \
+        apt-get install ca-certificates-java && \
 	apt-get clean && \
 	update-ca-certificates -f;
 
