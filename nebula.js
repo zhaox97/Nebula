@@ -683,13 +683,13 @@ Nebula.prototype.handleUpdate = function(room, res) {
             var doc = res.documents[i];
             var obj = {};
             obj.id = doc.doc_id;
-            if ("displayTitle" in doc) {
-                obj.displayTitle = obj.display_title;
+            if (doc.display_title) {
+                obj.displayTitle = doc.display_title;
             }
             obj.pos = doc.low_d;
             obj.type = doc.type;
             obj.relevance = doc.doc_relevance;
-            if ("color" in doc) {
+            if (doc.color) {
                 obj.color = doc.dolor;
             }
 
