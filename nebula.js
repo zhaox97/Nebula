@@ -683,9 +683,15 @@ Nebula.prototype.handleUpdate = function(room, res) {
             var doc = res.documents[i];
             var obj = {};
             obj.id = doc.doc_id;
+            if ("displayTitle" in doc) {
+                obj.displayTitle = obj.display_title;
+            }
             obj.pos = doc.low_d;
             obj.type = doc.type;
             obj.relevance = doc.doc_relevance;
+            if ("color" in doc) {
+                obj.color = doc.dolor;
+            }
 
             if (typeof(room.observation_data) != "undefined") {
                 var data = {};
@@ -712,6 +718,11 @@ Nebula.prototype.handleUpdate = function(room, res) {
 
     if (res.similarity_weights) {
         update.similarity_weights = res.similarity_weights;
+    }
+    
+    // This grabs the word cloud data, should there be any
+    if (res.cloud) {
+        update.cloud = res.cloud;
     }
 
     if (typeof(room.observation_data) != "underfined") {
