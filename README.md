@@ -148,7 +148,15 @@ Next, you can install all the **pipeline dependencies** with the command:
 
 *Developer Tip:* If you are going to develop, you can use ``pip install -e ./path/to/Nebula-Pipeline``
 
+Also, install the **NLTK stopwords** to support UIs that use the Elasticsearch Data Controllers:
+
+``python -m nltk.downloader stopwords``
+
 Again, you may need to use `sudo`.
+
+**If you are on Linux and want to support Omniview, you must install a custom sklearn package,** which is only compatible with Linux systems:
+
+``pip install -U ./lib/scikit_learn-0.19.dev0-cp27-cp27mu-linux_x86_64.whl``
 
 You can now launch the Node.js server by running `npx nodemon start` from the root directory. This will start the server locally (default listening on port 8081). You should now be able to connect to the server via `localhost:8081/`.
 
@@ -196,7 +204,7 @@ This folder contains any files intended for the client. Anything in this folder 
 ### routes/
 Contains all REST logic, which currently only forwards the root path to `/cosmos/CosmosD3.html`. However, the forwarding of the corresponding `CosmosD3.js` file that is necessary to properly use the Cosmos interface has been broken, so the full URL (`/cosmos/CosmosD3.html`) should be used instead.
 
-## nebula.js
+### nebula.js
 The `nebula` Node.js module contains the heart of the logic pertaining to the visualizations and pipelines. The ports to run the pipeline on and the data to be visualized for each pipeline are hard coded within this module. 
 
 The current logical flow of the application can be described as follows:
