@@ -134,6 +134,9 @@ Also install the **libzmq package**:
 *Note:* You can largely follow the [Dockerfile](https://github.com/DiscoveryAnalyticsCenter/Nebula/blob/master/Dockerfile) to install this project via command line. Please refer to it if you have any issues during installation.
 
 ### All Platforms
+
+## Install Node.js packages
+
 Once these platform specific dependencies have be installed, you can install all the required **Node.js modules** using:
 
 ``npm install``
@@ -141,6 +144,8 @@ Once these platform specific dependencies have be installed, you can install all
 *Note:* on Linux and OS X you may need to use ``sudo``. Additionally, if you have problems with the installation, you may need to change the permissions for the node_modules directory using `chown -R yourusername:yourusername node_modules` (which is discussed more [here](https://github.com/Automattic/node-canvas/issues/1188)).
 
 With this, all the Node dependencies should be installed. 
+
+## Install Python Pipeline Dependenceies
 
 Next, you can install all the **pipeline dependencies** with the command:
 
@@ -159,6 +164,8 @@ Again, you may need to use `sudo`.
 ``pip install -U ./lib/scikit_learn-0.19.dev0-cp27-cp27mu-linux_x86_64.whl``
 
 You can now launch the Node.js server by running `npx nodemon start` from the root directory. This will start the server locally (default listening on port 8081). You should now be able to connect to the server via `localhost:8081/`.
+
+*Developer Tip:* If Nebula-Pipeline has changed, you may not see the changes you made unless you rerun the above `pip install` commands.
 
 ## User Guide
 
