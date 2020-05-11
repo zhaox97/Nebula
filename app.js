@@ -29,7 +29,7 @@ var io = require('socket.io')(http);//Create an io/websocket on top of http obje
 var nebula = require('./nebula')(io);//Creates nebula layer on top of io.
 
 /* Set the port we want to run on */
-var port = process.env.PORT || 8081;
+var port = process.env.PORT || 80;
 app.set('port', port);
 
 /* view engine setup, currently not used */

@@ -1,7 +1,7 @@
 import sys
 #sys.path.append('Nebula-Pipeline')
 import nebula.connector
-from nebula.data_controller.OmniviewESController import OmniviewESController
+from nebula.data_controller.ESController import ESController
 from nebula.model.ActiveSetModel import ActiveSetModel
 from nebula.model.TopicModel import TopicModel
 from nebula.model.TopicSimilarityModel import TopicSimilarityModel
@@ -20,7 +20,7 @@ def main():
     relevance = ActiveSetModel()
     similarity = TopicSimilarityModel()
     topic_model = TopicModel()
-    data_controller = OmniviewESController()
+    data_controller = ESController()
     tfModel = TFModel()
 
 
