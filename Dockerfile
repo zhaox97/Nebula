@@ -43,7 +43,7 @@ RUN pip install -U /opt/lib/scikit_learn-0.19.dev0-cp27-cp27mu-linux_x86_64.whl
 # Install nodemon specifically here so that we can use the command below
 RUN npm install -g nodemon
 
-EXPOSE 8081
+EXPOSE 80
 
 # Attempt to run npm withing a tmux sesssion
 # Docker only seems to care about whatever command it's being launched with,
