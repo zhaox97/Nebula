@@ -29,6 +29,9 @@ RUN pip install --upgrade pip
 COPY . /www
 RUN npm install
 
+# Install OpenCL dependencies
+RUN apt install ocl-icd-libopencl1 opencl-headers clinfo
+
 RUN pip install -e ./Nebula-Pipeline
 #RUN pip install numpy scipy cython zerorpc tweepy nltk elasticsearch
 RUN python -m nltk.downloader stopwords
