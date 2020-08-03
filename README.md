@@ -4,7 +4,7 @@ This project acts as the visualization controller. It is a Node.js server that m
 # Installation
 There are two different installation strategies: Using Docker or following more traditional installation strategies. Docker lets you get a new machine up and running within minutes, but it can require rebuilding Docker images to see changes reflected in one of our UIs, depending on what you're changing and how you're running your Docker containers.
 
-Regardless of which method you choose, you first need to **clone this repository (and the CosmosD3 and Nebula-Pipeline repositories)** onto your local machine. (Be sure you have git installed, and install it [here](https://git-scm.com/downloads) if you don't have it already. You don't need the GUI; the command line tool should be sufficient and will likely cause you fewer issues with this project.) When initialing cloning from git, be sure to either run `git clone` with the `--recursive` flag (recommended), or run `git submodule init` followed by `git submodule update` to pull in the CosmosD3 and Nebula-Pipeline submodules.
+Regardless of which method you choose, you first need to **clone this repository (and the CosmosD3 and Nebula-Pipeline repositories)** onto your local machine. (Be sure you have git installed, and install it [here](https://git-scm.com/downloads) if you don't have it already. You don't need the GUI; the command line tool should be sufficient and will likely cause you fewer issues with this project.) When initialing cloning from git, be sure to either run `git clone --recursive` (recommended), or `git submodule init` followed by `git submodule update` to pull in the CosmosD3 and Nebula-Pipeline submodules.
 
 ## Docker Installation
 Make sure you have a version of **Docker** installed from [the official website](https://docs.docker.com/install/) (look to the menu on the left to get a version installed for your OS, making sure to double check your system requirements and installing the older Docker Toolbox if necessary, and note that **Docker Desktop is not compatible with VirtualBox**). Just about any version of Docker should do; we are just using *images* and *containers*, not *services*, *networks*, or any other Docker features.
@@ -13,9 +13,9 @@ Before you can do much with Docker, you may have to get a *Docker daemon* runnin
 
 * **Docker Toolbox on Mac OS**:
 To get the default daemon running, these commands can be helpful (when in doubt, you can run all 3 in this order; more information is available [here](https://stackoverflow.com/questions/21871479/docker-cant-connect-to-docker-daemon)):
-* `docker-machine start` # Start virtual machine for docker
-* `docker-machine env`  # Get environment variables
-* `eval "$(docker-machine env default)"` # Set environment variables
+    * `docker-machine start` # Start virtual machine for docker
+    * `docker-machine env`  # Get environment variables
+    * `eval "$(docker-machine env default)"` # Set environment variables
 
 * **Docker Desktop on Mac OS**:
 You likely will not have to do any additional setup; Docker Desktop should be able to run straight from the installation.
@@ -36,7 +36,7 @@ For example, I call my image `nebulaserver`. The `.` simply specifies your curre
 
 *Developer Tip:* If you have already used Docker before and are trying to create a new, updated image (based on changes to the Docker file), use the `--no-cache` flag to force Docker to completely rebuild the image from scratch (i.e., without any cached information): `docker build --no-cache -t imageName .` This may take longer for Docker to create the image.
 
-Your docker image is not yet running. To run it, you need to use `docker run -p hostPort:containerPort imageName`. This **runs the given image (e.g., `nebulaserver`) within a container**, where the image is running the given application on `containerPort` (which for us is `8081`, as defined in app.js; this port is then "exposed" to the host machine with the `EXPOSE` command in the Dockerfile). This container port is then mapped to the given host port, which can be any unused port you want it to be (e.g, `80`). Your app should now be ready for you to use. You will see in your console printout from within your container print to the terminal window that you launched your container in. Note, however, that your container will be unresponsive to any keyboard input from this terminal window (including the typical `CTRL+C` to stop the Node.js server).
+Your docker image is not yet running. To run it, you need to use `docker run -p hostPort:containerPort imageName`. This **runs the given image (e.g., `nebulaserver`) within a container**, where the image is running the given application on `containerPort` (which for us is typically `8081` or `80`, as defined in app.js; this port is then "exposed" to the host machine with the `EXPOSE` command in the Dockerfile). This container port is then mapped to the given host port, which can be any unused port you want it to be (e.g, `80`). Your app should now be ready for you to use. You will see in your console printout from within your container print to the terminal window that you launched your container in. Note, however, that your container will be unresponsive to any keyboard input from this terminal window (including the typical `CTRL+C` to stop the Node.js server).
 
 *Note:* I recommend you run a longer command to start your container... See below for details:
 
@@ -99,7 +99,7 @@ Also, install **Node.js** version 8.X [here](https://nodejs.org/dist/latest-v8.x
 
 ### Windows
 
-NOTE: Any LTS version at or below 4.4.7 will not work correctly.  As of this writing, the newest version is 8.11.1 LTS, with which the rest of the instructions should work fine. To fix this issue, you must run `npm install -g npm`, and then go into your `~\AppData\Roaming\npm\node_modules\npm` directory and run the command `npm install node-gyp@3.4.0`. With this, the remaining instructions should work. Any LTS Node.js version after 4.4.7 should not need to the aforementioned steps.
+*Developer Tip: Any LTS version at or below 4.4.7 will not work correctly.  As of this writing, the newest version is 8.11.1 LTS, with which the rest of the instructions should work fine. To fix this issue, you must run `npm install -g npm`, and then go into your `~\AppData\Roaming\npm\node_modules\npm` directory and run the command `npm install node-gyp@3.4.0`. With this, the remaining instructions should work. Any LTS Node.js version after 4.4.7 should not need to the aforementioned steps.
 
 Install the **Visual C++ Build Tools**, found [here](http://landinghub.visualstudio.com/visual-cpp-build-tools). Then tell the Node package manager to use this version by running:
 
@@ -141,7 +141,7 @@ Once these platform specific dependencies have be installed, you can install all
 
 ``npm install``
 
-*Note:* on Linux and OS X you may need to use ``sudo``. Additionally, if you have problems with the installation, you may need to change the permissions for the node_modules directory using `chown -R yourusername:yourusername node_modules` (which is discussed more [here](https://github.com/Automattic/node-canvas/issues/1188)).
+*Developer Tip:* on Linux and OS X you may need to use ``sudo``. Additionally, if you have problems with the installation, you may need to change the permissions for the node_modules directory using `chown -R yourusername:yourusername node_modules` (which is discussed more [here](https://github.com/Automattic/node-canvas/issues/1188)).
 
 With this, all the Node dependencies should be installed. 
 
