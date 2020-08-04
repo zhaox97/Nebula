@@ -1,0 +1,50 @@
+body {background:#EFEFEF;}
+a {text-decoration: none !important;}
+.shadow {box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);padding:0; background: #FFF;}
+
+/*===================Header==============================*/
+#topRow {padding:13px;margin: 0; border-radius:0;}
+strong {font-size: 16px; line-height:32px;}
+#info {padding-top:3px; padding-bottom:0;}
+#sessionDiv {position: relative; display: inline-block; float: right; margin-top: 10px;}
+
+.button {float:right; margin: 0 30px; background-color: #FFF; color : black; border: 2px solid #e7e7e7; padding: 5px 10px; border-radius:8px;}
+.button:hover {background-color: #e7e7e7;text-decoration:none; cursor:pointer;}
+.button:active {transform: translateY(2px); }
+
+
+/*====================Bottom Row==========================*/
+#bottomRow {margin: 0;}
+
+/*OLI*/
+#oliDiv {background: #EFEFEF; margin: 20px 0; position:relative;}
+#oliDiv p {line-height: 25px; position: absolute; top: 10px; left: 20px;}
+#oli {width:100%; height:100%; background: white;}
+
+#zoomIn {border-radius:50%; position: absolute; bottom: 50px; left:-30px;}
+#zoomOut {border-radius:50%; position: absolute; bottom: 0px; left:-30px;}
+
+/*g.node circle.point {fill: steelblue;}*/
+g.node circle.point {fill: #bc0021; stroke: lightgray; stroke-width: 1px;}
+/*g.node.selected circle.point {fill: red;}*/
+g.node.selected circle.point {fill: orange;}
+g.node.selected text.chosen {stroke: #40C4FF;}
+g.node.hover circle.point {fill: yellow;}
+
+/*circle.indicator.highlighted {fill: red;}*/
+circle.indicator.highlighted {fill: orange;}
+circle.indicator.chosen {fill: yellow; stroke: #000; stroke-opacity: 0.4;}
+
+/*Groups*/
+#groups {margin-left:1px;}
+#groups p {text-align:center; line-height: 26px;}
+
+/*Attributes*/
+#attributes {margin-left:1px;}
+#attributes p {text-align:center; line-height: 25px; margin-top: 10px;}
+#attributes div {margin-bottom: 5px; overflow-y: scroll; overflow-x: auto; position:relative;}
+#pi {width:auto; padding:0 10px;}
+
+.handle {fill: #E8EAF6; stroke:#000; stroke-opacity: 0.5;}
+.track {stroke:#000; stroke-opacity: 0.15;stroke-width: 8px;stroke-linecap: round; fill:transparent;}
+.zero {stroke:#000; stroke-opacity: 0.5; stroke-width: 2px;}

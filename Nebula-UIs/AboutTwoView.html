@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset='utf-8'>
+        <title>Nebula</title>
+        <script src="/socket.io/socket.io.js"></script>
+        <script src='http://d3js.org/d3.v3.min.js'></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+        <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+        <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+        <!-- Latest compiled and minified CSS -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+        
+        <!-- Optional theme -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
+        
+        <!-- Latest compiled and minified JavaScript -->
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+        
+        <link rel="stylesheet" href="About.css">
+        
+    </head>
+    <body>
+        <h1>SIRIUS and Centaurus</h1>
+        
+        <p>
+            <a href="SIRIUS.html">SIRIUS</a> and <a href="Centaurus.html">Centaurus</a>
+            are both visualizations for high-dimensional data that are similar
+            in nature to <a href="AboutCosmos.html">Cosmos</a>, with the exception
+            that there are now two visualizations: one for the data items and
+            one for their attributes. Using the "Provide Feedback After Interaction"
+            checkbox beneath a given projection allows the given visualization to
+            "receive information" from the other visualization. For example,
+            if the checkbox is checked under the data item visualization, then
+            performing an interaction in that visualization will result in the
+            corresponding change that will occur in the attribute visualization
+            to affect the final appearance of the data item visualization.
+            In addition to this interactivity, Centaurus also enables foraging.
+            In other words, SIRIUS displays all data by default (like
+            <a href="AboutAndromeda.html">Andromeda</a> does), whereas Centaurus
+            enables both traditional keyword search foraging and automated foraging
+            (similar to Cosmos).
+        </p>
+        
+        <iframe width="747" height="420" src="https://www.youtube.com/embed/TzBjImkrbDU" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        <br>
+        <iframe src="https://player.vimeo.com/video/303129207" width="640" height="360" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>
+        <!--<p><a href="https://vimeo.com/303129207">VAST 2018: SIRIUS: Dual, Symmetric, Interactive Dimension Reductions</a> from <a href="https://vimeo.com/vgtcommunity">VGTCommunity</a> on <a href="https://vimeo.com">Vimeo</a>.</p>-->
+        <br><br>
+        
+        <p>
+            Ultimately, the interactivity between these visualizations is enabled
+            using dot products between weight vectors and normalized raw data.
+            Initially, these weight vectors are used as they are in
+            Andromeda, which allow for each visualization of high-dimensional
+            data to be individually interactive. As such, the data item
+            visualization uses attribute weights, and the attribute visualization
+            uses data item weights. After a parametric interaction or a
+            projection-level interaction (as described in the Andromeda link above),
+            one of these weight vectors is redefined. Using a dot product with
+            normalized data, we are able to use this weight vector to produce the
+            other weight vector.
+        </p>
+        
+        <img src="images/Math_Flowchart.png" alt="SIRIUS math flowchart" width="50%">
+        <br><br>
+        
+        <p>
+            As a more concrete example, let's say the user performs a parametric
+            interaction with an attribute. The user-defined weight is then used
+            in the the attribute weights, changing this weight vector. By using a
+            dot product between this weight vector and the normalized data for
+            the data items, we are able to compute a new set of weights for each
+            data item. As a final step to enable richer insights into correlations
+            within the dataset, we perform a similar dot product between these
+            new data item weights and the normalized data for the attributes to
+            produce a final set of attribute weights.
+        </p>
+        
+        <p>
+            A similar process is used for projection-level interactions. If the
+            user performs such an interaction in the attribute visualization
+            (to reflect desired similarity/dissimilarity relationships between
+            attributes), then a new set of data item weights is computed (such that
+            these weights would produce a visualization that captured the user-defined
+            relationships). These data item weights are then used in a dot product
+            with the normalized attribute data to produce a new set of attribute
+            weights.
+        </p>
+        
+        <p>
+            Centaurus takes this concept a step further by utilizing these weight
+            vectors as a ranking metric on previously unseen data items and
+            attributes to perform automated foraging. Thus, like in Cosmos,
+            this automated foraging uses the same user interest models used by the projections to
+            automatically add more information to the screen. This new method for
+            automated foraging is currently under review.
+        </p>
+        
+        <p>Most relevant publications:</p>
+        <ul>
+            <li><a href="https://ieeexplore.ieee.org/abstract/document/8440814?casa_token=wHiHJJP6AIEAAAAA:m5c-v_t878XIoStcfF9auwwiWYykuks1k01GV0urFPH2wCBnRA5eAPuIM1oo0m1WyZSKH2UkTw">Dowling M, Wenskovitch J, Fry JT, House L, North C. SIRIUS: Dual, symmetric, interactive dimension reductions. IEEE Transactions on Visualization and Computer Graphics. 2018 Aug 20;25(1):172-82.</a></li>
+        </ul>
+        
+        <p>Other relevant publications and links:</p>
+        <ul>
+            <li><a href="AboutAndromeda.html">Andromeda</a></li>
+            <li><a href="AboutCosmos.html">Cosmos</a></li>
+        </ul>
+    </body>
+</html>

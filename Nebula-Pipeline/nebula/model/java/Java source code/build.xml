@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<project default="create_run_jar" name="Create Runnable Jar for Project Nebula-Java with libraries in sub-folder">
+    <!--this file was created by Eclipse Runnable JAR Export Wizard-->
+    <!--ANT 1.7 is required                                        -->
+    <!--define folder properties-->
+    <property name="dir.buildfile" value="."/>
+    <property name="dir.workspace" value="${dir.buildfile}/.."/>
+    <property name="dir.jarfile" value="${dir.buildfile}"/>
+    <target name="create_run_jar">
+        <jar destfile="${dir.jarfile}/mds.jar">
+            <manifest>
+                <attribute name="Main-Class" value="mds.MDS"/>
+                <attribute name="Class-Path" value=". mdsj.jar javax.json-1.0.4.jar"/>
+            </manifest>
+            <fileset dir="${dir.jarfile}/bin"/>
+        </jar>
+    </target>
+</project>

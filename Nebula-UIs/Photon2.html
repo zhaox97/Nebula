@@ -1,0 +1,787 @@
+<!--
+X3DOM prototype for desktop running with pipeline
+Credits: Michelle - Used CosmosD3 as the template for X3DOM UI
+         Adam - Helping with integration with pipeline
+         x3dom.org - Referred to examples for using X3DOM
+Issues: Sometimes clicks made for selecting or opening a file triggers Move event
+         OLI throws ArrayIndexOutOfBounds Exception
+         Code refactoring needed for onclick event (neater code to be written for color change, left click/right click, opened/closed, //         selected/deselected)
+         Code for checking whether node already exists on screen after OLI is inefficient
+         Text area for Data content and Notes are static currently
+-->
+         
+
+<!DOCTYPE html>
+
+<title>Photon-Nebula</title> 			
+<script type='text/javascript' src='http://www.x3dom.org/download/x3dom.js'></script> 
+<link rel='stylesheet' type='text/css' href='http://www.x3dom.org/download/x3dom.css'>
+<script type="text/javascript" src="http://code.jquery.com/jquery-2.1.0.min.js" ></script>
+<script src="/socket.io/socket.io.js"></script>
+
+<!--CSS-->
+<style>
+    body
+    {     
+        font-size:80%;
+        font-family:verdana, sans-serif;
+        background-color:wheat;
+        margin: 2em;
+        color: lightgray;
+        height : 100%;
+    }
+
+    h1
+    {
+        color: darkorange;
+    }
+    
+    .div2
+    {  
+        float : right;
+        width:28%;
+        max-height:100%;
+    }
+    
+    .div3
+    {  
+        position: relative;
+        float : left;
+        width:15%;
+        max-height:100%;
+    }
+    
+    .divRow
+    {  
+        position: relative;
+        float : left;
+        width:100%;
+        max-height:100%;
+    }
+    
+    #x3dElement 
+    {
+        width : 70%;
+        height : 100%;        
+    }
+
+    input[type = text] 
+    {
+        box-sizing: border-box;
+        border: 2px solid #ccc;
+        border-radius: 8px;
+        background-color: #f8f8f8;
+        font-size: 16px;
+    }
+    input[type = text]:disabled
+    {
+        box-sizing: border-box;
+        border: 2px solid #ccc;
+        border-radius: 8px;
+        background-color: #D3D3D3;
+        font-size: 16px;
+    }
+    input[type=button], input[type=submit] {        
+        background-color: #A9A9A9;
+        border: none;
+        border-radius: 8px;
+        color: white;
+        padding: 5px 10px;
+        text-decoration: none;
+        margin: 4px 2px;
+        cursor: pointer;
+        font-size: 16px;
+    }
+    input[type =button]:disabled, input[type=submit]:disabled {
+        background-color: #D3D3D3;
+        cursor: not-allowed;
+    }
+
+    textarea {        
+        box-sizing: border-box;
+        border: 2px solid #ccc;
+        border-radius: 8px;
+        background-color: #f8f8f8;
+        font-size: 16px;
+        width: 100%;
+        height: 100px;
+        overflow: auto;
+        resize : none;
+    }
+
+    textarea:disabled {
+        background-color: #D3D3D3;        
+    }
+
+</style>
+
+<body> 
+    
+    <h1> Photon </h1>     
+    <input type ="text" id = "inputSearch" value = ""/>
+    <input type="button" id = "searchBtn" value="Search" onclick = "search();"/>
+    <input type="button" id = "resetBtn" value="Reset Layout" onclick = "resetLayout();"/>
+    <input type="button" id = "updateBtn" value="Update Layout" onclick = "updateLayout();"/>
+    <input type="button" id = "resetViewBtn" value="Reset Viewpoint" onclick = "resetView();"/>    
+    <p></p>
+    
+<!--X3DOM content    -->
+<x3d id = "x3dElement" disableDoubleClick = "true">
+    <scene> 
+    
+        <environment frustumCulling='false'>
+        </environment>
+    
+        <directionalLight id="directional" direction='0 -1 0' on ="TRUE" intensity='1.0' shadowIntensity='0.5'  shadowCascades="1" shadowFilterSize="16" shadowMapSize="512">
+        </directionalLight>
+        
+        <Viewpoint id = 'vp' position="-2.25680 3.36560 14.62828"></Viewpoint>        
+        <background skyColor='0.6901 0.7686 0.8705' groundColor='0.4117 0.4117 0.4117'></background>
+        <Transform DEF="objects" id="objects">
+        </Transform>
+        
+        <Transform id="PlaneY" translation="0 -60 0" rotation="1 0 0 -1.57">
+        <Shape>
+           <Appearance><Material diffuseColor="0.7 0.7 0.7"></Material></Appearance>
+           <Plane solid="false" size="70 70"></Plane>
+       </Shape>
+       </Transform>
+       
+       
+       <Transform id="PlaneX" translation="60 0 0" rotation="0 1.5775 0 1.5775">
+        <Shape>
+           <Appearance><Material diffuseColor="0.7 0.7 0.7"></Material></Appearance>
+           <Plane solid="false" size="70 70"></Plane>
+       </Shape>
+       </Transform>
+       
+       <Transform id="PlaneZ" translation="0 0 -60" rotation="0 0 1.5775 1.5775">
+        <Shape>
+           <Appearance><Material diffuseColor="0.7 0.7 0.7"></Material></Appearance>
+           <Plane solid="false" size="70 70"></Plane>
+       </Shape>
+       </Transform>
+       <!-- These help keep the camera aligned to the center -->
+       <Transform id="Plane-Y" translation="0 60 0" rotation="1 0 0 -1.57">
+        <Shape>
+           <Appearance><Material diffuseColor="0.7 0.7 0.7"></Material></Appearance>
+           <Plane solid="false" size="0 0"></Plane>
+       </Shape>
+       </Transform>
+       
+       
+       <Transform id="Plane-X" translation="-60 0 0" rotation="0 1.5775 0 1.5775">
+        <Shape>
+           <Appearance><Material diffuseColor="0.7 0.7 0.7"></Material></Appearance>
+           <Plane solid="false" size="0 0"></Plane>
+       </Shape>
+       </Transform>
+       
+       <Transform id="Plane-Z" translation="0 0 60" rotation="0 0 1.5775 1.5775">
+        <Shape>
+           <Appearance><Material diffuseColor="0.7 0.7 0.7"></Material></Appearance>
+           <Plane solid="false" size="0 0"></Plane>
+       </Shape>
+       </Transform>
+       <!-- End alignment-->
+    </scene> 
+</x3d> 
+
+<!--Div for Update Label, Relevance, Notes & Display content-->
+<div class = "div2">
+    <p>
+        <input type ="text" id = "dataLabel" disabled = "disabled"/>
+        <input type="button" id = "updateLabel" value="Update Label" onclick = "updateLabel();" disabled="disabled"/>
+    </p>
+    <p>
+        <input type ="text" id = "dataRel" disabled = "disabled" />
+        <input type="button" id = "updateRel" value="Update Relevance" onclick = "updateRel();" disabled = "disabled"/>
+    </p>
+    <p>       
+        <textarea id = "dataContent" value = "" disabled = "disabled"></textarea>
+    </p>
+    <p>
+        <input type ="text" id = "dataNotes" disabled = "disabled">
+        <input type="button" id = "updateNotes" value="Update Notes" onclick = "updateNotes();" disabled="disabled"/>
+    </p>
+    <p>
+        <input type="button" id = "delete" value="Delete Node" onclick = "deleteNode();" disabled="disabled"/>
+    </p>
+        <input type="button" id = "topView" value="Top" onclick = "document.getElementById('x3dElement').runtime.showAll('negY');">
+        <input type="button" id = "bottomView" value="Bottom" onclick = "document.getElementById('x3dElement').runtime.showAll('posY');">
+        <input type="button" id = "rightView" value="Right" onclick = "document.getElementById('x3dElement').runtime.showAll('negX');">
+        <input type="button" id = "leftView" value="Left" onclick = "document.getElementById('x3dElement').runtime.showAll('posX');">
+        <input type="button" id = "frontView" value="Front" onclick = "document.getElementById('x3dElement').runtime.showAll('negZ');">
+        <input type="button" id = "backView" value="Back" onclick = "document.getElementById('x3dElement').runtime.showAll('posZ');">
+</div>
+
+<div id = "tools" class = "divRow" style="top:10px">
+<!-- Div for shadow settings -->
+<div id="tools_Shadows" class = "div3">
+    <b style="color:darkorange" >Shadow Intensity</b><br>
+    0 <input type="range" id="sliderShadowIntesity" min="0.0" max="1.0" step="0.05" value="0.5" onchange="changeSetting('shadowIntensity', this.value, 'directional')"/>1<br>
+    <br>
+    <b style="color:darkorange" >Shadow Map Size</b><br>
+    32 <input type="range" id="sliderShadowMapSize" min="32" max="2048" value="512" onchange="changeSetting('shadowMapSize', this.value, 'directional')" /> 2048<br>
+    <br>
+    <b style="color:darkorange" >Shadow Filter Size</b><br>
+    0 <input type="range" id="sliderShadowFilterSize" min="0" max="32" value="16" onchange="changeSetting('shadowFilterSize', this.value, 'directional')" /> 32<br>
+    <br>
+    <b style="color:darkorange" >Shadow Cascades</b><br>
+    0 <input type="range" id="sliderShadowCascades" min="0" max="10" value="1" onchange="changeSetting('shadowCascades', this.value, 'directional')" /> 10<br>
+</div>
+
+<div id = "lightDirections" class = "div3">
+     <!--<p>
+    <input type="checkbox" checked="true" onclick="headlight('head3')">
+        <label>headlight</label>
+    </p> -->
+    <b style="color:darkorange" >Light Direction X</b><br>
+    -1 <input type="range" id="sliderXPoint" min="-1" max="1" step="0.1" value="0" onchange="changeDirection('directional','sliderXPoint','sliderYPoint','sliderZPoint')" /> 1 <br>
+    <br>
+    <b style="color:darkorange" >Light Direction Y</b><br>
+    -1 <input type="range" id="sliderYPoint" min="-1" max="1" step="0.1" value="-1" onchange="changeDirection('directional','sliderXPoint','sliderYPoint','sliderZPoint')" /> 1 <br>
+    <br>
+    <b style="color:darkorange" >Light Direction Z</b><br>
+    -1 <input type="range" id="sliderZPoint" min="-1" max="1" step="0.1" value="0" onchange="changeDirection('directional','sliderXPoint','sliderYPoint','sliderZPoint')" /> 1 <br>
+    <br>
+</div>
+
+<div id = "lightDefaults" class = "div3">
+     <!--<p>
+    <input type="checkbox" checked="true" onclick="headlight('head3')">
+        <label>headlight</label>
+    </p> -->
+    <input type="button" id = "defaultLightDirectionX" value="Set Light To X Direction" onclick = "setLightDirection('directional','1','0','0')"> <br>
+    <br>
+    <input type="button" id = "defaultLightDirectionX" value="Set Light To Y Direction" onclick = "setLightDirection('directional','0','-1','0')"> <br>
+    <br>
+    <input type="button" id = "defaultLightDirectionX" value="Set Light To Z Direction" onclick = "setLightDirection('directional','0','0','-1')"> <br>
+    <br>
+</div>
+<!--<div id = "rotationTools" class = "div3">
+<b>Rotation X</b><br>
+    -1 <input type="range" id="sliderXRotation" min="-3.141592" max="3.141592" step="0.3141592" value="0" onchange="rotateObject('PlaneX','sliderXRotation','sliderYRotation','sliderZRotation')" /> 1 <br>
+    <br>
+    <b>Rotation Y</b><br>
+    -1 <input type="range" id="sliderYRotation" min="-3.141592" max="3.141592" step="0.3141592" value="0" onchange="rotateObject('PlaneX','sliderXRotation','sliderYRotation','sliderZRotation')" /> 1 <br>
+    <br>
+    <b>Rotation Z</b><br>
+    -1 <input type="range" id="sliderZRotation" min="-3.141592" max="3.141592" step="0.3141592" value="0" onchange="rotateObject('PlaneX','sliderXRotation','sliderYRotation','sliderZRotation')" /> 1 <br>
+    <br>
+</div> -->
+
+<div id="translationTools" class = "div3">
+<b style="color:darkorange" >Translate Planes</b><br>
+    30 <input type="range" id="sliderPlanes" min="30" max="200" step="5" value="60" onchange="translatePlanes(['PlaneX','PlaneY','PlaneZ','Plane-X','Plane-Y','Plane-Z'],this.value)" /> 200 <br>
+    <br>
+    </div>
+</div>
+
+<script>
+    //Global variables    
+    var drag = false;
+    var scale = 1; // How much to scale a point in reference to the number of nodes.
+    var minSphereRadius = 0.2; // Minimum sphere size
+    var boxes1 = document.getElementById("x3dElement");
+    var nodeList = new Array();
+    var nodesCount = 0;
+    var currentNodeCount = 0;
+    var red = "1 0 0"; //News
+    var blue = "0 0 1"; //Tweet
+    var textColor = "0.55 0.95 0.25";
+    var selected = false;
+    var selectedNode = null;
+    var openedNode = null;
+    var worldX = 10;
+    var worldY = 10;
+    var worldZ = 10;
+    var movedList = new Array();
+    var movedCount = movedList.length;
+    var movedNode = null;
+    var action;
+    var text = "";
+    var socket = io.connect({reconnection:false});
+    // Use the photon pipeline
+    //socket.emit('join', 'default', socket.id);
+    socket.emit('join', 'photon', socket.id, "cosmos", {"low_dimensions": 3});
+    
+    function changeSetting(field, value, id1)
+    {
+        var light = document.getElementById(id1);
+
+        light.setAttribute(field, value);
+    }
+    
+    // on Search
+    function search() {
+        /////Actual Code
+        action = "search";
+        socket.emit('update', {type: "search", query: document.getElementById("inputSearch").value});
+    }
+    
+    //Function to update the layout
+    //Returns the result of inverse MDS    
+    function updateLayout() {
+        action = "update";
+        socket.emit("update", {type: "oli"});
+    }
+    
+    //Deletes all the nodes
+    function resetLayout() {
+        //// Actual code
+        socket.emit("reset");
+        nodeList = [];
+        nodesCount = 0;
+        document.getElementById("inputSearch").value = "";
+        resetNodeInfo();
+    }
+    
+    //Function to delete the node 
+    function deleteNode() {
+        /////Actual code 
+        if (selectedNode !== null) {
+            socket.emit('action', {type: "delete", id: selectedNode.id});
+            document.getElementById(selectedNode.id).parentElement.remove();
+            selectedNode = null;
+            resetNodeInfo();
+            updateLayout();
+        }
+        else {
+            alert("Select a node to delete");
+        }
+    }
+    
+    //Function to update the node with notes entered by user
+    function updateNotes() {
+        var newNotes = document.getElementById("dataNotes").value;
+        var nodeIndex = nodeList.indexOf(selectedNode);
+        nodeList[nodeIndex].notes = newNotes;
+    }
+    
+    
+    //Function to update the node with Relevance entered by user
+    function updateRel() {
+        ///Actual Code = ??
+        var newRel = document.getElementById("dataRel").value;
+        if (newRel >= 0 && newRel <= 1) {
+            //socket.emit('action', {type: "", relevance: ""});
+        }
+        else {
+            alert("Please enter a relevance value from 0 to 1");
+        }
+
+        ///Stub
+        var newRel = document.getElementById("dataRel").value;
+        //Relevance value entered must be between 0 to 1
+        if (newRel >= 0 && newRel <= 1) {
+            var nodeIndex = nodeList.indexOf(selectedNode);
+            nodeList[nodeIndex].relevance = newRel;
+            var sphere = document.getElementById(selectedNode.id);
+            sphere.getElementsByTagName("SPHERE")[0].setAttribute("radius", newRel*scale+minSphereRadius); //Scale the relevance to get the visible radius --JG
+        }
+        else {
+            alert("Please enter a relevance value from 0 to 1");
+        }
+    }    
+    
+    //Function to update the node with Label entered by user
+    function updateLabel() {
+        ////Actual Code = ??
+        ////Stub
+        var newLabel = document.getElementById("dataLabel").value;
+        var nodeIndex = nodeList.indexOf(selectedNode);
+        nodeList[nodeIndex].label = newLabel;
+        var sphere = document.getElementById(selectedNode.id);
+        sphere.parentElement.getElementsByTagName("TEXT")[0].setAttribute("string", newLabel);
+    }
+    
+    //Resets the viewpoint to default
+    function resetView() {
+        boxes1.runtime.resetView();
+        boxes1.runtime.showAll();        
+    }
+
+    //Visualize the data
+    function visualizeData(data) {        
+        var trafo;
+        var found = false;
+        if(data) {
+        var ot = document.getElementById("objects");
+        if(data.points) {
+        currentNodeCount = data.points.length;
+        scale = 1+50/(currentNodeCount+1);
+        for (var i = 0; i < data.points.length; i++) {  
+            var point = data.points[i];
+            
+            if(point.pos) {
+            var pos = [];
+            pos = point.pos;
+            //<normalize the position>
+            pos[0] *= worldX;
+            pos[1] *= worldY;
+            pos[2] *= worldZ;
+            }
+            
+            if(nodeList.length !== 0) {
+            for(var j = 0; j<nodeList.length; j++) {
+                if(nodeList[j].id === point.id ) {
+                    if(pos) {
+                    nodeList[j].pos = pos;
+                    document.getElementById(point.id).parentElement.setAttribute("translation", pos);                    
+                    }
+                    if("relevance" in point) {
+                        nodeList[j].relevance = point.relevance;
+                    }
+                    nodeList[j].selected = false;
+                    nodeList[j].moved = false;
+                    nodeList[j].opened = false;                    
+                    found = true;
+                    break;
+                }
+            }
+            }
+            if(found === false) {            
+            var radius = (point.relevance); //Is the relevance, dont change this value unless relevance needs to change, only change scale
+            
+            var nodeID = point.id;
+            var nodeLabel =  point.id;
+            var nodeColor = red;
+
+            //Create Transform Node
+            trafo = createNode(nodeID, nodeLabel, nodeColor, pos, radius*scale+minSphereRadius); 
+            ot.appendChild(trafo);     
+            trafo.onmousedown = function() {
+                start(event);
+            }
+            trafo.onmouseup = function() {
+                stop(event);
+            }
+            //Make the  generated transform node a moveable object
+            new x3dom.Moveable(boxes1, trafo,moveCallback, 0);                        
+            var newNode = {id: nodeID, label: nodeLabel, relevance: radius, pos: pos, selected : false, opened : false, moved: false};
+            nodeList.push(newNode);
+            }
+            boxes1.runtime.showAll();
+            }                             
+          }
+        }        
+      }
+
+    //Function to create a new DOM element
+    function createNode(nodeID, nodeLabel, nodeColor, pos, radius) {
+            var t = document.createElement('transform');
+            t.setAttribute("translation", pos[0] + " " + pos[1] + " " + pos[2]);
+            t.setAttribute("id", nodeID);
+            t.setAttribute("class", "node");
+
+            //Create shape Node
+            var s = document.createElement('shape');
+
+            // Create Appearance Node
+            var app = document.createElement('appearance');
+
+            // Create Material Node
+            var mat = document.createElement('material');
+            mat.setAttribute("diffuseColor", nodeColor);
+            app.appendChild(mat);
+            s.appendChild(app);
+            t.appendChild(s);
+            //Create Sphere Node
+            var b = document.createElement('sphere');
+            // Draw sphere with relevance as radius
+            b.setAttribute("radius", radius);
+            s.appendChild(b);
+            
+            //Generate X3DOM text to label the Node
+            var textTrafo = genNodeLabel(nodeLabel, pos, radius);
+            var trafo = document.createElement("transform");
+            trafo.setAttribute("id", nodeID + "_parent");
+            trafo.appendChild(textTrafo);
+            trafo.appendChild(t);
+            //Attach onClick for the generated node
+            t.onclick = function () {
+                selectNode(this, event);
+            };                      
+            return trafo;
+    }
+    
+//    on Node select - changes the shade of red/blue to highlight or reset color    
+    function selectNode(obj, event) {
+        var material = obj.getElementsByTagName("MATERIAL")[0];
+        var objColor = material.getAttribute("diffuseColor");
+        var id = obj.getAttribute("id");
+        var prevNode = null;
+        for(var i = 0; i<nodeList.length; i++) {
+            if(nodeList[i].id === id) {
+                if((event.button == 0) && (nodeList[i].moved == false)){
+                    nodeList[i].selected = !(nodeList[i].selected);
+                    if(nodeList[i].selected == true){
+                        selectedNode = nodeList[i];
+                    }
+                    else {
+                        selectedNode = null;  
+                    }
+                }
+               
+                else if(event.button == 2) {
+                    nodeList[i].opened = !(nodeList[i].opened);
+                    if(nodeList[i].opened == true){
+                        if(openedNode !== null) {
+                            prevNode = openedNode;
+                        }
+                        openedNode = nodeList[i];
+                    }
+                    else {                           
+                        openedNode = null; 
+                        resetNodeInfo();
+                    }
+                }
+                break;
+            }
+        }
+        
+        if(selectedNode !== null || openedNode !== null) {
+            material.setAttribute("diffuseColor", "0.1 0 0");
+            if(event.button == 0 && selectedNode !== null) {
+                socket.emit('action', {type: "select", state: true, id:id });
+            }
+            else if(event.button == 2 && openedNode !== null) {                    
+                if(prevNode !== null) {
+                document.getElementById(prevNode.id).getElementsByTagName("MATERIAL")[0].setAttribute("diffuseColor", red);
+                }
+                socket.emit("get", {type: "raw", id: id});
+            }
+        }
+        else if(event.button == 0 && selectedNode == null) {
+            material.setAttribute("diffuseColor", red);
+            socket.emit('action', {type: "select", state: false, id:id });
+        }
+        else if(event.button == 2 && openedNode == null) {
+            material.setAttribute("diffuseColor", red);
+        }
+    }
+
+    // on Mouse button press
+    function start(event) {
+        if (!drag) {
+            drag = true;
+        }
+    }
+
+    // on Mouse Move
+    function moveCallback(nodeTransform, position) {        
+        movedNode = {};
+        var nodeID = nodeTransform.getAttribute("id").split("_")[0];      
+        var pos = [parseFloat(position.x/worldX), parseFloat(position.y/worldY), parseFloat(position.z/worldZ)] ;
+        for(var i = 0; i<nodeList.length; i++) {
+           if(nodeList[i].id === nodeID) {
+             nodeList[i].moved === true;
+             break;
+           }
+        }
+        movedNode = {id : nodeID, pos : pos};  
+        //console.log(movedNode);
+    }
+    
+ 
+    //  on Mouse release
+    function stop(event) {
+        if (drag) {
+            drag = false;             
+            if(movedNode !== null) {        
+            socket.emit('action', {type: "move", pos: movedNode.pos, id: movedNode.id});               
+            }
+        }
+    }       
+    
+    //Displays the details if a node is selected/reset the display section
+    function fieldsDisplay(data) {
+        if (data) {
+            for(var i = 0; i < nodeList.length; i++) {
+                if(nodeList[i].id === data.id) {
+                    var node = nodeList[i];
+                    var text = data.value;
+                }
+            }
+            document.getElementById("dataLabel").setAttribute("value", node.id);
+            document.getElementById("dataLabel").value = node.id; //HTML and DOM values are not the same --JG
+            document.getElementById("dataNotes").setAttribute("value", "Dummy");
+            document.getElementById("dataRel").setAttribute("value", node.relevance);
+            document.getElementById("dataRel").value = node.relevance; //HTML and DOM values are not the same --JG
+            if(text) {                
+                document.getElementById("dataContent").value = text;               
+            }
+            document.getElementById("dataLabel").removeAttribute("disabled");
+            document.getElementById("dataNotes").removeAttribute("disabled");
+            document.getElementById("dataRel").removeAttribute("disabled");
+            document.getElementById("updateLabel").removeAttribute("disabled");
+            document.getElementById("updateRel").removeAttribute("disabled");
+            document.getElementById("updateNotes").removeAttribute("disabled");
+            document.getElementById("delete").removeAttribute("disabled");
+        }
+        else {
+            resetNodeInfo();
+        }
+    }
+
+    // Generates Node Label
+    function genNodeLabel(nodeLabel, pos, radius) {
+        var shape = document.createElement("shape");
+        var app = document.createElement("appearance");
+        var material = document.createElement("material");
+        var geometry = document.createElement("geometry");
+        material.setAttribute("diffuseColor", textColor);
+        app.appendChild(material);
+        shape.appendChild(app);
+        var text = document.createElement("text");
+        text.setAttribute("string", nodeLabel);
+        text.setAttribute("solid", "false");
+        var font = document.createElement("fontstyle");
+        font.setAttribute("family", "TYPEWRITER");
+        font.setAttribute("style", "BOLDITALIC");
+        font.setAttribute("size", radius);
+        text.appendChild(font);
+        shape.appendChild(text);
+        geometry.setAttribute("lit",false)
+        shape.appendChild(geometry);
+        var textTrafo = document.createElement("transform");
+        textTrafo.setAttribute("translation", pos[0] + radius + " " + pos[1] + " " + (pos[2] + radius));
+        textTrafo.appendChild(shape);
+        return textTrafo;
+    }
+
+    //Function to reset the display section 
+    function resetNodeInfo() {
+        document.getElementById("dataLabel").setAttribute("value", "");
+        document.getElementById("dataNotes").setAttribute("value", "");
+        document.getElementById("dataRel").setAttribute("value", "");
+        document.getElementById("dataContent").value = "";
+        document.getElementById("dataLabel").setAttribute("disabled", "disabled");
+        document.getElementById("dataNotes").setAttribute("disabled", "disabled");
+        document.getElementById("dataRel").setAttribute("disabled", "disabled");
+        document.getElementById("updateLabel").setAttribute("disabled", "disabled");
+        document.getElementById("updateRel").setAttribute("disabled", "disabled");
+        document.getElementById("updateNotes").setAttribute("disabled", "disabled");
+        document.getElementById("delete").setAttribute("disabled", "disabled");
+        text = "";
+    }
+    ;
+  
+    socket.on('action', function (data) {
+        console.log(data);
+        if (data.type === "move") {
+            /* Data format:
+             * pointId: <string>,
+             * pos: [] (each [-1, 1])
+             */
+            
+        }
+        else if (data.type === "select") {
+            /* Data format:
+             * pointId: <string>,
+             * state: <boolean>
+             */            
+        }
+    });
+    socket.on('reset', function () {
+        /* Simply delete all the nodes when a reset message is received */
+        document.getElementById("objects").innerHTML = "";
+        nodeList = [];
+        nodesCount = 0;
+    });
+    socket.on('update', function (data) { 
+        if(data) {
+        resetNodeInfo();
+        visualizeData(data);
+        }       
+    
+    });
+    socket.on('get', function (data) {
+        if (!data || !data.type)
+            return;
+        if (data.type === "attributes") {
+            /* data.value will be an array of attribute names.
+             This is for enabling the composite matrix functionality. */
+        }
+        else if (data.type === "raw") {
+            /* This is the raw data for one data point. data.id will be
+             the id of the point, and data.value will be the raw text. */
+            fieldsDisplay(data); //Calls the function to display the details of opened document
+        }
+    });
+    
+    // Applies a 'direction' through three elements representing x,y, and z values.
+    function changeDirection(id, id1, id2, id3)
+    {
+       var dL = document.getElementById(id);
+       var dX = parseFloat(document.getElementById(id1).value).toString();
+       var dY = parseFloat(document.getElementById(id2).value).toString();
+       var dZ = parseFloat(document.getElementById(id3).value).toString();
+       
+       dL.setAttribute('direction', dX.concat(" ",dY," ",dZ));
+    };
+    
+    function setLightDirection(id, x,y,z)
+    {
+        var dL = document.getElementById(id);
+        dL.setAttribute('direction', x.concat(" ",y," ",z));
+    };
+    
+    function setQuaternionFromEueler(x, y, z){
+        var sx = Math.sin(x * 0.5);
+        var cx = Math.cos(x * 0.5);
+        var sy = Math.sin(y * 0.5);
+        var cy = Math.cos(y * 0.5);
+        var sz = Math.sin(z * 0.5);
+        var cz = Math.cos(z * 0.5);
+
+        alpha = (sx * cy * cz) - (cx * sy * sz);
+        beta = (cx * sy * cz) + (sx * cy * sz);
+        gamma = (cx * cy * sz) - (sx * sy * cz);
+        omega = (cx * cy * cz) + (sx * sy * sz);
+        return alpha.toString().concat(" ",beta," ",gamma," ",omega);
+    };
+    
+    function rotateObject(objID, x, y, z){
+        obj = document.getElementById(objID);
+        id1 = document.getElementById(x);
+        id2 = document.getElementById(y);
+        id3 = document.getElementById(z);
+        obj.setAttribute('rotation', setQuaternionFromEueler(id1.value, id2.value, id3.value));
+    };
+    
+    function switchNodesFromView(nodes, viewable){
+        for(var i=0;i<nodes.Length;i++){
+            if(nodes[i].getAttribute("whichChoice")!='-1'){
+                nodes[i].setAttribute("whichChoice",'-1');
+            } else {
+                nodes[i].setAttribute("whichChoice",'0');
+            }
+        }
+    };
+    
+    function translatePlanes(id, translate){
+        planeX = document.getElementById(id[0]);
+        planeX.setAttribute("translation",translate.toString().concat(" 0 0"));
+        
+        planeY = document.getElementById(id[1]);
+        planeY.setAttribute("translation","0".concat(" -",translate," ",0));
+        
+        planeZ = document.getElementById(id[2]);
+        planeZ.setAttribute("translation","0 0 ".concat("-",translate));
+        
+        planeX = document.getElementById(id[3]);
+        planeX.setAttribute("translation","-".concat(translate.toString()," 0 0"));
+        
+        planeY = document.getElementById(id[4]);
+        planeY.setAttribute("translation","0".concat(" ",translate," ",0));
+        
+        planeZ = document.getElementById(id[5]);
+        planeZ.setAttribute("translation","0 0 ".concat("",translate));
+    };
+    
+    
+</script>
+</body> 
+

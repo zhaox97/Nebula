@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset='utf-8'>
+        <title>Nebula</title>
+        <script src="/socket.io/socket.io.js"></script>
+        <script src='http://d3js.org/d3.v3.min.js'></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+        <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+        <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+        <!-- Latest compiled and minified CSS -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+        
+        <!-- Optional theme -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
+        
+        <!-- Latest compiled and minified JavaScript -->
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+        
+        <link rel="stylesheet" href="About.css">
+        
+    </head>
+    <body>
+        <h1>Cosmos</h1>
+        
+        <p>
+            <a href="CosmosD3.html">Cosmos</a> is a visual analytics system
+            to support exploration of large text datasets. This original version
+            was developed by Michelle Dowling and Adam Binford to explore supporting
+            text analytics by combining ideas from
+            <a href="AboutAndromeda.html">Andromeda</a> with those from
+            <a href="https://ieeexplore.ieee.org/abstract/document/7042492?casa_token=JxxQ-5oaEi4AAAAA:ZSv_wgMwAcZLLStt-ETxmr_f9LQD7otgxNHA8gY5szTYjYgvIjtoXv_bgfP-C1_PVtPwuD6M6A">StarSPIRE</a>.
+            Since then, many students and researchers have contributed
+            to this project, culminating in CosmosOmniview (pictured and described
+            below).
+        </p>
+        
+        <img src="images/CosmosViewTopicNoLabels.png" alt="Cosmos screenshot" width="100%">
+        <br><br>
+        
+        <p>
+            In the initial development of Cosmos, the goal was to take the
+            visual "near = similar" metaphor from Andromeda with a multimodal
+            pipeline structure similar to StarSPIRE, which enabled querying
+            features. As such, this system enables projection-level interactions
+            (like those in Andromeda) and document relevance interactions
+            (similar to Andromeda's parametric interactions) while only showing
+            the user the most relevant data to their investigation
+            (similar to StarSPIRE). In so doing, users maintain an accurate sense
+            of how similar the displayed documents are without being
+            overwhelmed with the number of documents on the screen.
+        </p>
+        
+        <p>
+            In conjunction with traditional keyword search foraging (i.e., using a search bar),
+            Cosmos also uses automated foraging to show the user relevant
+            documents based on how they interact with the system. As such, this
+            automated foraging mechanism utilizes the same user interest model that
+            is used by the projection algorithm to also drive the foraging algorithm.
+            This new method for automated foraging is also used in
+            <a href="AboutTwoView.html">Centaurus</a> and is currently under review.
+        </p>
+        
+        <p>
+            After the <a href="CosmosD3.html">initial development of Cosmos</a>,
+            the multimodal architecture enabled exploration into additional
+            possibilities of combining existing research for the sake of an interactive
+            "near == similar" visualization of text data that uses this automated
+            foraging. These explorations include:
+        </p>
+        <ul>
+            <li>
+                <a href="Photon2.html">[DEPRECATED] Photon</a>: A 3D version of
+                Cosmos that uses X3DOM. The <a href="Photon.html">previous version of this interface</a>
+                is deprecated as well.
+            </li>
+            <li>
+                <a href="Oculus with Pipeline.html">[DEPRECATED] Oculus with Pipeline</a>:
+                An immersive version of Cosmos that uses the Oculus.
+            </li>
+            <li>
+                <a href="Elasticsearch.html">[BUGGY] CosmosElasticsearch</a>: A version
+                of Cosmos that uses an <a href="https://www.elastic.co/">Elasticsearch</a>
+                Data Controller as opposed to relying on flat files. [May experience
+                slow or unresponsive page. Please contact us if this is the case.]
+            </li>
+            <li>
+                <a href="CosmosTwitter.html">[DEPRECATED] CosmosTwitter</a>: A version
+                of Cosmos that uses a Twitter-based Data Controller as opposed to
+                relying on flat files.
+            </li>
+            <li>
+                <a href="CosmosComposite.html">[BUGGY] CosmosComposite</a>: A version
+                of Cosmos that uses the ideas of the
+                <a href="https://ieeexplore.ieee.org/abstract/document/7194836?casa_token=eu7kiNeExbsAAAAA:8jn_jfE4eRM-DTZXBsP2acKxdAaQUxnAw1GcHHoqjzGmv1NCWfpwomDoM-R3uCn4KSz9RV0reg">composite matrix described by Cheng and Mueller</a>
+                to display documents and terms in the same, interactive
+                projection. However, we found that this projection method often
+                led to visualizations that seemed "polarized" based on the terms,
+                meaning the perception of the similarity between documents was
+                distorted. Ultimately, we decided that this distortion was too severe,
+                often leading to the perception that documents hardly contained
+                any similarities. This distortion is at least in part due to the
+                sparse nature of the data (i.e., terms tend to not appear in many
+                documents within a corpus). [Interactions with terms usually results
+                in errors.]
+            </li>
+            <li>
+                <a href="CosmosRadar.html">[BUGGY] CosmosRadar</a>: A version of Cosmos that
+                uses the
+                <a href="https://dl.acm.org/doi/abs/10.1145/2505515.2505644?casa_token=bQJSgRTr9p0AAAAA:ccEKs57jRW9ljRCMxn4-do7Pt2crWoyTQDIC3cEBdsrwlCsjTwCzwexFJkRzP-Vovyn7E-7aP4xF">Intent Radar by Ruotalo et al.</a>
+                to visualize the similarity of the documents as the angle around
+                a center point, and the relevance as both the node size and the
+                node's distance from the center point. [Our algorithm used to
+                process the projection-level interactions does not work fully as
+                intended, but this version of Cosmos still serves as a useful and
+                interesting exploration.]
+            </li>
+            <li>
+                <a href="CosmosOmniview.html">[BUGGY] CosmosOmniview</a>: A version of
+                CosmosElasticsearch that is meant to work in conjunction with a
+                <a href="#" onclick="redirectURL();return false;" >map visualization</a>
+                to only display documents within a specified geofence. In addition,
+                this version uses an interactive topic model, which enables interaction
+                with even larger datasets. The topic model has information
+                displayed within two word clouds: one for the the top five occurring
+                terms, and one for the top five unique terms in the top five topics.
+                A screenshot of this version of Cosmos is depicted above, with
+                further details provided in
+                <a href="https://www.sciencedirect.com/science/article/pii/S2214579618302995?casa_token=HyvFGmZQ7ycAAAAA:05PaII5xKCUGI6PN-udfhESsOsIW0Wyx25gpTNZ6BQafNHwnf2gkYzokTwc__QKkczYcDaTAiA">Interactive visual analytivs for sensemaking with big text by Dowling et al.</a>
+                [Map visualization does not properly display documents, and the
+                geofence may not work properly when foraging for documents in
+                CosmosOmniview. Additionally, you may experience a slow or unresponsive
+                page. Please contact us if this is the case.]
+            </li>
+            <li>
+                <a href="AboutTwoView.html">SIRIUS and Centaurus</a>: Although a
+                visualization of the documents and their similarity is useful, so too
+                is a visualization of the terms that appear within the documents.
+                SIRIUS and Centaurus explore providing one visualization for each
+                while connecting these visualizations such that an interaction in
+                either visualization can affect both visualizations, providing
+                rich feedback and enabling deep exploration after each
+                interaction.
+            </li>
+        </ul>
+
+        
+        <p>Most relevant publications:</p>
+        <ul>
+            <li><a href="https://www.sciencedirect.com/science/article/pii/S2214579618302995?casa_token=HyvFGmZQ7ycAAAAA:05PaII5xKCUGI6PN-udfhESsOsIW0Wyx25gpTNZ6BQafNHwnf2gkYzokTwc__QKkczYcDaTAiA">Dowling M, Wycoff N, Mayer B, Wenskovitch J, House L, Polys N, North C, Hauck P. Interactive visual analytics for sensemaking with big text. Big Data Research. 2019 Jul 1;16:49-58.</a></li>
+        </ul>
+        
+        <p>Other relevant publications and links:</p>
+        <ul>
+            <li><a href="https://ieeexplore.ieee.org/abstract/document/7042492?casa_token=JxxQ-5oaEi4AAAAA:ZSv_wgMwAcZLLStt-ETxmr_f9LQD7otgxNHA8gY5szTYjYgvIjtoXv_bgfP-C1_PVtPwuD6M6A">Bradel L, North C, House L. Multi-model semantic interaction for text analytics. In 2014 IEEE Conference on Visual Analytics Science and Technology (VAST) 2014 Oct 25 (pp. 163-172). IEEE.</a></li>
+            <li><a href="AboutAndromeda.html">Andromeda</a></li>
+            <li><a href="https://ieeexplore.ieee.org/abstract/document/7194836?casa_token=eu7kiNeExbsAAAAA:8jn_jfE4eRM-DTZXBsP2acKxdAaQUxnAw1GcHHoqjzGmv1NCWfpwomDoM-R3uCn4KSz9RV0reg">Cheng S, Mueller K. The data context map: Fusing data and attributes into a unified display. IEEE transactions on visualization and computer graphics. 2015 Aug 13;22(1):121-30.</a></li>
+            <li><a href="https://dl.acm.org/doi/abs/10.1145/2505515.2505644?casa_token=bQJSgRTr9p0AAAAA:ccEKs57jRW9ljRCMxn4-do7Pt2crWoyTQDIC3cEBdsrwlCsjTwCzwexFJkRzP-Vovyn7E-7aP4xF">Ruotsalo T, Peltonen J, Eugster M, Głowacka D, Konyushkova K, Athukorala K, Kosunen I, Reijonen A, Myllymäki P, Jacucci G, Kaski S. Directing exploratory search with interactive intent modeling. In Proceedings of the 22nd ACM international conference on Information & Knowledge Management 2013 Oct 27 (pp. 1759-1764).</a></li>
+            <li><a href="AboutTwoView.html">SIRIUS and Centaurus</a></li>
+        </ul>
+
+        
+        <p>Related research</p>
+        <ul>
+            <li><a href="https://dl.acm.org/doi/abs/10.1145/1753326.1753336?casa_token=sE2AAvt1b74AAAAA:1sGMNKNARL34_bM_1ZYtgVzrSIPZh1qqmAVoFXN_xpNqEuUt40VeUc6opJ6uNnSLKKhYvmek4dpO">Andrews C, Endert A, North C. Space to think: large high-resolution displays for sensemaking. In Proceedings of the SIGCHI conference on human factors in computing systems 2010 Apr 10 (pp. 55-64).</a></li>
+        </ul>
+
+    </body>
+    
+    <footer>
+        <script>
+            // Code base on: https://stackoverflow.com/questions/20834002/building-dynamic-url-using-a-href
+            function createDynamicURL() {
+                //The variable to be returned
+                var url = window.location.href;
+                var rootEndIndex = url.indexOf("/cosmos");
+                var mapURL = url.substr(0, rootEndIndex) + ":8080";
+                console.log(mapURL);
+                return mapURL;
+            }
+
+            function redirectURL() {
+                window.location = createDynamicURL();
+            }
+        </script>
+    </footer>
+</html>

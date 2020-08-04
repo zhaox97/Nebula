@@ -1,0 +1,8 @@
+pyzmq
+numpy
+scipy
+sklearn
+tweepy
+nltk==3.4
+zerorpc
+elasticsearch

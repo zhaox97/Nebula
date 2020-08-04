@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset='utf-8'>
+    <title>Andromeda</title>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src='http://d3js.org/d3.v3.min.js'></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+    <style>
+    .row {
+        margin: 10px 0px;
+    }
+    
+    body {
+        padding: 25px;
+    }
+    
+    h1 {
+        text-align: center;
+    }
+    
+    p.description {
+        text-align: center;
+        margin: 0px 0px 50px 0px;
+    }
+    #sessionDiv > * {
+        float: left;
+        position: relative;
+        top: 50%;
+        transform: translateY(-50%);
+    }
+    input {
+        border-color: lightgrey;
+        background-color: white;
+        height: 34px;
+        margin: 0px 2px;
+        float: left;
+    }
+    
+    br {
+        clear: both;
+    }
+    
+    svg {
+        float: left;
+        background-color: white;
+        border-style: solid;
+        border-color: black;
+        border-width: 2px;
+        cursor: default !important;
+
+    }
+    
+    g.node.moving-selected circle.point,
+    g.node.selected circle.point {
+        fill: url(#stripe_me);
+    }
+    
+    g.node {
+        //fill: url(#stripe_me2);
+        stroke: black;
+        stroke-width: 1px;
+        opacity: 1;
+    }
+    
+    g.node circle.point {
+        fill: url(#stripe_me2);
+    }
+    
+    .slider {
+        font: 10px sans-serif;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        user-select: none;
+    
+        
+
+    }
+    
+    .slider .domain {
+        fill: none;
+        stroke: #000;
+        stroke-opacity: .3;
+        stroke-width: 10px;
+        stroke-linecap: round;
+    }
+    
+    .slider .halo {
+        fill: none;
+        stroke: #ddd;
+        stroke-width: 8px;
+        stroke-linecap: round;
+        
+        
+    }
+    
+    .handle {
+        fill: #E8EAF6;
+        stroke: #000;
+        stroke-opacity: .5;
+        stroke-width: 1.25px;
+        cursor: default !important;
+        
+    }
+    
+    
+    
+    .track {
+        stroke: #000;
+        stroke-opacity: 0.3;
+        stroke-width: 10px;
+        stroke-linecap: round;
+        fill: transparent;
+    }
+    
+    .zero {
+        stroke: #000;
+        stroke-width: 2px;
+    }
+    
+    svg text {
+        letter-spacing: 1px;
+        font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+    }
+    
+    g.node circle.outer {
+        display: none;
+        stroke: black 8px;
+        stroke-opacity: 1;
+        fill: transparent;
+    }
+    
+    g.node.moving circle.outer {
+        display: inline;
+    }
+    
+    g.node.hover circle.point {
+        fill: url(#stripe_me3);
+    }
+    
+
+    g.slider circle.hover {
+        fill: #FF7043;
+    }
+    
+    circle.indicator.highlighted {
+        stroke: #000;
+        stroke-opacity: 1;
+        stroke-width: 1.25px;
+        pointer-events: none;
+        fill: yellow !important;
+
+    }
+    
+    circle.indicator.chosen{
+        fill: #1DE9B6;
+        stroke: #000;
+        stroke-opacity: .3;
+        stroke-width: 1px;
+        pointer-events: none;
+        position: relative;
+        -webkit-transform: scale(.6, .6);
+        transform-origin: center;
+    }
+    
+    g.node.moving-selected text.chosen,
+    g.node.selected text.chosen {
+        stroke: #40C4FF;
+    }
+    
+    g text {
+        letter-spacing: 1px;
+        font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+        stroke: grey;
+    }
+    
+    #dataContents {
+        border-style: solid;
+        border-color: transparent;
+        height: 1864px; 
+        overflow: visible;
+        
+    }
+
+    .col-md-4{
+        border-style: solid;
+        border-color: black;
+        border-width: 2px;
+        border-height: 10px;
+        position: relative;
+        overflow-y: scroll;
+        overflow-x: hidden;
+    }
+
+    
+
+
+    textarea {
+        resize: none;
+        overflow-y: scroll;
+    }
+    
+    .data {
+        margin: 5px 0px;
+    }
+    </style>
+</head>
+
+<body>
+    <h1>Andromeda Web</h1>
+    <p class="description">With Nebula backend</p>
+    <script src="InitializeSession.js"></script>
+    <script src='andromedaClassic.js'></script>
+
+</body>
+
+</html>

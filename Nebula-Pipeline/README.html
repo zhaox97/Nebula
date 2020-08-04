@@ -1,0 +1,81 @@
+<h1 id="overview">Overview</h1>
+<p>The pipeline performs all the back end data processing for the visualizations. It executes as a single Python script and is made up of three main pieces: a data controller, a series of models, and a connector. The data controller handles loading and accessing whatever data is to be visualized. The models control how the data is processed and sent to the client, as well as how the client's interactions change these models. Finally, the connector mediates connections to the visualization directly or to a visualization controller such as the Node.js server.</p>
+<h1 id="installation">Installation</h1>
+<p>For all platforms, Python 2.7 must be installed. It can be installed from their website <a href="https://www.python.org/downloads/release/python-2712/">here</a>. This install should come with pip, the Python package manager. If you can run pip from the command line, you are ready to proceed. If pip isn't found, you can install it by following the instructions <a href="https://pip.pypa.io/en/stable/installing/">here</a>. Make sure pip is updated to the latest version by running:</p>
+<p><code>pip install --upgrade pip</code></p>
+<p>Then you can install the package and all the dependencies by running the following command from the root directory:</p>
+<p><code>pip install .</code> (if you are going to develop you can use <code>pip install -e .</code>)</p>
+<h2 id="note-for-windows">Note for Windows</h2>
+<p>When installing on Windows platforms, the scipy package will not install properly using the setup file. It must be installed manually, along with its dependency numpy. One option is to use a Python distribution that has these packages preinstalled, such as <a href="https://www.continuum.io/downloads">Anaconda</a>. If you already have the traditional Python distribution installed, the best way to install these packages is by downloading them from the site <a href="http://www.lfd.uci.edu/~gohlke/pythonlibs/">here</a>. Download the files <code>numpy-1.11.1+mkl-cp27-cp27m-win_amd64.whl</code> and <code>scipy-0.17.1-cp27-cp27m-win_amd64.whl</code> (or the 32-bit version if that's the Python version you're running), and run the following commands in the directory these files are in:</p>
+<p><code>pip install numpy-1.11.1+mkl-cp27-cp27m-win_amd64.whl</code></p>
+<p><code>pip install scipy-0.17.1-cp27-cp27m-win_amd64.whl</code></p>
+<p>Then run the <code>pip install .</code> and everything should install correctly.</p>
+<h1 id="pipeline-components">Pipeline components</h1>
+<p>Each of the three main components, Models, Data Controllers, and Connectors, have a base class defined within the <code>pipeline</code> module. New instances of these components simply need to overwrite the methods defined in these classes as they are described in the comments. The structure of a pipeline can be seen in the following figure:</p>
+<div class="figure">
+<img src="docs/img/generalpipeline.jpg" alt="Unable to load figure" />
+<p class="caption">Unable to load figure</p>
+</div>
+<h2 id="data-controller">Data Controller</h2>
+<p>The Data Controller mediates access to whatever underlying data is being visualized. While essentially operating as a Model itself, it has one extra key function, its <code>get</code> method. Visualizations can use this <code>get</code> method to directly access the underlying data or metadata, without having to run an iteration of the pipeline.</p>
+<h2 id="models">Models</h2>
+<p>Models are the main data processing components of a pipeline. They have two main pieces: the forward algorithm and the inverse algorithm. Iterations of the pipeline start by running all inverse algorithms along the pipeline in order to interpret the user's interaction. Each Model is capable of short circuiting itself, which cuts the pipeline short starts the forward pipeline immediately from that same Model. The forward algorithms use the new parameters for each model resulting from the interaction to transform the data. After each forward algorithm is run, the resulting data is passed back to the visualization through the connector.</p>
+<h2 id="connector">Connector</h2>
+<p>The Connector is in charge of communication between the pipeline and the visualization. It can use whatever means its decides to allow visualizations to run iterations of the pipeline and retrieve data directly through the <code>get</code> functionality.</p>
+<h1 id="user-guide">User Guide</h1>
+<h2 id="creating-a-pipeline">Creating a Pipeline</h2>
+<p>Creating a pipeline is straight forward. First, you create a new instance of a pipeline. Then, you create instances of all the models you want, along with a data controller and a connector. Finally, you add all these pieces to the pipeline, and start it. This is all exemplified in the following example:</p>
+<div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python">pipeline <span class="op">=</span> nebula.pipeline.Pipeline()
+
+relevance <span class="op">=</span> nebula.model.ActiveSetRelevanceModel()
+similarity <span class="op">=</span> nebula.model.SimilarityModel()
+data_controller <span class="op">=</span> nebula.data.CSVDataController(csvfile)
+connector <span class="op">=</span> nebula.connector.ZeroMQConnector()
+
+pipeline.append_model(relevance)
+pipeline.append_model(similarity)
+
+pipeline.set_data_controller(data_controller)
+pipeline.set_connector(connector)
+
+pipeline.start()</code></pre></div>
+<p>There are several built in data controllers, models, and connectors available for use. Here we describe the basics of each. You can find more details in the documentation for each module.</p>
+<h3 id="current-data-controllers">Current Data Controllers</h3>
+<h4 id="csvdatacontroller">CSVDataController</h4>
+<p>This data controller loads high dimensional data from a CSV file, where each row indicates a data point and each column represents an attribute of the data. The first row should be attribute names, and the first column should be an ID for each point. Optionally, when working with text data, a folder containing the raw text of each document can be specified. This folder should contain a text file for each document, with a filename of &quot;<em>id</em>.txt&quot;. Then the raw text can be queried for from the visualization using a <code>get</code> command.</p>
+<h4 id="twitterdatacontroller">TwitterDataController</h4>
+<p>This streams live tweets into the visualization using the Twitter API. The filter to search for can be set through an interaction, and all tweets that come in matching that filter are then buffered and eventually sent to the visualization.</p>
+<h3 id="current-models">Current Models</h3>
+<h4 id="similaritymodel">SimilarityModel</h4>
+<p>Performs forward and inverse MDS projection of the data. The forward projection is done using the sklearn package. The inverse projection is done using a Java library we created. This algorithm is in the process of being ported to Python, so this Java code will soon no longer be required. The inverse projection results in a new set of attribute weights, which are used during the next forward projection of the data.</p>
+<h4 id="compositemodel">CompositeModel</h4>
+<p>Extends the SimilarityModel by adding attributes to the project data. It uses a composite matrix approach, forming a pairwise distance matrix that includes attributes as data points. Only attribute that have a certain amount of weight to them are included. The inverse projection is the same as the SimilarityModel.</p>
+<h4 id="andromedamodel">AndromedaModel</h4>
+<p>Extends the SimilarityModel to provide more of the features from the Andromeda tool. It adds the interaction of manipulating attribute weights directly.</p>
+<h4 id="activesetmodel">ActiveSetModel</h4>
+<p>Uses a relevance-based approach to filter down a large set of data points to a smaller set to be visualized. It interprets three basic interactions: text queries that are matched to attribute names to influence weights, user indicated changes to document relevance to affect the weights of attributes in that document, and document deletion.</p>
+<p>An &quot;active set&quot; of documents is stored, which is all the documents currently being considered to send down the pipeline. The most relevant documents are placed into the &quot;working set&quot;, which is what is currently being seen in the visualization.</p>
+<h4 id="corpussetmodel">CorpusSetModel</h4>
+<p>Similar to the ActiveSetModel, but acts as an asynchronous model, so all computations are done in a background thread and not within the synchronous pipeline loop. It is designed to be used in conjunction with the ActiveSetModel. This allows for a larger set of documents to be iterated over without affecting the response time of the pipeline. The main limitation is that results from this model will always be at least one interaction behind, so a text query may result in new documents placed in the &quot;active set&quot;, but they cannot be moved to the &quot;working set&quot; and sent to the visualization until the next interaction occurs.</p>
+<h3 id="current-connectors">Current Connectors</h3>
+<h4 id="zerorpcconnector">ZeroRPCConnector</h4>
+<p>Establishes a zerorpc server with RPC calls for <code>update</code>, <code>get</code>, and <code>reset</code>. Allows for simple communication with a Node.js server, but does not allow for asynchronous pushes from the pipeline.</p>
+<h4 id="zeromqconnector">ZeroMQConnector</h4>
+<p>Creates a ZeroMQ PAIR socket and listens for a connection. Messages are encapsulated into an RPC-like fashion, but it allows for asynchronous pushes.</p>
+<h1 id="developer-notes">Developer Notes</h1>
+<p>Development of new components or modifying current ones is fairly simple. The project is structured as a single Python package, called <code>nebula</code>. Within this package are four modules, <code>pipeline</code>, <code>data</code>, <code>model</code>, and <code>connector</code>. The purpose of each are described below.</p>
+<h2 id="modules">Modules</h2>
+<h3 id="nebula.pipeline">nebula.pipeline</h3>
+<p>This module contains the <code>Pipeline</code> class which has all the logic for putting together and running a pipeline. It mediates communication between each piece of the pipeline, and is the core piece of the framework. As seen in the example above, to start a pipeline, you simply need to instantiate a <code>Pipeline</code> object, add the necessary modules to it, and tell it to start.</p>
+<p>This module also contains the base classes for the three main modules, <code>DataController</code>, <code>Model</code>, and <code>Connector</code>. Each implementation of one of these modules should extend the appropriate base class and override the necessary methods. All methods that can be overridden to affect the behavior of a module is listed out in each base class.</p>
+<h3 id="nebula.data">nebula.data</h3>
+<p>This module contains all the current implementations of data controllers. This file can be modified to change the behavior of current implementations or add new ones. The current data controllers are listed above in the User Guide.</p>
+<h3 id="nebula.model">nebula.model</h3>
+<p>This module contains all the current implementations of models, which are listed above. This file can be modified to change these models or add new ones.</p>
+<h3 id="nebula.connector">nebula.connector</h3>
+<p>This module contains all the current implementations of connectors, which are listed above. This file can be modified to change these connectors or add new ones.</p>
+<h2 id="additional-files">Additional files</h2>
+<p>The <code>java/</code> folder contains the Java libraries used for the inverse MDS calculation within the SimilarityModel. This library comes from the Nebula-Java project, and will hopefully soon be replaced with direct Python code.</p>
+<p><code>nltkStopwords.txt</code> is used by the TwitterDataController to filter out additional stopwords from tweets.</p>
+<h2 id="other-notes">Other Notes</h2>
+<p>When making modifications to this project and experimenting with them using the Nebula Node.js server, be sure to use the <code>-e</code> flag when installing with pip. This will install a link to your development folder instead of copying the files to the <code>site-packages</code> directory, so you will not need to reinstall when you make changes.</p>
