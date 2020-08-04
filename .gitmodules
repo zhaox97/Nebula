@@ -1,6 +1,3 @@
 [submodule "Nebula-UIs"]
 	path = Nebula-UIs
 	url = https://github.com/dowlmic/Nebula-UIs.git
-[submodule "Nebula-Pipeline"]
-	path = Nebula-Pipeline
-	url = https://github.com/dowlmic/Nebula-Pipeline.git
