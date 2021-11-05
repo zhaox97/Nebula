@@ -616,7 +616,7 @@ Nebula.prototype.handleAction = function(action, room) {
             room.attribute_points.get(action.id).pos = action.pos;
         }
         else {
-            console.log(socket.roomName + ": Point not found in room for move: " + action.id);
+            console.log(room.name + ": Point not found in room for move: " + action.id);
         }
     }
     else if (action.type === "select") {
@@ -627,7 +627,16 @@ Nebula.prototype.handleAction = function(action, room) {
             room.attribute_points.get(action.id).selected = action.state;
         }
         else {
-            console.log(socket.roomName + ": Point not found in room for select: " + action.id);
+            // Not sure what this condition should be...
+            // Use to check typeof(console) != "undefined" which doesn't make sense
+            if (typeof(socket) != "undefined") {
+                console.log(room.name + ": Point not found in room for select: " + action.id);
+            }
+            else {
+                console.log("Point not for for room in select... " +
+                    "socket not defined. (This message may be caused by " +
+                    "switching to a new dataset that was uploaded by client)");
+            }
         }
     }
     else if (action.type === "sample") {
@@ -638,7 +647,7 @@ Nebula.prototype.handleAction = function(action, room) {
             room.attribute_points.get(action.id).sample = action.state;
         }
         else {
-            console.log(socket.roomName + ": Point not found in room for sampling: " + action.id);
+            console.log(room.name + ": Point not found in room for sampling: " + action.id);
         }
     }
 };

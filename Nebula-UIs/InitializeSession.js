@@ -406,6 +406,7 @@ function fileSelect(e, sessionOptionsDropdown) {
 //                });
 
             // Get a new room/session name
+            socket.removeListener("receiveSessionName");
             socket.on("receiveSessionName", function(sessionName) {
                 if (currentSessionName != "FAKE") {
                     socket.emit('session-change');

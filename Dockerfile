@@ -25,13 +25,18 @@ RUN apt-get update && \
 ENV JAVA_HOME /usr/lib/jvm/java-8-openjdk-amd64/
 RUN export JAVA_HOME
 
-RUN pip install --upgrade pip
+# Python 2.7 is now too depricated to just upgrade pip in the typical fashion
+# RUN pip install --upgrade pip
+RUN apt-get install wget && wget https://bootstrap.pypa.io/pip/2.7/get-pip.py
+RUN python get-pip.py
 COPY . /www
 RUN npm install
 
 RUN pip install -e ./Nebula-Pipeline
 #RUN pip install numpy scipy cython zerorpc tweepy nltk elasticsearch
 RUN python -m nltk.downloader stopwords
+# Helps ensure all custom modules can be found
+RUN export PYTHONPATH="${PYTHONPATH}:./Nebula-Pipeline"
 
 # Install Nathan Wycoff's version of sklearn
 COPY ./lib/ /opt/lib
@@ -41,7 +46,7 @@ RUN pip install -U /opt/lib/scikit_learn-0.19.dev0-cp27-cp27mu-linux_x86_64.whl
 #RUN apt install -y tmux
 
 # Install nodemon specifically here so that we can use the command below
-RUN npm install -g nodemon
+RUN npm install -g nodemon@^1.19.1
 
 EXPOSE 80
 
