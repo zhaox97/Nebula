@@ -11,6 +11,7 @@ var pipelineType; // A variable to hold the type of pipeline to launch
 var extraJoinSessionParams = null; // A variable for any extra parameters needed to initialize an appropriate pipeline
 var piheight = 0;
 
+if (typeof(isStudy) === "undefined" || !isStudy) {
 // Create a div to hold all session-related elements
 var sessionDiv = d3.select("#sessionDiv");
 if (!sessionDiv.node()) {
@@ -42,6 +43,58 @@ dropdownButton.on("click", sessionDropdownClick);
 // When a session is selected, call sessionChange
 var dropdownOptions = sessionDiv.append("ul").attr("class", "dropdown-menu");
 dropdownOptions.append("li").append("a").text(defaultDropdownOption).on("click", sessionChange);
+}
+else {
+    function autoConnectFunc() {
+        // Set the pipelineType variable
+        if (ui == "radar") {
+            extraJoinSessionParams = {'low_dimensions': 1};
+            pipelineType = "cosmos";
+        }
+        else {
+            pipelineType = ui;
+        }
+
+        // Determine which dataset should be used
+        var dataset;
+        if (ui === "andromeda" || ui === "sirius") {
+            if (isPractice && (typeof(isObservationCentric) === "undefined" ||
+              isObservationCentric)) {
+                dataset = "highD/Food Taste and Mouthfeel.csv";
+            }
+            else if (isPractice) {
+                dataset = "highD/Food Taste and Mouthfeel Transpose.csv";
+            }
+            else if (typeof(isObservationCentric) === "undefined" ||
+              isObservationCentric) {
+                dataset = "highD/Animal_Data_square.csv";
+            }
+            else {
+                dataset = "highD/Animal_Data_square_transpose.csv";
+            }
+        }
+
+        // Handle the session creation + CSV file communication
+        socket.on("receiveSessionName", function(sessionName) {
+            // If we're switching sessions, let the server know
+            if (currentSessionName != "FAKE") {
+                socket.emit('session-change');
+            }
+            currentSessionName = sessionName;
+            socket.on("csvDataReady", csvDataReadyFunction);
+
+            // Don't enable the raw CSV table creation for Andromeda and SIRIUS
+            if (ui != "andromeda" && ui != "sirius") {
+                socket.on("csvDataReadComplete", csvDataReadCompleteFunction);
+            }
+
+            socket.emit('setCSV', dataset);
+        });
+
+        // Ask the server for a session name
+        socket.emit("getSessionName", ui);
+    }
+}
 
 // The function that is called with the session dropdown menu is clicked
 // This function updates the list of available sessions to select from
@@ -510,11 +563,32 @@ window.onload = function() {
     sessionDisconnect = function() {
         socket.on('disconnect', function() {
             d3.selectAll("div").remove();
-            d3.select("body").append("h3").text("Your communication with the server " +
-                "has been interrupted. Please refresh this page to reconnect.");
+            if (typeof(isStudy) !== "undefined" && isStudy &&
+              typeof(isPractice) !== "undefined" && isPractice) {
+                d3.select("body").append("h3").text("Your time has run out. " +
+                    "Please move on to the main task by closing this " +
+                    "tab and proceeding through the study.");
+            }
+            else {
+                d3.select("body").append("h3").text("Your communication with the server " +
+                    "has been interrupted. Please refresh this page to reconnect.");
+            }
         });
     }
     sessionDisconnect();
+    
+    if (typeof(autoConnectFunc) !== "undefined") {
+        autoConnectFunc();
+    }
+        
+    if (typeof(isStudy) !== "undefined" && isStudy &&
+      typeof(isPractice) !== "undefined" && isPractice) {
+        var min = 20;
+        var timeout = min * 60 * 1000;
+        setTimeout(function() {
+            socket.emit('disconnect');
+        }, timeout);
+    }
 }
 
 function resetSocketCallbacks() {

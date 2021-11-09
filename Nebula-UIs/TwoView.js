@@ -87,14 +87,38 @@ function createFeedbackCheckBox(location, isObservation) {
     location.append("input")
         .attr("type", "checkbox")
         .attr("class", className)
-        .attr("checked", true)
+    .attr("checked", function() {
+        if (typeof(isStudy) === "undefined" ||
+          (typeof(svgsShouldHaveFeedback) !== "undefined" && svgsShouldHaveFeedback)) {
+                return true;
+            }
+            else {
+                return null;
+            }
+        })
         .style("margin", "0 10px 0 20px")
         .on("click", function() {
             var checked = this.checked;
             $("input."+isObservation+"-feedback-check").prop("checked", checked);
+        })
+        .style("visibility", function() {
+            if (typeof(isStudy) === "undefined") {
+                return "visible";
+            }
+            else if (isStudy) {
+                return "hidden";
+            }
         });
     return label = location.append("p")
-        .style("margin-top", "7px");
+        .style("margin-top", "7px")
+        .style("visibility", function() {
+            if (typeof(isStudy) === "undefined") {
+                return "visible";
+            }
+            else if (isStudy) {
+                return "hidden";
+            }
+        });
 }
 
 // A helper function to create a check box to denote whether SI foraging should
