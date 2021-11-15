@@ -317,7 +317,7 @@ var csvDataReadyFunction = function() {
 
 var csvDataReadCompleteFunction = function(csvContents, firstKey) {
     // We don't want to create a CSV table for Andromeda
-    if (ui !== "andromeda") {
+    if (ui !== "andromeda") && (typeof(isStudy) !== "undefined" && !isStudy)) {
         
         var rawTableContainer = d3.select("body").append("div").attr("class", "container-fluid");
         
