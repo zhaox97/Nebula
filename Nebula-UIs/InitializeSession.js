@@ -563,16 +563,8 @@ window.onload = function() {
     sessionDisconnect = function() {
         socket.on('disconnect', function() {
             d3.selectAll("div").remove();
-            if (typeof(isStudy) !== "undefined" && isStudy &&
-              typeof(isPractice) !== "undefined" && isPractice) {
-                d3.select("body").append("h3").text("Your time has run out. " +
-                    "Please move on to the main task by closing this " +
-                    "tab and proceeding through the study.");
-            }
-            else {
-                d3.select("body").append("h3").text("Your communication with the server " +
-                    "has been interrupted. Please refresh this page to reconnect.");
-            }
+            d3.select("body").append("h3").text("Your communication with the server " +
+                "has been interrupted. Please refresh this page to reconnect.");
         });
     }
     sessionDisconnect();
@@ -583,12 +575,41 @@ window.onload = function() {
         
     if (typeof(isStudy) !== "undefined" && isStudy &&
       typeof(isPractice) !== "undefined" && isPractice) {
-        var min = 20;
+        var min = 25;
         var timeout = min * 60 * 1000;
+        
+        // Create the JQuery dialog
+        d3.select("body").append("div")
+            .attr("id", "timeoutWarning")
+            .attr("title", "Warning: Practice Session Time is Expiring")
+            .style("display", "none")
+            .append("p")
+                .text("You are past the allotted 25 minutes for the practice " +
+                      "session. You may choose to finish the practice " +
+                      "session, or you can simply read the answers to the " +
+                      "practice questions to understand how to interact with " +
+                      "the visualization and get the appropriate answers for " +
+                      "each question. It is up you you.");
         setTimeout(function() {
-            socket.emit('disconnect');
+            showTimeoutDialog();
         }, timeout);
     }
+}
+
+function showTimeoutDialog() {
+    // Show the JQuery dialog
+    $( function() {
+        $( "#timeoutWarning" ).dialog({
+            resizable: false,
+            height: "auto",
+            width: 400,
+            modal: true,
+            buttons: {"Close": function() {
+                $( this ).dialog( "close" );
+                setTimeout(showTimeoutDialog, 5*60*1000);
+            }}
+        });
+    });
 }
 
 function resetSocketCallbacks() {
