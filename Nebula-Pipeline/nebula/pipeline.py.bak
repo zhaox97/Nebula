@@ -8,7 +8,7 @@ overridden to provide functionality."""
 import argparse
 import functools
 import inspect
-import queue
+import Queue
 import sys
 import threading
 import time
@@ -100,7 +100,7 @@ class Pipeline:
    
         # Create an asynchronous queue for holding data blobs waiting to be
         # fetched by the asynchronous models.
-        self._async_queue = queue.Queue()
+        self._async_queue = Queue.Queue()
         
         # Creates a lock for the synchronous portion of the pipeline.
         self._lock = threading.Lock()
@@ -140,7 +140,7 @@ class Pipeline:
     def delete_model(self, index):
         """Removes a model from the pipeline at the specified index."""
         
-        if index not in list(range(len(self._models))):
+        if index not in range(len(self._models)):
             raise IndexError("Invalid index to delete model")
         
         self._models.pop(index)
@@ -148,7 +148,7 @@ class Pipeline:
     def get_model(self, index):
         """Returns the model in the pipeline at the specified index."""
         
-        if index not in list(range(len(self._models))):
+        if index not in range(len(self._models)):
             raise IndexError("Invalid index to delete model")
         
         return self._models[index]
@@ -263,12 +263,12 @@ class Pipeline:
         setup_data = {}
         self._data_controller.setup(setup_data)
         if ATTRIBUTES in setup_data:
-            Model.global_weight_vector = {attr: 1.0/len(setup_data[ATTRIBUTES])  for attr in list(setup_data[ATTRIBUTES].keys())}
+            Model.global_weight_vector = {attr: 1.0/len(setup_data[ATTRIBUTES])  for attr in setup_data[ATTRIBUTES].keys()}
             # for SIRIUS
-            Model.global_attribute_weight_vector = {attr: 1.0/len(setup_data[ATTRIBUTES]) for attr in list(setup_data[ATTRIBUTES].keys())}
+            Model.global_attribute_weight_vector = {attr: 1.0/len(setup_data[ATTRIBUTES]) for attr in setup_data[ATTRIBUTES].keys()}
         
         if   DOCUMENTS_LIST  in setup_data:
-             Model.global_document_weight_vector ={doc: 1.0/len(setup_data[DOCUMENTS_LIST]) for doc in list(setup_data[DOCUMENTS_LIST].keys())}
+             Model.global_document_weight_vector ={doc: 1.0/len(setup_data[DOCUMENTS_LIST]) for doc in setup_data[DOCUMENTS_LIST].keys()}
          
         for model in self._models:
             # Each call of model.setup changes setup_data at this scope.
@@ -377,7 +377,7 @@ class Pipeline:
         exec_time = time.time() - start_time
         
         # Get the timing info for the class
-        cls = func.__self__.__class__.__name__
+        cls = func.im_class.__name__
         if cls not in self._timing_info:
             self._timing_info[cls] = {}
             
@@ -502,12 +502,12 @@ class Pipeline:
 
         """ I need to redefine the the model.global vector here """
         if ATTRIBUTES in setup_data:
-            Model.global_weight_vector = { attr: 1.0/len(setup_data[ATTRIBUTES]) for attr in list(setup_data[ATTRIBUTES].keys()) }
+            Model.global_weight_vector = { attr: 1.0/len(setup_data[ATTRIBUTES]) for attr in setup_data[ATTRIBUTES].keys() }
             # for SIRIUS
-            Model.global_attribute_weight_vector = {attr: 1.0/len(setup_data[ATTRIBUTES]) for attr in list(setup_data[ATTRIBUTES].keys())}
+            Model.global_attribute_weight_vector = {attr: 1.0/len(setup_data[ATTRIBUTES]) for attr in setup_data[ATTRIBUTES].keys()}
           
         if   DOCUMENTS_LIST  in setup_data:
-             Model.global_document_weight_vector ={doc: 1.0/len(setup_data[DOCUMENTS_LIST]) for doc in list(setup_data[DOCUMENTS_LIST].keys())}
+             Model.global_document_weight_vector ={doc: 1.0/len(setup_data[DOCUMENTS_LIST]) for doc in setup_data[DOCUMENTS_LIST].keys()}
        
         for model in self._models:
             model.setup(setup_data)
