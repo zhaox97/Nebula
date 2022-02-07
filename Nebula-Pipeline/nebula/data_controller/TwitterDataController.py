@@ -10,7 +10,7 @@ from sklearn.feature_extraction.text import CountVectorizer
 #from sklearn.feature_extraction.text import TfidfVectorizer
 
 from nebula import pipeline
-from TextDataFunctions import preprocess
+from .TextDataFunctions import preprocess
 
 
 
@@ -71,7 +71,7 @@ class TwitterDataController(pipeline.DataController, tweepy.StreamListener):
         data = json.loads(data, encoding="unicode")
         
         if "id" not in data or "text" not in data:
-            print "Tweet did not contain ID or text"
+            print("Tweet did not contain ID or text")
             return
         
         id = str(data["id"])
@@ -79,14 +79,14 @@ class TwitterDataController(pipeline.DataController, tweepy.StreamListener):
         self._tweets[id] = tweet
         
         tweet = preprocess(tweet, self._blacklist)
-        print "%s: %s" % (id, tweet)
+        print("%s: %s" % (id, tweet))
         self._buffer.append((id, tweet))
         
         if len(self._buffer) > self._max_buffer or time.time() > (self._last_flushed + self._max_time):
             self._flush()
     
     def on_error(self, status):
-        print status
+        print(status)
         
     def _flush(self):
         """Empty the buffer, sending any currently stored tweets down the
@@ -146,8 +146,8 @@ class TwitterDataController(pipeline.DataController, tweepy.StreamListener):
                 filter = data["filter"].split()
                 self._stream.disconnect()
                 self._stream.filter(track=filter, languages=['en'], async=True)
-                print "Setting filter to: "
-                print filter
+                print("Setting filter to: ")
+                print(filter)
             elif data[pipeline.INTERACTION] == "tweet_stop":
                 self._stream.disconnect()
         return {}

@@ -26,15 +26,15 @@ if __name__ == "__main__":
     while True:
     	searchList=[]
 
-    	target=raw_input("target: ")
+    	target=input("target: ")
         try:
             result= search('test_index', target)
-            hits=result[u'hits'][u'total']
-            print hits
+            hits=result['hits']['total']
+            print(hits)
             if hits != 0:
-                for i in result[u'hits'][u'hits']:
-                    print "==============================="
-                    print i[u'_id']
+                for i in result['hits']['hits']:
+                    print("===============================")
+                    print(i['_id'])
             break
         except ValueError:
             print("Oops!  search error, make sure you have the index")

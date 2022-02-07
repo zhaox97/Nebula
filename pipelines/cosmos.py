@@ -9,7 +9,7 @@ import zerorpc
 
 def main():
     if len(sys.argv) < 4:
-        print "Usage: python main.py <port> <csv file path> <raw data folder path> <pipeline arguments>"
+        print("Usage: python main.py <port> <csv file path> <raw data folder path> <pipeline arguments>")
     
  
     csvfile = sys.argv[2]

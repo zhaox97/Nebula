@@ -1,5 +1,4 @@
-FROM ubuntu:16.04
-
+FROM ubuntu:20.04
 RUN mkdir /www
 WORKDIR /www
 RUN apt-get update
@@ -27,12 +26,12 @@ RUN export JAVA_HOME
 
 # Python 2.7 is now too depricated to just upgrade pip in the typical fashion
 # RUN pip install --upgrade pip
-RUN apt-get install wget && wget https://bootstrap.pypa.io/pip/2.7/get-pip.py
+RUN apt-get install wget && wget https://bootstrap.pypa.io/pip/3.x/get-pip.py
 RUN python get-pip.py
 COPY . /www
 RUN npm install
 
-RUN pip install -e ./Nebula-Pipeline
+RUN pip3 install -e ./Nebula-Pipeline
 #RUN pip install numpy scipy cython zerorpc tweepy nltk elasticsearch
 RUN python -m nltk.downloader stopwords
 # Helps ensure all custom modules can be found
@@ -40,7 +39,7 @@ RUN export PYTHONPATH="${PYTHONPATH}:./Nebula-Pipeline"
 
 # Install Nathan Wycoff's version of sklearn
 COPY ./lib/ /opt/lib
-RUN pip install -U /opt/lib/scikit_learn-0.19.dev0-cp27-cp27mu-linux_x86_64.whl
+RUN pip3 install -U /opt/lib/scikit_learn-0.19.dev0-cp27-cp27mu-linux_x86_64.whl
 
 # Install tmux
 #RUN apt install -y tmux

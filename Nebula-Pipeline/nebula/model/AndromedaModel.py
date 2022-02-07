@@ -7,7 +7,7 @@ __location__ = os.path.realpath(
 
 from nebula.pipeline import INTERACTION
 
-from SimilarityModel import SimilarityModel
+from .SimilarityModel import SimilarityModel
 
 
 
@@ -30,10 +30,10 @@ class AndromedaModel(SimilarityModel):
             value = float(data["value"])
             
             if param not in self._weights:
-                print "Parameter not found for PI"
+                print("Parameter not found for PI")
                 return
             if value < 0 or value > 1:
-                print "Invalid value for parameter, must be [0, 1]"
+                print("Invalid value for parameter, must be [0, 1]")
                 return
             
             value = max(0.01, min(0.99, value))

@@ -11,8 +11,8 @@ df = {}
 def main():
     # First check to ensure that we have the proper number of parameters
     if len(sys.argv) < 3 or not (len(sys.argv) == 4 and sys.argv[1] == "--contains_url") or len(sys.argv) > 4:
-        print "Error: Incorrect usage"
-        print "Usage: 'python text_tfidf_calculator.py [--contains_url] ./directory/path/ output_csv_file_name.csv"
+        print("Error: Incorrect usage")
+        print("Usage: 'python text_tfidf_calculator.py [--contains_url] ./directory/path/ output_csv_file_name.csv")
         sys.exit()
         
     # Determine whether a URL should be parsed from the first line of the files
@@ -97,7 +97,7 @@ def main():
     
     # Write the headers for the CSV file
     first_line = "file_name"
-    for word in tfidf[tfidf.keys()[0]]:
+    for word in tfidf[list(tfidf.keys())[0]]:
         word = word.replace(" ", ".")
         first_line += "," + word
     csv_file.write(first_line + "\n")

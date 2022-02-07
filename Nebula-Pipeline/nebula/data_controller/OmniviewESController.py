@@ -42,7 +42,7 @@ class OmniviewESController(pipeline.DataController):
         # return doc with that ID
         if req_type == "raw":
             result= self.search_ID(TARGET_INDEX, args["id"])
-            args["value"]=result[u'_source'][u'text']
+            args["value"]=result['_source']['text']
             return args
         return None
             
@@ -65,19 +65,19 @@ class OmniviewESController(pipeline.DataController):
 	    if term != "":
          #      result= self.search_latlong(TARGET_INDEX, latt, longt, term)
           	result = self.search_TEXT(TARGET_INDEX, term)
-	        hits=result[u'hits'][u'total']
+	        hits=result['hits']['total']
 
             return_doc = []
             if hits != 0:
                 ## return doc ID and doc raw text
-                for text in result[u'hits'][u'hits']:
-                     doc={pipeline.DOC_ID:text[u'_id'], pipeline.RAW_TEXT:text[u'_source'][u'text']}
+                for text in result['hits']['hits']:
+                     doc={pipeline.DOC_ID:text['_id'], pipeline.RAW_TEXT:text['_source']['text']}
                      return_doc.append(doc)
 
             return { pipeline.DOCUMENTS: return_doc}
         ## if interaction is Omniview, this will do a lattlongt search and return documents
         if pipeline.INTERACTION in data and data[pipeline.INTERACTION] == "omniview":
-            print "================     Omniview INTERACTION  =============="
+            print("================     Omniview INTERACTION  ==============")
             latt=[]
             longt =[]
             term = data["query"]
@@ -90,15 +90,15 @@ class OmniviewESController(pipeline.DataController):
                   latt = [latt["gte"],latt["lte"]]
                   longt = [longt["gte"],longt["lte"]]
             result = self.search_latlong(TARGET_INDEX, latt, longt, term)
-            hits=result[u'hits'][u'total']
-            print "================     Omniview result:" + str(hits)  
+            hits=result['hits']['total']
+            print("================     Omniview result:" + str(hits))  
             return_doc=[]
             if hits != 0:
                 ## return doc ID and raw text
-                for text in result[u'hits'][u'hits']:
-                    doc={pipeline.DOC_ID:text[u'_id'], pipeline.RAW_TEXT:text[u'_source'][u'text']}
+                for text in result['hits']['hits']:
+                    doc={pipeline.DOC_ID:text['_id'], pipeline.RAW_TEXT:text['_source']['text']}
                     return_doc.append(doc)
-                print "searching" + str(latt) + str(longt)
+                print("searching" + str(latt) + str(longt))
                 return { pipeline.DOCUMENTS: return_doc}
         # if the update request is update relavence, this will up-weight terms 
         if pipeline.INTERACTION in data and data[pipeline.INTERACTION] == "change_relevance":
@@ -107,15 +107,15 @@ class OmniviewESController(pipeline.DataController):
 	    term = data["query"]
             # do a or search
             result = self.search_OR(TARGET_INDEX, term)
-            hits=result[u'hits'][u'total']
+            hits=result['hits']['total']
 
             #initialize return_doc. If hits=0, return empty list
             return_doc = []
             if hits != 0:
-                print 'hits: ', hits
+                print('hits: ', hits)
 
-                for text in result[u'hits'][u'hits']:
-                     doc={pipeline.DOC_ID:text[u'_id'], pipeline.RAW_TEXT:text[u'_source'][u'text']}
+                for text in result['hits']['hits']:
+                     doc={pipeline.DOC_ID:text['_id'], pipeline.RAW_TEXT:text['_source']['text']}
                      return_doc.append(doc)
                 return { pipeline.DOCUMENTS: return_doc}
 
@@ -125,13 +125,13 @@ class OmniviewESController(pipeline.DataController):
 
     ##search with document ID (used for clicking dots)
     def search_ID(self, target_index, target):
-        print "=======================>     searching Document ID: " + target
+        print("=======================>     searching Document ID: " + target)
         result= self._es.get(index=target_index, id=target)
         return result
 
     ##search with terms (used for search button)
     def search_TEXT(self, target_index, target):
-        print "=======================>     searching keyword: " + target
+        print("=======================>     searching keyword: " + target)
         result= self._es.search(index=target_index, body={"query": {"match" : { "text" : target }}})
         return result
     

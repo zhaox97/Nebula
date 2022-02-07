@@ -23,8 +23,8 @@ from nebula.pipeline import LOWD_POSITION
 from nebula.pipeline import SIMILARITY_WEIGHTS
 
 
-from SimilarityModel import SimilarityModel
-from DistanceFunctions import euclidean, cosine
+from .SimilarityModel import SimilarityModel
+from .DistanceFunctions import euclidean, cosine
 
 
 
@@ -82,7 +82,7 @@ class CompositeModel(SimilarityModel):
             if len(weight_list) > 10:
                 cutoff = sorted(weight_list, key=lambda x: x[1], reverse=True)[10][1]
                 
-            indices = np.where(np.array(map(lambda x: x[1], weight_list)) > cutoff)[0]
+            indices = np.where(np.array([x[1] for x in weight_list]) > cutoff)[0]
             
             if len(indices) != 0:
                 # Form a high D matrix with only the included attributes
@@ -110,8 +110,8 @@ class CompositeModel(SimilarityModel):
                 weights = np.full((num_docs), 1.0 / num_docs)
                 
                 # Calculate the distance between every pair of attributes
-                for i in xrange(0, num_attributes - 1):
-                    for j in xrange(i + 1, num_attributes):
+                for i in range(0, num_attributes - 1):
+                    for j in range(i + 1, num_attributes):
                         d = cosine(sub_high_d_transposed[i], sub_high_d_transposed[j], weights)
                         vv_matrix[i][j] = d
                         vv_matrix[j][i] = d
@@ -145,7 +145,7 @@ class CompositeModel(SimilarityModel):
                 low_d_max = 1
             
             # Set the low dimensional position of each document
-            for i, pos in itertools.izip(xrange(len(data[DOCUMENTS])), low_d):
+            for i, pos in zip(range(len(data[DOCUMENTS])), low_d):
                 doc = data[DOCUMENTS][i].copy()
                 doc[LOWD_POSITION] = (pos / low_d_max).tolist()
                 

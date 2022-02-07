@@ -3,6 +3,7 @@ log
 build
 *.log
 elasticsearch/data
+*.py.bak
 # Elastic Beanstalk Files
 .elasticbeanstalk/*
 !.elasticbeanstalk/*.cfg.yml

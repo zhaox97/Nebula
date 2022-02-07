@@ -32,4 +32,4 @@ if __name__ == "__main__":
 				}
 				infile=re.sub('\.txt$', '', infile)
 				es.index(index='test_index', doc_type='reports', id=infile, body=doc)
-				print infile
+				print(infile)

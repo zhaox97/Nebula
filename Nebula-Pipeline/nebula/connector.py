@@ -2,11 +2,11 @@
 the one currently used by the Nebula Node.js server."""
 
 import json
-import Queue
+import queue
 import zerorpc
 import zmq
 
-import pipeline
+from . import pipeline
 
 
 
@@ -86,7 +86,7 @@ class ZeroMQConnector(pipeline.Connector):
         self._socket = context.socket(zmq.PAIR)
         self._socket.bind("%s://%s:%d" % (proto, host, port))
         
-        self._push_queue = Queue.Queue()
+        self._push_queue = queue.Queue()
         
     def set_callbacks(self, update=None, get=None, set=None, reset=None):
         if update:
@@ -107,7 +107,7 @@ class ZeroMQConnector(pipeline.Connector):
             try:
                 data = self._push_queue.get_nowait()
                 self._socket.send_json({"func": "update", "contents": data})
-            except Queue.Empty:
+            except queue.Empty:
                 pass
             
             # Check if we have a new message
