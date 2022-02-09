@@ -3,13 +3,17 @@ RUN mkdir /www
 WORKDIR /www
 RUN apt-get update
 
-# Install node v8.16.2 and npm version 6.4.1
+# Timezone added for some Python Dependencies 
+ENV TZ=America/Detroit
+RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
+
+# Install node v16.13.2 and npm version 8.4.1
 # This version is necessary for zmq
 RUN apt-get install -y curl && \
-        curl -sL https://deb.nodesource.com/setup_8.x | bash - && \
+        curl -sL https://deb.nodesource.com/setup_17.x | bash - && \
         apt-get install -y nodejs
 
-RUN apt-get install -y libzmq-dev python python-pip
+RUN apt-get install -y libzmq3-dev python python3-pip
 
 # Fix certificate issues, found as of 
 # https://bugs.launchpad.net/ubuntu/+source/ca-certificates-java/+bug/983302
@@ -26,20 +30,22 @@ RUN export JAVA_HOME
 
 # Python 2.7 is now too depricated to just upgrade pip in the typical fashion
 # RUN pip install --upgrade pip
-RUN apt-get install wget && wget https://bootstrap.pypa.io/pip/3.x/get-pip.py
-RUN python get-pip.py
+RUN apt-get install wget && wget https://bootstrap.pypa.io/pip/3.6/get-pip.py
+RUN python3 get-pip.py
 COPY . /www
-RUN npm install
+# COPY package.json package-lock.json .
+RUN npm install -g npm@8.4.1
 
 RUN pip3 install -e ./Nebula-Pipeline
 #RUN pip install numpy scipy cython zerorpc tweepy nltk elasticsearch
-RUN python -m nltk.downloader stopwords
+RUN python3 -m nltk.downloader stopwords
 # Helps ensure all custom modules can be found
 RUN export PYTHONPATH="${PYTHONPATH}:./Nebula-Pipeline"
 
 # Install Nathan Wycoff's version of sklearn
 COPY ./lib/ /opt/lib
-RUN pip3 install -U /opt/lib/scikit_learn-0.19.dev0-cp27-cp27mu-linux_x86_64.whl
+#RUN pip3 install -U /opt/lib/scikit_learn-0.19.dev0-cp27-cp27mu-linux_x86_64.whl
+RUN pip3 install -U scikit-learn
 
 # Install tmux
 #RUN apt install -y tmux
