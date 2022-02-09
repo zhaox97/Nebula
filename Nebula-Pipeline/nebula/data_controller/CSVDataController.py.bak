@@ -45,12 +45,12 @@ class CSVDataController(pipeline.DataController):
                     doc = {}
                     doc[pipeline.DOC_ID] = line[0]
                     doc[pipeline.HIGHD_POSITION] = [float(x) for x in line[1:]]
-                    doc[pipeline.DOC_ATTRIBUTES] = {self._columns[i]: float(line[i+1]) for i in range(len(self._columns))}
+                    doc[pipeline.DOC_ATTRIBUTES] = {self._columns[i]: float(line[i+1]) for i in xrange(len(self._columns))}
                     self._documents.append(doc)
                 
         max_attributes = {}
         for doc in self._documents:
-            for attr, value in doc[pipeline.DOC_ATTRIBUTES].items():
+            for attr, value in doc[pipeline.DOC_ATTRIBUTES].iteritems():
                 if attr not in max_attributes or value > max_attributes[attr]:
                     max_attributes[attr] = value
                     
