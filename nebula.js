@@ -1,7 +1,7 @@
 var spawn = require('child_process').spawn;
 var fs = require("fs");
 var async = require('async');
-var zmq = require('zmq');
+var zmq = require('zeromq');
 var readline = require('readline');
 var getPort = require('get-port');
 

@@ -51,7 +51,7 @@ RUN pip3 install -U scikit-learn
 #RUN apt install -y tmux
 
 # Install nodemon specifically here so that we can use the command below
-RUN npm install -g nodemon@^1.19.1
+RUN npm install -g nodemon@^2.0.15
 
 EXPOSE 80
 

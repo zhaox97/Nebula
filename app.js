@@ -1,14 +1,21 @@
 /*Import packages required in package.json   */
 /*Add these packages from the ../node_modules path*/
-var express = require('express');//A lightweight nodejs web framework
-var path = require('path');//Ability to join filepaths to filenames.
-var favicon = require('serve-favicon');//Set prefered icon in browser URL bar. Unused?
-var logger = require('morgan');//HTTP request logger. Unused?
-var cookieParser = require('cookie-parser');//Stores cookies in req.cookies
-var bodyParser = require('body-parser');//Middleware parser for incoming request bodies, 
+//var express = require('express');//A lightweight nodejs web framework
+import express from 'express';
+//var path = require('path');//Ability to join filepaths to filenames.
+import path from 'path';
+//var favicon = require('serve-favicon');//Set prefered icon in browser URL bar. Unused?
+import favicon from 'serve-favicon';
+//var logger = require('morgan');//HTTP request logger. Unused?
+import logger from 'morgan';
+//var cookieParser = require('cookie-parser');//Stores cookies in req.cookies
+import cookieParser from 'cookie-parser';
+//var bodyParser = require('body-parser');//Middleware parser for incoming request bodies, 
+import bodyParser from 'body-parser';
 
 /* REST API routes */
-var routes = require('./routes/index');//Points to /routes/index.js.  Currently, index.js points to CosmosD3/CosmosD3.html
+//var routes = require('./routes/index');//Points to /routes/index.js.  Currently, index.js points to CosmosD3/CosmosD3.html
+import routes from './routes/index';
 
 /* Connect to the databases */
 //var mongo = require('mongodb');
@@ -19,7 +26,8 @@ var routes = require('./routes/index');//Points to /routes/index.js.  Currently,
 /* The HTTP request handler */
 
 var app = express();//Creates app from express class. (Baseline famework for an app. No web functionality).
-var debug = require('debug')('Nebula:server');//Require the debug module. Pass it scoping 'Nebula:server'
+//var debug = require('debug')('Nebula:server');//Require the debug module. Pass it scoping 'Nebula:server'
+import debug from 'debug';
 var http = require('http').Server(app);//Create an http server on top of app.
 
 /* The Socket.io WebSocket module */
