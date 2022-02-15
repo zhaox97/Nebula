@@ -27,7 +27,7 @@ from nebula.pipeline import SIMILARITY_WEIGHTS
 from nebula.pipeline import INTERACTION
 
 
-from DistanceFunctions import euclidean, cosine
+from .DistanceFunctions import euclidean, cosine
 
 
 
@@ -107,8 +107,8 @@ class SimilarityModel(pipeline.Model):
         high_d = np.zeros((num_docs, len(attributes)), dtype=np.float64)
         
         # Fill in the highD matrix with the attribute values of the documents
-        for i in xrange(num_docs):
-            for j in xrange(len(attribute_list)):
+        for i in range(num_docs):
+            for j in range(len(attribute_list)):
                 if attribute_list[j] in docs[i][DOC_ATTRIBUTES]:
                     high_d[i][j] = docs[i][DOC_ATTRIBUTES][attribute_list[j]]
         
@@ -121,12 +121,12 @@ class SimilarityModel(pipeline.Model):
         high_d = np.nan_to_num(high_d)
         
         # Remove any weights no longer in the attributes
-        for attr in self._weights.keys():
+        for attr in list(self._weights.keys()):
             if attr not in attributes:
                 del self._weights[attr]
                 
         # Renormalize the remaining weights to 1
-        sum = np.sum(self._weights.values())
+        sum = np.sum(list(self._weights.values()))
         if sum > 0:
             for attr in self._weights:
                 self._weights[attr] /= sum
@@ -159,14 +159,14 @@ class SimilarityModel(pipeline.Model):
         
         # Compute the pairwise distance of the high dimensional points
         pdist = np.zeros((num_docs, num_docs), dtype=np.float64)
-        weight_list = map(lambda x: x[1], weight_list)
+        weight_list = [x[1] for x in weight_list]
        
         # Calculate the distance between every pair of points
         dist_func = euclidean
         if self.dist_func == "cosine":
             dist_func = cosine
-        for i in xrange(0, num_docs - 1):
-            for j in xrange(i + 1, num_docs):
+        for i in range(0, num_docs - 1):
+            for j in range(i + 1, num_docs):
                 d = dist_func(high_d[i], high_d[j], weight_list)
                 pdist[i][j] = d
                 pdist[j][i] = d
@@ -227,7 +227,7 @@ class SimilarityModel(pipeline.Model):
             low_d_max = 1
         
         # Set the low dimensional position of each document
-        for i, pos in itertools.izip(xrange(len(data[DOCUMENTS])), low_d):
+        for i, pos in zip(range(len(data[DOCUMENTS])), low_d):
             doc = data[DOCUMENTS][i].copy()
             doc[LOWD_POSITION] = (pos / low_d_max).tolist()
            
@@ -266,24 +266,24 @@ class SimilarityModel(pipeline.Model):
             # Form the set of all attributes to form the matrix
             attributes = set()
              
-            for p in points.keys():
+            for p in list(points.keys()):
                 if p in self._high_d:
-                    attributes.update(self._high_d[p].keys())
+                    attributes.update(list(self._high_d[p].keys()))
                 else:
                     del points[p] 
                     
             attributes = list(attributes)
             high_d_matrix = np.zeros((len(points), len(attributes)), dtype=np.float64)
   
-            keys = points.keys()
+            keys = list(points.keys())
             
             # Fill in the highD matrix with the attribute values of the documents
             # Creates a vector format of our high dimensional data, but the input
             # is different than what _vectorize expects
             i = 0
        
-            for i in xrange(len(keys)): 
-                for j in xrange(len(attributes)):
+            for i in range(len(keys)): 
+                for j in range(len(attributes)):
                     if attributes[j] in self._high_d[keys[i]]:
                         high_d_matrix[i][j] = self._high_d[keys[i]][attributes[j]]
           
@@ -296,7 +296,7 @@ class SimilarityModel(pipeline.Model):
                 if high_d_matrix[:,i].var() > 0:
                     keep_indeces.append(i)
           
-            for i in xrange(len(keys)):
+            for i in range(len(keys)):
                 points[keys[i]]["highD"] = high_d_matrix[i][keep_indeces].tolist()
             
             high_dimensions = len(keep_indeces)
@@ -324,7 +324,7 @@ class SimilarityModel(pipeline.Model):
             weights = np.zeros((num_dimensions))            
             weights[keep_indeces] = output["weights"]
            
-            self._weights = {attributes[i]: weights[i] for i in xrange(num_dimensions)}
+            self._weights = {attributes[i]: weights[i] for i in range(num_dimensions)}
             pipeline.Model.global_weight_vector = self._weights
                     
             self._new_weights = True         

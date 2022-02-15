@@ -42,7 +42,7 @@ from nebula.pipeline import ATTRIBUTE_LIST
 from nebula.pipeline import ATTRIBUTE_ID
 from nebula.pipeline import ATTRIBUTE_DOCS
 
-from DistanceFunctions import euclidean, cosine
+from .DistanceFunctions import euclidean, cosine
 
 
 
@@ -161,8 +161,8 @@ class TwoView_SimilarityModel(pipeline.Model):
         
         #need to change this
         # Fill in the highD matrix with the attribute values of the documents
-        for i in xrange(num_docs):
-            for j in xrange(len(attribute_list)):
+        for i in range(num_docs):
+            for j in range(len(attribute_list)):
                 if attribute_list[j] in docs[i][DOC_ATTRIBUTES]:
                     high_d[i][j] = docs[i][DOC_ATTRIBUTES][attribute_list[j]]
         
@@ -177,8 +177,8 @@ class TwoView_SimilarityModel(pipeline.Model):
         # Make a list of weights to use for the distance calculation
         # The new set of weights should still sum to 1
         old_attribute_count = len(self._weights)
-        print "Old attr count: %d, New count: %d" % (old_attribute_count, len(attribute_list))
-        print "Old weight of attrs sum: %f" % np.sum(self._weights.values())
+        print("Old attr count: %d, New count: %d" % (old_attribute_count, len(attribute_list)))
+        print("Old weight of attrs sum: %f" % np.sum(list(self._weights.values())))
         
         weight_list = []
         for attr in attribute_list:
@@ -187,7 +187,7 @@ class TwoView_SimilarityModel(pipeline.Model):
             else:
                 weight_list.append((attr, 0))
         
-        print "Attr weight sum: %f" % np.sum(self._weights.values())
+        print("Attr weight sum: %f" % np.sum(list(self._weights.values())))
                         
         return (high_d, weight_list)
 
@@ -205,8 +205,8 @@ class TwoView_SimilarityModel(pipeline.Model):
         
         #need to change this
         # Fill in the highD matrix with the attribute values of the documents
-        for i in xrange(num_attrs):
-            for j in xrange(len(document_list)):
+        for i in range(num_attrs):
+            for j in range(len(document_list)):
                 if document_list[j] in attrs[i][ATTRIBUTE_DOCS]:
                     high_d[i][j] = attrs[i][ATTRIBUTE_DOCS][document_list[j]]
                     
@@ -221,8 +221,8 @@ class TwoView_SimilarityModel(pipeline.Model):
         # Make a list of weights to use for the distance calculation
         # The new set of weights should still sum to 1
         old_documents_count = len(self._docs_weights)
-        print "Old doc count: %d, New count: %d" % (old_documents_count, len(document_list))
-        print "Old weight of docs sum: %f" % np.sum(self._docs_weights.values())
+        print("Old doc count: %d, New count: %d" % (old_documents_count, len(document_list)))
+        print("Old weight of docs sum: %f" % np.sum(list(self._docs_weights.values())))
         
         weight_list = []
         for doc in document_list:
@@ -231,7 +231,7 @@ class TwoView_SimilarityModel(pipeline.Model):
             else:
                 weight_list.append((doc, 0))
         
-        print "Doc weight sum: %f" % np.sum(self._docs_weights.values())
+        print("Doc weight sum: %f" % np.sum(list(self._docs_weights.values())))
         
         return (high_d, weight_list)
 
@@ -243,13 +243,13 @@ class TwoView_SimilarityModel(pipeline.Model):
         
         # Compute the pairwise distance of the high dimensional points
         pdist = np.zeros((num_docs, num_docs), dtype=np.float64)
-        weight_list = map(lambda x: x[1], weight_list)
+        weight_list = [x[1] for x in weight_list]
         # Calculate the distance between every pair of points
         dist_func = euclidean
         if self.dist_func == "cosine":
             dist_func = cosine
-        for i in xrange(0, num_docs - 1):
-            for j in xrange(i + 1, num_docs):
+        for i in range(0, num_docs - 1):
+            for j in range(i + 1, num_docs):
                 d = dist_func(high_d[i], high_d[j], weight_list)
                 pdist[i][j] = d
                 pdist[j][i] = d
@@ -349,7 +349,7 @@ class TwoView_SimilarityModel(pipeline.Model):
        
           # Set the low dimensional position of each document
           #change this also
-          for i, pos in itertools.izip(xrange(len(data[DOCUMENTS])), low_d):
+          for i, pos in zip(range(len(data[DOCUMENTS])), low_d):
             doc = data[DOCUMENTS][i].copy()
             doc[LOWD_POSITION] = (pos / low_d_max).tolist()
            
@@ -362,7 +362,7 @@ class TwoView_SimilarityModel(pipeline.Model):
             data["OBSERVATION"][DOCUMENTS][i] =  doc
         
           
-          for i, pos in itertools.izip(xrange(len(data["ATTRIBUTE"][ATTRIBUTE_LIST])), attr_low_d):
+          for i, pos in zip(range(len(data["ATTRIBUTE"][ATTRIBUTE_LIST])), attr_low_d):
             attr = data["ATTRIBUTE"][ATTRIBUTE_LIST][i].copy()
             attr[LOWD_POSITION] = (pos / attr_low_d_max).tolist()  
             if ATTRIBUTE_DOCS in attr:
@@ -386,7 +386,7 @@ class TwoView_SimilarityModel(pipeline.Model):
           if low_d_max == 0:
             low_d_max = 1
           
-          for i, pos in itertools.izip(xrange(len(data[DOCUMENTS])), low_d):
+          for i, pos in zip(range(len(data[DOCUMENTS])), low_d):
             doc = data[DOCUMENTS][i].copy()
             doc[LOWD_POSITION] = (pos / low_d_max).tolist()
            
@@ -414,7 +414,7 @@ class TwoView_SimilarityModel(pipeline.Model):
           if attr_low_d_max == 0:
             attr_low_d_max = 1
           
-          for i, pos in itertools.izip(xrange(len(data["ATTRIBUTE"][ATTRIBUTE_LIST])), attr_low_d):
+          for i, pos in zip(range(len(data["ATTRIBUTE"][ATTRIBUTE_LIST])), attr_low_d):
             attr = data["ATTRIBUTE"][ATTRIBUTE_LIST][i].copy()
             attr[LOWD_POSITION] = (pos / attr_low_d_max).tolist()  
             if ATTRIBUTE_DOCS in attr:
@@ -472,7 +472,7 @@ class TwoView_SimilarityModel(pipeline.Model):
             attributes = list(attributes)
             high_d_matrix = np.zeros((len(points), len(attributes)), dtype=np.float64)
             
-            keys = points.keys()
+            keys = list(points.keys())
             
             # Fill in the highD matrix with the attribute values of the documents or document values of the attributes based on the used view (attrivute/observation)
             # Creates a vector format of our high dimensional data, but the input
@@ -480,8 +480,8 @@ class TwoView_SimilarityModel(pipeline.Model):
             
             i = 0
             #change this to customized view
-            for i in xrange(len(keys)): 
-                for j in xrange(len(attributes)):
+            for i in range(len(keys)): 
+                for j in range(len(attributes)):
                     #observation view
                     if self._view:
                       if attributes[j] in self._high_d[keys[i]]:
@@ -499,7 +499,7 @@ class TwoView_SimilarityModel(pipeline.Model):
                 if high_d_matrix[:,i].var() > 0:
                     keep_indeces.append(i)
                     
-            for i in xrange(len(keys)):
+            for i in range(len(keys)):
                 points[keys[i]]["highD"] = high_d_matrix[i][keep_indeces].tolist()
                 
             high_dimensions = len(keep_indeces)
@@ -529,11 +529,11 @@ class TwoView_SimilarityModel(pipeline.Model):
             
             # change weight vector based on used view
             if self._view :
-               self._weights = {attributes[i]: weights[i] for i in xrange(num_dimensions)}
+               self._weights = {attributes[i]: weights[i] for i in range(num_dimensions)}
                pipeline.Model.global_attribute_weight_vector = self._weights
         
             elif self._view is False:
-                self._docs_weights = {attributes[i]: weights[i] for i in xrange(num_dimensions)}
+                self._docs_weights = {attributes[i]: weights[i] for i in range(num_dimensions)}
                 pipeline.Model.global_document_weight_vector = self._docs_weights 
             
             self._new_weights = True

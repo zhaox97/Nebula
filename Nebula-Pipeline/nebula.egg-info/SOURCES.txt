@@ -1,4 +1,3 @@
-README.md
 setup.py
 nebula/__init__.py
 nebula/connector.py

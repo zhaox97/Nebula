@@ -49,7 +49,7 @@ class TwoView_CSVDataController(pipeline.DataController):
                     self._rows.append(line[0])
                     doc[pipeline.HIGHD_POSITION] = [float(x) for x in line[1:]]
                     attrs_high_d.append(doc[pipeline.HIGHD_POSITION])
-                    doc[pipeline.DOC_ATTRIBUTES] = {self._columns[i]: float(line[i+1]) for i in xrange(len(self._columns))}
+                    doc[pipeline.DOC_ATTRIBUTES] = {self._columns[i]: float(line[i+1]) for i in range(len(self._columns))}
                     self._documents.append(doc)
                 
             attrs_high_d = np.array(attrs_high_d)
@@ -60,13 +60,13 @@ class TwoView_CSVDataController(pipeline.DataController):
                 attrs = {}
                 attrs[pipeline.ATTRIBUTE_ID] = self._columns[i]
                 attrs[pipeline.HIGHD_POSITION] = list(attr)
-                attrs[pipeline.ATTRIBUTE_DOCS] = {self._rows[k]:float(attr[k]) for k in xrange (len(self._rows))}
+                attrs[pipeline.ATTRIBUTE_DOCS] = {self._rows[k]:float(attr[k]) for k in range (len(self._rows))}
                 self._attributes_set.append(attrs)
         
         max_attributes = {}
         min_attributes = {}
         for doc in self._documents:
-            for attr, value in doc[pipeline.DOC_ATTRIBUTES].iteritems():
+            for attr, value in doc[pipeline.DOC_ATTRIBUTES].items():
                 if attr not in max_attributes or value > max_attributes[attr]:
                     max_attributes[attr] = value
                 if attr not in  min_attributes or value < min_attributes[attr]:

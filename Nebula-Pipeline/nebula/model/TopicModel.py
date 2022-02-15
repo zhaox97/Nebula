@@ -126,8 +126,8 @@ class TopicModel(pipeline.Model):
         high_d = np.zeros((num_docs, len(attribute_list)), dtype=np.float64)
         
         # Fill in the highD matrix with the attribute values of the documents
-        for i in xrange(num_docs):
-            for j in xrange(len(attribute_list)):
+        for i in range(num_docs):
+            for j in range(len(attribute_list)):
                 if attribute_list[j] in docs[i][DOC_ATTRIBUTES]:
                     update = docs[i][DOC_ATTRIBUTES][attribute_list[j]]
                     high_d[i][j] = update
@@ -162,8 +162,8 @@ class TopicModel(pipeline.Model):
             #Normalize wieghts so that they're between 0 and V
             self._word_weights = np.array(list(self._word_weights / np.sum(self._word_weights) * old_V)  + list(idf))
             
-        print 'Our top 10 weighted words for topic formation:'
-        print zip(np.array(self._vocab)[np.argsort(-self._word_weights)][:10], np.sort(-self._word_weights)[:10])
+        print('Our top 10 weighted words for topic formation:')
+        print(list(zip(np.array(self._vocab)[np.argsort(-self._word_weights)][:10], np.sort(-self._word_weights)[:10])))
 
         np.random.seed(123)
 
@@ -282,7 +282,7 @@ class TopicModel(pipeline.Model):
             # Set the documents to our last copy to continue the forward model
             #return
             if len(self._docs) > 0:
-                print "self._docs is greater than 0 in len"
+                print("self._docs is greater than 0 in len")
                 data[DOCUMENTS] = [{DOC_ID: x[DOC_ID], DOC_ATTRIBUTES : x[DOC_ATTRIBUTES]} for x in self._docs]
             else: 
                 return
@@ -292,7 +292,7 @@ class TopicModel(pipeline.Model):
 
         
         # If we don't have any documents or we don't need to update, just return
-        if num_docs == 0 or (not self._new_docs and not self._new_weights) and DOC_TOPICS in data.keys():
+        if num_docs == 0 or (not self._new_docs and not self._new_weights) and DOC_TOPICS in list(data.keys()):
             return
         
         # We are updating now so make sure we only update again if we need to
@@ -314,7 +314,7 @@ class TopicModel(pipeline.Model):
         topic_mixtures = self._reduce(tf, topics=self.topics)
 
         # Set the medium dimensional position of each document
-        for i, top in itertools.izip(xrange(len(data[DOCUMENTS])), topic_mixtures):
+        for i, top in zip(range(len(data[DOCUMENTS])), topic_mixtures):
             doc = data[DOCUMENTS][i].copy()
             doc[DOC_TOPICS] = (top).tolist()
             
@@ -323,7 +323,7 @@ class TopicModel(pipeline.Model):
                 self._high_d[doc[DOC_ID]] = doc[DOC_TOPICS]
 
             #Changed DOC_TOPICS from an unnamed list to a dict as the next module expects
-            doc[DOC_TOPICS] = dict(zip(['Topic %s'%j for j in range(self.topics)], (top).tolist()))
+            doc[DOC_TOPICS] = dict(list(zip(['Topic %s'%j for j in range(self.topics)], (top).tolist())))
             doc['color'] =  self._colors[np.argmax(top)]
 
             data[DOCUMENTS][i] = doc
@@ -339,11 +339,11 @@ class TopicModel(pipeline.Model):
         """
         interaction = data[INTERACTION]
 
-        if TOPIC_WEIGHTS in data.keys():
+        if TOPIC_WEIGHTS in list(data.keys()):
             topic_weights = data[TOPIC_WEIGHTS]
             self._word_weights = self._get_induced_weights(topic_weights)
             self._new_weights = True
-            print "Ok we've got the inverse LDA now"
+            print("Ok we've got the inverse LDA now")
          
     def reset(self):
         self._word_weights = np.array([])

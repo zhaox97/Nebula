@@ -48,7 +48,7 @@ class TFModel(pipeline.Model):
 			data[pipeline.ATTRIBUTES][w] = len(data[pipeline.ATTRIBUTES])
 		    if w not in data[pipeline.SIMILARITY_WEIGHTS]:
 			newWeight = float(1.0/(len(data[pipeline.SIMILARITY_WEIGHTS])+1))
-			print "=============== new SIMILARITY_WEIGHTS: " + str(newWeight) + " length: " + str(len(data[pipeline.SIMILARITY_WEIGHTS])+1)
+			print("=============== new SIMILARITY_WEIGHTS: " + str(newWeight) + " length: " + str(len(data[pipeline.SIMILARITY_WEIGHTS])+1))
 			data[pipeline.SIMILARITY_WEIGHTS][w] = newWeight
 			for key in data[pipeline.SIMILARITY_WEIGHTS]:
 			    data[pipeline.SIMILARITY_WEIGHTS][key] = newWeight
@@ -66,7 +66,7 @@ class TFModel(pipeline.Model):
     def inverse(self, data):
         if pipeline.ATTRIBUTE_RELEVANCE_DELTA in data:
             freq = data[pipeline.ATTRIBUTE_RELEVANCE_DELTA]
-            sorted_f = sorted(freq.items(), key=operator.itemgetter(1), reverse=True)
+            sorted_f = sorted(list(freq.items()), key=operator.itemgetter(1), reverse=True)
             if len(sorted_f) <= self._MaxAttri:
                 sorted_f=sorted_f
             else:

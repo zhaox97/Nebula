@@ -134,7 +134,7 @@ class CorpusSetModel(pipeline.AsyncModel):
         
     def _relevance(self, doc, weights):
         relevance = 0
-        for attr, value in doc[DOC_ATTRIBUTES].iteritems():
+        for attr, value in doc[DOC_ATTRIBUTES].items():
             if attr in weights:
                 relevance += weights[attr] * value
 
