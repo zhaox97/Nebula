@@ -1,8 +1,8 @@
-pyzmq
+elasticsearch
+nltk==3.4
 numpy
+pyzmq
 scipy
 sklearn
 tweepy
-nltk==3.4
 zerorpc
-elasticsearch
