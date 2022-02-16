@@ -1,9 +1,15 @@
-var spawn = require('child_process').spawn;
-var fs = require("fs");
-var async = require('async');
-var zmq = require('zeromq');
-var readline = require('readline');
-var getPort = require('get-port');
+// const spawn = require('child_process').spawn;
+import spawn from "child_process";
+// const fs = require("fs");
+import fs from "fs";
+// const async = require('async');
+import async from "async";
+// const zmq = require('zeromq');
+import zmq from "zeromq";
+// const readline = require('readline');
+import readline from "linebyline";
+// const getPort = require;
+import getPort from "get-port";
 
 /* Load the databases we need */
 //var monk = require('monk');
@@ -12,6 +18,7 @@ var getPort = require('get-port');
 
 /* Export the Nebula class */
 module.exports = Nebula;
+module.exports = io;
 
 /* Location of the data for the Crescent dataset */
 var textDataPath = "data/text/";
@@ -80,7 +87,7 @@ var nextSessionNumber = 0;
 var usedSessionNumbers = [];
 
 /* Nebula class constructor */
-function Nebula(io, pipelineAddr) {
+export default function Nebula(io, pipelineAddr) {
     /* This allows you to use "Nebula(obj)" as well as "new Nebula(obj)" */
     if (!(this instanceof Nebula)) {
         return new Nebula(io);

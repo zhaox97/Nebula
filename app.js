@@ -1,21 +1,21 @@
 /*Import packages required in package.json   */
 /*Add these packages from the ../node_modules path*/
-var express = require('express');//A lightweight nodejs web framework
-// import express from './node_modules/express';
-var path = require('path');//Ability to join filepaths to filenames.
-// import path from './node_modules/path';
-var favicon = require('serve-favicon');//Set prefered icon in browser URL bar. Unused?
-// import favicon from './node_modules/serve-favicon';
-var logger = require('morgan');//HTTP request logger. Unused?
-// import {morgan as logger} from './node_modules/morgan';
-var cookieParser = require('cookie-parser');//Stores cookies in req.cookies
-// import cookieParser from './node_modules/cookie-parser';
-var bodyParser = require('body-parser');//Middleware parser for incoming request bodies, 
-// import bodyParser from './node_modules/body-parser';
+// var express = require('express');//A lightweight nodejs web framework
+import express from "express";
+// var path = require('path');//Ability to join filepaths to filenames.
+import path from "path";
+// var favicon = require('serve-favicon');//Set prefered icon in browser URL bar. Unused?
+import favicon from "serve-favicon";
+// var logger = require('morgan');//HTTP request logger. Unused?
+import logger from "morgan";
+// var cookieParser = require('cookie-parser');//Stores cookies in req.cookies
+import cookieParser from "cookie-parser";
+// var bodyParser = require('body-parser');//Middleware parser for incoming request bodies, 
+import bodyParser from "body-parser";
 
 /* REST API routes */
-var routes = require('./routes/index');//Points to /routes/index.js.  Currently, index.js points to CosmosD3/CosmosD3.html
-// import routes from './routes/index';
+// var routes = require('./routes/index');//Points to /routes/index.js.  Currently, index.js points to CosmosD3/CosmosD3.html
+import {router} from "./routes/index.js";
 
 /* Connect to the databases */
 //var mongo = require('mongodb');
@@ -25,19 +25,23 @@ var routes = require('./routes/index');//Points to /routes/index.js.  Currently,
 
 /* The HTTP request handler */
 
-var app = express();//Creates app from express class. (Baseline famework for an app. No web functionality).
-var debug = require('debug')('Nebula:server');//Require the debug module. Pass it scoping 'Nebula:server'
-// import debug from './node_modules/debug';
-var http = require('http').Server(app);//Create an http server on top of app.
-// import http from './node_modules/http';
+const app = express();//Creates app from express class. (Baseline famework for an app. No web functionality).
+// const debug = require('debug')('Nebula:server');//Require the debug module. Pass it scoping 'Nebula:server'
+import debug from "debug";
+// const http = require('http').Server(app);//Create an http server on top of app.
+import {createServer} from "http";
 
 /* The Socket.io WebSocket module */
-var io = require('socket.io')(http);//Create an io/websocket on top of http object.
-// import io from './node_modules/socket.io';
+// const io = require('socket.io')(http);//Create an io/websocket on top of http object.
+import Server from "socket.io";
+import Socket from "socket.io";
+
+const httpServer = createServer(app);
+const socketio = new Server(httpServer);
 
 /* Our custom Nebula module handles the WebSocket synchronization */
-var nebula = require('./nebula')(io);//Creates nebula layer on top of io.
-// import nebula from './nebula';
+// const nebula = require('./nebula.js')(io);//Creates nebula layer on top of io.
+import Nebula from "./nebula.js";
 
 /* Set the port we want to run on */
 var port = process.env.PORT || 80;
@@ -66,7 +70,7 @@ app.use("/", express.static(path.join(__dirname, 'Nebula-UIs')));
 //});
 
 /* Initiate the REST API */
-app.use('/', routes);
+app.use('/', router);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
