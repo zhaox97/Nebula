@@ -15,7 +15,7 @@ import bodyParser from 'body-parser';
 
 /* REST API routes */
 //var routes = require('./routes/index');//Points to /routes/index.js.  Currently, index.js points to CosmosD3/CosmosD3.html
-import routes from './routes/index';
+import * as router from './routes/index.js';
 
 /* Connect to the databases */
 //var mongo = require('mongodb');
