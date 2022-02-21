@@ -17,8 +17,10 @@ import getPort from "get-port";
 //var datasets = monk('localhost:27017/datasets');
 
 /* Export the Nebula class */
-module.exports = Nebula;
-module.exports = io;
+// module.exports = Nebula;
+// module.exports = io;
+// export default(Nebula);
+// export default(io);
 
 /* Location of the data for the Crescent dataset */
 var textDataPath = "data/text/";

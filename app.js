@@ -15,7 +15,11 @@ import bodyParser from "body-parser";
 
 /* REST API routes */
 // var routes = require('./routes/index');//Points to /routes/index.js.  Currently, index.js points to CosmosD3/CosmosD3.html
-import {router} from "./routes/index.js";
+import * as router from "./routes/index.js";
+
+import { fileURLToPath } from "url";
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 /* Connect to the databases */
 //var mongo = require('mongodb');
@@ -69,8 +73,10 @@ app.use("/", express.static(path.join(__dirname, 'Nebula-UIs')));
 //    next();
 //});
 
+import routes from "./routes/index.js"
 /* Initiate the REST API */
-app.use('/', router);
+// app.use('/routes', index);
+app.use("/nebulaRoute", routes.nebulaRoute)
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
