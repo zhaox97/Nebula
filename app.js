@@ -1,54 +1,42 @@
 /*Import packages required in package.json   */
 /*Add these packages from the ../node_modules path*/
-// var express = require('express');//A lightweight nodejs web framework
 import express from "express";
-// var path = require('path');//Ability to join filepaths to filenames.
 import path from "path";
-// var favicon = require('serve-favicon');//Set prefered icon in browser URL bar. Unused?
-import favicon from "serve-favicon";
-// var logger = require('morgan');//HTTP request logger. Unused?
+import favicon from "serve-favicon";  // Although not read, this line is important for when favicon added to /public
 import logger from "morgan";
-// var cookieParser = require('cookie-parser');//Stores cookies in req.cookies
 import cookieParser from "cookie-parser";
-// var bodyParser = require('body-parser');//Middleware parser for incoming request bodies, 
 import bodyParser from "body-parser";
+import debug from "debug";
+import {createServer} from "http";
+
+/* The Socket.io WebSocket module */
+import Server from "socket.io";
 
 /* REST API routes */
-// var routes = require('./routes/index');//Points to /routes/index.js.  Currently, index.js points to CosmosD3/CosmosD3.html
-import * as router from "./routes/index.js";
+import routes from "./routes/index.js"
 
+// Next three lines conver "URL" to file path
 import { fileURLToPath } from "url";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
+/* Our custom Nebula module handles the WebSocket synchronization */
+import Nebula from "./nebula.js";
+
 /* Connect to the databases */
+// TODO: Possibly update this code, unless not needed, then can delete, need to ask Professor Dowling
 //var mongo = require('mongodb');
 //var monk = require('monk');
 //var db = monk('localhost:27017/nodetest');
 //var datasets = monk('localhost:27017/datasets');
 
-/* The HTTP request handler */
-
 const app = express();//Creates app from express class. (Baseline famework for an app. No web functionality).
-// const debug = require('debug')('Nebula:server');//Require the debug module. Pass it scoping 'Nebula:server'
-import debug from "debug";
-// const http = require('http').Server(app);//Create an http server on top of app.
-import {createServer} from "http";
-
-/* The Socket.io WebSocket module */
-// const io = require('socket.io')(http);//Create an io/websocket on top of http object.
-import Server from "socket.io";
-import Socket from "socket.io";
 
 const httpServer = createServer(app);
 const socketio = new Server(httpServer);
 
-/* Our custom Nebula module handles the WebSocket synchronization */
-// const nebula = require('./nebula.js')(io);//Creates nebula layer on top of io.
-import Nebula from "./nebula.js";
-
 /* Set the port we want to run on */
-var port = process.env.PORT || 80;
+var port = process.env.PORT || 4040;  // Port changed from 80 to 4040 due to 'Port 80 requires elevated priveleges' Error
 app.set('port', port);
 
 /* view engine setup, currently not used */
@@ -56,7 +44,7 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
 
 // uncomment after placing your favicon in /public
-//app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
+// app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -66,6 +54,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use("/", express.static(path.join(__dirname, 'Nebula-UIs')));
 
+// TODO: Ask Professor Dowling about following commented out code
 // Make our db accessible to our router
 //app.use(function(req, res, next){
 //    req.db = db;
@@ -73,9 +62,8 @@ app.use("/", express.static(path.join(__dirname, 'Nebula-UIs')));
 //    next();
 //});
 
-import routes from "./routes/index.js"
+
 /* Initiate the REST API */
-// app.use('/routes', index);
 app.use("/nebulaRoute", routes.nebulaRoute)
 
 // catch 404 and forward to error handler
@@ -140,7 +128,7 @@ function onError(error) {
  */
 
 function onListening() {
-  var addr = http.address();
+  var addr = httpServer.address();
   var bind = (typeof addr === 'string' ? 'pipe ' + addr : 'port ' + addr.port);
   debug('Listening on ' + bind);
 }
@@ -148,6 +136,6 @@ function onListening() {
 /**
  * Listen on provided port, on all network interfaces.
  */
-http.listen(port);
-http.on('error', onError);
-http.on('listening', onListening);
+httpServer.listen(port);
+httpServer.on('error', onError);
+httpServer.on('listening', onListening);

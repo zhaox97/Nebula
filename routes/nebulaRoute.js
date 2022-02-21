@@ -1,16 +1,11 @@
-// var express = require('express');
-// import express from "express";
 import {Router} from "express";
-// var router = express.Router();
 const router = Router();
-// var path = require('path');
 import path from "path";
 
+// Following three lines convert a "URL" to a file path
 import { fileURLToPath } from "url";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-
-
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
@@ -23,5 +18,3 @@ router.get('/', function(req, res, next) {
 });
 
 export default router;
-
-// module.exports = router;

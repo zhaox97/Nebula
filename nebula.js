@@ -1,14 +1,8 @@
-// const spawn = require('child_process').spawn;
 import spawn from "child_process";
-// const fs = require("fs");
 import fs from "fs";
-// const async = require('async');
 import async from "async";
-// const zmq = require('zeromq');
 import zmq from "zeromq";
-// const readline = require('readline');
 import readline from "linebyline";
-// const getPort = require;
 import getPort from "get-port";
 
 /* Load the databases we need */
