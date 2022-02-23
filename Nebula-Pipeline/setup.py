@@ -11,7 +11,7 @@ setup(
                         "scipy",
                         "sklearn",
                         "tweepy",
-                        "nltk==3.4",
+                        "nltk",
                         "zerorpc",
                         "elasticsearch"
                         ],

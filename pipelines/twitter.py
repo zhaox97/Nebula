@@ -9,7 +9,7 @@ import zerorpc
 
 def main():
     if len(sys.argv) < 2:
-        print "Usage: python main.py <port> <pipeline arguments>"
+        print("Usage: python main.py <port> <pipeline arguments>")
     
     access_token = "22705576-1RXheyykqon2L6DgUIBtLcqrqeyb5PzIAiTpkN2Eh"
     access_token_secret = "lBX6JsFWkB1vYM0V3RHQjuWz9gclBc4ZvWACerDTB8O8h"

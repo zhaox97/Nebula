@@ -9,10 +9,10 @@ import zerorpc
 
 def main():
     if len(sys.argv) < 4:
-        print "Usage: python main.py <port> <csv file path> <raw data folder path> <pipeline arguments>"
+        print("Usage: python main.py <port> <csv file path> <raw data folder path> <pipeline arguments>")
     
     csvfile = sys.argv[2]
-    print csvfile
+    print(csvfile)
     raw_folder = sys.argv[3]
     
     pipeline = nebula.pipeline.Pipeline()

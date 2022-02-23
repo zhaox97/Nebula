@@ -15,5 +15,5 @@ def preprocess(sentence, blacklist, remove_ints=False):
     allbadwords = stopwords.words('english') + blacklist
     filtered_words = [w for w in tokens if not w in allbadwords]
     if remove_ints:
-	filtered_words = [w for w in filtered_words if not w.isdigit()]
+	    filtered_words = [w for w in filtered_words if not w.isdigit()]
     return " ".join(filtered_words)

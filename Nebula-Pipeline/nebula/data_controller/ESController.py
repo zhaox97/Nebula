@@ -11,7 +11,7 @@ import numpy as np
 from sklearn.feature_extraction.text import TfidfVectorizer
 
 from nebula import pipeline
-from TextDataFunctions import preprocess
+from .TextDataFunctions import preprocess
 
 from elasticsearch import Elasticsearch
 
@@ -53,7 +53,7 @@ class ESController(pipeline.DataController):
         # return doc with that ID
         if req_type == "raw":
             result= self.search_ID(TARGET_INDEX, args["id"])
-            args["value"]=result[u'_source'][u'text']
+            args["value"]=result['_source']['text']
             return args
         return None
             
@@ -75,16 +75,16 @@ class ESController(pipeline.DataController):
 	        if term == "random":
 		    #Exectures random search if 'random' keyword is entered'
 		    result = self.search_RANDOM(TARGET_INDEX, 10)
-		    hits=result[u'hits'][u'total']
+		    hits=result['hits']['total']
                 elif term != "":
                     result= self.search_TEXT(TARGET_INDEX, term)
-                    hits=result[u'hits'][u'total']
+                    hits=result['hits']['total']
 
                 return_doc = []
                 if hits != 0:
                     ## return doc ID and doc raw text
-                    for text in result[u'hits'][u'hits']:
-                        doc={pipeline.DOC_ID:text[u'_id'], pipeline.RAW_TEXT:text[u'_source'][u'text']}
+                    for text in result['hits']['hits']:
+                        doc={pipeline.DOC_ID:text['_id'], pipeline.RAW_TEXT:text['_source']['text']}
                         return_doc.append(doc)
 
                 return { pipeline.DOCUMENTS: return_doc}
@@ -109,18 +109,18 @@ class ESController(pipeline.DataController):
 		# maxterm = sortedkeys[-1]	
 		if len(terms) != 0:
 			result = self.search_BOOL(TARGET_INDEX, terms, 3, 10)
-			hits = result[u'hits'][u'total']
+			hits = result['hits']['total']
 		
 		return_doc = []
 		if hits != 0:
-			for text in result[u'hits'][u'hits']:
-				doc = {pipeline.DOC_ID: text[u'_id'], pipeline.RAW_TEXT: text[u'_source'][u'text']}
+			for text in result['hits']['hits']:
+				doc = {pipeline.DOC_ID: text['_id'], pipeline.RAW_TEXT: text['_source']['text']}
 				return_doc.append(doc)
 		return { pipeline.DOCUMENTS: return_doc }
 		
 	## if interaction is Omniview, this will do a lattlongt search and return documents
         if pipeline.INTERACTION in data and data[pipeline.INTERACTION] == "omniview":
-            print "================     Omniview INTERACTION  =============="
+            print("================     Omniview INTERACTION  ==============")
             latt=[]
             longt =[]
             term = data["query"]
@@ -133,15 +133,15 @@ class ESController(pipeline.DataController):
                   latt = [latt["gte"],latt["lte"]]
                   longt = [longt["gte"],longt["lte"]]
             result = self.search_latlong(TARGET_INDEX, latt, longt, term)
-            hits=result[u'hits'][u'total']
-            print "================     Omniview result:" + str(hits)  
+            hits=result['hits']['total']
+            print("================     Omniview result:" + str(hits))  
             return_doc=[]
             if hits != 0:
                 ## return doc ID and raw text
-                for text in result[u'hits'][u'hits']:
-                    doc={pipeline.DOC_ID:text[u'_id'], pipeline.RAW_TEXT:text[u'_source'][u'text']}
+                for text in result['hits']['hits']:
+                    doc={pipeline.DOC_ID:text['_id'], pipeline.RAW_TEXT:text['_source']['text']}
                     return_doc.append(doc)
-                print "searching" + str(latt) + str(longt)
+                print("searching" + str(latt) + str(longt))
                 return { pipeline.DOCUMENTS: return_doc}
         # if the update request is update relavence, this will up-weight terms 
         if pipeline.INTERACTION in data and data[pipeline.INTERACTION] == "change_relevance":
@@ -150,15 +150,15 @@ class ESController(pipeline.DataController):
 	    term = data["query"]
             # do a or search
             result = self.search_OR(TARGET_INDEX, term)
-            hits=result[u'hits'][u'total']
+            hits=result['hits']['total']
 
             #initialize return_doc. If hits=0, return empty list
             return_doc = []
             if hits != 0:
-                print 'hits: ', hits
+                print('hits: ', hits)
 
-                for text in result[u'hits'][u'hits']:
-                     doc={pipeline.DOC_ID:text[u'_id'], pipeline.RAW_TEXT:text[u'_source'][u'text']}
+                for text in result['hits']['hits']:
+                     doc={pipeline.DOC_ID:text['_id'], pipeline.RAW_TEXT:text['_source']['text']}
                      return_doc.append(doc)
                 return { pipeline.DOCUMENTS: return_doc}
 
@@ -170,19 +170,19 @@ class ESController(pipeline.DataController):
 
 	result=None
 	all_terms = terms
-	print('Intial Terms: ' + str(terms))
+	print(('Intial Terms: ' + str(terms)))
 	for i in range(3):
 	    #Search with current terms
 	    result = self.search_BOOL(TARGET_INDEX, terms, len(terms), 10)
 	
 	    #If there are no documents returned break out of loop
-	    if len(result[u'hits'][u'hits']) == 0:
+	    if len(result['hits']['hits']) == 0:
 		break
 		
 	    #Get list of clean texts
 	    texts = []
-	    for text in result[u'hits'][u'hits']:
-	        doc={pipeline.DOC_ID:text[u'_id'], pipeline.RAW_TEXT:text[u'_source'][u'text']}
+	    for text in result['hits']['hits']:
+	        doc={pipeline.DOC_ID:text['_id'], pipeline.RAW_TEXT:text['_source']['text']}
 	        clean_text = preprocess(doc[pipeline.RAW_TEXT].encode('utf-8'), ['\xc2', 'sa', 'said'], remove_ints=True)	    
 		texts.append(clean_text)
 
@@ -196,23 +196,23 @@ class ESController(pipeline.DataController):
 	    #Sum up columns of array 
 	    tfidf_sums = np.sum(temp.todense(), axis=0).tolist()[0]
 	    #Zip values with the associated term
-	    terms = zip(vocab, tfidf_sums)
+	    terms = list(zip(vocab, tfidf_sums))
 
 	    #Sort the list by value and get the N highest terms
 	    new_words = [a for (a,b) in sorted(terms, key=lambda x: x[1]) if a not in all_terms][-5:]
 	    all_terms += new_words
 	    terms = new_words
 		    
-	print("Final terms: " + str(all_terms))
+	print(("Final terms: " + str(all_terms)))
 		
 	#Search with new term set
 	result = self.search_BOOL(TARGET_INDEX, all_terms, len(all_terms) / 4, 50)
 	return_doc = []
-	hits = result[u'hits'][u'total']
-	print('Final hits: ' + str(hits))
+	hits = result['hits']['total']
+	print(('Final hits: ' + str(hits)))
 	if hits != 0:
-            for text in result[u'hits'][u'hits']:
-                doc={pipeline.DOC_ID:text[u'_id'], pipeline.RAW_TEXT:text[u'_source'][u'text']}
+            for text in result['hits']['hits']:
+                doc={pipeline.DOC_ID:text['_id'], pipeline.RAW_TEXT:text['_source']['text']}
                 return_doc.append(doc)
 
 	#If no docs are returned, do regular term search
@@ -226,16 +226,16 @@ class ESController(pipeline.DataController):
             if searchquery == "random":
                 #Exectures random search if 'random' keyword is entered'
                 result = self.search_RANDOM(TARGET_INDEX, 10)
-                hits=result[u'hits'][u'total']
+                hits=result['hits']['total']
             elif searchquery != "":
                 result= self.search_TEXT(TARGET_INDEX, searchquery)
-                hits=result[u'hits'][u'total']
+                hits=result['hits']['total']
 
                 return_doc = []
                 if hits != 0:
                     ## return doc ID and doc raw text
-                    for text in result[u'hits'][u'hits']:
-                        doc={pipeline.DOC_ID:text[u'_id'], pipeline.RAW_TEXT:text[u'_source'][u'text']}
+                    for text in result['hits']['hits']:
+                        doc={pipeline.DOC_ID:text['_id'], pipeline.RAW_TEXT:text['_source']['text']}
                         return_doc.append(doc)
 
                 return { pipeline.DOCUMENTS: return_doc}
@@ -330,13 +330,13 @@ class ESController(pipeline.DataController):
 
     ##search with document ID (used for clicking dots)
     def search_ID(self, target_index, target):
-        print "=======================>     searching Document ID: " + target
+        print("=======================>     searching Document ID: " + target)
         result= self._es.get(index=target_index, id=target)
         return result
 
     ##search with terms (used for search button)
     def search_TEXT(self, target_index, target):
-        print "=======================>     searching keyword: " + target
+        print("=======================>     searching keyword: " + target)
         result= self._es.search(index=target_index, body={"query": {"match" : { "text" : target }}})
         return result
     

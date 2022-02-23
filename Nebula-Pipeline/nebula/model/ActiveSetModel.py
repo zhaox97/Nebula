@@ -177,7 +177,7 @@ class ActiveSetModel(pipeline.Model):
         
         # Resets all the documents within the data blob as the current working
         # set
-        data[DOCUMENTS] = self._working_set.values()
+        data[DOCUMENTS] = list(self._working_set.values())
     
     def inverse(self, data):
         attr_weights_delta = {}
@@ -240,11 +240,11 @@ class ActiveSetModel(pipeline.Model):
             relevance_change = new_relevance - old_relevance
 
             sum_squares = 0
-            for value in self._working_set[doc_id][DOC_ATTRIBUTES].values():
+            for value in list(self._working_set[doc_id][DOC_ATTRIBUTES].values()):
                 sum_squares +=  math.pow(value, 2) 
 
             if sum_squares != 0 and old_relevance != 0:
-                for attr, value in self._working_set[doc_id][DOC_ATTRIBUTES].iteritems():
+                for attr, value in self._working_set[doc_id][DOC_ATTRIBUTES].items():
                     if value != 0:  
                        attr_weights_delta[attr] =float( (value * ((new_relevance/old_relevance)-1)* old_relevance)/sum_squares )
 
@@ -279,7 +279,7 @@ class ActiveSetModel(pipeline.Model):
            
             """ We  can use self.delete_factor = 0.5 but note that you have attr_weights_delta as dictonary between attr name(key) and value (increase/decrease) """
             # Down-weight the relevance for attributes in that document
-            for attr, value in self._working_set[doc_id][DOC_ATTRIBUTES].iteritems():
+            for attr, value in self._working_set[doc_id][DOC_ATTRIBUTES].items():
                 if value != 0:
                     attr_weights_delta[attr] = value*-5
                     weight_increase = True
@@ -378,7 +378,7 @@ class ActiveSetModel(pipeline.Model):
 
              self._attr_weights[attr] += attr_weights_delta[attr]
 
-        print "Sum of wieghts after relevance update = %f"%sum(self._attr_weights.values())
+        print("Sum of wieghts after relevance update = %f"%sum(self._attr_weights.values()))
 
         pipeline.Model.global_weight_vector = self._attr_weights
         
@@ -412,7 +412,7 @@ class ActiveSetModel(pipeline.Model):
                 interaction_relevance = 0
        
                 # Iterate through each attribute in the document
-                for attr, value in self._active_set[doc_id][DOC_ATTRIBUTES].iteritems():
+                for attr, value in self._active_set[doc_id][DOC_ATTRIBUTES].items():
                     if attr in interaction_attrs: 
                         interaction_relevance += interaction_attrs[attr]*value
                             
@@ -460,7 +460,7 @@ class ActiveSetModel(pipeline.Model):
         # Calculate the relevance score for a single document
         relevance = 0
        
-        for attr, value in doc[DOC_ATTRIBUTES].iteritems():     
+        for attr, value in doc[DOC_ATTRIBUTES].items():     
             if attr in self._attr_weights:         
                 # Add relevance for each attribute to get total relevance
                relevance += self._attr_weights[attr] * value

@@ -290,13 +290,13 @@ class ImportanceModel(pipeline.Model):
                 weights[item] = weights[item] ** ((len(weights)/7.0))
 
             # Shift values up if we have a negative min weight
-            min = np.min(weights.values())
+            min = np.min(list(weights.values()))
             if (min < 0):
                 for item in weights:
                     weights[item] += min
 
             # Ensure weights sum to 1
-            sum = np.sum(weights.values())
+            sum = np.sum(list(weights.values()))
             for item in  weights:
                 weights[item] /= sum
         
@@ -399,8 +399,8 @@ class ImportanceModel(pipeline.Model):
                         self._weights[attr] = self._relevance(self._attr_working_set[attr], False)
                     self._weights = self._rescale_weights(self._weights)
 
-          print "Sum of attr weights after forward = %f" % sum(self._weights.values())
-          print "Sum of doc weights after forward = %f" % sum(self._docs_weights.values())
+          print("Sum of attr weights after forward = %f" % sum(self._weights.values()))
+          print("Sum of doc weights after forward = %f" % sum(self._docs_weights.values()))
           pipeline.Model.global_document_weight_vector = self._docs_weights 
           pipeline.Model.global_attribute_weight_vector = self._weights
 
@@ -412,8 +412,8 @@ class ImportanceModel(pipeline.Model):
             self._update_working_set((x[ATTRIBTUE_ID] for x in data[ATTRIBUTE_LIST]), False)
        
 	
-        data[DOCUMENTS] = self._doc_working_set.values()
-        data[ATTRIBUTE_LIST] = self._attr_working_set.values()
+        data[DOCUMENTS] = list(self._doc_working_set.values())
+        data[ATTRIBUTE_LIST] = list(self._attr_working_set.values())
 
         # These are what the previous 2 lines used to be in the original SIRIUS
         # Can probably delete these... I don't think they're necessary anymore
@@ -552,7 +552,7 @@ class ImportanceModel(pipeline.Model):
             # Down-weight the relevance for attributes in that document
             if data_id in self._doc_working_set:
                 self._doc_interaction = True
-                for attr, value in self._doc_working_set[data_id][DOC_ATTRIBUTES].iteritems():
+                for attr, value in self._doc_working_set[data_id][DOC_ATTRIBUTES].items():
                     if value != 0 and attr in self._attr_working_set:
                         attr_weights_delta[attr] = value * -5
                         attr_weight_increase = True
@@ -567,7 +567,7 @@ class ImportanceModel(pipeline.Model):
             # Down-weight the relevance for documents in that attribute
             if data_id in self._attr_working_set:
                 self._attr_interaction = True
-                for doc, value in self._attr_working_set[data_id][ATTRIBUTE_DOCS].iteritems():
+                for doc, value in self._attr_working_set[data_id][ATTRIBUTE_DOCS].items():
                     if value != 0 and doc in self._doc_working_set:
                         doc_weights_delta[doc] = value * -5
                         doc_weight_increase = True
@@ -615,7 +615,7 @@ class ImportanceModel(pipeline.Model):
             if len(self._newly_added_docs) > 0:
                 for doc_id in self._doc_working_set:
                     self._docs_weights[doc_id] = self._relevance(self._doc_working_set[doc_id], True)
-                total_docs_added = set(doc_weights_delta.keys() + self._newly_added_docs.keys()) & set(self._attr_working_set.keys())
+                total_docs_added = set(list(doc_weights_delta.keys()) + list(self._newly_added_docs.keys())) & set(self._attr_working_set.keys())
                 if len(total_docs_added) > self.new_limit:
                     chosen_items = sorted(total_docs_added, reverse=True)[:self.new_limit]
                     for doc in total_docs_added:
@@ -650,7 +650,7 @@ class ImportanceModel(pipeline.Model):
             
             # Update the weight vector to account for the new attributes
             if len(self._newly_added_attrs) > 0:
-                total_attrs_added = set(attr_weights_delta.keys() + self._newly_added_attrs.keys()) & set(self._attr_working_set.keys())
+                total_attrs_added = set(list(attr_weights_delta.keys()) + list(self._newly_added_attrs.keys())) & set(self._attr_working_set.keys())
                 for attr_id in self._attr_working_set:
                     self._weights[attr_id] = self._relevance(self._attr_working_set[attr_id], False)
                 if len(total_attrs_added) > self.new_limit:
@@ -680,8 +680,8 @@ class ImportanceModel(pipeline.Model):
             self._newly_added_attrs = {}
             
             
-        print "Sum of attr weights after inverse = %f" % sum(self._weights.values())
-        print "Sum of doc weights after inverse = %f" % sum(self._docs_weights.values())
+        print("Sum of attr weights after inverse = %f" % sum(self._weights.values()))
+        print("Sum of doc weights after inverse = %f" % sum(self._docs_weights.values()))
         pipeline.Model.global_attribute_weight_vector = self._weights
         pipeline.Model.global_document_weight_vector = self._docs_weights
         
@@ -693,13 +693,13 @@ class ImportanceModel(pipeline.Model):
         relevance = 0
 
         if(view):
-          for attr, value in item[DOC_ATTRIBUTES].iteritems():
+          for attr, value in item[DOC_ATTRIBUTES].items():
            if attr in self._weights:      
               # Add relevance for each attribute to get total relevance
               relevance += self._weights[attr] * value 
           
         else:
-          for doc, value in item[ATTRIBUTE_DOCS].iteritems():
+          for doc, value in item[ATTRIBUTE_DOCS].items():
            if doc in self._docs_weights:
                 relevance += self._docs_weights[doc] * value              
         
@@ -757,7 +757,7 @@ class ImportanceModel(pipeline.Model):
             
         # If there are no items left in weights_delta, then set the flags to
         # False
-        if len(weights_delta.keys()) == 0:
+        if len(list(weights_delta.keys())) == 0:
             weight_increase = False
             weight_decrease = False
             new_items_found = False
@@ -944,7 +944,7 @@ class ImportanceModel(pipeline.Model):
                         iter_list = active_set[item_id][DOC_ATTRIBUTES]
                     else:
                         iter_list = active_set[item_id][ATTRIBUTE_DOCS]
-                    for item, value in iter_list.iteritems():
+                    for item, value in iter_list.items():
                         if len(interaction_list) > 0:
                             if item in interaction_list:
                                 interaction_relevance += interaction_list[item]*value
@@ -991,7 +991,7 @@ class ImportanceModel(pipeline.Model):
     def _update_working_set(self, candidates, max_limit=None, view=None):
 
         if view == None:
-            print "Error: No view specified for _update_working_set"
+            print("Error: No view specified for _update_working_set")
             return
         
         if max_limit == None:

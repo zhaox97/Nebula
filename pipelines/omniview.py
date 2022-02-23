@@ -12,7 +12,7 @@ import sys
 
 def main():
     if len(sys.argv) < 2:
-        print "Usage: python main.py <port> <csv file path> <raw data folder path> <pipeline arguments>"
+        print("Usage: python main.py <port> <csv file path> <raw data folder path> <pipeline arguments>")
    
     
     pipeline = nebula.pipeline.Pipeline()

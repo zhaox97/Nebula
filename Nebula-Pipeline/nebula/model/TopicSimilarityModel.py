@@ -7,9 +7,9 @@ import subprocess
 import numpy as np
 from scipy.stats.mstats import zscore
 
-from SimilarityModel import SimilarityModel
+from .SimilarityModel import SimilarityModel
 
-from DistanceFunctions import euclidean, cosine
+from .DistanceFunctions import euclidean, cosine
 
 __location__ = os.path.realpath(
     os.path.join(os.getcwd(), os.path.dirname(__file__)))
@@ -99,7 +99,7 @@ class TopicSimilarityModel(SimilarityModel):
         doc topics instead of doc attributes"""
         num_docs = len(docs)
 
-        print "Vectorizing %s docs in SimiliarityModel"%num_docs
+        print("Vectorizing %s docs in SimiliarityModel"%num_docs)
         
         # Form the set of all attributes to form the matrix
         attributes = set()
@@ -111,8 +111,8 @@ class TopicSimilarityModel(SimilarityModel):
         high_d = np.zeros((num_docs, len(attributes)), dtype=np.float64)
         
         # Fill in the highD matrix with the attribute values of the documents
-        for i in xrange(num_docs):
-            for j in xrange(len(attribute_list)):
+        for i in range(num_docs):
+            for j in range(len(attribute_list)):
                 if attribute_list[j] in docs[i][DOC_TOPICS]:
                     high_d[i][j] = docs[i][DOC_TOPICS][attribute_list[j]]
         
@@ -125,12 +125,12 @@ class TopicSimilarityModel(SimilarityModel):
         high_d = np.nan_to_num(high_d)
         
         # Remove any weights no longer in the attributes
-        for attr in self._weights.keys():
+        for attr in list(self._weights.keys()):
             if attr not in attributes:
                 del self._weights[attr]
                 
         # Renormalize the remaining weights to 1
-        sum = np.sum(self._weights.values())
+        sum = np.sum(list(self._weights.values()))
         if sum > 0:
             for attr in self._weights:
                 self._weights[attr] /= sum
@@ -138,8 +138,8 @@ class TopicSimilarityModel(SimilarityModel):
         # Make a list of weights to use for the distance calculation
         # The new set of weights should still sum to 1
         old_attribute_count = len(self._weights)
-        print "Old count: %d, New count: %d" % (old_attribute_count, len(attribute_list))
-        print "Old weight sum: %f" % np.sum(self._weights.values())
+        print("Old count: %d, New count: %d" % (old_attribute_count, len(attribute_list)))
+        print("Old weight sum: %f" % np.sum(list(self._weights.values())))
         weight_list = []
         for attr in attribute_list:
             if attr in self._weights:
@@ -151,7 +151,7 @@ class TopicSimilarityModel(SimilarityModel):
                 self._weights[attr] = new_weight
             weight_list.append((attr, self._weights[attr]))
                 
-        print "Weight sum: %f" % np.sum(self._weights.values())
+        print("Weight sum: %f" % np.sum(list(self._weights.values())))
         
         return (high_d, weight_list)
     
@@ -166,8 +166,8 @@ class TopicSimilarityModel(SimilarityModel):
         dist_func = euclidean
         if self.dist_func == "cosine":
             dist_func = cosine
-        for i in xrange(0, num_docs - 1):
-            for j in xrange(i + 1, num_docs):
+        for i in range(0, num_docs - 1):
+            for j in range(i + 1, num_docs):
                 d = dist_func(high_d[i], high_d[j], np.repeat(1, len(high_d[i])))
                 pdist[i][j] = d
                 pdist[j][i] = d
@@ -176,7 +176,7 @@ class TopicSimilarityModel(SimilarityModel):
         
     def forward(self, data):     
         if DOCUMENTS in data:
-            print "Updating documents"
+            print("Updating documents")
             self._update_documents(data[DOCUMENTS])
         else:
             # Set the documents to our last copy to continue the forward model
@@ -216,7 +216,7 @@ class TopicSimilarityModel(SimilarityModel):
             low_d_max = 1
         
         # Set the low dimensional position of each document
-        for i, pos in itertools.izip(xrange(len(data[DOCUMENTS])), low_d):
+        for i, pos in zip(range(len(data[DOCUMENTS])), low_d):
             doc = data[DOCUMENTS][i].copy()
             doc[LOWD_POSITION] = (pos / low_d_max).tolist()
             
@@ -229,7 +229,7 @@ class TopicSimilarityModel(SimilarityModel):
         
         
     def inverse(self, data):
-        print 'ts inverse called'
+        print('ts inverse called')
         interaction = data[INTERACTION]
         
         # If it's an OLI interaction, calculate a new set of weights based on
@@ -250,37 +250,37 @@ class TopicSimilarityModel(SimilarityModel):
             
             # Form the set of all attributes to form the matrix
             attributes = set()
-            for p in points.keys():
+            for p in list(points.keys()):
                 if p in self._high_d:
-                    attributes.update(self._high_d[p].keys())
+                    attributes.update(list(self._high_d[p].keys()))
                 else:
                     del points[p]
                     
             attributes = list(attributes)
             high_d_matrix = np.zeros((len(points), len(attributes)), dtype=np.float64)
             
-            keys = points.keys()
+            keys = list(points.keys())
             # Fill in the highD matrix with the attribute values of the documents
             # Creates a vector format of our high dimensional data, but the input
             # is different than what _vectorize expects
             i = 0
-            for i in xrange(len(keys)): 
-                for j in xrange(len(attributes)):
+            for i in range(len(keys)): 
+                for j in range(len(attributes)):
                     if attributes[j] in self._high_d[keys[i]]:
                         high_d_matrix[i][j] = self._high_d[keys[i]][attributes[j]]
             
             # Remove the dimensions with no variability
             high_d_matrix = np.array(high_d_matrix)
-            print 'high d mat'
-            print high_d_matrix
-            print 'high d mat'
+            print('high d mat')
+            print(high_d_matrix)
+            print('high d mat')
             num_dimensions = high_d_matrix.shape[1]
             keep_indeces = []
             for i in range(num_dimensions):
                 if high_d_matrix[:,i].var() > 0:
                     keep_indeces.append(i)
                     
-            for i in xrange(len(keys)):
+            for i in range(len(keys)):
                 points[keys[i]]["highD"] = high_d_matrix[i][keep_indeces].tolist()
                 
             high_dimensions = len(keep_indeces)
@@ -308,7 +308,7 @@ class TopicSimilarityModel(SimilarityModel):
             weights = np.zeros((num_dimensions))
             weights[keep_indeces] = output["weights"]
             
-            self._weights = {attributes[i]: weights[i] for i in xrange(num_dimensions)}
+            self._weights = {attributes[i]: weights[i] for i in range(num_dimensions)}
 
             self._new_weights = True
 
