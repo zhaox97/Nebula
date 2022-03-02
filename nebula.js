@@ -1,3 +1,4 @@
+console.log("start of nebula file");
 import spawn from "child_process";
 import fs from "fs";
 import async from "async";
@@ -82,9 +83,11 @@ var portsInProcess = [];
 var nextSessionNumber = 0;
 var usedSessionNumbers = [];
 
+
 /* Nebula class constructor */
 export default function Nebula(io, pipelineAddr) {
     /* This allows you to use "Nebula(obj)" as well as "new Nebula(obj)" */
+    console.log("start of Nebula"); // doesnt run
     if (!(this instanceof Nebula)) {
         return new Nebula(io);
     }
@@ -158,6 +161,8 @@ export default function Nebula(io, pipelineAddr) {
                 }
             }
         };
+        
+        console.log("before all socket.ons");
 
         socket.on('disconnect', disconnectClient);
 
@@ -171,7 +176,9 @@ export default function Nebula(io, pipelineAddr) {
         /* When the client starts trying to select a file, provide a list of
          * possible files to choose from
          */
+         console.log("before getDefaultFileList");
         socket.on('getDefaultFileList', function(isTextOnlyUI, ui) {
+        	console.log("testing getDefaultFileList socket.on");
             if (ui == "radar") {
                 ui = "cosmos";
             }
@@ -195,7 +202,7 @@ export default function Nebula(io, pipelineAddr) {
                 pipelines[ui]["defaultData"].substring("data/".length));
         });
 
-
+	console.log("after recieveDefaultFileList");
         // Use the csvFilePath to store the name of a user-defined CSV file
         var csvFilePath = null;
 
@@ -210,10 +217,12 @@ export default function Nebula(io, pipelineAddr) {
 
             // Prepare to parse the CSV file
             var csvData = [];
-            const rl = readline.createInterface({
+            /*const rl = readline.createInterface({
                 input: fs.createReadStream(csvFilePath),
                 crlfDelay: Infinity
             });
+            */
+            const rl = readline(csvFilePath);
 
             // Print any error messages we encounter
             rl.on('error', function (err) {
@@ -477,11 +486,11 @@ export default function Nebula(io, pipelineAddr) {
                         console.log(pythonArgs);
                         console.log("");
 
-                        var pipelineInstance = spawn("python2.7", pythonArgs, {stdout: "inherit"});
+                        var pipelineInstance = spawn.spawn("python3", pythonArgs, {stdout: "inherit"});
 
                         pipelineInstance.on("error", function(err) {
-                            console.log(socket.roomName + ": python2.7.exe not found. Trying python.exe");
-                            pipelineInstance = spawn("python", pythonArgs,{stdout: "inherit"});
+                            console.log(socket.roomName + ": python3.exe not found. Trying python.exe");
+                            pipelineInstance = spawn.spawn("python3", pythonArgs,{stdout: "inherit"});
 
                             pipelineInstance.stdout.on("data", function(data) {
                                 console.log(socket.roomName + " Pipeline: " + data.toString());
@@ -509,9 +518,15 @@ export default function Nebula(io, pipelineAddr) {
                     /* Connect to the pipeline */
                     pipelineAddr = pipelineAddr || "tcp://127.0.0.1:" + port.toString();
 
-                    room.pipelineSocket = zmq.socket('pair');
-                    room.pipelineSocket.connect(pipelineAddr);
+                    //room.pipelineSocket = zmq.socket('pair');
+                    console.log(Object.getOwnPropertyNames(zmq));
 
+                    let sock = new zmq.Socket('pair');
+                    room.pipelineSocket = sock;
+                    room.pipelineSocket.connect(pipelineAddr);
+                    
+                    	
+			
                     pipelineAddr = null;
                     portsInProcess.splice(portsInProcess.indexOf(port), 1);
 
