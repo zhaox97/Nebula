@@ -1,6 +1,5 @@
 /*Import packages required in package.json   */
 /*Add these packages from the ../node_modules path*/
-console.log("Start of nebula");
 import express from "express";
 import path from "path";
 import favicon from "serve-favicon";  // Although not read, this line is important for when favicon added to /public
@@ -21,8 +20,8 @@ import { fileURLToPath } from "url";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-console.log("testing import nebula.");
 /* Our custom Nebula module handles the WebSocket synchronization */
+console.log("testing import nebula");
 import Nebula from "./nebula.js";
 
 /* Connect to the databases */
@@ -36,8 +35,6 @@ const app = express();//Creates app from express class. (Baseline famework for a
 console.log("print test");
 const debug2 = Debug('Nebula:server');
 console.log("print test2");
-
-
 const httpServer = createServer(app);
 const socketio = new Server(httpServer);
 const nebula = Nebula(socketio);
@@ -107,8 +104,7 @@ app.use(function(err, req, res, next) {
 /**
  * Event listener for HTTP server "error" event.
  */
- console.log("line 105");
-
+console.log("line 105");
 function onError(error) {
   if (error.syscall !== 'listen') {
     throw error;
