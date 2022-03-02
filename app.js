@@ -6,7 +6,7 @@ import favicon from "serve-favicon";  // Although not read, this line is importa
 import logger from "morgan";
 import cookieParser from "cookie-parser";
 import bodyParser from "body-parser";
-import debug from "debug";
+import Debug from "debug";
 import {createServer} from "http";
 
 /* The Socket.io WebSocket module */
@@ -21,6 +21,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 /* Our custom Nebula module handles the WebSocket synchronization */
+console.log("testing import nebula");
 import Nebula from "./nebula.js";
 
 /* Connect to the databases */
@@ -31,9 +32,12 @@ import Nebula from "./nebula.js";
 //var datasets = monk('localhost:27017/datasets');
 
 const app = express();//Creates app from express class. (Baseline famework for an app. No web functionality).
-
+console.log("print test");
+const debug2 = Debug('Nebula:server');
+console.log("print test2");
 const httpServer = createServer(app);
 const socketio = new Server(httpServer);
+const nebula = Nebula(socketio);
 
 /* Set the port we want to run on */
 var port = process.env.PORT || 4040;  // Port changed from 80 to 4040 due to 'Port 80 requires elevated priveleges' Error
@@ -100,7 +104,7 @@ app.use(function(err, req, res, next) {
 /**
  * Event listener for HTTP server "error" event.
  */
-
+console.log("line 105");
 function onError(error) {
   if (error.syscall !== 'listen') {
     throw error;
@@ -130,7 +134,7 @@ function onError(error) {
 function onListening() {
   var addr = httpServer.address();
   var bind = (typeof addr === 'string' ? 'pipe ' + addr : 'port ' + addr.port);
-  debug('Listening on ' + bind);
+  debug2('Listening on ' + bind);
 }
 
 /**
@@ -139,3 +143,4 @@ function onListening() {
 httpServer.listen(port);
 httpServer.on('error', onError);
 httpServer.on('listening', onListening);
+console.log("the end");
