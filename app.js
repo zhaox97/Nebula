@@ -36,8 +36,11 @@ console.log("print test");
 const debug2 = Debug('Nebula:server');
 console.log("print test2");
 const httpServer = createServer(app);
-const socketio = new Server(httpServer);
-const nebula = Nebula(socketio);
+const clientio = new Server(httpServer);
+//const pythonio = new Server(httpServer);
+const nebula = Nebula(clientio);
+
+
 
 /* Set the port we want to run on */
 var port = process.env.PORT || 4040;  // Port changed from 80 to 4040 due to 'Port 80 requires elevated priveleges' Error

@@ -5,6 +5,10 @@ import async from "async";
 import zmq from "zeromq";
 import readline from "linebyline";
 import getPort from "get-port";
+import express from "express";
+import Server from "socket.io";
+import {createServer} from "http";
+
 
 /* Load the databases we need */
 //var monk = require('monk');
@@ -85,11 +89,11 @@ var usedSessionNumbers = [];
 
 
 /* Nebula class constructor */
-export default function Nebula(io, pipelineAddr) {
+export default function Nebula(clientio, pipelineAddr) {
     /* This allows you to use "Nebula(obj)" as well as "new Nebula(obj)" */
     console.log("start of Nebula"); // doesnt run
     if (!(this instanceof Nebula)) {
-        return new Nebula(io);
+        return new Nebula(clientio);
     }
 
     /* The group of rooms currently active, each with a string identifier
@@ -97,17 +101,18 @@ export default function Nebula(io, pipelineAddr) {
      * among clients.
      */
     this.rooms = {};
-    this.io = io;
+    this.clientio = clientio;
+    //this.pythonio = pythonio;
 
     /* For proper use in callback functions */
     var self = this;
 
     /* Accept new WebSocket clients */
-    io.on('connection', function(socket) {
+    clientio.on('connection', function(socket) {
 
         /* When a client requests the list of rooms, send them the list */
         socket.on('list.sessions',function() {
-            socket.emit('list.sessions.response', io.sockets.adapter.rooms);
+            socket.emit('list.sessions.response', clientio.sockets.adapter.rooms);
         });
 
         /* When clients disconnect, remove them from the room. If the room is
@@ -157,7 +162,7 @@ export default function Nebula(io, pipelineAddr) {
                     deleteFile(customCSVFolder + name + "_data.csv");
 
                     // Make sure the room is no longer maintained by Socket.io
-                    delete io.sockets.adapter.rooms[name];
+                    delete clientio.sockets.adapter.rooms[name];
                 }
             }
         };
@@ -518,14 +523,19 @@ export default function Nebula(io, pipelineAddr) {
                     /* Connect to the pipeline */
                     pipelineAddr = pipelineAddr || "tcp://127.0.0.1:" + port.toString();
 
+                    /*
                     //room.pipelineSocket = zmq.socket('pair');
                     console.log(Object.getOwnPropertyNames(zmq));
 
                     let sock = new zmq.Socket('pair');
                     room.pipelineSocket = sock;
                     room.pipelineSocket.connect(pipelineAddr);
+                    */
                     
-                    	
+                    this.pythonio = new Server(pipelineAddr);
+                    pythonio = room.pipelineSocket = this.pythonio;
+                    
+                    
 			
                     pipelineAddr = null;
                     portsInProcess.splice(portsInProcess.indexOf(port), 1);
@@ -681,14 +691,14 @@ Nebula.prototype.handleMessage = function(room, msg) {
         }
         else if (obj.func === "get") {
             //getting data when user clicks a node(document) and send it to the client
-            this.io.to(room.name).emit("get", obj.contents, true);
+            this.clientio.to(room.name).emit("get", obj.contents, true);
         }
         else if (obj.func === "set") {
-            this.io.to(room.name).emit("set", obj.contents);
+            this.clientio.to(room.name).emit("set", obj.contents);
         }
         else if (obj.func === "reset") {
             // takes place either when users joins the room or when he hits reset button
-            this.io.to(room.name).emit("reset");
+            this.clientio.to(room.name).emit("reset");
             invoke(room.pipelineSocket, "update", {interaction: "none", prototype: sirius_prototype});
         }
     }
@@ -754,11 +764,11 @@ Nebula.prototype.handleUpdate = function(room, res) {
 
     if (typeof(room.observation_data) != "underfined") {
         updateRoom(room, update, true);
-        this.io.to(room.name).emit('update', update, true);
+        this.clientio.to(room.name).emit('update', update, true);
     }
     else {
         updateRoom(room, update);
-        this.io.to(room.name).emit('update', update);
+        this.clientio.to(room.name).emit('update', update);
     }
 
     if (typeof(room.observation_data) != "undefined") {
@@ -800,11 +810,11 @@ Nebula.prototype.handleUpdate = function(room, res) {
 
         if (typeof(room.observation_data) != "undefined") {
             updateRoom(room, update_attr, false);
-            this.io.to(room.name).emit('update', update_attr, false);
+            this.clientio.to(room.name).emit('update', update_attr, false);
         }
 //        else {
 //            updateRoom(room, update_attr, false);
-//            this.io.to(room.name).emit('update', update_attr, false);
+//            this.clientio.to(room.name).emit('update', update_attr, false);
 //        }
 
     }
