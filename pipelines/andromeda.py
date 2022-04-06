@@ -20,7 +20,7 @@ def main():
     pipeline.append_model(andromeda)
     pipeline.set_data_controller(data_controller)
     
-    connector = nebula.connector.ZeroMQConnector(port=int(sys.argv[1]))
+    connector = nebula.connector.PrintConnector(port=int(sys.argv[1]))
     pipeline.set_connector(connector)
     
     pipeline.start(sys.argv[3:])

@@ -6,7 +6,7 @@ import zmq from "zeromq";
 import readline from "linebyline";
 import getPort from "get-port";
 import express from "express";
-import Server from "socket.io";
+import Server from "socket.io"; 
 import {createServer} from "http";
 
 
@@ -109,6 +109,10 @@ export default function Nebula(clientio, pipelineAddr) {
 
     /* Accept new WebSocket clients */
     clientio.on('connection', function(socket) {
+    
+    	socket.on("testing", function(){
+    		console.log("Python connection established");
+    	});
 
         /* When a client requests the list of rooms, send them the list */
         socket.on('list.sessions',function() {
@@ -240,11 +244,13 @@ export default function Nebula(clientio, pipelineAddr) {
             var firstColumnName;
             rl.on('line', function (data) {
                 var dataColumns = data.split(",");
+                console.log(dataColumns);
 
                 // If we haven't saved any column names yet, do so first
                 if (columnHeaders.length == 0) {
                     columnHeaders = dataColumns;
                     firstColumnName = columnHeaders[0];
+                    console.log(columnHeaders);
                 }
 
                 // Process each individual line of data in the CSV file
@@ -256,6 +262,7 @@ export default function Nebula(clientio, pipelineAddr) {
                         var value = dataColumns[i];
                         dataObj[key] = value
                     }
+                    //console.log(dataObj);
                     csvData.push(dataObj);
                 }
 
@@ -267,6 +274,7 @@ export default function Nebula(clientio, pipelineAddr) {
                 // On certain OSs, like Windows, an extra, blank line may be read
                 // Check for this and remove it if it exists
                 var lastObservation = csvData[csvData.length-1];
+                console.log(csvData);
                 var lastObservationKeys = Object.keys(lastObservation);
                 if (lastObservationKeys.length = 1 && lastObservation[lastObservationKeys[0]] == "") {
                     csvData.pop();
@@ -510,6 +518,7 @@ export default function Nebula(clientio, pipelineAddr) {
                          * we want to convert that received data into a string and
                          * append it to the overall data String
                          */
+                         //check data for one of the 4 commands, else log as below
                         pipelineInstance.stdout.on("data", function(data) {
                             console.log(socket.roomName + " Pipeline STDOUT: " + data.toString());
                         });
@@ -523,6 +532,7 @@ export default function Nebula(clientio, pipelineAddr) {
                     /* Connect to the pipeline */
                     pipelineAddr = pipelineAddr || "tcp://127.0.0.1:" + port.toString();
 
+
                     /*
                     //room.pipelineSocket = zmq.socket('pair');
                     console.log(Object.getOwnPropertyNames(zmq));
@@ -532,9 +542,11 @@ export default function Nebula(clientio, pipelineAddr) {
                     room.pipelineSocket.connect(pipelineAddr);
                     */
                     
-                    this.pythonio = new Server(pipelineAddr);
-                    pythonio = room.pipelineSocket = this.pythonio;
-                    
+                    const httpServer = createServer();
+                    console.log("Testing create Server");
+                    this.pythonio = new Server(httpServer);
+                    //pythonio = room.pipelineSocket = this.pythonio;
+                    room.pipelineSocket = this.pythonio;
                     
 			
                     pipelineAddr = null;

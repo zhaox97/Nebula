@@ -1,5 +1,5 @@
 elasticsearch
-nltk==3.4
+nltk
 numpy
 pyzmq
 scipy

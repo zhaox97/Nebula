@@ -15,6 +15,8 @@ import time
 
 import logging
 
+sys.path.insert(0,"Nebula-Pipeline/nebula")
+
 # Initialize the logging interface to log the timing info for each model function
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.DEBUG)
