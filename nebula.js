@@ -5,7 +5,7 @@ import zmq from "zeromq";
 import readline from "linebyline";
 import getPort from "get-port";
 import express from "express";
-import Server from "socket.io"; 
+import {Server} from "socket.io"; 
 import {createServer} from "http";
 
 
@@ -109,8 +109,9 @@ export default function Nebula(clientio, pipelineAddr) {
 
     /* Accept new WebSocket clients */
     clientio.on('connection', function(socket) {
+        console.log("new connection finally!");
     
-    	socket.on("testing", function(){
+    	socket.on('testing', function(){
     		console.log("Python connection established");
     	});
 
@@ -538,6 +539,7 @@ export default function Nebula(clientio, pipelineAddr) {
                     const httpServer = createServer();
                     console.log("Testing create Server");
                     this.pythonio = new Server(httpServer);
+                    
                     //pythonio = room.pipelineSocket = this.pythonio;
                     room.pipelineSocket = this.pythonio;
                     

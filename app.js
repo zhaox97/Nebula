@@ -10,7 +10,7 @@ import Debug from "debug";
 import {createServer} from "http";
 
 /* The Socket.io WebSocket module */
-import Server from "socket.io";
+import {Server} from "socket.io";
 
 /* REST API routes */
 import routes from "./routes/index.js"

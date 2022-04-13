@@ -6,7 +6,7 @@ nebula_pipeline_dir = os.path.join( script_dir, '..', 'Nebula-Pipeline')
 sys.path.append(nebula_pipeline_dir)
 
 from nebula.pipeline import Pipeline
-from nebula.connector import PrintConnector
+from nebula.connector import SocketIOConnector
 from nebula.data_controller.CSVDataController import CSVDataController
 from nebula.model.AndromedaModel import AndromedaModel
 import asyncio
@@ -30,9 +30,10 @@ async def main():
     
     # connector = nebula.connector.PrintConnector(port=int(sys.argv[1]))
 
-    connector = PrintConnector(port=int(sys.argv[1]))
-    await connector.makeConnection(port=int(sys.argv[1]))
+    connector = SocketIOConnector(port=int(sys.argv[1]))
     pipeline.set_connector(connector)
+    await connector.makeConnection(port=int(sys.argv[1]))
+    # pipeline.set_connector(connector)
     
     pipeline.start(sys.argv[3:])
     
