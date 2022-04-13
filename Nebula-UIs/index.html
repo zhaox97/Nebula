@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset='utf-8'>
+        <title>Nebula</title>
+        <script src="/socket.io/socket.io.js"></script>
+        <script src='http://d3js.org/d3.v3.min.js'></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+        <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+        <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+        <!-- Latest compiled and minified CSS -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+        
+        <!-- Optional theme -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
+        
+        <!-- Latest compiled and minified JavaScript -->
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+        
+        <link rel="stylesheet" href="About.css">
+        
+    </head>
+    <body>
+        <h1>Nebula</h1>
+        
+        <p>
+            Welcome to Nebula! This website hosts a variety of related research
+            projects focused on visualizing and interacting with high-dimensional
+            data. Please click on one of the links below for more information about
+            each part of Nebula.
+        </p>
+        
+        
+        <p>
+            Keep in mind that these pages are for demonstration and research purposes
+            as opposed to being full-fledged and flawless tools. As such, <b>we
+            highly recommend using Google Chrome and the window at about 13" width or
+            more to access these pages</b>, but Safari is likely to work as well.
+            Firefox has known issues with these pages. Similarly, having the window
+            too small may make the page render incorrectly.
+        </p>
+        
+        <p>
+            Have a question or notice a bug? Feel free to reach out and let us know!
+        </p>
+        
+        <div class="container-fluid">
+            <div class="col-md-4">
+                <h2><a id="AboutAndromeda">Andromeda</a></h2>
+                <img id="AndromedaScreenshot" alt="Andromeda screenshot" width="100%">
+            </div>
+            
+            <div class="col-md-4">
+                <h2><a id="AboutCosmos">Cosmos</a></h2>
+                <img id="CosmosScreenshot" alt="Cosmos screenshot" width="100%">
+            </div>
+            
+            <div class="col-md-4">
+                <h2><a id="AboutTwoView">SIRIUS and Centaurus</a></h2>
+                <img id="SIRIUSScreenshot" alt="SIRIUS screenshot" width="100%">
+            </div>
+        </div>
+    </body>
+    
+    <footer>
+        <script>
+            // Dynamically set link to other page depending on current URL
+            function setLocation(element, targetURL) {
+                // Determine if we are using the routes forwarding or the full URL
+                var currentURLLength = window.location.href.lastIndexOf("/");
+                // If we are using foutes forwarding, we need our URLs to have
+                // "cosmos/" in them
+                if (currentURLLength === 16 || currentURLLength === 17) {
+                    targetURL = "/" + targetURL;
+                }
+                
+                // Depending on the element type, set the URL
+                if (element.tagName === "LINK" || element.tagName === "A") {
+                    element.href = targetURL;
+                }
+                else if (element.tagName === "IMG") {
+                    element.src = targetURL;
+                }
+            }
+            // Dynamically set CSS based on current URL 
+            var head = document.getElementsByTagName("head")[0];
+            var link = document.createElement('link');
+            link.rel = "stylesheet";
+            setLocation(link, "About.css");
+            head.appendChild(link);
+            
+            // Dynamically set About Andromeda URL based on current URL
+            setLocation(document.getElementById("AboutAndromeda"), "AboutAndromeda.html");
+            
+            // Dynamically set Andromeda Screenshot src based on current URL
+            setLocation(document.getElementById("AndromedaScreenshot"), "images/Andromeda.jpg");
+            
+            // Dynamically set About Cosmos URL based on current URL
+            setLocation(document.getElementById("AboutCosmos"), "AboutCosmos.html");
+            
+            // Dynamically set Cosmos Screenshot src based on current URL
+            setLocation(document.getElementById("CosmosScreenshot"), "images/CosmosViewTopicNoLabels.png");
+            
+            // Dynamically set About TwoView URL based on current URL
+            setLocation(document.getElementById("AboutTwoView"), "AboutTwoView.html");
+            
+            // Dynamically set SIRIUS Screenshot src based on current URL
+            setLocation(document.getElementById("SIRIUSScreenshot"), "images/SIRIUS_Overview4.jpg");
+        </script>
+    </footer>
+</html>

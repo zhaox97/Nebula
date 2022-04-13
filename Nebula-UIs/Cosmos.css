@@ -1,0 +1,65 @@
+.row {
+    margin: 10px 0px;
+}
+body {
+    padding: 25px;
+}
+h1 {
+    text-align: center;
+}
+p.description {
+    text-align: center;
+    margin: 0px 0px 50px 0px;
+}
+#sessionDiv > * {
+    float: left;
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+}
+input {
+    border-color: lightgrey;
+    background-color: white;
+    height: 34px;
+    margin: 0px 2px;
+    float: left;
+}
+br {
+    clear: both;
+}
+svg {
+    float: left;
+    background-color: white;
+    border-style: solid;
+    border-color: black;
+    border-width: 2px;
+}
+.node {
+    fill: #f00;
+    stroke: lightgray;
+    stroke-width: 1px;
+}
+g.node.selected circle {
+    stroke: springgreen;
+    stroke-width: 4px;
+}
+g.node.opened circle {
+    stroke: purple;
+    stroke-width: 4px;
+}
+g text {
+    letter-spacing: 1px;
+    font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+}
+#dataContents {
+    border-style: solid;
+    border-color: black;
+    border-width: 2px;
+}
+textarea {
+    resize: none;
+    overflow-y: scroll;
+}
+.data {
+    margin: 5px 0px;
+}

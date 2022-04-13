@@ -1,0 +1,6 @@
+{
+    "python.analysis.extraPaths": [
+        "./Nebula-Pipeline",
+        "./Nebula-Pipeline/nebula"
+    ]
+}

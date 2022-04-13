@@ -1,0 +1,65 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!--Google icon-->
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<!-- Latest compiled JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<!-- d3-->
+<script src="http://d3js.org/d3.v3.min.js"></script>
+<!-- socket.io -->
+<script src="/socket.io/socket.io.js"></script>
+
+<title>Andromeda</title>
+
+<link rel="stylesheet" type="text/css" href="andromeda2.css">
+
+</head>
+
+<body>
+<div class="container-fluid">
+	<div class="row">
+  		<div id="topRow" class="col-md-12 well shadow">
+			<strong> ANDROMEDA </strong>
+            <a class = "button" id="info"><i class="material-icons">info_outline</i></a>
+            <a class="button" id="reset">Reset</a>
+            <a class="button" id="update">Update Layout</a>
+            <div id="sessionDiv"></div>
+		</div>
+	</div>
+
+	<div class="row" id="bottomRow">
+  		<div class="col-md-9 shadow" id="oliDiv">
+			<p> OBSERVATIONS </p>
+			<svg id="oli"></svg>
+            <a class="button" href="#" id="zoomIn"><i class="material-icons">zoom_in</i></a>
+            <a class="button" href="#" id="zoomOut"><i class="material-icons">zoom_out</i></a>
+		</div>
+  		<div class="col-md-3">
+			<div id="groups" class="row well shadow">
+                <p> GROUPS </p>
+            </div>
+            <div id="attributes" class="row well shadow">
+                <p> ATTRIBUTES </p>
+                <div>
+                    <svg id="pi"></svg>
+                </div>
+
+            </div>
+		</div>
+	</div>
+</div>
+<script src="InitializeSession.js"></script>
+<script src="andromeda2.js"></script>
+
+</body>
+</html>

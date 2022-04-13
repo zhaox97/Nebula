@@ -1,0 +1,92 @@
+.row {
+    margin: 10px 0px;
+}
+body {
+    padding: 25px;
+}
+h1 {
+    text-align: center;
+}
+p.description {
+    text-align: center;
+    margin: 0px 0px 50px 0px;
+}
+#sessionDiv > * {
+    float: left;
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+}
+input {
+    border-color: lightgrey;
+    background-color: white;
+    height: 34px;
+    margin: 0px 2px;
+    float: left;
+}
+br {
+    clear: both;
+}
+svg {
+    float: left;
+    background-color: white;
+    border-style: solid;
+    border-color: black;
+    border-width: 2px;
+}
+.node {
+    stroke: lightgray;
+    stroke-width: 1px;
+}
+.node circle {
+    transition: fill 1s;
+}
+.node.unopened circle {
+    stroke: black;
+    stroke-width: 2px;
+}
+.node.true circle {
+    fill: #b20000;
+}
+.node.true.new circle {
+    fill: #ff073a;
+}
+.node.false circle {
+    fill: green;
+}
+.node.false.new circle {
+    fill: springgreen;
+}
+.node.selected circle {
+    transition: fill 0.3s;
+    fill: orange !important;
+    stroke: black;
+    stroke-width: 1px;
+}
+.node.opened circle {
+    stroke: black;
+    stroke-width: 5px;
+}
+.node.opened.selected circle {
+    stroke: black;
+    stroke-width: 5px;
+}
+g text {
+    letter-spacing: 1px;
+    font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+}
+g.unopened text {
+    font-weight: bolder;
+}
+#dataContents {
+    border-style: solid;
+    border-color: black;
+    border-width: 2px;
+}
+textarea {
+    resize: none;
+    overflow-y: scroll;
+}
+.data {
+    margin: 5px 0px;
+}

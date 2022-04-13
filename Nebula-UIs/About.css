@@ -1,0 +1,11 @@
+body {
+    padding: 25px;
+}
+
+h1 {
+    text-align: center;
+}
+iframe, img {
+    display: block;
+    margin: 0 auto;
+ }
