@@ -32,13 +32,10 @@ import Nebula from "./nebula.js";
 
 const app = express();//Creates app from express class. (Baseline famework for an app. No web functionality).
 const debug2 = Debug('Nebula:server');
-console.log("print test2");
 const httpServer = createServer(app);
 const clientio = new Server(httpServer);
-//const pythonio = new Server(httpServer);
+// Variable 'nebula' never referenced in this file because the following line is used to connect nebula.js to app.js
 const nebula = Nebula(clientio);
-
-
 
 /* Set the port we want to run on */
 var port = process.env.PORT || 4040;  // Port changed from 80 to 4040 due to 'Port 80 requires elevated priveleges' Error
@@ -48,7 +45,7 @@ app.set('port', port);
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
 
-// uncomment after placing your favicon in /public
+// Uncomment following line after placing your favicon in /public
 // app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));
 app.use(bodyParser.json());
@@ -59,7 +56,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use("/", express.static(path.join(__dirname, 'Nebula-UIs')));
 
-// TODO: Ask Professor Dowling about following commented out code
+// TODO: After updating previous import statements for DB, use this following code to test connection
 // Make our db accessible to our router
 //app.use(function(req, res, next){
 //    req.db = db;
