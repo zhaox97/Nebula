@@ -15,24 +15,22 @@ import {Server} from "socket.io";
 /* REST API routes */
 import routes from "./routes/index.js"
 
-// Next three lines conver "URL" to file path
+// Following three lines conver "URL" to file path
 import { fileURLToPath } from "url";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-/* Our custom Nebula module handles the WebSocket synchronization */
-console.log("testing import nebula");
+// Our custom Nebula module handles the WebSocket synchronization
 import Nebula from "./nebula.js";
 
 /* Connect to the databases */
-// TODO: Possibly update this code, unless not needed, then can delete, need to ask Professor Dowling
+// TODO: Update these to import statements and verify connection to the database
 //var mongo = require('mongodb');
 //var monk = require('monk');
 //var db = monk('localhost:27017/nodetest');
 //var datasets = monk('localhost:27017/datasets');
 
 const app = express();//Creates app from express class. (Baseline famework for an app. No web functionality).
-console.log("print test");
 const debug2 = Debug('Nebula:server');
 console.log("print test2");
 const httpServer = createServer(app);
