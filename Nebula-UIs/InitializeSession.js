@@ -215,7 +215,6 @@ function sessionChange() {
         
         // Otherwise, create the JDialog to have the user select/upload data
         else {
-        	//this emit works 3/2
             socket.emit("getDefaultFileList", textOnlyUIs.indexOf(ui) >= 0, ui);
         }
     }
