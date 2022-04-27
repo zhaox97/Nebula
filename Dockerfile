@@ -34,9 +34,9 @@ RUN apt-get install wget && wget https://bootstrap.pypa.io/pip/get-pip.py
 RUN python3 get-pip.py
 COPY . /www
 # COPY package.json package-lock.json .
-RUN npm install -g npm@8.4.1
+RUN npm install -g npm@8.7.0
 
-RUN pip3 install -e ./Nebula-Pipeline
+RUN pip3 install ./Nebula-Pipeline/dist/nebula-1.0-py2.py3-none-any.whl
 #RUN pip install numpy scipy cython zerorpc tweepy nltk elasticsearch
 RUN python3 -m nltk.downloader stopwords
 # Helps ensure all custom modules can be found
@@ -53,7 +53,7 @@ RUN pip3 install -U scikit-learn
 # Install nodemon specifically here so that we can use the command below
 RUN npm install -g nodemon@^2.0.15
 
-EXPOSE 80
+EXPOSE 4040
 
 # Attempt to run npm withing a tmux sesssion
 # Docker only seems to care about whatever command it's being launched with,

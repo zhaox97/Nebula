@@ -7,11 +7,15 @@ import sys
 script_dir = os.path.dirname( __file__ )
 nebula_pipeline_dir = os.path.join( script_dir, '..', 'Nebula-Pipeline')
 sys.path.append(nebula_pipeline_dir)
+data_controller_dir = os.path.join( script_dir, '..', 'Nebula-Pipeline', 'data_controller')
+sys.path.append(data_controller_dir)
+model_dir = os.path.join( script_dir, '..', 'Nebula-Pipeline', 'model')
+sys.path.append(model_dir)
 
 from nebula.pipeline import Pipeline
 from nebula.connector import SocketIOConnector
-from nebula.data_controller.CSVDataController import CSVDataController
-from nebula.model.AndromedaModel import AndromedaModel
+from data_controller.CSVDataController import CSVDataController
+from model.AndromedaModel import AndromedaModel
 import asyncio
 
 async def main():

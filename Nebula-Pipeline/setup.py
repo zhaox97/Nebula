@@ -13,6 +13,9 @@ setup(
                         "tweepy",
                         "nltk",
                         "zerorpc",
-                        "elasticsearch"
+                        "elasticsearch",
+                        "python-socketio",
+                        "scikit-learn",
+                        "aiohttp"
                         ],
       packages=['nebula'])
