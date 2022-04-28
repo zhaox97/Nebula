@@ -15,32 +15,27 @@ import {Server} from "socket.io";
 /* REST API routes */
 import routes from "./routes/index.js"
 
-// Next three lines conver "URL" to file path
+// Following three lines conver "URL" to file path
 import { fileURLToPath } from "url";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-/* Our custom Nebula module handles the WebSocket synchronization */
-console.log("testing import nebula");
+// Our custom Nebula module handles the WebSocket synchronization
 import Nebula from "./nebula.js";
 
 /* Connect to the databases */
-// TODO: Possibly update this code, unless not needed, then can delete, need to ask Professor Dowling
+// TODO: Update these to import statements and verify connection to the database
 //var mongo = require('mongodb');
 //var monk = require('monk');
 //var db = monk('localhost:27017/nodetest');
 //var datasets = monk('localhost:27017/datasets');
 
 const app = express();//Creates app from express class. (Baseline famework for an app. No web functionality).
-console.log("print test");
 const debug2 = Debug('Nebula:server');
-console.log("print test2");
 const httpServer = createServer(app);
 const clientio = new Server(httpServer);
-//const pythonio = new Server(httpServer);
+// Variable 'nebula' never referenced in this file because the following line is used to connect nebula.js to app.js
 const nebula = Nebula(clientio);
-
-
 
 /* Set the port we want to run on */
 var port = process.env.PORT || 4040;  // Port changed from 80 to 4040 due to 'Port 80 requires elevated priveleges' Error
@@ -50,7 +45,7 @@ app.set('port', port);
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
 
-// uncomment after placing your favicon in /public
+// Uncomment following line after placing your favicon in /public
 // app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));
 app.use(bodyParser.json());
@@ -61,7 +56,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use("/", express.static(path.join(__dirname, 'Nebula-UIs')));
 
-// TODO: Ask Professor Dowling about following commented out code
+// TODO: After updating previous import statements for DB, use this following code to test connection
 // Make our db accessible to our router
 //app.use(function(req, res, next){
 //    req.db = db;

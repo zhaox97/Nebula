@@ -1,7 +1,10 @@
+aiohttp
 elasticsearch
 nltk
 numpy
+python-socketio
 pyzmq
+scikit-learn
 scipy
 sklearn
 tweepy

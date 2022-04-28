@@ -110,7 +110,8 @@ export default function Nebula(clientio, pipelineAddr) {
     /* Accept new WebSocket clients */
     clientio.on('connection', function(socket) {
         console.log("new connection finally!");
-    
+
+		//This was used to test the connector connection    
     	socket.on('testing', function(){
     		console.log("Python connection established");
     	});
@@ -185,7 +186,6 @@ export default function Nebula(clientio, pipelineAddr) {
          * possible files to choose from
          */
         socket.on('getDefaultFileList', function(isTextOnlyUI, ui) {
-        	console.log("testing getDefaultFileList socket.on");
             if (ui == "radar") {
                 ui = "cosmos";
             }
@@ -209,7 +209,6 @@ export default function Nebula(clientio, pipelineAddr) {
                 pipelines[ui]["defaultData"].substring("data/".length));
         });
 
-	console.log("after recieveDefaultFileList");
         // Use the csvFilePath to store the name of a user-defined CSV file
         var csvFilePath = null;
 
@@ -528,7 +527,8 @@ export default function Nebula(clientio, pipelineAddr) {
 
 
                     /*
-                    //room.pipelineSocket = zmq.socket('pair');
+                    This is the original code utilizing zmq
+                    room.pipelineSocket = zmq.socket('pair');
                     console.log(Object.getOwnPropertyNames(zmq));
 
                     let sock = new zmq.Socket('pair');
@@ -536,11 +536,11 @@ export default function Nebula(clientio, pipelineAddr) {
                     room.pipelineSocket.connect(pipelineAddr);
                     */
                     
+                    //Utilizing Socket.io to connect to connector
                     const httpServer = createServer();
-                    console.log("Testing create Server");
                     this.pythonio = new Server(httpServer);
                     
-                    //pythonio = room.pipelineSocket = this.pythonio;
+					//Setting the new socket for the room
                     room.pipelineSocket = this.pythonio;
                     
 			
