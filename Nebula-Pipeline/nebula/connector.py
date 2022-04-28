@@ -152,38 +152,29 @@ from . import pipeline
 #     def push_update(self, data):
 #         self._push_queue.put(data)                
                 
-#print connector
-#instead of emit we are printing
+
+#This is the new connector utilizing Socket.io.  Functions similarly to the zeroMQ connector
 class SocketIOConnector (pipeline.Connector):
 
     sio = socketio.AsyncClient()
 
     def __init__(self, port=5555):
-        print("test")
         self._update = None
         self._get = None
         self._set = None
         self._reset = None
 
         self._push_queue = queue.Queue()
-        
-        #Have to change host to nebula
-        print("Testing PrintConnector init")
-        # proto="tcp"
-        # host="://127.0.0.1:"
-        # url = proto+ host + port
-        # await PrintConnector.sio.connect(url)
-        print("Testing")
-        
-        # self._push_queue = queue.Queue()
 
     async def makeConnection(self, port=5555):
         proto="tcp"
-        # proto="http"
+
         host="://127.0.0.1:"
-        # host="*"
+
         url = proto+ host + str(4040)
         await SocketIOConnector.sio.connect(url)
+        
+        #This was used to test the connector connection
         await SocketIOConnector.sio.emit("testing")
         await SocketIOConnector.sio.wait()
     
@@ -200,7 +191,7 @@ class SocketIOConnector (pipeline.Connector):
         if reset:
             self._reset = reset
             
-        #definitely needs work   
+   
     def start(self):
         while True:
             # Check if we have any data to push
@@ -210,8 +201,6 @@ class SocketIOConnector (pipeline.Connector):
             except queue.Empty:
                 pass
             
-            # Check if we have a new message
-            # might need to use @socket.on()
             
             
     def push_update(self, data):
@@ -253,6 +242,5 @@ class SocketIOConnector (pipeline.Connector):
                     response = func_call(contents)
                     
                 data["contents"] = response
-                #self._socket.send_json(data) #zmq code
                 print("sending data")
                 print(data)
